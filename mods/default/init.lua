@@ -307,6 +307,14 @@ minetest.register_craft({
 	}
 })
 
+minetest.register_craft({
+	output = 'default:sticks',
+	recipe = {
+		{'default:stick', ''},
+		{'', 'default:stick'},
+	},
+})
+
 --
 -- Crafting (tool repair)
 --
@@ -1122,6 +1130,34 @@ minetest.register_craftitem("default:clay_brick", {
 minetest.register_craftitem("default:scorched_stuff", {
 	description = "Scorched Stuff",
 	inventory_image = "default_scorched_stuff.png",
+})
+
+minetest.register_tool("default:sticks", {
+	description = "Sticks",
+	inventory_image = "default_sticks.png",
+	on_use = function(item, user, pointed_thing)
+		if pointed_thing.type ~= "node" then
+			return
+		end
+		local objects = minetest.env:get_objects_inside_radius(pointed_thing.above, 0.5)
+		local n = 0
+		for _, v in ipairs(objects) do
+				if not v:is_player() and v:get_luaentity() and v:get_luaentity().name == "__builtin:item" then
+					if ItemStack(v:get_luaentity().itemstring):get_name() == "default:stick" then
+						n = n + ItemStack(v:get_luaentity().itemstring):get_count()*2
+						v:remove()
+					elseif ItemStack(v:get_luaentity().itemstring):get_name() == "default:leaves" then
+						n = n + ItemStack(v:get_luaentity().itemstring):get_count()
+						v:remove()
+					end
+				end
+		end
+		if n >= 10 then
+			minetest.env:set_node(pointed_thing.above, {name = "bonfire:self"})
+		end
+		item:add_wear(65535/10)
+		return item
+	end,
 })
 
 --
