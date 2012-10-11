@@ -1,12 +1,5 @@
 bonfire = {}
 
-minetest.register_craft({
-	output = 'bonfire:self',
-	recipe = {
-		{'default:stick','default:stick','default:stick'},
-	}
-})
-
 bonfire.formspec =
 	"invsize[8,9;]"..
 	"image[0,2;1,1;default_furnace_fire_bg.png]"..
@@ -37,6 +30,7 @@ minetest.register_node("bonfire:self", {
 			{-0.5,-0.5,-0.5,0.5,-0.45,0.5},
 		},
 	},
+	drop = "",
 	groups = {crumbly=3, oddly_breakable_by_hand=1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = function(pos)
