@@ -1113,7 +1113,7 @@ minetest.register_craftitem("default:book", {
 })
 
 minetest.register_craftitem("default:coal_lump", {
-	description = "charcoal",
+	description = "Charcoal",
 	inventory_image = "default_charcoal.png",
 })
 
@@ -1139,21 +1139,42 @@ minetest.register_tool("default:sticks", {
 		if pointed_thing.type ~= "node" then
 			return
 		end
-		local objects = minetest.env:get_objects_inside_radius(pointed_thing.above, 0.5)
-		local n = 0
-		for _, v in ipairs(objects) do
-				if not v:is_player() and v:get_luaentity() and v:get_luaentity().name == "__builtin:item" then
-					if ItemStack(v:get_luaentity().itemstring):get_name() == "default:stick" then
-						n = n + ItemStack(v:get_luaentity().itemstring):get_count()*2
-						v:remove()
-					elseif ItemStack(v:get_luaentity().itemstring):get_name() == "default:leaves" then
-						n = n + ItemStack(v:get_luaentity().itemstring):get_count()
-						v:remove()
+		if minetest.env:get_node(pointed_thing.above).name == "air" then
+			local objects = minetest.env:get_objects_inside_radius(pointed_thing.above, 0.5)
+			local pos = pointed_thing.above
+			local furnace_blocks = {{x=1,y=0,z=-1}, {x=1,y=0,z=0}, {x=1,y=0,z=1}, {x=0,y=0,z=-1}, {x=0,y=0,z=1}, {x=-1,y=0,z=-1},		{x=-1,y=0,z=0}, {x=-1,y=0,z=1}, {x=0,y=-1,z=0}, {x=1,y=-1,z=-1}, {x=1,y=-1,z=0}, {x=1,y=-1,z=1}, {x=0,y=-1,z=-1}, {x=0,y=-1,z=1}, {x=-1,y=-1,z=-1}, {x=-1,y=-1,z=0}, {x=-1,y=-1,z=1}}
+			local bonfire = 0
+			local furnace = 0
+			for _, v in ipairs(objects) do
+					if not v:is_player() and v:get_luaentity() and v:get_luaentity().name == "__builtin:item" then
+						local istack = ItemStack(v:get_luaentity().itemstring)
+						if istack:get_name() == "default:stick" then
+							bonfire = bonfire + istack:get_count() * 2
+							v:remove()
+						elseif istack:get_name() == "default:leaves" then
+							bonfire = bonfire + istack:get_count()
+							v:remove()
+						elseif istack:get_name() == "default:coal_lump" then
+							furnace = furnace + istack:get_count()
+							v:remove()
+						end
+					end
+			end
+			local function check_furnace_blocks()
+				for n = 1,#furnace_blocks do
+					local v = furnace_blocks[n]
+					minetest.chat_send_all("123")
+					if minetest.env:get_node({x=pos.x+v.x,y=pos.y+v.y,z=pos.z+v.z}).name ~= "default:cobble" then
+						return false
 					end
 				end
-		end
-		if n >= 10 then
-			minetest.env:set_node(pointed_thing.above, {name = "bonfire:self"})
+				return true
+			end
+			if furnace >= 9 and check_furnace_blocks() then
+				minetest.env:set_node(pos, {name = "furnace:self"})
+			elseif bonfire >= 10 then
+				minetest.env:set_node(pos, {name = "bonfire:self"})
+			end
 		end
 		item:add_wear(65535/10)
 		return item
