@@ -31,7 +31,7 @@ minetest.register_node("bonfire:self", {
 		},
 	},
 	drop = "",
-	groups = {crumbly=3, oddly_breakable_by_hand=1},
+	groups = {crumbly=3, oddly_breakable_by_hand=1, not_in_creative_inventory=1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
@@ -77,8 +77,8 @@ minetest.register_node("bonfire:self_active", {
 		},
 	},
 	light_source = 12,
-	drop = "bonfire:self",
-	groups = {crumbly=3, not_in_creative_inventory=1},-- not_in_creative_inventory=1},  --recoment
+	drop = "",
+	groups = {crumbly=3, not_in_creative_inventory=1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
