@@ -1,12 +1,15 @@
 furnace = {}
 
-minetest.register_craft({
-	output = 'furnace:self',
-	recipe = {
-		{'default:coal_lump','default:coal_lump','default:coal_lump'},
-		{'default:coal_lump','default:coal_lump','default:coal_lump'},
-	}
-})
+function furnace.check_furnace_blocks(pos)
+	local furnace_blocks = {{x=1,y=0,z=-1}, {x=1,y=0,z=0}, {x=1,y=0,z=1}, {x=0,y=0,z=-1}, {x=0,y=0,z=1}, {x=-1,y=0,z=-1}, {x=-1,y=0,z=0}, {x=-1,y=0,z=1}, {x=0,y=-1,z=0}, {x=1,y=-1,z=-1}, {x=1,y=-1,z=0}, {x=1,y=-1,z=1}, {x=0,y=-1,z=-1}, {x=0,y=-1,z=1}, {x=-1,y=-1,z=-1}, {x=-1,y=-1,z=0}, {x=-1,y=-1,z=1}}
+	for n = 1,#furnace_blocks do
+		local v = furnace_blocks[n]
+			if minetest.env:get_node({x=pos.x+v.x,y=pos.y+v.y,z=pos.z+v.z}).name ~= "default:cobble" then
+				return false
+			end
+		end
+	return true
+end
 
 furnace.formspec =
 	"invsize[8,9;]"..
@@ -22,7 +25,7 @@ furnace.formspec =
 	"list[current_player;main;0,5;8,4;]"
 
 minetest.register_node("furnace:self", {
-	description = "Bonfire",
+	description = "Furnace",
 	tiles = {"furnace_top.png", "furnace_bottom.png", "furnace_side.png"},
 	drawtype = "nodebox",
 	paramtype = "light",
@@ -38,12 +41,13 @@ minetest.register_node("furnace:self", {
 			{-0.5,-0.5,-0.5,0.5,0.2,0.5},
 		},
 	},
-	groups = {crumbly=3, oddly_breakable_by_hand=1},
+	drop = "",
+	groups = {crumbly=3, oddly_breakable_by_hand=1, not_in_creative_inventory=1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
 		meta:set_string("formspec", furnace.formspec)
-		meta:set_string("infotext", "Bonfire")
+		meta:set_string("infotext", "Furnace")
 		local inv = meta:get_inventory()
 		inv:set_size("fuel", 1)
 		inv:set_size("src", 1)
@@ -67,7 +71,7 @@ minetest.register_node("furnace:self", {
 })
 
 minetest.register_node("furnace:self_active", {
-	description = "Bonfire",
+	description = "Furnace",
 	tiles = {"furnace_top_active.png", "furnace_bottom.png", "furnace_side_active.png"},
 	drawtype = "nodebox",
 	paramtype = "light",
@@ -84,13 +88,13 @@ minetest.register_node("furnace:self_active", {
 		},
 	},
 	light_source = 12,
-	drop = "furnace:self",
-	groups = {crumbly=3, not_in_creative_inventory=1},-- not_in_creative_inventory=1},  --recoment
+	drop = "",
+	groups = {crumbly=3, not_in_creative_inventory=1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
 		meta:set_string("formspec", furnace.formspec)
-		meta:set_string("infotext", "Bonfire")
+		meta:set_string("infotext", "Furnace")
 		local inv = meta:get_inventory()
 		inv:set_size("fuel", 1)
 		inv:set_size("src", 1)
@@ -143,8 +147,26 @@ minetest.register_abm({
 				meta:set_float(name, 0.0)
 			end
 		end
-
+		
 		local inv = meta:get_inventory()
+		
+		if not furnace.check_furnace_blocks(pos) then
+			for _, v in ipairs({
+				{"fuel", 1,},
+				{"src", 1,},
+				{"dst", 2,},
+				{"add", 4,},
+			}) do
+				local name, size = v[1], v[2]
+				for n = 1,size do
+					if not inv:is_empty(name) then
+						minetest.env:add_item(pos, inv:get_stack(name, n):get_name() .. " " .. inv:get_stack(name, n):get_count())
+					end
+				end
+			end
+			minetest.env:remove_node(pos)
+			return
+		end
 
 		local srclist = inv:get_list("src")
 		local cooked = nil
@@ -178,7 +200,7 @@ minetest.register_abm({
 		if meta:get_float("fuel_time") < meta:get_float("fuel_totaltime") then
 			local percent = math.floor(meta:get_float("fuel_time") /
 					meta:get_float("fuel_totaltime") * 100)
-			meta:set_string("infotext","Bonfire active: "..percent.."%")
+			meta:set_string("infotext","Furnace active: "..percent.."%")
 			hacky_swap_node(pos,"furnace:self_active")
 			meta:set_string("formspec",
 				"invsize[8,9;]"..
@@ -209,7 +231,7 @@ minetest.register_abm({
 		end
 
 		if fuel.time <= 0 then
-			meta:set_string("infotext","Bonfire out of fuel")
+			meta:set_string("infotext","Furnace out of fuel")
 			hacky_swap_node(pos,"furnace:self")
 			meta:set_string("formspec", furnace.formspec)
 			return
@@ -217,7 +239,7 @@ minetest.register_abm({
 
 		if cooked.item:is_empty() then
 			if was_active then
-				meta:set_string("infotext","Bonfire is empty")
+				meta:set_string("infotext","Furnace is empty")
 				hacky_swap_node(pos,"furnace:self")
 				meta:set_string("formspec", furnace.formspec)
 			end
