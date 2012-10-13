@@ -127,6 +127,10 @@ minetest.register_node("anvil:self", {
 		local inv = meta:get_inventory()
 		
 		if fields["forge"] then
+			if inv:is_empty("hammer") or inv:is_empty("ingot") or inv:is_empty("recipe") then
+				return
+			end
+			
 			local ingotstack = inv:get_stack("ingot", 1)
 			local recipestack = inv:get_stack("recipe", 1)
 			local hammerstack = inv:get_stack("hammer", 1)
@@ -229,7 +233,5 @@ minetest.register_node("anvil:self", {
 				end
 			end
 		end
-		minetest.chatsendall(string.sub(ingotstack:get_name(), 1, 6))
-		minetest.chatsendall(string.sub(ingotstack:get_name(),string.len(ingotstack:get_name())-9,9))
 	end,
 })
