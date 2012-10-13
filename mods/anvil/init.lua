@@ -35,9 +35,9 @@ end
 minetest.register_craft({
 	output = 'anvil:self',
 	recipe = {
-		{'default:cobble','default:cobble','default:cobble'},
-		{'','default:cobble',''},
-		{'default:cobble','default:cobble','default:cobble'},
+		{'default:stone','default:stone','default:stone'},
+		{'','default:stone',''},
+		{'default:stone','default:stone','default:stone'},
 	}
 })
 
