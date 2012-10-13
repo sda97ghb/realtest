@@ -131,4 +131,10 @@ end
 -- Hide dyelocal
 dyelocal = nil
 
+minetest.register_craft({
+	type = "shapeless",
+	output = 'dye:dark_green',
+	recipe = {'default:cactus'},
+})
+
 -- EOF
