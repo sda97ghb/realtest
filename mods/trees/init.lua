@@ -3,6 +3,12 @@ minetest.register_abm({
 	interval = 1.0,
 	chance = 1.0,
 	action = function(pos, node, active_object_count, active_object_count_wider)
+		for i=1,10 do
+			if minetest.env:get_node({x=pos.x,y=pos.y+i,z=pos.z}).name == "trees:mapple_trunk" then
+				minetest.env:add_node(pos, {name="trees:mapple_trunk"})
+				return
+			end
+		end
 		minetest.env:add_node(pos, {name="air"})
 	end,
 })
@@ -21,21 +27,21 @@ local table_containts = function(t, v)
 	return false
 end
 
--- minetest.register_abm({
--- 	nodenames = {'trees:mapple_trunk'},
--- 	interval = 1.0,
--- 	chance = 1.0,
--- 	action = function(pos, node, active_object_count, active_object_count_wider)
--- 		if table_containts(GROUND_LIST, minetest.env:get_node({x = pos.x, y = pos.y-1, z = pos.z}).name) then return end
--- 		for i = -1, 1 do
--- 			for k = -1, 1 do
--- 				if minetest.env:get_node({x = pos.x+i, y = pos.y-1, z = pos.z+k}).name == 'trees:mapple_trunk' then return end
--- 			end
--- 		end
--- 		minetest.env:add_item(pos, "trees:mapple_trunk")
--- 		minetest.env:add_node(pos, {name="air"})
--- 	end,
--- })
+minetest.register_abm({
+	nodenames = {'trees:mapple_trunk'},
+	interval = 1.0,
+	chance = 1.0,
+	action = function(pos, node, active_object_count, active_object_count_wider)
+		if table_containts(GROUND_LIST, minetest.env:get_node({x = pos.x, y = pos.y-1, z = pos.z}).name) then return end
+		for i = -1, 1 do
+			for k = -1, 1 do
+				if minetest.env:get_node({x = pos.x+i, y = pos.y-1, z = pos.z+k}).name == 'trees:mapple_trunk' then return end
+			end
+		end
+		minetest.env:add_item(pos, "trees:mapple_trunk")
+		minetest.env:add_node(pos, {name="air"})
+	end,
+})
 
 TREES_LIST={
 	"mapple",
@@ -119,26 +125,7 @@ end
 
 function gen_mapple(ipos)
 	local pos = ipos
-	for i=-5,5 do
-		for j=-5,5 do
-			for k=-5,5 do
-				local s = minetest.env:get_node({x=pos.x+i,y=pos.y+j,z=pos.z+k}).name
-				if s ~= "air" then
-				if s ~= "default:dirt" then
-				if s ~= "default:dirt_with_grass" then
-				if s ~= "default:stone" then
-				if s ~= "default:tree" then
-				if s ~= "default:leaves" then
-					return
-				end
-				end
-				end
-				end
-				end
-				end
-			end
-		end
-	end
+	if minetest.env:find_node_near(pos, 5, "trees:mapple_trunk") then return end
 	local height = 7 + math.random(5)
 	for i=1,height do
 		if minetest.env:get_node({x=pos.x, y=pos.y+i, z=pos.z}).name == "air" then
@@ -266,22 +253,12 @@ local function generate(name, wherein, minp, maxp, seed, chunks_per_volume, ore_
 	end
 end
 
--- local function generate_ore(minp, maxp, trees_per_volume, height_min, height_max)
--- 	if maxp.y < height_min or minp.y > height_max then
--- 		return
--- 	end
--- 	for j=minp.y, maxp.y do
--- 		for i=1,trees_per_volume do
--- 			local pos = {x=minp.x+math.random(15), y=minp.y+j, z=minp.z+math.random(15)}
--- 			if minetest.env:get_node(pos).name == "default:dirt_with_grass" then
--- 				gen_mapple(pos)
--- 			end
--- 		end
--- 	end
--- end
-
 minetest.register_on_generated(
 function(minp, maxp, seed)
-	--if math.random(2) == 1 then generate_ore(minp, maxp, 10, -100,  31000) end
-	if math.random(6) == 1 then generate(gen_mapple, "default:dirt_with_grass", minp, maxp, seed, 1/8/2, 1, -100, 2000) end
+	local pr = PseudoRandom(seed)
+	minetest.after(0, function()
+				if pr:next(1,6) == 1 then
+					generate(gen_mapple, "default:dirt_with_grass", minp, maxp, seed, 1/8/2, 1, -100, 2000)
+				end
+			  end)
 end)
