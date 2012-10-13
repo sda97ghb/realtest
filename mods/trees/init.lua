@@ -82,8 +82,12 @@ for i=1,#TREES_LIST do
 			max_items = 1,
 			items = {
 				{
-					items = {'trees:trees_'..TREES_LIST[i]..'_sapling'},
-					rarity = 20,
+					items = {'trees:'..TREES_LIST[i]..'_sapling'},
+					rarity = 15,
+				},
+				{
+					items = {'trees:'..TREES_LIST[i]..'_stick'},
+					rarity = 2,
 				},
 				{
 					items = {"trees:"..TREES_LIST[i].."_leaves"},
@@ -108,13 +112,31 @@ for i=1,#TREES_LIST do
 		description = "Stick of "..TREES_LIST[i],
 		inventory_image = "trees_"..TREES_LIST[i].."_stick.png",
 		groups = {sticks=3},
-		on_use = function(itemstack, user, pointed_thing)
-			if pointed_thing.type ~= "node" then
-				return
-			end
-			local pos = pointed_thing.under
-			gen_mapple(pos)
-			
+	})
+	
+	minetest.register_node("trees:"..TREES_LIST[i].."_sapling", {
+		description = "Sapling of "..TREES_LIST[i],
+		drawtype = "plantlike",
+		visual_scale = 1.0,
+		tiles = {"trees_"..TREES_LIST[i].."_sapling.png"},
+		inventory_image = "trees_"..TREES_LIST[i].."_sapling.png",
+		wield_image = "trees_"..TREES_LIST[i].."_sapling.png",
+		paramtype = "light",
+		walkable = false,
+		groups = {snappy=2,dig_immediate=3,flammable=2},
+		sounds = default.node_sound_defaults(),
+	})
+	
+	minetest.register_abm({
+		nodenames = {"trees:"..TREES_LIST[i].."_sapling"},
+		interval = 900.0,
+		chance = 1.0,
+		action = function(pos, node, active_object_count, active_object_count_wider)
+			posn = {x=pos.x, y=pos.y-1, z=pos.z}
+			minetest.env:set_node(pos,{name="air"})
+			local s = minetest.env:get_node(posn).name
+			if s ~= "default:dirt" and s ~= "default:dirt_with_grass" then return end
+			gen_mapple(posn)
 		end,
 	})
 end
@@ -125,7 +147,7 @@ end
 
 function gen_mapple(ipos)
 	local pos = ipos
-	if minetest.env:find_node_near(pos, 5, "trees:mapple_trunk") then return end
+	if minetest.env:find_node_near(pos, 4, "trees:mapple_trunk") then return end
 	local height = 7 + math.random(5)
 	for i=1,height do
 		if minetest.env:get_node({x=pos.x, y=pos.y+i, z=pos.z}).name == "air" then
