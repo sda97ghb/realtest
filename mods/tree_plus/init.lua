@@ -14,7 +14,7 @@ minetest.register_node(":default:leaves", {
 			},
 			{
 				items = {'default:stick'},
-				rarity = 10,
+				rarity = 3,
 			},
 			{
 				items = {'default:leaves'},
