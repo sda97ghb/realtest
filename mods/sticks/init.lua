@@ -41,7 +41,27 @@ minetest.register_tool("sticks:sticks", {
 					for _, v in ipairs(coals) do
 						v:remove()
 					end
-					minetest.env:set_node(pos, {name = "furnace:self"})
+					minetest.env:set_node(pos, {name = "furnace:self_active"})
+					local meta = minetest.env:get_meta(pos)
+					meta:set_int("active", 1)
+					meta:set_float("fuel_time", 0)
+					meta:set_float("fuel_totaltime", 30)
+					meta:set_string("formspec",
+							"invsize[8,10;]"..
+							"list[current_name;src1;1.5,0;1,1;]"..
+							"list[current_name;dst1;1.5,1;1,1;]"..
+							"list[current_name;src2;2.5,1;1,1;]"..
+							"list[current_name;dst2;2.5,2;1,1;]"..
+							"list[current_name;src3;3.5,2;1,1;]"..
+							"list[current_name;dst3;3.5,3;1,1;]"..
+							"list[current_name;src4;4.5,1;1,1;]"..
+							"list[current_name;dst4;4.5,2;1,1;]"..
+							"list[current_name;src5;5.5,0;1,1;]"..
+							"list[current_name;dst5;5.5,1;1,1;]"..
+							"image[3.5,4;1,1;default_furnace_fire_bg.png"..
+								"^[lowpart:100:default_furnace_fire_fg.png]"..
+							"list[current_name;fuel;3.5,5;1,1;]"..
+							"list[current_player;main;0,6;8,4;]")
 					if furnaceb > 9 then
 						local meta = minetest.env:get_meta(pos)
 						local inv = meta:get_inventory()
