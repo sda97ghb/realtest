@@ -1283,3 +1283,22 @@ end
 minetest.register_on_punchnode(on_punchnode)
 
 -- END
+
+minetest.register_on_dignode(function(pos, oldnode, digger)
+	local sides = {{x=-1,y=0,z=0}, {x=1,y=0,z=0}, {x=0,y=0,z=-1}, {x=0,y=0,z=1}, {x=0,y=-1,z=0}, {x=0,y=1,z=0},}
+	for _, s in ipairs(sides) do
+		if minetest.env:get_node({x=pos.x+s.x,y=pos.y+s.y,z=pos.z+s.z}).name == "default:stone" then
+			local fall = true
+			for _2, s2 in ipairs(sides) do
+				if minetest.env:get_node({x=pos.x+s.x+s2.x,y=pos.y+s.y+s2.y,z=pos.z+s.z+s2.z}).name ~= "air" then
+					fall = false
+					break
+				end
+			end
+			if fall then
+				minetest.env:remove_node({x=pos.x+s.x,y=pos.y+s.y,z=pos.z+s.z})
+				minetest.env:add_item({x=pos.x+s.x,y=pos.y+s.y,z=pos.z+s.z}, "default:stone")
+			end
+		end
+	end
+end)
