@@ -1,7 +1,7 @@
 for i = 1,4 do
 	minetest.register_node("icicles:icicle_"..i, {
 		description = "Icicle "..i,
-		groups = {cracky=3, icicle=1},
+		groups = {cracky=3, icicle=1, oddly_breakable_by_hand=4-i},
 		tiles = {"default_stone.png"},
 		is_ground_content = true,
 		sounds = default.node_sound_stone_defaults(),
