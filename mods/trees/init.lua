@@ -4,8 +4,20 @@ minetest.register_abm({
 	chance = 1.0,
 	action = function(pos, node, active_object_count, active_object_count_wider)
 		for i=1,10 do
-			if minetest.env:get_node({x=pos.x,y=pos.y+i,z=pos.z}).name == "trees:mapple_trunk" then
-				minetest.env:add_node(pos, {name="trees:mapple_trunk"})
+			if minetest.env:get_node({x=pos.x,y=pos.y+i,z=pos.z}).name == "trees:ash_trunk" then
+				minetest.env:add_node(pos, {name="trees:ash_trunk"})
+				return
+			end
+			if minetest.env:get_node({x=pos.x,y=pos.y+i,z=pos.z}).name == "trees:ash_trunk" then
+				minetest.env:add_node(pos, {name="trees:ash_trunk"})
+				return
+			end
+			if minetest.env:get_node({x=pos.x,y=pos.y-i,z=pos.z}).name == "trees:ash_trunk" then
+				minetest.env:add_node(pos, {name="trees:ash_trunk"})
+				return
+			end
+			if minetest.env:get_node({x=pos.x,y=pos.y-i,z=pos.z}).name == "trees:ash_trunk" then
+				minetest.env:add_node(pos, {name="trees:ash_trunk"})
 				return
 			end
 		end
@@ -27,23 +39,8 @@ local table_containts = function(t, v)
 	return false
 end
 
-minetest.register_abm({
-	nodenames = {'trees:mapple_trunk'},
-	interval = 1.0,
-	chance = 1.0,
-	action = function(pos, node, active_object_count, active_object_count_wider)
-		if table_containts(GROUND_LIST, minetest.env:get_node({x = pos.x, y = pos.y-1, z = pos.z}).name) then return end
-		for i = -1, 1 do
-			for k = -1, 1 do
-				if minetest.env:get_node({x = pos.x+i, y = pos.y-1, z = pos.z+k}).name == 'trees:mapple_trunk' then return end
-			end
-		end
-		minetest.env:add_item(pos, "trees:mapple_trunk")
-		minetest.env:add_node(pos, {name="air"})
-	end,
-})
-
 TREES_LIST={
+	"ash",
 	"mapple",
 }
 
@@ -129,20 +126,169 @@ for i=1,#TREES_LIST do
 	
 	minetest.register_abm({
 		nodenames = {"trees:"..TREES_LIST[i].."_sapling"},
-		interval = 900.0,
+		interval = 9.0,
 		chance = 1.0,
 		action = function(pos, node, active_object_count, active_object_count_wider)
 			posn = {x=pos.x, y=pos.y-1, z=pos.z}
 			minetest.env:set_node(pos,{name="air"})
 			local s = minetest.env:get_node(posn).name
 			if s ~= "default:dirt" and s ~= "default:dirt_with_grass" then return end
-			gen_mapple(posn)
+			gen_ash(posn)
 		end,
+	})
+	
+	minetest.register_abm({
+	nodenames = {"trees:"..TREES_LIST[i].."_trunk"},
+	interval = 1.0,
+	chance = 1.0,
+	action = function(pos, node, active_object_count, active_object_count_wider)
+		if table_containts(GROUND_LIST, minetest.env:get_node({x = pos.x, y = pos.y-1, z = pos.z}).name) then return end
+		for x = -1, 1 do
+			for z = -1, 1 do
+				local posn={x = pos.x+x, y = pos.y-1, z = pos.z+z}
+				if minetest.env:get_node(posn).name == "trees:"..TREES_LIST[i].."_trunk" then
+					return
+				end
+			end
+		end
+		minetest.env:add_item(pos, "trees:"..TREES_LIST[i].."_trunk")
+		minetest.env:add_node(pos, {name="air"})
+	end,
 	})
 end
 
-function set_node_instead_air(pos, block)
+function set_node_instead_air(ipos, i, j, k, block)
+	local pos = {x=ipos.x+i,y=ipos.y+j,z=ipos.z+k}
 	if minetest.env:get_node(pos).name == "air" then minetest.env:set_node(pos, block) end
+end
+
+TREES_GEN_ASH_LIST={
+	{0,2,0},
+	{-1,2,0},
+	{1,2,0},
+	{0,2,-1},
+	{0,2,1},
+	----------
+	{-1,1,-1},
+	{0,1,-1},
+	{1,1,-1},
+	{-1,1,0},
+	{0,1,0},
+	{1,1,0},
+	{-1,1,1},
+	{0,1,1},
+	{1,1,1},
+	{-2,1,0},
+	{2,1,0},
+	{0,1,-2},
+	{0,1,2},
+	----------
+	{-1,0,-2},
+	{0,0,-2},
+	{1,0,-2},
+	{-2,0,-1},
+	{-1,0,-1},
+	{0,0,-1},
+	{1,0,-1},
+	{2,0,-1},
+	{-2,0,0},
+	{-1,0,0},
+	{0,0,0},
+	{1,0,0},
+	{2,0,0},
+	{-2,0,1},
+	{-1,0,1},
+	{0,0,1},
+	{1,0,1},
+	{2,0,1},
+	{-1,0,2},
+	{0,0,2},
+	{1,0,2},
+	----------
+	{-1,-1,-2},
+	{0,-1,-2},
+	{1,-1,-2},
+	{-2,-1,-1},
+	{-1,-1,-1},
+	{0,-1,-1},
+	{1,-1,-1},
+	{2,-1,-1},
+	{-2,-1,0},
+	{-1,-1,0},
+	{0,-1,0},
+	{1,-1,0},
+	{2,-1,0},
+	{-2,-1,1},
+	{-1,-1,1},
+	{0,-1,1},
+	{1,-1,1},
+	{2,-1,1},
+	{-1,-1,2},
+	{0,-1,2},
+	{1,-1,2},
+	{3,-1,0},
+	{-3,-1,0},
+	{0,-1,3},
+	{0,-1,-3},
+	----------
+	{-2,-2,-2},
+	{-1,-2,-2},
+	{0,-2,-2},
+	{1,-2,-2},
+	{2,-2,-2},
+	{-2,-2,-1},
+	{-1,-2,-1},
+	{0,-2,-1},
+	{1,-2,-1},
+	{2,-2,-1},
+	{-2,-2,0},
+	{-1,-2,0},
+	{0,-2,0},
+	{1,-2,0},
+	{2,-2,0},
+	{-2,-2,1},
+	{-1,-2,1},
+	{0,-2,1},
+	{1,-2,1},
+	{2,-2,1},
+	{-2,-2,2},
+	{-1,-2,2},
+	{0,-2,2},
+	{1,-2,2},
+	{2,-2,2},
+	{3,-2,0},
+	{-3,-2,0},
+	{0,-2,3},
+	{0,-2,-3},
+	----------
+	{-1,-3,-1},
+	{0,-3,-1},
+	{1,-3,-1},
+	{-1,-3,0},
+	{0,-3,0},
+	{1,-3,0},
+	{-1,-3,1},
+	{0,-3,1},
+	{1,-3,1},
+	{-2,-3,0},
+	{2,-3,0},
+	{0,-3,-2},
+	{0,-3,2},
+}
+
+function gen_ash(ipos) --small ash
+	local pos = ipos
+	if minetest.env:find_node_near(pos, 4, "trees:ash_trunk") then return end
+	local height = 4 + math.random(4)
+	for i=1,height do
+		if minetest.env:get_node({x=pos.x, y=pos.y+i, z=pos.z}).name == "air" then
+			minetest.env:set_node({x=pos.x, y=pos.y+i, z=pos.z}, {name="trees:ash_trunk"})
+		end
+	end
+	local loc_leaves={name="trees:ash_leaves"}
+	for i=1,#TREES_GEN_ASH_LIST do
+		set_node_instead_air(pos, TREES_GEN_ASH_LIST[i][1], height+TREES_GEN_ASH_LIST[i][2], TREES_GEN_ASH_LIST[i][3], loc_leaves)
+	end
 end
 
 function gen_mapple(ipos)
@@ -155,84 +301,84 @@ function gen_mapple(ipos)
 		end
 	end
 	-----------------------------------------------------------------------------------------------
-	set_node_instead_air({x=pos.x, y=pos.y+height+1, z=pos.z}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-1, y=pos.y+height+1, z=pos.z}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+1, y=pos.y+height+1, z=pos.z}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x, y=pos.y+height+1, z=pos.z-1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x, y=pos.y+height+1, z=pos.z+1}, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x, y=pos.y+height+1, z=pos.z}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-1, y=pos.y+height+1, z=pos.z}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+1, y=pos.y+height+1, z=pos.z}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x, y=pos.y+height+1, z=pos.z-1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x, y=pos.y+height+1, z=pos.z+1}, 0,0,0, {name="trees:mapple_leaves"})
 	-----------------------------------------------------------------------------------------------
-	set_node_instead_air({x=pos.x-1, y=pos.y+height, z=pos.z}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+1, y=pos.y+height, z=pos.z}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x, y=pos.y+height, z=pos.z-1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x, y=pos.y+height, z=pos.z+1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-1, y=pos.y+height, z=pos.z-1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+1, y=pos.y+height, z=pos.z-1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-1, y=pos.y+height, z=pos.z+1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+1, y=pos.y+height, z=pos.z+1}, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-1, y=pos.y+height, z=pos.z}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+1, y=pos.y+height, z=pos.z}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x, y=pos.y+height, z=pos.z-1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x, y=pos.y+height, z=pos.z+1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-1, y=pos.y+height, z=pos.z-1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+1, y=pos.y+height, z=pos.z-1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-1, y=pos.y+height, z=pos.z+1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+1, y=pos.y+height, z=pos.z+1}, 0,0,0, {name="trees:mapple_leaves"})
 	-----------------------------------------------------------------------------------------------
-	set_node_instead_air({x=pos.x-1, y=pos.y+height-1, z=pos.z}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+1, y=pos.y+height-1, z=pos.z}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x, y=pos.y+height-1, z=pos.z-1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x, y=pos.y+height-1, z=pos.z+1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-1, y=pos.y+height-1, z=pos.z-1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+1, y=pos.y+height-1, z=pos.z-1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-1, y=pos.y+height-1, z=pos.z+1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+1, y=pos.y+height-1, z=pos.z+1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-2, y=pos.y+height-1, z=pos.z-1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-2, y=pos.y+height-1, z=pos.z}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-2, y=pos.y+height-1, z=pos.z+1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+2, y=pos.y+height-1, z=pos.z-1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+2, y=pos.y+height-1, z=pos.z}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+2, y=pos.y+height-1, z=pos.z+1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+1, y=pos.y+height-1, z=pos.z-2}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x, y=pos.y+height-1, z=pos.z-2}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-1, y=pos.y+height-1, z=pos.z-2}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+1, y=pos.y+height-1, z=pos.z+2}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x, y=pos.y+height-1, z=pos.z+2}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-1, y=pos.y+height-1, z=pos.z+2}, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-1, y=pos.y+height-1, z=pos.z}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+1, y=pos.y+height-1, z=pos.z}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x, y=pos.y+height-1, z=pos.z-1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x, y=pos.y+height-1, z=pos.z+1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-1, y=pos.y+height-1, z=pos.z-1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+1, y=pos.y+height-1, z=pos.z-1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-1, y=pos.y+height-1, z=pos.z+1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+1, y=pos.y+height-1, z=pos.z+1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-2, y=pos.y+height-1, z=pos.z-1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-2, y=pos.y+height-1, z=pos.z}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-2, y=pos.y+height-1, z=pos.z+1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+2, y=pos.y+height-1, z=pos.z-1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+2, y=pos.y+height-1, z=pos.z}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+2, y=pos.y+height-1, z=pos.z+1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+1, y=pos.y+height-1, z=pos.z-2}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x, y=pos.y+height-1, z=pos.z-2}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-1, y=pos.y+height-1, z=pos.z-2}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+1, y=pos.y+height-1, z=pos.z+2}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x, y=pos.y+height-1, z=pos.z+2}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-1, y=pos.y+height-1, z=pos.z+2}, 0,0,0, {name="trees:mapple_leaves"})
 	-----------------------------------------------------------------------------------------------
-	set_node_instead_air({x=pos.x-1, y=pos.y+height-2, z=pos.z}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+1, y=pos.y+height-2, z=pos.z}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x, y=pos.y+height-2, z=pos.z-1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x, y=pos.y+height-2, z=pos.z+1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-1, y=pos.y+height-2, z=pos.z-1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+1, y=pos.y+height-2, z=pos.z-1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-1, y=pos.y+height-2, z=pos.z+1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+1, y=pos.y+height-2, z=pos.z+1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-2, y=pos.y+height-2, z=pos.z-1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-2, y=pos.y+height-2, z=pos.z}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-2, y=pos.y+height-2, z=pos.z+1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+2, y=pos.y+height-2, z=pos.z-1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+2, y=pos.y+height-2, z=pos.z}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+2, y=pos.y+height-2, z=pos.z+1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+1, y=pos.y+height-2, z=pos.z-2}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x, y=pos.y+height-2, z=pos.z-2}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-1, y=pos.y+height-2, z=pos.z-2}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+1, y=pos.y+height-2, z=pos.z+2}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x, y=pos.y+height-2, z=pos.z+2}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-1, y=pos.y+height-2, z=pos.z+2}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-2, y=pos.y+height-2, z=pos.z-2}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+2, y=pos.y+height-2, z=pos.z+2}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-2, y=pos.y+height-2, z=pos.z+2}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+2, y=pos.y+height-2, z=pos.z-2}, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-1, y=pos.y+height-2, z=pos.z}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+1, y=pos.y+height-2, z=pos.z}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x, y=pos.y+height-2, z=pos.z-1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x, y=pos.y+height-2, z=pos.z+1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-1, y=pos.y+height-2, z=pos.z-1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+1, y=pos.y+height-2, z=pos.z-1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-1, y=pos.y+height-2, z=pos.z+1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+1, y=pos.y+height-2, z=pos.z+1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-2, y=pos.y+height-2, z=pos.z-1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-2, y=pos.y+height-2, z=pos.z}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-2, y=pos.y+height-2, z=pos.z+1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+2, y=pos.y+height-2, z=pos.z-1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+2, y=pos.y+height-2, z=pos.z}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+2, y=pos.y+height-2, z=pos.z+1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+1, y=pos.y+height-2, z=pos.z-2}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x, y=pos.y+height-2, z=pos.z-2}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-1, y=pos.y+height-2, z=pos.z-2}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+1, y=pos.y+height-2, z=pos.z+2}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x, y=pos.y+height-2, z=pos.z+2}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-1, y=pos.y+height-2, z=pos.z+2}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-2, y=pos.y+height-2, z=pos.z-2}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+2, y=pos.y+height-2, z=pos.z+2}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-2, y=pos.y+height-2, z=pos.z+2}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+2, y=pos.y+height-2, z=pos.z-2}, 0,0,0, {name="trees:mapple_leaves"})
 	-----------------------------------------------------------------------------------------------
-	set_node_instead_air({x=pos.x-1, y=pos.y+height-3, z=pos.z+1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-1, y=pos.y+height-3, z=pos.z}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-1, y=pos.y+height-3, z=pos.z-1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+1, y=pos.y+height-3, z=pos.z+1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+1, y=pos.y+height-3, z=pos.z}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+1, y=pos.y+height-3, z=pos.z-1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x,   y=pos.y+height-3, z=pos.z+1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x,   y=pos.y+height-3, z=pos.z-1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x-2, y=pos.y+height-3, z=pos.z}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+2, y=pos.y+height-3, z=pos.z}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x, y=pos.y+height-3, z=pos.z+2}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x, y=pos.y+height-3, z=pos.z-2}, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-1, y=pos.y+height-3, z=pos.z+1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-1, y=pos.y+height-3, z=pos.z}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-1, y=pos.y+height-3, z=pos.z-1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+1, y=pos.y+height-3, z=pos.z+1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+1, y=pos.y+height-3, z=pos.z}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+1, y=pos.y+height-3, z=pos.z-1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x,   y=pos.y+height-3, z=pos.z+1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x,   y=pos.y+height-3, z=pos.z-1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-2, y=pos.y+height-3, z=pos.z}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+2, y=pos.y+height-3, z=pos.z}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x, y=pos.y+height-3, z=pos.z+2}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x, y=pos.y+height-3, z=pos.z-2}, 0,0,0, {name="trees:mapple_leaves"})
 	-----------------------------------------------------------------------------------------------
-	set_node_instead_air({x=pos.x-1, y=pos.y+height-4, z=pos.z}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x+1, y=pos.y+height-4, z=pos.z}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x,   y=pos.y+height-4, z=pos.z+1}, {name="trees:mapple_leaves"})
-	set_node_instead_air({x=pos.x,   y=pos.y+height-4, z=pos.z-1}, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x-1, y=pos.y+height-4, z=pos.z}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x+1, y=pos.y+height-4, z=pos.z}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x,   y=pos.y+height-4, z=pos.z+1}, 0,0,0, {name="trees:mapple_leaves"})
+	set_node_instead_air({x=pos.x,   y=pos.y+height-4, z=pos.z-1}, 0,0,0, {name="trees:mapple_leaves"})
 end
 
 local function generate(name, wherein, minp, maxp, seed, chunks_per_volume, ore_per_chunk, height_min, height_max)
@@ -279,8 +425,12 @@ minetest.register_on_generated(
 function(minp, maxp, seed)
 	local pr = PseudoRandom(seed)
 	minetest.after(0, function()
+				if pr:next(1,3) == 1 then
+					generate(gen_ash, "default:dirt_with_grass", minp, maxp, seed, 1/8/2, 1, -1000, 10000)
+				end
 				if pr:next(1,6) == 1 then
-					generate(gen_mapple, "default:dirt_with_grass", minp, maxp, seed, 1/8/2, 1, -100, 2000)
+					generate(gen_mapple, "default:dirt_with_grass", minp, maxp, seed, 1/8/2, 1, -1000, 10000)
 				end
 			  end)
+	
 end)
