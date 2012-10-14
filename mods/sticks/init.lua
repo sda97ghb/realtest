@@ -4,6 +4,12 @@ minetest.register_tool("sticks:sticks", {
 	on_use = function(item, user, pointed_thing)
 		local pos
 		if pointed_thing.type == "node" then	
+			if minetest.env:get_node(pointed_thing.under).name == "furnace:self" then
+				local meta = minetest.env:get_meta(pointed_thing.under)
+				meta:set_int("active", 1)
+				item:add_wear(65535/10)
+				return item
+			end
 			pos = pointed_thing.above
 		elseif pointed_thing.type == "object" then
 			pos = pointed_thing.ref:getpos()
