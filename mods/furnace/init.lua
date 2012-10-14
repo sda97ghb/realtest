@@ -11,18 +11,6 @@ function furnace.check_furnace_blocks(pos)
 	return true
 end
 
---[[furnace.formspec =
-	"invsize[8,9;]"..
-	"image[2,3;1,1;default_furnace_fire_bg.png]"..
-	"list[current_name;fuel;2,2;1,1;]"..
-	"list[current_name;src;1,1;1,1;]"..
-	"list[current_name;dst;2,1;2,1;]"..
-	"list[current_name;add;5,1;2,2;]"..
-	"label[0,1;Source:]"..
-	"label[0,2;Fuel:]"..
-	"label[2,0;Output:]"..
-	"label[5,0;Additional:]"..
-	"list[current_player;main;0,5;8,4;]"]]
 furnace.formspec = 
 	"invsize[8,10;]"..
 	"list[current_name;src1;1.5,0;1,1;]"..
@@ -64,32 +52,25 @@ minetest.register_node("furnace:self", {
 		meta:set_string("formspec", furnace.formspec)
 		meta:set_string("infotext", "Furnace")
 		local inv = meta:get_inventory()
-		inv:set_size("src1", 1)
-		inv:set_size("dst1", 1)
-		inv:set_size("src2", 1)
-		inv:set_size("dst2", 1)
-		inv:set_size("src3", 1)
-		inv:set_size("dst3", 1)
-		inv:set_size("src4", 1)
-		inv:set_size("dst4", 1)
-		inv:set_size("src5", 1)
-		inv:set_size("dst5", 1)
+		for i = 1,5 do
+			inv:set_size("src"..i, 1)
+			inv:set_size("dst"..i, 1)
+		end
 		inv:set_size("fuel", 1)
 	end,
-	--[[can_dig = function(pos,player)
+	can_dig = function(pos,player)
 		local meta = minetest.env:get_meta(pos);
 		local inv = meta:get_inventory()
+		for i = 1,5 do
+			if not inv:is_empty("src"..i) or not inv:is_empty("dst"..i) then
+				return false
+			end
+		end
 		if not inv:is_empty("fuel") then
-			return false
-		elseif not inv:is_empty("src") then
-			return false
-		elseif not inv:is_empty("dst") then
-			return false
-		elseif not inv:is_empty("add") then
 			return false
 		end
 		return true
-	end,]]
+	end,
 })
 
 minetest.register_node("furnace:self_active", {
@@ -118,21 +99,21 @@ minetest.register_node("furnace:self_active", {
 		meta:set_string("formspec", furnace.formspec)
 		meta:set_string("infotext", "Furnace")
 		local inv = meta:get_inventory()
+		for i = 1,5 do
+			inv:set_size("src"..i, 1)
+			inv:set_size("dst"..i, 1)
+		end
 		inv:set_size("fuel", 1)
-		inv:set_size("src", 1)
-		inv:set_size("dst", 2)
-		inv:set_size("add", 4)
 	end,
 	can_dig = function(pos,player)
 		local meta = minetest.env:get_meta(pos);
 		local inv = meta:get_inventory()
+		for i = 1,5 do
+			if not inv:is_empty("src"..i) or not inv:is_empty("dst"..i) then
+				return false
+			end
+		end
 		if not inv:is_empty("fuel") then
-			return false
-		elseif not inv:is_empty("src") then
-			return false
-		elseif not inv:is_empty("dst") then
-			return false
-		elseif not inv:is_empty("add") then
 			return false
 		end
 		return true
@@ -175,9 +156,11 @@ end
 		if not furnace.check_furnace_blocks(pos) then
 			for _, v in ipairs({
 				{"fuel", 1,},
-				{"src", 1,},
-				{"dst", 2,},
-				{"add", 4,},
+				{"src1", 1,}, {"dst1", 1,},
+				{"src2", 1,}, {"dst2", 1,},
+				{"src3", 1,}, {"dst3", 1,},
+				{"src4", 1,}, {"dst4", 1,},
+				{"src5", 1,}, {"dst5", 1,},
 			}) do
 				local name, size = v[1], v[2]
 				for n = 1,size do
