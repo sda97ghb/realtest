@@ -8,16 +8,16 @@ minetest.register_abm({
 				minetest.env:add_node(pos, {name="trees:ash_trunk"})
 				return
 			end
-			if minetest.env:get_node({x=pos.x,y=pos.y+i,z=pos.z}).name == "trees:ash_trunk" then
-				minetest.env:add_node(pos, {name="trees:ash_trunk"})
+			if minetest.env:get_node({x=pos.x,y=pos.y+i,z=pos.z}).name == "trees:mapple_trunk" then
+				minetest.env:add_node(pos, {name="trees:mapple_trunk"})
 				return
 			end
 			if minetest.env:get_node({x=pos.x,y=pos.y-i,z=pos.z}).name == "trees:ash_trunk" then
 				minetest.env:add_node(pos, {name="trees:ash_trunk"})
 				return
 			end
-			if minetest.env:get_node({x=pos.x,y=pos.y-i,z=pos.z}).name == "trees:ash_trunk" then
-				minetest.env:add_node(pos, {name="trees:ash_trunk"})
+			if minetest.env:get_node({x=pos.x,y=pos.y-i,z=pos.z}).name == "trees:mapple_trunk" then
+				minetest.env:add_node(pos, {name="trees:mapple_trunk"})
 				return
 			end
 		end
