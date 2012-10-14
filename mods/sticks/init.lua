@@ -4,7 +4,7 @@ minetest.register_tool("sticks:sticks", {
 	on_use = function(item, user, pointed_thing)
 		local pos
 		if pointed_thing.type == "node" then	
-			if minetest.env:get_node(pointed_thing.under).name == "furnace:self" then
+			if minetest.env:get_node(pointed_thing.under).name == "furnace:self" or minetest.env:get_node(pointed_thing.under).name == "bonfire:self" then
 				local meta = minetest.env:get_meta(pointed_thing.under)
 				meta:set_int("active", 1)
 				item:add_wear(65535/10)
@@ -63,7 +63,6 @@ minetest.register_tool("sticks:sticks", {
 							"list[current_name;fuel;3.5,5;1,1;]"..
 							"list[current_player;main;0,6;8,4;]")
 					if furnaceb > 9 then
-						local meta = minetest.env:get_meta(pos)
 						local inv = meta:get_inventory()
 						inv:add_item("fuel", "default:coal_lump "..furnaceb-9)
 					end
@@ -71,6 +70,18 @@ minetest.register_tool("sticks:sticks", {
 			end
 			if bonfireb >= 10 and minetest.env:get_node(pos).name == "air" then
 				minetest.env:set_node(pos, {name = "bonfire:self"})
+				local meta = minetest.env:get_meta(pos)
+				meta:set_int("active", 1)
+				meta:set_float("fuel_time", 0)
+				meta:set_float("fuel_totaltime", 20)
+				meta:set_string("formspec",
+					"invsize[8,9;]"..
+					"image[2,2;1,1;default_furnace_fire_bg.png"..
+						"^[lowpart:100:default_furnace_fire_fg.png]"..
+					"list[current_name;fuel;2,3;1,1;]"..
+					"list[current_name;src;2,1;1,1;]"..
+					"list[current_name;dst;5,1;2,1;]"..
+					"list[current_player;main;0,5;8,4;]")
 			end
 		end
 		item:add_wear(65535/10)
