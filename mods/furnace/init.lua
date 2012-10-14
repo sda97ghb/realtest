@@ -11,7 +11,7 @@ function furnace.check_furnace_blocks(pos)
 	return true
 end
 
-furnace.formspec =
+--[[furnace.formspec =
 	"invsize[8,9;]"..
 	"image[2,3;1,1;default_furnace_fire_bg.png]"..
 	"list[current_name;fuel;2,2;1,1;]"..
@@ -22,8 +22,23 @@ furnace.formspec =
 	"label[0,2;Fuel:]"..
 	"label[2,0;Output:]"..
 	"label[5,0;Additional:]"..
-	"list[current_player;main;0,5;8,4;]"
-
+	"list[current_player;main;0,5;8,4;]"]]
+furnace.formspec = 
+	"invsize[8,10;]"..
+	"list[current_name;src1;1.5,0;1,1;]"..
+	"list[current_name;dst1;1.5,1;1,1;]"..
+	"list[current_name;src2;2.5,1;1,1;]"..
+	"list[current_name;dst2;2.5,2;1,1;]"..
+	"list[current_name;src3;3.5,2;1,1;]"..
+	"list[current_name;dst3;3.5,3;1,1;]"..
+	"list[current_name;src4;4.5,1;1,1;]"..
+	"list[current_name;dst4;4.5,2;1,1;]"..
+	"list[current_name;src5;5.5,0;1,1;]"..
+	"list[current_name;dst5;5.5,1;1,1;]"..
+	"image[3.5,4;1,1;default_furnace_fire_bg.png]"..
+	"list[current_name;fuel;3.5,5;1,1;]"..
+	"list[current_player;main;0,6;8,4;]"
+	
 minetest.register_node("furnace:self", {
 	description = "Furnace",
 	tiles = {"furnace_top.png", "furnace_bottom.png", "furnace_side.png"},
@@ -49,12 +64,19 @@ minetest.register_node("furnace:self", {
 		meta:set_string("formspec", furnace.formspec)
 		meta:set_string("infotext", "Furnace")
 		local inv = meta:get_inventory()
+		inv:set_size("src1", 1)
+		inv:set_size("dst1", 1)
+		inv:set_size("src2", 1)
+		inv:set_size("dst2", 1)
+		inv:set_size("src3", 1)
+		inv:set_size("dst3", 1)
+		inv:set_size("src4", 1)
+		inv:set_size("dst4", 1)
+		inv:set_size("src5", 1)
+		inv:set_size("dst5", 1)
 		inv:set_size("fuel", 1)
-		inv:set_size("src", 1)
-		inv:set_size("dst", 2)
-		inv:set_size("add", 4)
 	end,
-	can_dig = function(pos,player)
+	--[[can_dig = function(pos,player)
 		local meta = minetest.env:get_meta(pos);
 		local inv = meta:get_inventory()
 		if not inv:is_empty("fuel") then
@@ -67,7 +89,7 @@ minetest.register_node("furnace:self", {
 			return false
 		end
 		return true
-	end,
+	end,]]
 })
 
 minetest.register_node("furnace:self_active", {
@@ -131,7 +153,7 @@ function hacky_swap_node(pos,name)
 	meta:from_table(meta0)
 end
 
-minetest.register_abm({
+--[[minetest.register_abm({
 	nodenames = {"furnace:self","furnace:self_active"},
 	interval = 1.0,
 	chance = 1,
@@ -253,4 +275,4 @@ minetest.register_abm({
 		stack:take_item()
 		inv:set_stack("fuel", 1, stack)
 	end,
-})
+})]]
