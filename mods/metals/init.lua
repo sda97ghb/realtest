@@ -445,35 +445,23 @@ end
 -- Recipes
 --
 
-minetest.register_craftitem("metals:recipe_pick", {
-	description = "Pick recipe",
-	inventory_image = "metals_recipe.png",
-})
+local recipes = {
+	{"metals:recipe_pick", "Pick recipe"},
+	{"metals:recipe_axe", "Axe recipe"},
+	{"metals:recipe_shovel", "Shovel recipe"},
+	{"metals:recipe_sword", "Sword recipe"},
+	{"metals:recipe_hammer", "Hammer recipe"},
+	{"metals:recipe_spear", "Spear recipe"},
+	{"metals:recipe_bucket","Bucket recipe"},
+}
 
-minetest.register_craftitem("metals:recipe_axe", {
-	description = "Axe recipe",
-	inventory_image = "metals_recipe.png",
-})
-
-minetest.register_craftitem("metals:recipe_shovel", {
-	description = "Shovel recipe",
-	inventory_image = "metals_recipe.png",
-})
-
-minetest.register_craftitem("metals:recipe_sword", {
-	description = "Sword recipe",
-	inventory_image = "metals_recipe.png",
-})
-
-minetest.register_craftitem("metals:recipe_hammer", {
-	description = "Hammer recipe",
-	inventory_image = "metals_recipe.png",
-})
-
-minetest.register_craftitem("metals:recipe_spear", {
-	description = "Spear recipe",
-	inventory_image = "metals_recipe.png",
-})
+for _, recipe in ipairs(recipes) do
+	minetest.register_craftitem(recipe[1], {
+		description = recipe[2],
+		inventory_image = "metals_recipe.png",
+		stack_max = 1,
+	})
+end
 
 --
 -- Alloys

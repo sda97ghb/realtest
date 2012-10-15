@@ -12,7 +12,7 @@ function bucket.register_liquid(source, flowing, itemname, inventory_image)
 
 	if itemname ~= nil then
 		for i = 1,#METALS_LIST do
-			minetest.register_craftitem(itemname.."_"..i, {
+			minetest.register_craftitem(itemname.."_"..METALS_LIST[i], {
 				inventory_image = "metals_"..METALS_LIST[i].."_bucket.png^"..inventory_image,
 				stack_max = 1,
 				liquids_pointable = true,
@@ -32,7 +32,7 @@ function bucket.register_liquid(source, flowing, itemname, inventory_image)
 						-- It's a liquid
 						minetest.env:add_node(pointed_thing.under, {name=source})
 					end
-					return {name="metals:bucket_empty_"..i}
+					return {name="metals:bucket_empty_"..METALS_LIST[i]}
 				end
 			})
 		end
@@ -40,7 +40,7 @@ function bucket.register_liquid(source, flowing, itemname, inventory_image)
 end
 
 for i = 1,#METALS_LIST do
-	minetest.register_craftitem("metals:bucket_empty_"..i, {
+	minetest.register_craftitem("metals:bucket_empty_"..METALS_LIST[i], {
 		description = "Emtpy " .. DESC_LIST[i] .. " Bucket",
 		inventory_image = "metals_"..METALS_LIST[i].."_bucket.png",
 		stack_max = 1,
@@ -55,7 +55,7 @@ for i = 1,#METALS_LIST do
 			liquiddef = bucket.liquids[n.name]
 			if liquiddef ~= nil and liquiddef.source == n.name and liquiddef.itemname ~= nil then
 				minetest.env:add_node(pointed_thing.under, {name="air"})
-				return {name=liquiddef.itemname.."_"..i}
+				return {name=liquiddef.itemname.."_"..METALS_LIST[i]}
 			end
 		end,
 	})
