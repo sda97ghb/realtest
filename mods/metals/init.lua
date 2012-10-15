@@ -256,13 +256,6 @@ for i=1, #METALS_LIST do
 	})
 	
 	minetest.register_craft({
-		output = "metals:"..METALS_LIST[i].."_ingot",
-		recipe = {
-			{"metals:"..METALS_LIST[i].."_unshaped"},
-		},
-	})
-	
-	minetest.register_craft({
 		output = 'sawing_table:self',
 		recipe = {
 			{'default:tree',"metals:"..METALS_LIST[i].."_ingot",'default:tree'},

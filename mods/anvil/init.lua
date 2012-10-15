@@ -127,7 +127,7 @@ minetest.register_node("anvil:self", {
 		local inv = meta:get_inventory()
 		
 		if fields["forge"] then
-			if inv:is_empty("hammer") or inv:is_empty("ingot") or inv:is_empty("recipe") then
+			if inv:is_empty("hammer") or inv:is_empty("ingot") then
 				return
 			end
 			
@@ -138,61 +138,63 @@ minetest.register_node("anvil:self", {
 			
 			if table_containts(HAMMERS_LIST, hammerstack:get_name()) then
 				local s = ingotstack:get_name()
-				if recipestack:get_name()=="metals:recipe_axe" then
-					inv:add_item("res","metals:tool_axe_"..string.sub(s,8,string.len(s)-6).."_head")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-				elseif recipestack:get_name()=="metals:recipe_hammer" then
-					inv:add_item("res","metals:tool_hammer_"..string.sub(s,8,string.len(s)-6).."_head")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-				elseif recipestack:get_name()=="metals:recipe_pick" then
-					inv:add_item("res","metals:tool_pick_"..string.sub(s,8,string.len(s)-6).."_head")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-				elseif recipestack:get_name()=="metals:recipe_shovel" then
-					inv:add_item("res","metals:tool_shovel_"..string.sub(s,8,string.len(s)-6).."_head")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-				elseif recipestack:get_name()=="metals:recipe_spear" then
-					inv:add_item("res","metals:tool_spear_"..string.sub(s,8,string.len(s)-6).."_head")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-				elseif recipestack:get_name()=="metals:recipe_sword" then
-					inv:add_item("res","metals:tool_sword_"..string.sub(s,8,string.len(s)-6).."_head")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-				elseif recipestack:get_name()=="metals:recipe_bucket" then
-					inv:add_item("res","metals:bucket_empty_"..string.sub(s,8,string.len(s)-6))
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-				elseif ingotstack:get_name()=="metals:pig_iron_ingot" then
+				if not inv:is_empty("recipe") then
+					if recipestack:get_name()=="metals:recipe_axe" then
+						inv:add_item("res","metals:tool_axe_"..string.sub(s,8,string.len(s)-6).."_head")
+						ingotstack:take_item()
+						inv:set_stack("ingot",1,ingotstack)
+						hammerstack:add_wear(65535/30)
+						inv:set_stack("hammer",1,hammerstack)
+					elseif recipestack:get_name()=="metals:recipe_hammer" then
+						inv:add_item("res","metals:tool_hammer_"..string.sub(s,8,string.len(s)-6).."_head")
+						ingotstack:take_item()
+						inv:set_stack("ingot",1,ingotstack)
+						hammerstack:add_wear(65535/30)
+						inv:set_stack("hammer",1,hammerstack)
+					elseif recipestack:get_name()=="metals:recipe_pick" then
+						inv:add_item("res","metals:tool_pick_"..string.sub(s,8,string.len(s)-6).."_head")
+						ingotstack:take_item()
+						inv:set_stack("ingot",1,ingotstack)
+						hammerstack:add_wear(65535/30)
+						inv:set_stack("hammer",1,hammerstack)
+					elseif recipestack:get_name()=="metals:recipe_shovel" then
+						inv:add_item("res","metals:tool_shovel_"..string.sub(s,8,string.len(s)-6).."_head")
+						ingotstack:take_item()
+						inv:set_stack("ingot",1,ingotstack)
+						hammerstack:add_wear(65535/30)
+						inv:set_stack("hammer",1,hammerstack)
+					elseif recipestack:get_name()=="metals:recipe_spear" then
+						inv:add_item("res","metals:tool_spear_"..string.sub(s,8,string.len(s)-6).."_head")
+						ingotstack:take_item()
+						inv:set_stack("ingot",1,ingotstack)
+						hammerstack:add_wear(65535/30)
+						inv:set_stack("hammer",1,hammerstack)
+					elseif recipestack:get_name()=="metals:recipe_sword" then
+						inv:add_item("res","metals:tool_sword_"..string.sub(s,8,string.len(s)-6).."_head")
+						ingotstack:take_item()
+						inv:set_stack("ingot",1,ingotstack)
+						hammerstack:add_wear(65535/30)
+						inv:set_stack("hammer",1,hammerstack)
+					elseif recipestack:get_name()=="metals:recipe_bucket" then
+						inv:add_item("res","metals:bucket_empty_"..string.sub(s,8,string.len(s)-6))
+						ingotstack:take_item()
+						inv:set_stack("ingot",1,ingotstack)
+						hammerstack:add_wear(65535/30)
+						inv:set_stack("hammer",1,hammerstack)
+					end
+				end
+				if ingotstack:get_name()=="metals:pig_iron_ingot" then
 					inv:add_item("res","metals:wrought_iron_ingot")
 					ingotstack:take_item()
 					inv:set_stack("ingot",1,ingotstack)
 					hammerstack:add_wear(65535/30)
 					inv:set_stack("hammer",1,hammerstack)
-				--[[elseif string.sub(ingotstack:get_name(), 1, 6)=="metals" and string.sub(ingotstack:get_name(),string.len(ingotstack:get_name())-9,9)=="_unshaped" then
-					inv:add_item("res", "metals:"..string.sub(ingotstack:get_name(),7,string.len(ingotstack:get_name())-13).."_ingot")
+				elseif string.sub(ingotstack:get_name(), 1, 7)=="metals:" and string.sub(ingotstack:get_name(),-9,-1)=="_unshaped" then
+					inv:add_item("res", "metals:"..string.sub(ingotstack:get_name(),8,-10).."_ingot")
 					ingotstack:take_item()
 					inv:set_stack("ingot",1,ingotstack)
 					hammerstack:add_wear(65535/30)
 					inv:set_stack("hammer",1,hammerstack)
-					return]]
 				end
 			end
 		end
