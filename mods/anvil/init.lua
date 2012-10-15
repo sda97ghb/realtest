@@ -187,42 +187,6 @@ minetest.register_node("anvil:self", {
 					hammerstack:add_wear(65535/30)
 					inv:set_stack("hammer",1,hammerstack)
 					return
-				--moreores
-				elseif ingotstack:get_name()=="metals:gold_ingot" and minetest.get_modpath("moreores") ~= nil then
-					inv:add_item("res","moreores:gold_ingot")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-					return
-				elseif ingotstack:get_name()=="metals:silver_ingot" and minetest.get_modpath("moreores") ~= nil then
-					inv:add_item("res","moreores:silver_ingot")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-					return
-				elseif ingotstack:get_name()=="metals:tin_ingot" and minetest.get_modpath("moreores") ~= nil then
-					inv:add_item("res","moreores:tin_ingot")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-					return
-				elseif ingotstack:get_name()=="metals:copper_ingot" and minetest.get_modpath("moreores") ~= nil then
-					inv:add_item("res","moreores:copper_ingot")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-					return
-				elseif ingotstack:get_name()=="metals:bronze_ingot" and minetest.get_modpath("moreores") ~= nil then
-					ingotstack:take_item()
-					inv:add_item("res","moreores:bronze_ingot")
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-					return
 				--[[elseif string.sub(ingotstack:get_name(), 1, 6)=="metals" and string.sub(ingotstack:get_name(),string.len(ingotstack:get_name())-9,9)=="_unshaped" then
 					inv:add_item("res", "metals:"..string.sub(ingotstack:get_name(),7,string.len(ingotstack:get_name())-13).."_ingot")
 					ingotstack:take_item()

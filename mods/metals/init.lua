@@ -75,6 +75,7 @@ DESC_SMALL_LIST={
 
 
 dofile(minetest.get_modpath("metals").."/groupcaps.lua")
+dofile(minetest.get_modpath("metals").."/buckets.lua")
 
 for i=1, #METALS_LIST do
 	
@@ -259,14 +260,6 @@ for i=1, #METALS_LIST do
 		recipe = {
 			{"metals:"..METALS_LIST[i].."_unshaped"},
 		},
-	})
-	
-	minetest.register_craft({
-		output = 'bucket:bucket_empty',
-		recipe = {
-			{"metals:"..METALS_LIST[i].."_ingot", '', "metals:"..METALS_LIST[i].."_ingot"},
-			{'', "metals:"..METALS_LIST[i].."_ingot", ''},
-		}
 	})
 	
 	minetest.register_craft({
