@@ -104,23 +104,23 @@ minetest.register_node("anvil:self", {
 	end,
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
-		meta:set_string("formspec", "invsize[8,10;]"..
-				"list[current_name;hammer;1,3.5;1,1;]"..
-				"list[current_name;ingot;1,1.5;1,1;]"..
-				"list[current_name;recipe;6,1.5;1,1;]"..
-				"list[current_name;res;3,1.5;1,1;]"..
-				"label[1,1;Ingot:]"..
-				"label[6,1;Recipe:]"..
-				"label[3,1;Output:]"..
-				"label[1,3;Hammer:]"..
-				"button[4,2.5;2,3;forge;Forge]"..
-				"list[current_player;main;0,6;8,4;]")
+		meta:set_string("formspec", "invsize[8,7;]"..
+				"button[0.5,0.25;2,1;buttonForge;Forge]"..
+				"list[current_name;src1;2.9,0.25;1,1;]"..
+				"image[3.69,0.22;0.54,1.5;anvil_arrow.png]"..
+				"list[current_name;src2;4.1,0.25;1,1;]"..
+				"button[5.5,0.25;2,1;buttonWeld;Weld]"..
+				"list[current_name;hammer;1,1.5;1,1;]"..
+				"list[current_name;res;3.5,1.5;1,1;]"..
+				"list[current_name;borax;6,1.5;1,1;]"..
+				"list[current_player;main;0,3;8,4;]")
 		meta:set_string("infotext", "Anvil")
 		local inv = meta:get_inventory()
+		inv:set_size("src1", 1)
+		inv:set_size("src2", 1)
 		inv:set_size("hammer", 1)
-		inv:set_size("ingot", 1)
-		inv:set_size("recipe", 1)
 		inv:set_size("res", 1)
+		inv:set_size("borax", 1)
 	end,
 	on_receive_fields = function(pos, formname, fields, sender)
 		local meta = minetest.env:get_meta(pos)
