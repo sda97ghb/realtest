@@ -10,10 +10,20 @@ LIGHT_MAX = 14
 
 -- Definitions made by this mod that other mods can use too
 default = {}
+realtest = {}
 
 -- Load other files
 dofile(minetest.get_modpath("default").."/mapgen.lua")
 dofile(minetest.get_modpath("default").."/leafdecay.lua")
+
+table.contains = function(t, v)
+	for _, i in ipairs(t) do
+		if i==v then
+			return true
+		end
+	end
+	return false
+end
 
 --
 -- Tool definition
