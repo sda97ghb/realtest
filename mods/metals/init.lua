@@ -29,8 +29,8 @@ METALS_LIST={
 
 DESC_LIST={
 	'Bismuth',
-	'Pig iron',
-	'Wrought iron',
+	'Pig Iron',
+	'Wrought Iron',
 	'Steel',
 	'Gold',
 	'Nickel',
@@ -41,12 +41,12 @@ DESC_LIST={
 	'Copper',
 	'Zinc',
 	'Brass',
-	'Sterling silver',
-	'Rose gold',
-	'Black bronze',
-	'Bismuth bronze',
+	'Sterling Silver',
+	'Rose Gold',
+	'Black Bronze',
+	'Bismuth Bronze',
 	'Bronze',
-	'Black steel',
+	'Black Steel',
 	'Aluminium'
 }
 
@@ -84,13 +84,28 @@ for i=1, #METALS_LIST do
 	--
 	
 	minetest.register_craftitem("metals:"..METALS_LIST[i].."_unshaped", {
-		description = "Unshaped "..DESC_SMALL_LIST[i],
+		description = "Unshaped "..DESC_LIST[i],
 		inventory_image = "metals_"..METALS_LIST[i].."_unshaped.png",
 	})
 	
 	minetest.register_craftitem("metals:"..METALS_LIST[i].."_ingot", {
-		description = DESC_LIST[i].." ingot",
+		description = DESC_LIST[i].." Ingot",
 		inventory_image = "metals_"..METALS_LIST[i].."_ingot.png",
+	})
+	
+	minetest.register_craftitem("metals:" .. METALS_LIST[i] .. "_doubleingot", {
+		description = DESC_LIST[i] .. " Double Ingot",
+		inventory_image = "metals_" .. METALS_LIST[i] .. "_doubleingot.png",
+	})
+	
+	minetest.register_craftitem("metals:" .. METALS_LIST[i] .. "_sheet", {
+		description = DESC_LIST[i] .. " Sheet",
+		inventory_image = "metals_" .. METALS_LIST[i] .. "_sheet.png",
+	})
+	
+	minetest.register_craftitem("metals:" .. METALS_LIST[i] .. "_doublesheet", {
+		description = DESC_LIST[i] .. " Double Sheet",
+		inventory_image = "metals_" .. METALS_LIST[i] .. "_doublesheet.png",
 	})
 	
 	minetest.register_craftitem("metals:tool_pick_"..METALS_LIST[i].."_head", {
@@ -439,13 +454,13 @@ end
 --
 
 local recipes = {
-	{"metals:recipe_pick", "Pick recipe"},
-	{"metals:recipe_axe", "Axe recipe"},
-	{"metals:recipe_shovel", "Shovel recipe"},
-	{"metals:recipe_sword", "Sword recipe"},
-	{"metals:recipe_hammer", "Hammer recipe"},
-	{"metals:recipe_spear", "Spear recipe"},
-	{"metals:recipe_bucket","Bucket recipe"},
+	{"metals:recipe_pick", "Pick Recipe"},
+	{"metals:recipe_axe", "Axe Recipe"},
+	{"metals:recipe_shovel", "Shovel Recipe"},
+	{"metals:recipe_sword", "Sword Recipe"},
+	{"metals:recipe_hammer", "Hammer Recipe"},
+	{"metals:recipe_spear", "Spear Recipe"},
+	{"metals:recipe_bucket","Bucket Recipe"},
 }
 
 for _, recipe in ipairs(recipes) do
@@ -511,11 +526,6 @@ minetest.register_craft({
 --
 -- Other
 --
-
-minetest.register_craftitem(":default:steel_ingot", {
-	description = "Double wrought ingot",
-	inventory_image = "metals_wrought_iron_ingot.png",
-})
 
 --
 -- Entitis

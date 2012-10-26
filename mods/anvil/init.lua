@@ -21,17 +21,33 @@ function realtest.register_anvil_recipe(RecipeDef)
 	end
 end
 
---Unshaped metals and buckets
+--Unshaped metals, buckets, double ingots and sheets
 for _, metal in ipairs(METALS_LIST) do
 	realtest.register_anvil_recipe({
 		item1 = "metals:"..metal.."_unshaped",
 		output = "metals:"..metal.."_ingot",
 	})
 	realtest.register_anvil_recipe({
-		item1 = "metals:"..metal.."_ingot",
+		item1 = "metals:"..metal.."_sheet",
 		item2 = "metals:recipe_bucket",
 		rmitem2 = false,
 		output = "metals:bucket_empty_"..metal,
+	})
+	realtest.register_anvil_recipe({
+		item1 = "metals:"..metal.."_doubleingot",
+		output = "metals:"..metal.."_sheet",
+	})
+	realtest.register_anvil_recipe({
+		type = "weld",
+		item1 = "metals:"..metal.."_ingot",
+		item2 = "metals:"..metal.."_ingot",
+		output = "metals:"..metal.."_doubleingot",
+	})
+	realtest.register_anvil_recipe({
+		type = "weld",
+		item1 = "metals:"..metal.."_sheet",
+		item2 = "metals:"..metal.."_sheet",
+		output = "metals:"..metal.."_doublesheet",
 	})
 end
 --Pig iron --> Wrought iron
@@ -191,7 +207,29 @@ minetest.register_node("anvil:self", {
 				end 
 			end
 		elseif fields["buttonWeld"] then
-			
+			if flux:get_name() == "minerals:flux" and table.contains(anvil.hammers, hammer:get_name()) then
+				for _, recipe in ipairs(realtest.registered_anvil_recipes) do
+					if recipe.type == "weld" and recipe.item1 == src1:get_name() and recipe.item2 == src2:get_name() then
+						if inv:room_for_item("output", recipe.output) then
+							if recipe.rmitem1 then
+								src1:take_item()
+								inv:set_stack("src1", 1, src1)
+							end
+							if recipe.item2 ~= "" and recipe.rmitem2 then
+								src2:take_item()
+								inv:set_stack("src2", 1, src2)
+							end
+							output:add_item(recipe.output)
+							inv:set_stack("output", 1, output)
+							flux:take_item()
+							inv:set_stack("flux", 1, flux)
+							hammer:add_wear(65535/60)
+							inv:set_stack("hammer", 1, hammer)
+						end
+						return
+					end
+				end 
+			end
 		end
 	end,
 })
