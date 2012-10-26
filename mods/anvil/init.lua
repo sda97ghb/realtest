@@ -55,14 +55,20 @@ realtest.register_anvil_recipe({
 	item1 = "metals:pig_iron_ingot",
 	output = "metals:wrought_iron_ingot",
 })
-local instruments = {"axe", "pick", "shovel", "spear", "sword", "hammer"}
+local instruments = 
+	{{"axe", "_ingot"}, 
+	 {"pick", "_ingot"},
+	 {"shovel", "_ingot"},
+	 {"spear", "_ingot"},
+	 {"sword", "_doubleingot"},
+	 {"hammer", "_doubleingot"}}
 for _, instrument in ipairs(instruments) do
 	for _, metal in ipairs(METALS_LIST) do
 		realtest.register_anvil_recipe({
-			item1 = "metals:"..metal.."_ingot",
-			item2 = "metals:recipe_"..instrument,
+			item1 = "metals:"..metal..instrument[2],
+			item2 = "metals:recipe_"..instrument[1],
 			rmitem2 = false,
-			output = "metals:tool_"..instrument.."_"..metal.."_head",
+			output = "metals:tool_"..instrument[1].."_"..metal.."_head",
 		})
 	end
 end
