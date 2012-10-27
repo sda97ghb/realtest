@@ -10,10 +10,20 @@ LIGHT_MAX = 14
 
 -- Definitions made by this mod that other mods can use too
 default = {}
+realtest = {}
 
 -- Load other files
 dofile(minetest.get_modpath("default").."/mapgen.lua")
 dofile(minetest.get_modpath("default").."/leafdecay.lua")
+
+table.contains = function(t, v)
+	for _, i in ipairs(t) do
+		if i==v then
+			return true
+		end
+	end
+	return false
+end
 
 --
 -- Tool definition
@@ -519,7 +529,18 @@ minetest.register_node("default:stone", {
 	tiles = {"default_stone.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
-	drop = 'default:cobble',
+	drop = {
+		max_items = 1,
+		items = {
+			{
+				items = {'default:cobble', 'minerals:borax'},
+				rarity = 50,
+			},
+			{
+				items = {'default:cobble'}
+			},
+		},
+	},
 	legacy_mineral = true,
 	sounds = default.node_sound_stone_defaults(),
 })
