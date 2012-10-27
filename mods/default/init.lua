@@ -529,7 +529,18 @@ minetest.register_node("default:stone", {
 	tiles = {"default_stone.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
-	drop = 'default:cobble',
+	drop = {
+		max_items = 1,
+		items = {
+			{
+				items = {'default:cobble', 'minerals:borax'},
+				rarity = 50,
+			},
+			{
+				items = {'default:cobble'}
+			},
+		},
+	},
 	legacy_mineral = true,
 	sounds = default.node_sound_stone_defaults(),
 })
