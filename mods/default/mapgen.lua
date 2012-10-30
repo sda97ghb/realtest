@@ -6,8 +6,6 @@
 
 minetest.register_alias("mapgen_air", "air")
 minetest.register_alias("mapgen_stone", "default:stone")
-minetest.register_alias("mapgen_tree", "default:tree")
-minetest.register_alias("mapgen_leaves", "default:leaves")
 minetest.register_alias("mapgen_apple", "default:apple")
 minetest.register_alias("mapgen_water_source", "default:water_source")
 minetest.register_alias("mapgen_dirt", "default:dirt")
@@ -18,10 +16,6 @@ minetest.register_alias("mapgen_lava_source", "default:lava_source")
 minetest.register_alias("mapgen_cobble", "default:cobble")
 minetest.register_alias("mapgen_mossycobble", "default:mossycobble")
 minetest.register_alias("mapgen_dirt_with_grass", "default:dirt_with_grass")
-minetest.register_alias("mapgen_junglegrass", "default:junglegrass")
-minetest.register_alias("mapgen_stone_with_coal", "default:stone_with_coal")
-minetest.register_alias("mapgen_stone_with_iron", "default:stone_with_iron")
-minetest.register_alias("mapgen_mese", "default:mese")
 minetest.register_alias("mapgen_desert_sand", "default:desert_sand")
 minetest.register_alias("mapgen_desert_stone", "default:desert_stone")
 
@@ -80,65 +74,7 @@ function default.make_cactus(pos, size)
 	end
 end
 
--- facedir: 0/1/2/3 (head node facedir value)
--- length: length of rainbow tail
-function default.make_nyancat(pos, facedir, length)
-	local tailvec = {x=0, y=0, z=0}
-	if facedir == 0 then
-		tailvec.z = 1
-	elseif facedir == 1 then
-		tailvec.x = 1
-	elseif facedir == 2 then
-		tailvec.z = -1
-	elseif facedir == 3 then
-		tailvec.x = -1
-	else
-		print("default.make_nyancat(): Invalid facedir: "+dump(facedir))
-		facedir = 0
-		tailvec.z = 1
-	end
-	local p = {x=pos.x, y=pos.y, z=pos.z}
-	minetest.env:set_node(p, {name="default:nyancat", param2=facedir})
-	for i=1,length do
-		p.x = p.x + tailvec.x
-		p.z = p.z + tailvec.z
-		minetest.env:set_node(p, {name="default:nyancat_rainbow"})
-	end
-end
-
-function generate_nyancats(seed, minp, maxp)
-	local height_min = -31000
-	local height_max = -32
-	if maxp.y < height_min or minp.y > height_max then
-		return
-	end
-	local y_min = math.max(minp.y, height_min)
-	local y_max = math.min(maxp.y, height_max)
-	local volume = (maxp.x-minp.x+1)*(y_max-y_min+1)*(maxp.z-minp.z+1)
-	local pr = PseudoRandom(seed + 9324342)
-	local max_num_nyancats = math.floor(volume / (16*16*16))
-	for i=1,max_num_nyancats do
-		if pr:next(0, 1000) == 0 then
-			local x0 = pr:next(minp.x, maxp.x)
-			local y0 = pr:next(minp.y, maxp.y)
-			local z0 = pr:next(minp.z, maxp.z)
-			local p0 = {x=x0, y=y0, z=z0}
-			default.make_nyancat(p0, pr:next(0,3), pr:next(3,15))
-		end
-	end
-end
-
 minetest.register_on_generated(function(minp, maxp, seed)
-	-- Generate regular ores
-	generate_ore("default:stone_with_coal", "default:stone", minp, maxp, seed+0, 1/8/8/8,    3, 8, -31000,  64)
-	generate_ore("default:stone_with_iron", "default:stone", minp, maxp, seed+1, 1/12/12/12, 2, 3,    -15,   2)
-	generate_ore("default:stone_with_iron", "default:stone", minp, maxp, seed+2, 1/9/9/9,    3, 5,    -63, -16)
-	generate_ore("default:stone_with_iron", "default:stone", minp, maxp, seed+3, 1/7/7/7,    3, 5, -31000, -64)
-	generate_ore("default:mese",            "default:stone", minp, maxp, seed+4, 1/16/16/16, 2, 3,   -127, -64)
-	generate_ore("default:mese",            "default:stone", minp, maxp, seed+5, 1/9/9/9,    3, 5, -31000,-128)
-	
-	generate_ore("default:stone_with_coal", "default:stone", minp, maxp, seed+7, 1/24/24/24, 6,27, -31000,  0)
-	generate_ore("default:stone_with_iron", "default:stone", minp, maxp, seed+6, 1/24/24/24, 6,27, -31000, -64)
 
 	if maxp.y >= 2 and minp.y <= 0 then
 		-- Generate clay
@@ -268,8 +204,5 @@ minetest.register_on_generated(function(minp, maxp, seed)
 		end
 		end
 	end
-
-	-- Generate nyan cats
-	generate_nyancats(seed, minp, maxp)
 end)
 
