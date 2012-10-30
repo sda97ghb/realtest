@@ -1,19 +1,19 @@
-bucket = {}
-bucket.liquids = {}
+buckets = {}
+buckets.liquids = {}
 
-function bucket.register_liquid(source, flowing, itemname, inventory_image)
+function buckets.register_liquid(source, flowing, itemname, inventory_image)
 
-	bucket.liquids[source] = {
+	buckets.liquids[source] = {
 		source = source,
 		flowing = flowing,
 		itemname = itemname,
 	}
-	bucket.liquids[flowing] = bucket.liquids[source]
+	buckets.liquids[flowing] = buckets.liquids[source]
 
 	if itemname ~= nil then
-		for i = 1,#METALS_LIST do
-			minetest.register_craftitem(itemname.."_"..METALS_LIST[i], {
-				inventory_image = "metals_"..METALS_LIST[i].."_bucket.png^"..inventory_image,
+		for i = 1,#metals.list do
+			minetest.register_craftitem(itemname.."_"..metals.list[i], {
+				inventory_image = "metals_"..metals.list[i].."_bucket.png^"..inventory_image,
 				stack_max = 1,
 				liquids_pointable = true,
 				on_use = function(itemstack, user, pointed_thing)
@@ -23,7 +23,7 @@ function bucket.register_liquid(source, flowing, itemname, inventory_image)
 					end
 					-- Check if pointing to a liquid
 					n = minetest.env:get_node(pointed_thing.under)
-					if bucket.liquids[n.name] == nil then
+					if buckets.liquids[n.name] == nil then
 						-- Not a liquid
 						--if minetest.env:get_node(pointed_thing.above) == "air" then
 							minetest.env:add_node(pointed_thing.above, {name=source})
@@ -32,17 +32,17 @@ function bucket.register_liquid(source, flowing, itemname, inventory_image)
 						-- It's a liquid
 						minetest.env:add_node(pointed_thing.under, {name=source})
 					end
-					return {name="metals:bucket_empty_"..METALS_LIST[i]}
+					return {name="metals:bucket_empty_"..metals.list[i]}
 				end
 			})
 		end
 	end
 end
 
-for i = 1,#METALS_LIST do
-	minetest.register_craftitem("metals:bucket_empty_"..METALS_LIST[i], {
-		description = "Emtpy " .. DESC_LIST[i] .. " Bucket",
-		inventory_image = "metals_"..METALS_LIST[i].."_bucket.png",
+for i = 1,#metals.list do
+	minetest.register_craftitem("metals:bucket_empty_"..metals.list[i], {
+		description = "Emtpy " .. metals.desc_list[i] .. " Bucket",
+		inventory_image = "metals_"..metals.list[i].."_bucket.png",
 		stack_max = 1,
 		liquids_pointable = true,
 		on_use = function(itemstack, user, pointed_thing)
@@ -52,23 +52,23 @@ for i = 1,#METALS_LIST do
 			end
 			-- Check if pointing to a liquid source
 			n = minetest.env:get_node(pointed_thing.under)
-			liquiddef = bucket.liquids[n.name]
+			liquiddef = buckets.liquids[n.name]
 			if liquiddef ~= nil and liquiddef.source == n.name and liquiddef.itemname ~= nil then
 				minetest.env:add_node(pointed_thing.under, {name="air"})
-				return {name=liquiddef.itemname.."_"..METALS_LIST[i]}
+				return {name=liquiddef.itemname.."_"..metals.list[i]}
 			end
 		end,
 	})
 end
 
-bucket.register_liquid(
+buckets.register_liquid(
 	"default:water_source",
 	"default:water_flowing",
 	"metals:bucket_water",
 	"metals_water.png"
 )
 
-bucket.register_liquid(
+buckets.register_liquid(
 	"default:lava_source",
 	"default:lava_flowing",
 	"metals:bucket_lava",
