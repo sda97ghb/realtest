@@ -122,20 +122,6 @@ minetest.register_node("furnace:self_active", {
 	end,
 })
 
-function hacky_swap_node(pos,name)
-	local node = minetest.env:get_node(pos)
-	local meta = minetest.env:get_meta(pos)
-	local meta0 = meta:to_table()
-	if node.name == name then
-		return
-	end
-	node.name = name
-	local meta0 = meta:to_table()
-	minetest.env:set_node(pos,node)
-	meta = minetest.env:get_meta(pos)
-	meta:from_table(meta0)
-end
-
 minetest.register_abm({
 	nodenames = {"furnace:self","furnace:self_active"},
 	interval = 1.0,
@@ -156,7 +142,11 @@ minetest.register_abm({
 				local name, size = v[1], v[2]
 				for n = 1,size do
 					if not inv:is_empty(name) then
-						minetest.env:add_item(pos, inv:get_stack(name, n):get_name() .. " " .. inv:get_stack(name, n):get_count())
+						minetest.env:add_item(pos, 
+							{name=inv:get_stack(name, 1):get_name(),
+							 count=inv:get_stack(name, 1):get_count(),
+							 wear=inv:get_stack(name, 1):get_wear(),
+							 metadata=inv:get_stack(name, n):get_metadata()})
 					end
 				end
 			end
