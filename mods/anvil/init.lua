@@ -144,85 +144,48 @@ minetest.register_node("anvil:self", {
 					inv:set_stack("ingot",1,ingotstack)
 					hammerstack:add_wear(65535/30)
 					inv:set_stack("hammer",1,hammerstack)
-					return
 				elseif recipestack:get_name()=="metals:recipe_hammer" then
 					inv:add_item("res","metals:tool_hammer_"..string.sub(s,8,string.len(s)-6).."_head")
 					ingotstack:take_item()
 					inv:set_stack("ingot",1,ingotstack)
 					hammerstack:add_wear(65535/30)
 					inv:set_stack("hammer",1,hammerstack)
-					return
 				elseif recipestack:get_name()=="metals:recipe_pick" then
 					inv:add_item("res","metals:tool_pick_"..string.sub(s,8,string.len(s)-6).."_head")
 					ingotstack:take_item()
 					inv:set_stack("ingot",1,ingotstack)
 					hammerstack:add_wear(65535/30)
 					inv:set_stack("hammer",1,hammerstack)
-					return
 				elseif recipestack:get_name()=="metals:recipe_shovel" then
 					inv:add_item("res","metals:tool_shovel_"..string.sub(s,8,string.len(s)-6).."_head")
 					ingotstack:take_item()
 					inv:set_stack("ingot",1,ingotstack)
 					hammerstack:add_wear(65535/30)
 					inv:set_stack("hammer",1,hammerstack)
-					return
 				elseif recipestack:get_name()=="metals:recipe_spear" then
 					inv:add_item("res","metals:tool_spear_"..string.sub(s,8,string.len(s)-6).."_head")
 					ingotstack:take_item()
 					inv:set_stack("ingot",1,ingotstack)
 					hammerstack:add_wear(65535/30)
 					inv:set_stack("hammer",1,hammerstack)
-					return
 				elseif recipestack:get_name()=="metals:recipe_sword" then
 					inv:add_item("res","metals:tool_sword_"..string.sub(s,8,string.len(s)-6).."_head")
 					ingotstack:take_item()
 					inv:set_stack("ingot",1,ingotstack)
 					hammerstack:add_wear(65535/30)
 					inv:set_stack("hammer",1,hammerstack)
-					return
+				elseif recipestack:get_name()=="metals:recipe_bucket" then
+					inv:add_item("res","metals:bucket_empty_"..string.sub(s,8,string.len(s)-6))
+					ingotstack:take_item()
+					inv:set_stack("ingot",1,ingotstack)
+					hammerstack:add_wear(65535/30)
+					inv:set_stack("hammer",1,hammerstack)
 				elseif ingotstack:get_name()=="metals:pig_iron_ingot" then
 					inv:add_item("res","metals:wrought_iron_ingot")
 					ingotstack:take_item()
 					inv:set_stack("ingot",1,ingotstack)
 					hammerstack:add_wear(65535/30)
 					inv:set_stack("hammer",1,hammerstack)
-					return
-				--moreores
-				elseif ingotstack:get_name()=="metals:gold_ingot" and minetest.get_modpath("moreores") ~= nil then
-					inv:add_item("res","moreores:gold_ingot")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-					return
-				elseif ingotstack:get_name()=="metals:silver_ingot" and minetest.get_modpath("moreores") ~= nil then
-					inv:add_item("res","moreores:silver_ingot")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-					return
-				elseif ingotstack:get_name()=="metals:tin_ingot" and minetest.get_modpath("moreores") ~= nil then
-					inv:add_item("res","moreores:tin_ingot")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-					return
-				elseif ingotstack:get_name()=="metals:copper_ingot" and minetest.get_modpath("moreores") ~= nil then
-					inv:add_item("res","moreores:copper_ingot")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-					return
-				elseif ingotstack:get_name()=="metals:bronze_ingot" and minetest.get_modpath("moreores") ~= nil then
-					ingotstack:take_item()
-					inv:add_item("res","moreores:bronze_ingot")
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-					return
 				--[[elseif string.sub(ingotstack:get_name(), 1, 6)=="metals" and string.sub(ingotstack:get_name(),string.len(ingotstack:get_name())-9,9)=="_unshaped" then
 					inv:add_item("res", "metals:"..string.sub(ingotstack:get_name(),7,string.len(ingotstack:get_name())-13).."_ingot")
 					ingotstack:take_item()

@@ -1,2 +1,2 @@
-minerals
 default
+minerals

@@ -13,7 +13,7 @@ default = {}
 
 -- Load other files
 dofile(minetest.get_modpath("default").."/mapgen.lua")
-dofile(minetest.get_modpath("default").."/leafdecay.lua")
+--dofile(minetest.get_modpath("default").."/leafdecay.lua")
 
 --
 -- Tool definition
@@ -343,18 +343,6 @@ minetest.register_craft({
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "default:tree",
-	burntime = 20,
-})
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "default:leaves",
-	burntime = 3,
-})
-
-minetest.register_craft({
-	type = "fuel",
 	recipe = "default:cactus",
 	burntime = 15,
 })
@@ -608,14 +596,6 @@ minetest.register_node("default:brick", {
 	sounds = default.node_sound_stone_defaults(),
 })
 
-minetest.register_node("default:tree", {
-	description = "Tree",
-	tiles = {"default_tree_top.png", "default_tree_top.png", "default_tree.png"},
-	is_ground_content = true,
-	groups = {tree=1,snappy=1,choppy=2,flammable=2},
-	sounds = default.node_sound_wood_defaults(),
-})
-
 minetest.register_node("default:leaves", {
 	description = "Leaves",
 	drawtype = "allfaces_optional",
@@ -734,14 +714,6 @@ minetest.register_node("default:ladder", {
 	},
 	groups = {snappy=1,choppy=2,oddly_breakable_by_hand=3,flammable=2},
 	legacy_wallmounted = true,
-	sounds = default.node_sound_wood_defaults(),
-})
-
-minetest.register_node("default:wood", {
-	description = "Wooden Planks",
-	tiles = {"default_wood.png"},
-	is_ground_content = true,
-	groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=3},
 	sounds = default.node_sound_wood_defaults(),
 })
 
@@ -1088,11 +1060,6 @@ minetest.register_node("default:dry_shrub", {
 --
 -- Crafting items
 --
-
-minetest.register_craftitem("default:stick", {
-	description = "Stick",
-	inventory_image = "default_stick.png",
-})
 
 minetest.register_craftitem("default:paper", {
 	description = "Paper",

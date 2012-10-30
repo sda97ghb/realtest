@@ -52,6 +52,13 @@ local recipes = {
 		 0,1,1,0,0,
 		 1,0,0,0,0,}
 	},
+	{"metals:recipe_bucket",
+		{1,0,0,0,1,
+		 1,0,0,0,1,
+		 1,0,0,0,1,
+		 1,0,0,0,1,
+		 0,1,1,1,0,}
+	},
 }
 
 local function check_recipe(pos)
