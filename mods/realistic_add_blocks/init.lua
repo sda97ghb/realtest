@@ -178,18 +178,6 @@ minetest.register_node("realistic_add_blocks:malachite_vase", {
 				{-0.4, -0.5, -0.4, 0.4, -0.4, 0.4},
 			},
 		},
-	selection_box = {
-			type = "fixed",
-			fixed = {
-				{-0.5, 0, -0.5, -0.4, 0.5, 0.5},
-				{-0.5, 0, 0.4, 0.5, 0.5, 0.5},
-				{-0.5, 0, -0.5, 0.5, 0.5, -0.4},
-				{0.4, 0, -0.5, 0.5, 0.5, 0.5},
-				{-0.4, -0.1, -0.4, 0.4, 0, 0.4},
-				{-0.2, -0.4, -0.2, 0.2, -0.1, 0.2},
-				{-0.4, -0.5, -0.4, 0.4, -0.4, 0.4},
-			},
-		},
 	tiles = {"realistic_add_blocks_malachite.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
