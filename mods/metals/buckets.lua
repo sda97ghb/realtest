@@ -1,9 +1,10 @@
 buckets = {}
 buckets.liquids = {}
 
-function buckets.register_liquid(source, flowing, itemname, inventory_image)
+function buckets.register_liquid(name, source, flowing, itemname, inventory_image)
 
 	buckets.liquids[source] = {
+		name = name,
 		source = source,
 		flowing = flowing,
 		itemname = itemname,
@@ -13,6 +14,7 @@ function buckets.register_liquid(source, flowing, itemname, inventory_image)
 	if itemname ~= nil then
 		for i = 1,#metals.list do
 			minetest.register_craftitem(itemname.."_"..metals.list[i], {
+				description = metals.desc_list[i] .. " Bucket with " .. name,
 				inventory_image = "metals_"..metals.list[i].."_bucket.png^"..inventory_image,
 				stack_max = 1,
 				liquids_pointable = true,
@@ -25,9 +27,11 @@ function buckets.register_liquid(source, flowing, itemname, inventory_image)
 					n = minetest.env:get_node(pointed_thing.under)
 					if buckets.liquids[n.name] == nil then
 						-- Not a liquid
-						--if minetest.env:get_node(pointed_thing.above) == "air" then
+						if minetest.env:get_node(pointed_thing.above).name == "air" then
 							minetest.env:add_node(pointed_thing.above, {name=source})
-					--	end
+						else
+							return itemstack
+						end
 					elseif n.name ~= source then
 						-- It's a liquid
 						minetest.env:add_node(pointed_thing.under, {name=source})
@@ -62,6 +66,7 @@ for i = 1,#metals.list do
 end
 
 buckets.register_liquid(
+	"Water",
 	"default:water_source",
 	"default:water_flowing",
 	"metals:bucket_water",
@@ -69,6 +74,7 @@ buckets.register_liquid(
 )
 
 buckets.register_liquid(
+	"Lava",
 	"default:lava_source",
 	"default:lava_flowing",
 	"metals:bucket_lava",
