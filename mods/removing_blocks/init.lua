@@ -1,6 +1,4 @@
 DISABLE_BLOCKS={
-	--"default:desert_sand",
-	--"default:desert_stone",
 }
 
 for i=1, #DISABLE_BLOCKS do

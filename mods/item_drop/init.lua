@@ -1,3 +1,5 @@
+--Mod by PilzAdam
+
 function minetest.handle_node_drops(pos, drops, digger)
 	for _,item in ipairs(drops) do
 		local count, name
@@ -24,8 +26,4 @@ function minetest.handle_node_drops(pos, drops, digger)
 			end
 		end
 	end
-end
-
-if minetest.setting_get("log_mods") then
-	minetest.log("action", "item_drop loaded")
 end

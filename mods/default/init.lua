@@ -564,6 +564,24 @@ minetest.register_node("default:desert_stone", {
 	sounds = default.node_sound_stone_defaults(),
 })
 
+minetest.register_node("default:stone_flat", {
+	description = "Flat Stone",
+	tiles = {"default_stone_flat.png"},
+	is_ground_content = true,
+	groups = {cracky=3},
+	legacy_mineral = true,
+	sounds = default.node_sound_stone_defaults(),
+})
+
+minetest.register_node("default:desert_stone_flat", {
+	description = "Desert Flat Stone",
+	tiles = {"default_desert_stone_flat.png"},
+	is_ground_content = true,
+	groups = {cracky=3},
+	legacy_mineral = true,
+	sounds = default.node_sound_stone_defaults(),
+})
+
 minetest.register_node("default:dirt_with_grass", {
 	description = "Dirt with Grass",
 	tiles = {"default_grass.png", "default_dirt.png", "default_dirt.png^default_grass_side.png"},

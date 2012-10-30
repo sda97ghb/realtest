@@ -159,10 +159,10 @@ for i=1, #metals.list do
 				return
 			end
 			if minetest.env:get_node(pointed_thing.under).name == "default:stone" then
-				minetest.env:add_node(pointed_thing.under, {name="realistic_add_blocks:stone_flat"})
+				minetest.env:add_node(pointed_thing.under, {name="default:stone_flat"})
 			end
 			if minetest.env:get_node(pointed_thing.under).name == "default:desert_stone" then
-				minetest.env:add_node(pointed_thing.under, {name="realistic_add_blocks:desert_stone_flat"})
+				minetest.env:add_node(pointed_thing.under, {name="default:desert_stone_flat"})
 			end
 			item:add_wear(65535/10)
 			return item

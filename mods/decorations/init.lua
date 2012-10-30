@@ -1,32 +1,18 @@
-minetest.register_node("realistic_add_blocks:stone_flat", {
-	description = "Flat stone",
-	tiles = {"realistic_add_blocks_stone_flat.png"},
+--
+-- Malachite
+--
+
+minetest.register_node("decorations:malachite_block", {
+	description = "Malachite Block",
+	tiles = {"decorations_malachite.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
 	legacy_mineral = true,
 	sounds = default.node_sound_stone_defaults(),
 })
 
-minetest.register_node("realistic_add_blocks:desert_stone_flat", {
-	description = "Desert flat stone",
-	tiles = {"realistic_add_blocks_desert_stone_flat.png"},
-	is_ground_content = true,
-	groups = {cracky=3},
-	legacy_mineral = true,
-	sounds = default.node_sound_stone_defaults(),
-})
-
-minetest.register_node("realistic_add_blocks:malachite_block", {
-	description = "Malachite block",
-	tiles = {"realistic_add_blocks_malachite.png"},
-	is_ground_content = true,
-	groups = {cracky=3},
-	legacy_mineral = true,
-	sounds = default.node_sound_stone_defaults(),
-})
-
-minetest.register_node("realistic_add_blocks:malachite_pyramid", {
-	description = "Malachite pyramid",
+minetest.register_node("decorations:malachite_pyramid", {
+	description = "Malachite Pyramid",
 	drawtype = "nodebox",
 	paramtype = "light",
 	node_box = {
@@ -39,39 +25,45 @@ minetest.register_node("realistic_add_blocks:malachite_pyramid", {
 				{-0.1, 0.3, -0.1, 0.1, 0.5, 0.1},
 			},
 		},
-	tiles = {"realistic_add_blocks_malachite.png"},
+	tiles = {"decorations_malachite.png"},
 	is_ground_content = true,
-	groups = {cracky=3},
+	groups = {cracky = 3},
 	legacy_mineral = true,
 	sounds = default.node_sound_stone_defaults(),
 })
 
-minetest.register_node("realistic_add_blocks:malachite_table", {
-	description = "Malachite table",
+minetest.register_node("decorations:malachite_table", {
+	description = "Malachite Table",
 	drawtype = "nodebox",
 	paramtype = "light",
 	node_box = {
 			type = "fixed",
 			fixed = {
-				{-0.5, 0.35, -0.5, 0.5, 0.5, 0.5},
-				{-0.4, -0.5, -0.4, -0.25, 0.35, -0.25},
-				{-0.4, -0.5, 0.25, -0.25, 0.35, 0.4},
-				{0.25, -0.5, -0.4, 0.4, 0.35, -0.25},
-				{0.25, -0.5, 0.25, 0.4, 0.35, 0.4},
+				{-0.5, 0.245, -0.5, 0.5, 0.4375, 0.5},
+				{-0.4375, -0.5, -0.4375, -0.25, 0.25, -0.25},
+				{-0.4375, -0.5, 0.25, -0.25, 0.25, 0.4375},
+				{0.25, -0.5, -0.4375, 0.4375, 0.25, -0.25},
+				{0.25, -0.5, 0.25, 0.4375, 0.25, 0.4375},
 			},
 		},
-	tiles = {"realistic_add_blocks_malachite.png", "default_wood.png"},
+	selection_box = {
+			type = "fixed",
+			fixed = {
+				{-0.5, -0.5, -0.5, 0.5, 0.4375, 0.5},
+			},
+		},
+	tiles = {"decorations_malachite.png", "default_wood.png^decorations_malachite_table_bottom.png", "default_wood.png^decorations_malachite_table_side.png"},
 	is_ground_content = true,
-	groups = {cracky=3},
+	groups = {cracky=3, oddly_breakable_by_hand = 2},
 	legacy_mineral = true,
 	sounds = default.node_sound_stone_defaults(),
 })
 
-minetest.register_node("realistic_add_blocks:casket", {
-	description = "Cacket",
+minetest.register_node("decorations:casket", {
+	description = "Casket",
 	drawtype = "nodebox",
-	tiles = {"realistic_add_blocks_cacket_top.png", "realistic_add_blocks_cacket_top.png", "realistic_add_blocks_cacket_side.png",
-		"realistic_add_blocks_cacket_side.png", "realistic_add_blocks_cacket_side.png", "realistic_add_blocks_cacket_front.png"},
+	tiles = {"decorations_casket_top.png", "decorations_casket_top.png", "decorations_casket_side.png",
+		"decorations_casket_side.png", "decorations_casket_side.png", "decorations_casket_front.png"},
 	paramtype = "light",
 	paramtype2 = "facedir",
 	node_box = {
@@ -88,7 +80,7 @@ minetest.register_node("realistic_add_blocks:casket", {
 				{-0.3, 0, -0.2, 0.3, 0.1, 0.2},
 			},
 		},
-	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
+	groups = {snappy=2,oddly_breakable_by_hand=2},
 	legacy_facedir_simple = true,
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = function(pos)
@@ -97,7 +89,7 @@ minetest.register_node("realistic_add_blocks:casket", {
 				"size[8,8]"..
 				"list[current_name;main;1,0;6,3;]"..
 				"list[current_player;main;0,4;8,4;]")
-		meta:set_string("infotext", "Cacket")
+		meta:set_string("infotext", "Casket")
 		local inv = meta:get_inventory()
 		inv:set_size("main", 8*4)
 	end,
@@ -108,12 +100,12 @@ minetest.register_node("realistic_add_blocks:casket", {
 	end,
 })
 
-minetest.register_node("realistic_add_blocks:malachite_chest", {
+minetest.register_node("decorations:malachite_chest", {
 	description = "Chest",
-	tiles = {"realistic_add_blocks_malachite_chest_top.png", "realistic_add_blocks_malachite_chest_top.png", "realistic_add_blocks_malachite_chest_side.png",
-		"realistic_add_blocks_malachite_chest_side.png", "realistic_add_blocks_malachite_chest_side.png", "realistic_add_blocks_malachite_chest_front.png"},
+	tiles = {"decorations_malachite_chest_top.png", "decorations_malachite_chest_top.png", "decorations_malachite_chest_side.png",
+		"decorations_malachite_chest_side.png", "decorations_malachite_chest_side.png", "decorations_malachite_chest_front.png"},
 	paramtype2 = "facedir",
-	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
+	groups = {snappy=2,oddly_breakable_by_hand=2},
 	legacy_facedir_simple = true,
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = function(pos)
@@ -122,7 +114,7 @@ minetest.register_node("realistic_add_blocks:malachite_chest", {
 				"size[8,9]"..
 				"list[current_name;main;0,0;8,4;]"..
 				"list[current_player;main;0,5;8,4;]")
-		meta:set_string("infotext", "Chest")
+		meta:set_string("infotext", "Malachite Chest")
 		local inv = meta:get_inventory()
 		inv:set_size("main", 8*4)
 	end,
@@ -133,8 +125,8 @@ minetest.register_node("realistic_add_blocks:malachite_chest", {
 	end,
 })
 
-minetest.register_node("realistic_add_blocks:malachite_cylinder", {
-	description = "Malachite cylinder",
+minetest.register_node("decorations:malachite_cylinder", {
+	description = "Malachite Cylinder",
 	drawtype = "nodebox",
 	paramtype = "light",
 	node_box = {
@@ -155,15 +147,15 @@ minetest.register_node("realistic_add_blocks:malachite_cylinder", {
 				{-0.2, -0.5, -0.5, 0.2, 0.5, 0.5},
 			},
 		},
-	tiles = {"realistic_add_blocks_malachite.png"},
+	tiles = {"decorations_malachite.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
 	legacy_mineral = true,
 	sounds = default.node_sound_stone_defaults(),
 })
 
-minetest.register_node("realistic_add_blocks:malachite_vase", {
-	description = "Malachite cylinder",
+minetest.register_node("decorations:malachite_vase", {
+	description = "Malachite Vase",
 	drawtype = "nodebox",
 	paramtype = "light",
 	node_box = {
@@ -178,9 +170,9 @@ minetest.register_node("realistic_add_blocks:malachite_vase", {
 				{-0.4, -0.5, -0.4, 0.4, -0.4, 0.4},
 			},
 		},
-	tiles = {"realistic_add_blocks_malachite.png"},
+	tiles = {"decorations_malachite.png"},
 	is_ground_content = true,
-	groups = {cracky=3},
+	groups = {cracky=3, oddly_breakable_by_hand = 2},
 	legacy_mineral = true,
 	sounds = default.node_sound_stone_defaults(),
 })
@@ -188,25 +180,24 @@ minetest.register_node("realistic_add_blocks:malachite_vase", {
 ------CRAFT RECIPES------
 
 minetest.register_craft({
-	output = "realistic_add_blocks:casket",
+	output = "decorations:casket",
 	recipe = {
 		{"minerals:malachite","minerals:malachite","minerals:malachite"},
-		{"minerals:malachite","default:wood","minerals:malachite"},
 		{"minerals:malachite","minerals:malachite","minerals:malachite"},
 	}
 })
 
 minetest.register_craft({
-	output = "realistic_add_blocks:malachite_chest",
+	output = "decorations:malachite_chest",
 	recipe = {
 		{"minerals:malachite","minerals:malachite","minerals:malachite"},
-		{"minerals:malachite","default:chest","minerals:malachite"},
+		{"minerals:malachite","","minerals:malachite"},
 		{"minerals:malachite","minerals:malachite","minerals:malachite"},
 	}
 })
 
 minetest.register_craft({
-	output = "realistic_add_blocks:malachite_block",
+	output = "decorations:malachite_block",
 	recipe = {
 		{"minerals:malachite","minerals:malachite"},
 		{"minerals:malachite","minerals:malachite"},
@@ -215,12 +206,12 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "minerals:malachite 4",
 	recipe = {
-		{"realistic_add_blocks:malachite_block"},
+		{"decorations:malachite_block"},
 	}
 })
 
 minetest.register_craft({
-	output = "realistic_add_blocks:malachite_pyramid",
+	output = "decorations:malachite_pyramid",
 	recipe = {
 		{"","minerals:malachite",""},
 		{"minerals:malachite","minerals:malachite","minerals:malachite"},
@@ -228,16 +219,16 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "realistic_add_blocks:malachite_table",
+	output = "decorations:malachite_table",
 	recipe = {
 		{"minerals:malachite","minerals:malachite","minerals:malachite"},
-		{"default:wood","default:wood","default:wood"},
+		{"default:wood","","default:wood"},
 		{"default:wood","","default:wood"},
 	}
 })
 
 minetest.register_craft({
-	output = "realistic_add_blocks:malachite_cylinder",
+	output = "decorations:malachite_cylinder",
 	recipe = {
 		{"","minerals:malachite",""},
 		{"minerals:malachite","minerals:malachite","minerals:malachite"},
@@ -246,7 +237,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "realistic_add_blocks:malachite_vase",
+	output = "decorations:malachite_vase",
 	recipe = {
 		{"minerals:malachite","","minerals:malachite"},
 		{"","minerals:malachite",""},
