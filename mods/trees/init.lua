@@ -19,7 +19,6 @@ TREES_LIST={
 	"aspen",
 	"birch",
 	"chestnut",
-	--"hickory",
 	"mapple",
 	"pine",
 }
