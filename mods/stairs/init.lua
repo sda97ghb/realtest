@@ -127,9 +127,9 @@ stairs.register_stair_and_slab("stone", "default:stone",
 		"Stone stair",
 		"Stone slab")
 
-stairs.register_stair_and_slab("cobble", "default:cobble",
+stairs.register_stair_and_slab("cobble", "default:cobbleblock",
 		{cracky=3},
-		{"default_cobble.png"},
+		{"default_cobbleblock.png"},
 		"Cobble stair",
 		"Cobble slab")
 
