@@ -30,7 +30,7 @@ minetest.register_item(":", {
 		max_drop_level = 0,
 		groupcaps = {
 			fleshy = {times={[2]=2.00, [3]=1.00}, uses=0, maxlevel=1},
-			crumbly = {times={[2]=3.00, [3]=0.70}, uses=0, maxlevel=1},
+			crumbly = {times={[2]=7.50, [3]=5.00}, uses=0, maxlevel=1},
 			snappy = {times={[3]=0.40}, uses=0, maxlevel=1},
 			oddly_breakable_by_hand = {times={[1]=7.00,[2]=4.00,[3]=1.40}, uses=0, maxlevel=3},
 		}
@@ -894,7 +894,7 @@ minetest.register_node("default:cobbleblock", {
 	tiles = {"default_cobbleblock.png"},
 	is_ground_content = true,
 	drop = "default:cobble 9",
-	groups = {cracky=3, oddly_breakable_by_hand=1, falling_node=1},
+	groups = {crumbly=2, oddly_breakable_by_hand=1, falling_node=1},
 	sounds = default.node_sound_stone_defaults(),
 })
 
