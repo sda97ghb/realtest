@@ -889,12 +889,27 @@ minetest.register_node("default:chest_locked", {
 	end,
 })
 
-minetest.register_node("default:cobble", {
-	description = "Cobblestone",
-	tiles = {"default_cobble.png"},
+minetest.register_node("default:cobbleblock", {
+	description = "Block of Cobble",
+	tiles = {"default_cobbleblock.png"},
 	is_ground_content = true,
+	drop = "default:cobble 4",
 	groups = {cracky=3},
 	sounds = default.node_sound_stone_defaults(),
+})
+
+minetest.register_craftitem("default:cobble", {
+	description = "Stone",
+	inventory_image = "default_cobble.png",
+})
+
+minetest.register_craft({
+	output = "default:cobbleblock",
+	recipe = {
+		{"default:cobble","default:cobble","default:cobble"},
+		{"default:cobble","default:cobble","default:cobble"},
+		{"default:cobble","default:cobble","default:cobble"}, 
+	},
 })
 
 minetest.register_node("default:sapling", {

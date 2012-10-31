@@ -122,11 +122,13 @@ end
 for i = 1, 2 do
 	for _, anvil in ipairs(anvils) do
 		local postfix = ""
+		local tgroups = {oddly_breakable_by_hand=2, cracky=3, dig_immediate=1}
 		local ttiles = {"anvil_"..anvil[1].."_top.png","anvil_"..anvil[1].."_top.png","anvil_"..anvil[1].."_side.png"}
 		if i == 2 then 
 			ttiles = {"anvil_"..anvil[1].."_top.png^anvil_cracked.png","anvil_"..anvil[1].."_top.png^anvil_cracked.png",
 				"anvil_"..anvil[1].."_side.png^anvil_cracked.png"}
 			postfix = "_cracked"
+			tgroups.not_in_creative_inventory = 1
 		end
 		minetest.register_node("anvil:"..anvil[1].."_anvil"..postfix, {
 			description = anvil[2] .. " Anvil",
@@ -152,7 +154,7 @@ for i = 1, 2 do
 					{-0.35,-0.1,-0.2,0.35,0.1,0.2},
 				},
 			},
-			groups = {oddly_breakable_by_hand=2, cracky=3, dig_immediate=1},
+			groups = tgroups,
 			sounds = default.node_sound_stone_defaults(),
 			can_dig = function(pos,player)
 				local meta = minetest.env:get_meta(pos);

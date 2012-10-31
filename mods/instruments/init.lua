@@ -47,11 +47,26 @@ instruments.desc_list = {
 	"Black Steel",
 }
 
+instruments.stone_recipes = {
+	{{"default:cobble","default:cobble","default:cobble"},
+	 {"", "default:stick", ""},
+	 {"", "default:stick", ""}},
+	{{"default:cobble","default:cobble"},
+	 {"", "default:stick"},
+	 {"", "default:stick"}},
+	{{"default:cobble"},
+	 {"default:stick"},
+	 {"default:stick"}},
+	{{"default:cobble","default:cobble","default:cobble"},
+	 {"default:cobble", "default:stick", "default:cobble"},
+	 {"", "default:stick", ""}},
+}
+
 instruments.levels = {0,0,0,0,1,2,2,2,2,2,3,4,5}
 
 instruments.durability = {50, 211, 281, 296, 411, 521, 531, 581, 601, 731, 801, 1101, 1501}
 
-instruments.list = {"pick", "axe", "shovel", "sword", "hammer", "spear", "chisel"}
+instruments.list = {"pick", "axe", "shovel", "hammer", "sword", "spear", "chisel"}
 
 instruments.on_use = {nil, nil, nil, nil, nil,
 	function (item, player, pointed_thing)
@@ -82,26 +97,36 @@ dofile(minetest.get_modpath("instruments").."/groupcaps.lua")
 for i, material in ipairs(instruments.materials) do
 	--Heads, crafts and instruments
 	for j, instrument in ipairs(instruments.list) do
-		minetest.register_craftitem("instruments:"..instrument.."_"..material.."_head", {
-			description = instruments.desc_list[i].." "..instrument:capitalize() .. " Head",
-			inventory_image = "instruments_"..instrument.."_"..material.."_head.png",
-		})
-		minetest.register_tool("instruments:"..instrument.."_"..material, {
-			description = instruments.desc_list[i].." "..instrument:capitalize(),
-			inventory_image = "instruments_"..instrument.."_"..material..".png",
-			--[[tool_capabilities = {TODO
-				max_drop_level=1,
-				groupcaps=instruments.groupcaps[j][i],
-			},]]
-			on_use = instruments.on_use[j],
-			groups = {material_level=instruments.levels[i]},
-		})
-		minetest.register_craft({
-		output = "instruments:"..instrument.."_"..material,
-		recipe = {
-			{"instruments:"..instrument.."_"..material.."_head",},
-			{'default:stick'},
-		}
+		if not (material == "stone" and j > 4) then
+			minetest.register_tool("instruments:"..instrument.."_"..material, {
+				description = instruments.desc_list[i].." "..instrument:capitalize(),
+				inventory_image = "instruments_"..instrument.."_"..material..".png",
+				--[[tool_capabilities = {TODO
+					max_drop_level=1,
+					groupcaps=instruments.groupcaps[j][i],
+				},]]
+				on_use = instruments.on_use[j],
+				groups = {material_level=instruments.levels[i]},
+			})
+		end
+		if material ~= "stone" then
+			minetest.register_craftitem("instruments:"..instrument.."_"..material.."_head", {
+				description = instruments.desc_list[i].." "..instrument:capitalize() .. " Head",
+				inventory_image = "instruments_"..instrument.."_"..material.."_head.png",
+			})
+			minetest.register_craft({
+				output = "instruments:"..instrument.."_"..material,
+				recipe = {
+					{"instruments:"..instrument.."_"..material.."_head",},
+					{'default:stick'},
+				},
+			})
+		elseif not (material == "stone" and j > 4) then
+			minetest.register_craft({
+				output = "instruments:"..instrument.."_"..material,
+				recipe = instruments.stone_recipes[j],
+			})
+		end
 	end
 end
 
