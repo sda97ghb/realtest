@@ -14,7 +14,7 @@ realtest = {}
 
 -- Load other files
 dofile(minetest.get_modpath("default").."/mapgen.lua")
---dofile(minetest.get_modpath("default").."/leafdecay.lua") This is not necessary now
+dofile(minetest.get_modpath("default").."/leafdecay.lua")
 
 --
 -- Tool definition
