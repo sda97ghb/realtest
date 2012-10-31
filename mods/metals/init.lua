@@ -1,9 +1,4 @@
 metals = {}
-metals.spear = {}
-
-metals.spear.damage = 10
-metals.spear.gravity = 9
-metals.spear.velocity = 19
 
 metals.levels = {0,0,0,1,2,2,2,2,2,2,2,2,2,2,3,3,3,4,4,5}
 
@@ -63,7 +58,6 @@ metals.desc_list = {
 	'Black Steel'
 }
 
-dofile(minetest.get_modpath("metals").."/groupcaps.lua")
 dofile(minetest.get_modpath("metals").."/buckets.lua")
 
 for i=1, #metals.list do
@@ -97,76 +91,9 @@ for i=1, #metals.list do
 		inventory_image = "metals_"..metals.list[i].."_doublesheet.png",
 	})
 	
-	minetest.register_craftitem("metals:tool_pick_"..metals.list[i].."_head", {
-		description =metals.desc_list[i].." Pickaxe Head",
-		inventory_image = "metals_tool_pick_"..metals.list[i].."_head.png",
-	})
-	
-	minetest.register_craftitem("metals:tool_axe_"..metals.list[i].."_head", {
-		description =metals.desc_list[i].." Axe Head",
-		inventory_image = "metals_tool_axe_"..metals.list[i].."_head.png",
-	})
-	
-	minetest.register_craftitem("metals:tool_shovel_"..metals.list[i].."_head", {
-		description =metals.desc_list[i].." Shovel Head",
-		inventory_image = "metals_tool_shovel_"..metals.list[i].."_head.png",
-	})
-	
-	minetest.register_craftitem("metals:tool_sword_"..metals.list[i].."_head", {
-		description =metals.desc_list[i].." Sword Head",
-		inventory_image = "metals_tool_sword_"..metals.list[i].."_head.png",
-	})
-	
-	minetest.register_craftitem("metals:tool_hammer_"..metals.list[i].."_head", {
-		description =metals.desc_list[i].." Hammer Head",
-		inventory_image = "metals_tool_hammer_"..metals.list[i].."_head.png",
-	})
-	
-	minetest.register_craftitem("metals:tool_spear_"..metals.list[i].."_head", {
-		description =metals.desc_list[i].." Spear Head",
-		inventory_image = "metals_tool_spear_"..metals.list[i].."_head.png",
-	})
-	
-	minetest.register_craftitem("metals:tool_chisel_"..metals.list[i].."_head", {
-		description =metals.desc_list[i].." Chisel Head",
-		inventory_image = "metals_tool_chisel_"..metals.list[i].."_head.png",
-	})
-	
 	minetest.register_craftitem("metals:ceramic_mold_"..metals.list[i], {
 		description = "Ceramic Mold with "..metals.desc_list[i],
 		inventory_image = "metals_ceramic_mold.png^metals_"..metals.list[i].."_ingot.png",
-	})
-	
-	minetest.register_craftitem("metals:tool_spear_"..metals.list[i], {
-		description = metals.desc_list[i].." spear",
-		inventory_image = "metals_tool_spear_"..metals.list[i]..".png",
-		on_use = function (item, player, pointed_thing)
-			local playerpos=player:getpos()
-			local obj=minetest.env:add_entity({x=playerpos.x,y=playerpos.y+1.5,z=playerpos.z}, "metals:spear_entity")
-			local dir=player:get_look_dir()
-			obj:setvelocity({x=dir.x*metals.spear.velocity, y=dir.y*metals.spear.velocity, z=dir.z*metals.spear.velocity})
-			obj:setacceleration({x=dir.x*-3, y=-metals.spear.gravity, z=dir.z*-3})
-			return ""
-		end,
-		stack_max = 1,
-	})
-	
-	minetest.register_tool("metals:tool_chisel_"..metals.list[i], {
-		description = metals.desc_list[i].." chisel",
-		inventory_image = "metals_tool_chisel_"..metals.list[i]..".png",
-		on_use = function (item, player, pointed_thing)
-			if pointed_thing.type ~= "node" then
-				return
-			end
-			if minetest.env:get_node(pointed_thing.under).name == "default:stone" then
-				minetest.env:add_node(pointed_thing.under, {name="default:stone_flat"})
-			end
-			if minetest.env:get_node(pointed_thing.under).name == "default:desert_stone" then
-				minetest.env:add_node(pointed_thing.under, {name="default:desert_stone_flat"})
-			end
-			item:add_wear(65535/10)
-			return item
-		end,
 	})
 	
 	--
@@ -179,48 +106,6 @@ for i=1, #metals.list do
 		is_ground_content = true,
 		groups = {snappy=1,bendy=2,cracky=1,melty=2,level=2},
 		sounds = default.node_sound_stone_defaults(),
-	})
-	
-	--
-	-- Tools
-	--
-	
-	minetest.register_tool("metals:tool_pick_"..metals.list[i], {
-		description = metals.desc_list[i].." Pickaxe",
-		inventory_image = "metals_tool_pick_"..metals.list[i]..".png",
-		tool_capabilities = {
-			max_drop_level=1,
-			groupcaps={
-				cracky=PICKS_CRACKY_LIST[i],
-			}
-		},
-	})
-	minetest.register_tool("metals:tool_shovel_"..metals.list[i], {
-		description = metals.desc_list[i].." Shovel",
-		inventory_image = "metals_tool_shovel_"..metals.list[i]..".png",
-		tool_capabilities = {
-			max_drop_level=1,
-			groupcaps={
-				crumbly=SHOVELS_CRUMBLY_LIST[i],
-			}
-		},
-	})
-	minetest.register_tool("metals:tool_axe_"..metals.list[i], {
-		description = metals.desc_list[i].." Axe",
-		inventory_image = "metals_tool_axe_"..metals.list[i]..".png",
-		tool_capabilities = {
-			max_drop_level=1,
-			groupcaps=AXE_GROUPCAPS[i],
-		},
-	})
-	minetest.register_tool("metals:tool_sword_"..metals.list[i], {
-		description = metals.desc_list[i].." Sword",
-		inventory_image = "metals_tool_sword_"..metals.list[i]..".png",
-		tool_capabilities = {
-			full_punch_interval = 1.0,
-			max_drop_level=1,
-			groupcaps=SWORD_GROUPCAPS[i],
-		}
 	})
 	
 	--
@@ -259,64 +144,8 @@ for i=1, #metals.list do
 		}
 	})
 	
-	minetest.register_craft({
-		output = "metals:tool_pick_"..metals.list[i],
-		recipe = {
-			{"metals:tool_pick_"..metals.list[i].."_head"},
-			{'default:stick'},
-		}
-	})
-	
-	minetest.register_craft({
-		output = "metals:tool_axe_"..metals.list[i],
-		recipe = {
-			{"metals:tool_axe_"..metals.list[i].."_head"},
-			{'default:stick'},
-		}
-	})
-	
-	minetest.register_craft({
-		output = "metals:tool_shovel_"..metals.list[i],
-		recipe = {
-			{"metals:tool_shovel_"..metals.list[i].."_head"},
-			{'default:stick'},
-		}
-	})
-	
-	minetest.register_craft({
-		output = "metals:tool_sword_"..metals.list[i],
-		recipe = {
-			{"metals:tool_sword_"..metals.list[i].."_head"},
-			{'default:stick'},
-		}
-	})
-	
-	minetest.register_craft({
-		output = "metals:tool_hammer_"..metals.list[i],
-		recipe = {
-			{"metals:tool_hammer_"..metals.list[i].."_head"},
-			{'default:stick'},
-		}
-	})
-	
-	minetest.register_craft({
-		output = "metals:tool_spear_"..metals.list[i],
-		recipe = {
-			{"metals:tool_spear_"..metals.list[i].."_head"},
-			{'default:stick'},
-		}
-	})
-	
-	minetest.register_craft({
-		output = "metals:tool_chisel_"..metals.list[i],
-		recipe = {
-			{"metals:tool_chisel_"..metals.list[i].."_head"},
-			{'default:stick'},
-		}
-	})
-	
 	--
-	-- Coocking
+	-- Cooking
 	--
 	
 	minetest.register_craft({
@@ -506,43 +335,3 @@ minetest.register_craft({
 --
 -- Other
 --
-
---
--- Entitis
-
-metals.spear.entity = {
-	physical = false,
-	timer=0,
-	textures = {"spear_back.png"},
-	lastpos={},
-	collisionbox = {0,0,0,0,0,0},
-}
-
-metals.spear.entity.on_step = function(self, dtime)
-	self.timer=self.timer+dtime
-	local pos = self.object:getpos()
-	local node = minetest.env:get_node(pos)
-
-	if self.timer>0.2 then
-		local objs = minetest.env:get_objects_inside_radius({x=pos.x,y=pos.y,z=pos.z}, 2)
-		for k, obj in pairs(objs) do
-			obj:set_hp(obj:get_hp()-metals.spear.damage)
-			if obj:get_entity_name() ~= "metals:spear_entity" then
-				if obj:get_hp()<=0 then 
-					obj:remove()
-				end
-				self.object:remove() 
-			end
-		end
-	end
-
-	if self.lastpos.x~=nil then
-		if node.name ~= "air" then
-			minetest.env:add_item(self.lastpos, 'metals:tool_spear_bismuth')--FIXME
-			self.object:remove()
-		end
-	end
-	self.lastpos={x=pos.x, y=pos.y, z=pos.z}
-end
-
-minetest.register_entity("metals:spear_entity", metals.spear.entity)

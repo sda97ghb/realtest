@@ -1,27 +1,6 @@
-USES_LIST={
-	bismuth=20,
-	pig_iron=30,
-	wrought_iron=30,
-	steel=35,
-	gold=10,
-	nickel=25,
-	platinum=25,
-	tin=15,
-	silver=25,
-	lead=20,
-	copper=25,
-	zinc=25,
-	brass=25,
-	sterling_silver=25,
-	rose_gold=20,
-	black_bronze=35,
-	bismuth_bronze=25,
-	bronze=30,
-	black_steel=40,
-	aluminium=20,
-}
+instruments.groupcaps = {}--TODO
 
-PICKS_CRACKY_LIST={
+--[[PICKS_CRACKY_LIST={
 	--stone {times={[1]=3.00, [2]=1.20, [3]=0.80}, uses=20, maxlevel=1}
 	--steel {times={[1]=4.00, [2]=1.60, [3]=1.00}, uses=30, maxlevel=2}
 	{times={[1]=4.00, [2]=1.60, [3]=1.00}, uses=USES_LIST.bismuth, maxlevel=2},
@@ -72,12 +51,12 @@ SHOVELS_CRUMBLY_LIST={
 }
 
 AXE_GROUPCAPS={
-	--[[ stone 
+	 stone 
 	{choppy={times={[1]=3.00, [2]=1.00, [3]=0.60}, uses=20, maxlevel=1},
-	 fleshy={times={[2]=1.30, [3]=0.70}, uses=20, maxlevel=1},},]]
+	 fleshy={times={[2]=1.30, [3]=0.70}, uses=20, maxlevel=1},},
 	
-	--{choppy={times={[1]=3.00, [2]=1.60, [3]=1.00}, uses=30, maxlevel=2},
-	-- fleshy={times={[2]=1.10, [3]=0.60}, uses=40, maxlevel=1},},
+	{choppy={times={[1]=3.00, [2]=1.60, [3]=1.00}, uses=30, maxlevel=2},
+	 fleshy={times={[2]=1.10, [3]=0.60}, uses=40, maxlevel=1},},
 	{choppy={times={[1]=3.00, [2]=1.60, [3]=1.00}, uses=USES_LIST.bismuth, maxlevel=2},
 	 fleshy={times={[2]=1.10, [3]=0.60},           uses=USES_LIST.bismuth+10, maxlevel=1},},
 	{choppy={times={[1]=3.00, [2]=1.60, [3]=1.00}, uses=USES_LIST.pig_iron, maxlevel=2},
@@ -121,9 +100,9 @@ AXE_GROUPCAPS={
 }
 
 SWORD_GROUPCAPS={
-	--[[{fleshy={times={[1]=2.00, [2]=0.80, [3]=0.40}, uses=10, maxlevel=2},
+	{fleshy={times={[1]=2.00, [2]=0.80, [3]=0.40}, uses=10, maxlevel=2},
 	     snappy={times={[2]=0.70, [3]=0.30}, uses=40, maxlevel=1},
-	     choppy={times={[3]=0.70}, uses=40, maxlevel=0},},]]
+	     choppy={times={[3]=0.70}, uses=40, maxlevel=0},},
 	{fleshy={times={[1]=2.00, [2]=0.80, [3]=0.40}, uses=10, maxlevel=2},
 	 snappy={times={[2]=0.70, [3]=0.30},           uses=USES_LIST.bismuth, maxlevel=1},
 	 choppy={times={[3]=0.70},                     uses=USES_LIST.bismuth, maxlevel=0},},
@@ -184,4 +163,4 @@ SWORD_GROUPCAPS={
 	{fleshy={times={[1]=2.00, [2]=0.80, [3]=0.40}, uses=10, maxlevel=2},
 	 snappy={times={[2]=0.70, [3]=0.30},           uses=USES_LIST.aluminium, maxlevel=1},
 	 choppy={times={[3]=0.70},                     uses=USES_LIST.aluminium, maxlevel=0},},
-} 
+}]]

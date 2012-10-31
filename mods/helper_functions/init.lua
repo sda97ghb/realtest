@@ -29,3 +29,7 @@ function hacky_swap_node(pos,name)
 	meta = minetest.env:get_meta(pos)
 	meta:from_table(meta0)
 end
+
+function string:capitalize()
+	return self:sub(1,1):upper()..self:sub(2):lower()
+end

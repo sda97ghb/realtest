@@ -57,17 +57,6 @@ for i, metal in ipairs(metals.list) do
 		output = "metals:"..metal.."_doublesheet",
 		level = metals.levels[i] - 1,
 	})
-	minetest.register_tool("anvil:tool_hammer_"..metal, {
-		description = metals.desc_list[i].." Hammer",
-		inventory_image = "anvil_tool_hammer_"..metal..".png",
-		groups = {anvil_level = metals.levels[i]},
-		tool_capabilities = {
-			max_drop_level=1,
-			groupcaps={
-				cracky=PICKS_CRACKY_LIST[i],
-			}
-		},
-	})
 end
 --Pig iron --> Wrought iron
 realtest.register_anvil_recipe({
@@ -105,38 +94,16 @@ minetest.register_craft({
 	}
 })
 
-minetest.register_craft({
-	output = 'anvil:hammer',
-	recipe = {
-		{'default:cobble','default:cobble','default:cobble'},
-		{'default:cobble','default:stick','default:cobble'},
-		{'','default:stick',''},
-	}
-})
-
-minetest.register_tool("anvil:tool_hammer_stone", {
-	description = "Stone Hammer",
-	inventory_image = "anvil_tool_hammer_stone.png",
-	groups = {anvil_level = 0},
-	tool_capabilities = {
-		max_drop_level=1,
-		groupcaps={
-			cracky={times={[1]=6.00, [2]=4.30, [3]=3.00}, uses=20, maxlevel=1},
-			fleshy={times={[1]=2.00, [2]=0.80, [3]=0.40}, uses=10, maxlevel=2},
-		}
-	},
-})
-
 local anvils = {
-	{'stone', 'Stone', 0, 61},
-	{'copper', 'Copper', 1, 411},
-	{'rose_gold', 'Rose Gold', 2, 521},
-	{'bismuth_bronze', 'Bismuth Bronze', 2, 581},
-	{'black_bronze', 'Black Bronze', 2, 531},
-	{'bronze', 'Bronze', 2, 601},
-	{'wrought_iron', 'Wrought Iron', 3, 801},
-	{'steel', 'Steel', 4, 1101},
-	{'black_steel', 'Black Steel', 5, 1501}
+	{'stone', 'Stone', 0, 61*2.3},
+	{'copper', 'Copper', 1, 411*2.3},
+	{'rose_gold', 'Rose Gold', 2, 521*2.3},
+	{'bismuth_bronze', 'Bismuth Bronze', 2, 581*2.3},
+	{'black_bronze', 'Black Bronze', 2, 531*2.3},
+	{'bronze', 'Bronze', 2, 601*2.3},
+	{'wrought_iron', 'Wrought Iron', 3, 801*2.3},
+	{'steel', 'Steel', 4, 1101*2.3},
+	{'black_steel', 'Black Steel', 5, 1501*2.3}
 }
 
 for _, anvil in ipairs(anvils) do
@@ -234,7 +201,7 @@ for i = 1, 2 do
 						for _, recipe in ipairs(realtest.registered_anvil_recipes) do
 							if recipe.type == "forge" and recipe.item1 == src1:get_name() and recipe.item2 == src2:get_name() and
 								anvil[3] >= recipe.level and
-								minetest.registered_items[hammer:get_name()].groups["anvil_level"] >= recipe.level then
+								minetest.registered_items[hammer:get_name()].groups["material_level"] >= recipe.level then
 								if inv:room_for_item("output", recipe.output) then
 									if recipe.rmitem1 then
 										src1:take_item()
@@ -275,7 +242,7 @@ for i = 1, 2 do
 							for _, recipe in ipairs(realtest.registered_anvil_recipes) do
 								if recipe.type == "weld" and recipe.item1 == src1:get_name() and recipe.item2 == src2:get_name() and
 							 		anvil[3] >= recipe.level and
-							 		minetest.registered_items[hammer:get_name()].groups["anvil_level"] >= recipe.level then
+							 		minetest.registered_items[hammer:get_name()].groups["material_level"] >= recipe.level then
 									if inv:room_for_item("output", recipe.output) then
 										if recipe.rmitem1 then
 											src1:take_item()
