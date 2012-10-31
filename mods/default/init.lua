@@ -14,7 +14,7 @@ realtest = {}
 
 -- Load other files
 dofile(minetest.get_modpath("default").."/mapgen.lua")
-dofile(minetest.get_modpath("default").."/leafdecay.lua")
+--dofile(minetest.get_modpath("default").."/leafdecay.lua") This is not necessary now
 
 --
 -- Tool definition
@@ -893,8 +893,8 @@ minetest.register_node("default:cobbleblock", {
 	description = "Block of Cobble",
 	tiles = {"default_cobbleblock.png"},
 	is_ground_content = true,
-	drop = "default:cobble 4",
-	groups = {cracky=3},
+	drop = "default:cobble 9",
+	groups = {cracky=3, oddly_breakable_by_hand=1, falling_node=1},
 	sounds = default.node_sound_stone_defaults(),
 })
 

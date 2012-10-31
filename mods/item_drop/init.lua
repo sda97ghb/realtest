@@ -14,11 +14,15 @@ function minetest.handle_node_drops(pos, drops, digger)
 			local obj = minetest.env:add_item(pos, name)
 			if obj ~= nil then
 				obj:get_luaentity().collect = true
-				local x = math.random(1, 5)
+				local k = 1
+				if name == "default:cobble" then
+					k = math.random(3,6)
+				end
+				local x = math.random(1, 5)/k
 				if math.random(1,2) == 1 then
 					x = -x
 				end
-				local z = math.random(1, 5)
+				local z = math.random(1, 5)/k
 				if math.random(1,2) == 1 then
 					z = -z
 				end

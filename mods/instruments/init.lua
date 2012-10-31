@@ -87,7 +87,7 @@ instruments.on_use = {nil, nil, nil, nil, nil,
 		if minetest.env:get_node(pointed_thing.under).name == "default:desert_stone" then
 			minetest.env:add_node(pointed_thing.under, {name="default:desert_stone_flat"})
 		end
-		item:add_wear(65535/instrumnets.durabilit[i])
+		item:add_wear(65535/minetest.get_item_group(item:get_name(), "durability")*2)
 		return item
 	end
 }
@@ -101,12 +101,12 @@ for i, material in ipairs(instruments.materials) do
 			minetest.register_tool("instruments:"..instrument.."_"..material, {
 				description = instruments.desc_list[i].." "..instrument:capitalize(),
 				inventory_image = "instruments_"..instrument.."_"..material..".png",
-				--[[tool_capabilities = {TODO
+				tool_capabilities = {
 					max_drop_level=1,
 					groupcaps=instruments.groupcaps[j][i],
-				},]]
+				},
 				on_use = instruments.on_use[j],
-				groups = {material_level=instruments.levels[i]},
+				groups = {material_level=instruments.levels[i], durability=instruments.durability[i]},
 			})
 		end
 		if material ~= "stone" then

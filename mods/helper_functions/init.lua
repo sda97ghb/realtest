@@ -7,13 +7,12 @@ table.contains = function(t, v)
 	return false
 end
 
-table.get_index = function(t, v)
-	for j, i in ipairs(t) do
-		if i == v then
-			return j
+function table:get_index(value)
+	for i, v in ipairs(self) do
+		if v == value then
+			return i
 		end
 	end
-	return false
 end
 
 function hacky_swap_node(pos,name)
@@ -32,4 +31,11 @@ end
 
 function string:capitalize()
 	return self:sub(1,1):upper()..self:sub(2):lower()
+end
+
+function minetest.get_item_group(name, group)
+	if not minetest.registered_items[name] or not minetest.registered_items[name].groups[group] then
+		return 0
+	end
+	return minetest.registered_items[name].groups[group]  
 end
