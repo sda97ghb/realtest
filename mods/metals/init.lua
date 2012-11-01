@@ -58,8 +58,6 @@ metals.desc_list = {
 	'Black Steel'
 }
 
-dofile(minetest.get_modpath("metals").."/buckets.lua")
-
 for i=1, #metals.list do
 	
 	--

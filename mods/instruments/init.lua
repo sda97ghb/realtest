@@ -107,6 +107,7 @@ end
 minetest.register_entity("instruments:spear_entity", instruments.spear.entity)
 
 dofile(minetest.get_modpath("instruments").."/groupcaps.lua")
+dofile(minetest.get_modpath("instruments").."/buckets.lua")
 
 for i, material in ipairs(instruments.materials) do
 	minetest.register_tool("instruments:spear_"..material, {

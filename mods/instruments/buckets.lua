@@ -15,7 +15,7 @@ function buckets.register_liquid(name, source, flowing, itemname, inventory_imag
 		for i = 1,#metals.list do
 			minetest.register_craftitem(itemname.."_"..metals.list[i], {
 				description = metals.desc_list[i] .. " Bucket with " .. name,
-				inventory_image = "metals_"..metals.list[i].."_bucket.png^"..inventory_image,
+				inventory_image = "instruments_bucket_"..metals.list[i]..".png^"..inventory_image,
 				stack_max = 1,
 				liquids_pointable = true,
 				on_use = function(itemstack, user, pointed_thing)
@@ -36,7 +36,7 @@ function buckets.register_liquid(name, source, flowing, itemname, inventory_imag
 						-- It's a liquid
 						minetest.env:add_node(pointed_thing.under, {name=source})
 					end
-					return {name="metals:bucket_empty_"..metals.list[i]}
+					return {name="instruments:bucket_empty_"..metals.list[i]}
 				end
 			})
 		end
@@ -44,9 +44,9 @@ function buckets.register_liquid(name, source, flowing, itemname, inventory_imag
 end
 
 for i = 1,#metals.list do
-	minetest.register_craftitem("metals:bucket_empty_"..metals.list[i], {
+	minetest.register_craftitem("instruments:bucket_empty_"..metals.list[i], {
 		description = "Emtpy " .. metals.desc_list[i] .. " Bucket",
-		inventory_image = "metals_"..metals.list[i].."_bucket.png",
+		inventory_image = "instruments_bucket_"..metals.list[i]..".png",
 		stack_max = 1,
 		liquids_pointable = true,
 		on_use = function(itemstack, user, pointed_thing)
@@ -69,14 +69,14 @@ buckets.register_liquid(
 	"Water",
 	"default:water_source",
 	"default:water_flowing",
-	"metals:bucket_water",
-	"metals_water.png"
+	"instruments:bucket_water",
+	"instruments_water.png"
 )
 
 buckets.register_liquid(
 	"Lava",
 	"default:lava_source",
 	"default:lava_flowing",
-	"metals:bucket_lava",
-	"metals_lava.png"
+	"instruments:bucket_lava",
+	"instruments_lava.png"
 )
