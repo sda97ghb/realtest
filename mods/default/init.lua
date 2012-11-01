@@ -501,7 +501,7 @@ minetest.register_node("default:cactus", {
 	description = "Cactus",
 	tiles = {"default_cactus_top.png", "default_cactus_top.png", "default_cactus_side.png"},
 	is_ground_content = true,
-	groups = {snappy=2,choppy=3,flammable=2},
+	groups = {snappy=2,choppy=3,flammable=2,falling_node=1},
 	sounds = default.node_sound_wood_defaults(),
 })
 
