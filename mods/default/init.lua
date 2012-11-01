@@ -501,7 +501,7 @@ minetest.register_node("default:cactus", {
 	description = "Cactus",
 	tiles = {"default_cactus_top.png", "default_cactus_top.png", "default_cactus_side.png"},
 	is_ground_content = true,
-	groups = {snappy=2,choppy=3,flammable=2,falling_node=1},
+	groups = {snappy=2,choppy=3,flammable=2,dropping_node=1},
 	sounds = default.node_sound_wood_defaults(),
 })
 
@@ -514,7 +514,7 @@ minetest.register_node("default:papyrus", {
 	paramtype = "light",
 	is_ground_content = true,
 	walkable = false,
-	groups = {snappy=3,flammable=2},
+	groups = {snappy=3,flammable=2, dropping_node=1},
 	sounds = default.node_sound_leaves_defaults(),
 })
 
@@ -1111,6 +1111,15 @@ function nodeupdate_single(p)
 				not minetest.registered_nodes[n_bottom.name].walkable then
 			minetest.env:remove_node(p)
 			default.spawn_falling_node(p, n.name)
+			nodeupdate(p)
+		end
+	end
+	if minetest.get_node_group(n.name, "dropping_node") ~= 0 then
+		p_bottom = {x=p.x, y=p.y-1, z=p.z}
+		n_bottom = minetest.env:get_node(p_bottom)
+		if not minetest.registered_nodes[n_bottom.name].walkable and n_bottom.name ~= n.name then
+			minetest.env:remove_node(p)
+			minetest.env:add_item(p, n.name)
 			nodeupdate(p)
 		end
 	end
