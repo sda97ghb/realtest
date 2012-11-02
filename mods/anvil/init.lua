@@ -157,7 +157,7 @@ for _, anvil in ipairs(anvils) do
 		end,
 		on_construct = function(pos)
 			local meta = minetest.env:get_meta(pos)
-			meta:set_string("formspec", "invsize[8,7;]"..
+			meta:set_string("formspec", "size[8,7]"..
 					"button[0.5,0.25;2,1;buttonForge;Forge]"..
 					"list[current_name;src1;2.9,0.25;1,1;]"..
 					"image[3.69,0.22;0.54,1.5;anvil_arrow.png]"..

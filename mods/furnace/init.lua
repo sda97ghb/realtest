@@ -12,7 +12,7 @@ function furnace.check_furnace_blocks(pos)
 end
 
 furnace.formspec = 
-	"invsize[8,10;]"..
+	"size[8,10]"..
 	"list[current_name;src1;1.5,0;1,1;]"..
 	"list[current_name;dst1;1.5,1;1,1;]"..
 	"list[current_name;src2;2.5,1;1,1;]"..
@@ -214,7 +214,7 @@ minetest.register_abm({
 				meta:set_string("infotext","Furnace active: "..percent.."%")
 				hacky_swap_node(pos,"furnace:self_active")
 				meta:set_string("formspec",
-					"invsize[8,10;]"..
+					"size[8,10]"..
 					"list[current_name;src1;1.5,0;1,1;]"..
 					"list[current_name;dst1;1.5,1;1,1;]"..
 					"list[current_name;src2;2.5,1;1,1;]"..

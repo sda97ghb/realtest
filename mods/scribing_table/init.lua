@@ -115,7 +115,7 @@ minetest.register_node("scribing_table:self", {
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
-		local s_formspec="invsize[8,10;]"..
+		local s_formspec="size[8,10]"..
 				"list[current_name;paper;6,1;1,1;]"..
 				"list[current_name;dye;0,1;5,5;]"..
 				"list[current_name;res;6,4;1,1;]"..

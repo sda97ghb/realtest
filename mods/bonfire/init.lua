@@ -1,7 +1,7 @@
 bonfire = {}
 
 bonfire.formspec =
-	"invsize[8,9;]"..
+	"size[8,9]"..
 	"image[2,2;1,1;default_furnace_fire_bg.png]"..
 	"list[current_name;fuel;2,3;1,1;]"..
 	"list[current_name;src;2,1;1,1;]"..
@@ -144,7 +144,7 @@ minetest.register_abm({
 				meta:set_string("infotext","Bonfire active: "..percent.."%")
 				hacky_swap_node(pos,"bonfire:self_active")
 				meta:set_string("formspec",
-					"invsize[8,9;]"..
+					"size[8,9]"..
 					"image[2,2;1,1;default_furnace_fire_bg.png^[lowpart:"..
 							(100-percent)..":default_furnace_fire_fg.png]"..
 					"list[current_name;fuel;2,3;1,1;]"..
