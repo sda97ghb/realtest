@@ -70,6 +70,7 @@ local instruments =
 	 {"pick", "_ingot"},
 	 {"shovel", "_ingot"},
 	 {"spear", "_ingot"},
+	 {"chisel", "_ingot"},
 	 {"sword", "_doubleingot"},
 	 {"hammer", "_doubleingot"}
 	}

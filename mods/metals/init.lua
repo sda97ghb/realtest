@@ -268,6 +268,7 @@ metals.recipes = {
 	{"metals:recipe_hammer", "Hammer Recipe"},
 	{"metals:recipe_spear", "Spear Recipe"},
 	{"metals:recipe_bucket","Bucket Recipe"},
+	{"metals:recipe_chisel", "Chisel Recipe"},
 }
 
 for _, recipe in ipairs(metals.recipes) do
