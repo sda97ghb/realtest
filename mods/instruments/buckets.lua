@@ -45,7 +45,7 @@ end
 
 for i = 1,#metals.list do
 	minetest.register_craftitem("instruments:bucket_empty_"..metals.list[i], {
-		description = "Emtpy " .. metals.desc_list[i] .. " Bucket",
+		description = "Empty " .. metals.desc_list[i] .. " Bucket",
 		inventory_image = "instruments_bucket_"..metals.list[i]..".png",
 		stack_max = 1,
 		liquids_pointable = true,
