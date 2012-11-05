@@ -7,7 +7,6 @@ minetest.register_node("decorations:malachite_block", {
 	tiles = {"decorations_malachite.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
-	legacy_mineral = true,
 	sounds = default.node_sound_stone_defaults(),
 })
 
@@ -28,7 +27,6 @@ minetest.register_node("decorations:malachite_pyramid", {
 	tiles = {"decorations_malachite.png"},
 	is_ground_content = true,
 	groups = {cracky = 3},
-	legacy_mineral = true,
 	sounds = default.node_sound_stone_defaults(),
 })
 
@@ -55,7 +53,6 @@ minetest.register_node("decorations:malachite_table", {
 	tiles = {"decorations_malachite.png", "default_wood.png^decorations_malachite_table_bottom.png", "default_wood.png^decorations_malachite_table_side.png"},
 	is_ground_content = true,
 	groups = {cracky=3, oddly_breakable_by_hand = 2},
-	legacy_mineral = true,
 	sounds = default.node_sound_stone_defaults(),
 })
 
@@ -81,7 +78,6 @@ minetest.register_node("decorations:casket", {
 			},
 		},
 	groups = {snappy=2,oddly_breakable_by_hand=2},
-	legacy_facedir_simple = true,
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
@@ -106,7 +102,6 @@ minetest.register_node("decorations:malachite_chest", {
 		"decorations_malachite_chest_side.png", "decorations_malachite_chest_side.png", "decorations_malachite_chest_front.png"},
 	paramtype2 = "facedir",
 	groups = {snappy=2,oddly_breakable_by_hand=2},
-	legacy_facedir_simple = true,
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
@@ -150,7 +145,6 @@ minetest.register_node("decorations:malachite_cylinder", {
 	tiles = {"decorations_malachite.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
-	legacy_mineral = true,
 	sounds = default.node_sound_stone_defaults(),
 })
 
@@ -173,7 +167,6 @@ minetest.register_node("decorations:malachite_vase", {
 	tiles = {"decorations_malachite.png"},
 	is_ground_content = true,
 	groups = {cracky=3, oddly_breakable_by_hand = 2},
-	legacy_mineral = true,
 	sounds = default.node_sound_stone_defaults(),
 })
 
