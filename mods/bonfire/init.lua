@@ -107,6 +107,10 @@ minetest.register_abm({
 		end
 		
 		if meta:get_int("active") == 1 then
+			if meta:get_int("sound_play") ~= 1 then
+				meta:set_int("sound_handle", minetest.sound_play("bonfire_burning", {pos=pos, max_hear_distance = 4,loop=true}))
+				meta:set_int("sound_play", 1)
+			end
 			local inv = meta:get_inventory()
 
 			local srclist = inv:get_list("src")
@@ -171,6 +175,8 @@ minetest.register_abm({
 				hacky_swap_node(pos,"bonfire:self")
 				meta:set_string("formspec", bonfire.formspec)
 				meta:set_int("active", 0)
+				meta:set_int("sound_play", 0)
+				minetest.sound_stop(meta:get_int("sound_handle"))
 				return
 			end
 
