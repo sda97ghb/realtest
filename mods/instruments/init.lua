@@ -137,12 +137,15 @@ for i, material in ipairs(instruments.materials) do
 				if pointed_thing.type ~= "node" then
 					return
 				end
-				if minetest.env:get_node(pointed_thing.under).name == "default:stone" then
+				local n_name = minetest.env:get_node(pointed_thing.under).name
+				if  n_name == "default:stone" then
 					minetest.env:add_node(pointed_thing.under, {name="default:stone_flat"})
-				end
-				if minetest.env:get_node(pointed_thing.under).name == "default:desert_stone" then
+				elseif n_name == "default:desert_stone" then
 					minetest.env:add_node(pointed_thing.under, {name="default:desert_stone_flat"})
+				elseif n_name == "default:cobbleblock" then
+					minetest.env:add_node(pointed_thing.under, {name="default:cobbleblock_flat"})
 				end
+				
 				item:add_wear(65535/instruments.durability[i])
 				return item
 			end,

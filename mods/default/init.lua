@@ -358,7 +358,6 @@ minetest.register_node("default:stone", {
 			},
 		},
 	},
-	legacy_mineral = true,
 	sounds = default.node_sound_stone_defaults(),
 })
 
@@ -368,7 +367,6 @@ minetest.register_node("default:desert_stone", {
 	is_ground_content = true,
 	groups = {cracky=3},
 	drop = 'default:desert_stone',
-	legacy_mineral = true,
 	sounds = default.node_sound_stone_defaults(),
 })
 
@@ -377,7 +375,6 @@ minetest.register_node("default:stone_flat", {
 	tiles = {"default_stone_flat.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
-	legacy_mineral = true,
 	sounds = default.node_sound_stone_defaults(),
 })
 
@@ -386,7 +383,14 @@ minetest.register_node("default:desert_stone_flat", {
 	tiles = {"default_desert_stone_flat.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
-	legacy_mineral = true,
+	sounds = default.node_sound_stone_defaults(),
+})
+
+minetest.register_node("default:cobbleblock_flat", {
+	description = "Flat Block of Cobble",
+	tiles = {"default_cobbleblock_flat.png"},
+	is_ground_content = true,
+	groups = {cracky=3},
 	sounds = default.node_sound_stone_defaults(),
 })
 
@@ -589,7 +593,6 @@ minetest.register_node("default:ladder", {
 		--wall_side = = <default>
 	},
 	groups = {snappy=1,choppy=2,oddly_breakable_by_hand=3,flammable=2},
-	legacy_wallmounted = true,
 	sounds = default.node_sound_wood_defaults(),
 })
 
@@ -728,7 +731,6 @@ minetest.register_node("default:torch", {
 		wall_side = {-0.5, -0.3, -0.1, -0.5+0.3, 0.3, 0.1},
 	},
 	groups = {choppy=2,dig_immediate=3,flammable=1},
-	legacy_wallmounted = true,
 	sounds = default.node_sound_defaults(),
 })
 
@@ -749,7 +751,6 @@ minetest.register_node("default:sign_wall", {
 		--wall_side = <default>
 	},
 	groups = {choppy=2,dig_immediate=2},
-	legacy_wallmounted = true,
 	sounds = default.node_sound_defaults(),
 	on_construct = function(pos)
 		--local n = minetest.env:get_node(pos)
@@ -774,7 +775,6 @@ minetest.register_node("default:chest", {
 		"default_chest_side.png", "default_chest_side.png", "default_chest_front.png"},
 	paramtype2 = "facedir",
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
-	legacy_facedir_simple = true,
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
@@ -818,7 +818,6 @@ minetest.register_node("default:chest_locked", {
 		"default_chest_side.png", "default_chest_side.png", "default_chest_lock.png"},
 	paramtype2 = "facedir",
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
-	legacy_facedir_simple = true,
 	sounds = default.node_sound_wood_defaults(),
 	after_place_node = function(pos, placer)
 		local meta = minetest.env:get_meta(pos)
