@@ -387,7 +387,7 @@ minetest.register_node("default:desert_stone_flat", {
 })
 
 minetest.register_node("default:cobbleblock_flat", {
-	description = "Flat Block of Cobble",
+	description = "Stone Brick Block",
 	tiles = {"default_cobbleblock_flat.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
