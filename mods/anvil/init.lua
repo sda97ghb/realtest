@@ -1,39 +1,105 @@
 anvil = {}
+realtest.registered_anvil_recipes = {}
 
-HAMMERS_LIST={
-	'anvil:hammer',
-	'metals:tool_hammer_bismuth',
-	'metals:tool_hammer_pig_iron',
-	'metals:tool_hammer_wrought_iron',
-	'metals:tool_hammer_steel',
-	'metals:tool_hammer_gold',
-	'metals:tool_hammer_nickel',
-	'metals:tool_hammer_platinum',
-	'metals:tool_hammer_tin',
-	'metals:tool_hammer_silver',
-	'metals:tool_hammer_lead',
-	'metals:tool_hammer_copper',
-	'metals:tool_hammer_zinc',
-	'metals:tool_hammer_brass',
-	'metals:tool_hammer_sterling_silver',
-	'metals:tool_hammer_rose_gold',
-	'metals:tool_hammer_black_bronze',
-	'metals:tool_hammer_bismuth_bronze',
-	'metals:tool_hammer_bronze',
-	'metals:tool_hammer_black_steel',
-}
-
-local table_containts = function(t, v)
-	for _, i in ipairs(t) do
-		if i==v then
-			return true
-		end
+function realtest.register_anvil_recipe(RecipeDef)
+	local recipe = {
+		type = RecipeDef.type or "forge",
+		item1 = RecipeDef.item1 or "",
+		item2 = RecipeDef.item2 or "",
+		rmitem1 = RecipeDef.rmitem1,
+		rmitem2 = RecipeDef.rmitem2,
+		output = RecipeDef.output or "",
+		level = RecipeDef.level or 0,
+	}
+	if recipe.rmitem1 == nil then
+		recipe.rmitem1 = true
 	end
-	return false
+	if recipe.rmitem2 == nil then
+		recipe.rmitem2 = true
+	end
+	if recipe.level < 0 then
+		recipe.level = 0
+	end
+	if recipe.output ~= "" and recipe.item1 ~= "" and (recipe.type == "forge" or recipe.type == "weld") then
+		table.insert(realtest.registered_anvil_recipes, recipe)
+	end
 end
 
+--Unshaped metals, buckets, double ingots, sheets and hammers
+for i, metal in ipairs(metals.list) do
+	realtest.register_anvil_recipe({
+		item1 = "metals:"..metal.."_unshaped",
+		output = "metals:"..metal.."_ingot",
+	})
+	realtest.register_anvil_recipe({
+		item1 = "metals:"..metal.."_sheet",
+		item2 = "metals:recipe_bucket",
+		rmitem2 = false,
+		output = "instruments:bucket_empty_"..metal,
+		level = metals.levels[i],
+	})
+	realtest.register_anvil_recipe({
+		item1 = "metals:"..metal.."_doubleingot",
+		output = "metals:"..metal.."_sheet",
+		level = metals.levels[i] - 1,
+	})
+	realtest.register_anvil_recipe({
+		type = "weld",
+		item1 = "metals:"..metal.."_ingot",
+		item2 = "metals:"..metal.."_ingot",
+		output = "metals:"..metal.."_doubleingot",
+		level = metals.levels[i] - 1,
+	})
+	realtest.register_anvil_recipe({
+		type = "weld",
+		item1 = "metals:"..metal.."_sheet",
+		item2 = "metals:"..metal.."_sheet",
+		output = "metals:"..metal.."_doublesheet",
+		level = metals.levels[i] - 1,
+	})
+end
+--Pig iron --> Wrought iron
+realtest.register_anvil_recipe({
+	item1 = "metals:pig_iron_ingot",
+	output = "metals:wrought_iron_ingot",
+	level = 3,
+})
+--Instruments
+local instruments = 
+	{{"axe", "_ingot"}, 
+	 {"pick", "_ingot"},
+	 {"shovel", "_ingot"},
+	 {"spear", "_ingot"},
+	 {"chisel", "_ingot"},
+	 {"sword", "_doubleingot"},
+	 {"hammer", "_doubleingot"}
+	}
+for _, instrument in ipairs(instruments) do
+	for i, metal in ipairs(metals.list) do
+		realtest.register_anvil_recipe({
+			item1 = "metals:"..metal..instrument[2],
+			item2 = "metals:recipe_"..instrument[1],
+			rmitem2 = false,
+			output = "instruments:"..instrument[1].."_"..metal.."_head",
+			level = metals.levels[i],
+		})
+	end
+end
+
+local anvils = {
+	{'stone', 'Stone', 0, 61*2.3},
+	{'copper', 'Copper', 1, 411*2.3},
+	{'rose_gold', 'Rose Gold', 2, 521*2.3},
+	{'bismuth_bronze', 'Bismuth Bronze', 2, 581*2.3},
+	{'black_bronze', 'Black Bronze', 2, 531*2.3},
+	{'bronze', 'Bronze', 2, 601*2.3},
+	{'wrought_iron', 'Wrought Iron', 3, 801*2.3},
+	{'steel', 'Steel', 4, 1101*2.3},
+	{'black_steel', 'Black Steel', 5, 1501*2.3}
+}
+
 minetest.register_craft({
-	output = 'anvil:self',
+	output = 'anvil:stone_anvil',
 	recipe = {
 		{'default:stone','default:stone','default:stone'},
 		{'','default:stone',''},
@@ -41,160 +107,133 @@ minetest.register_craft({
 	}
 })
 
-minetest.register_craft({
-	output = 'anvil:hammer',
-	recipe = {
-		{'default:cobble','default:cobble','default:cobble'},
-		{'default:cobble','default:stick','default:cobble'},
-		{'','default:stick',''},
-	}
-})
+for _, anvil in ipairs(anvils) do
+	if anvil[1] ~= "stone" then
+		minetest.register_craft({
+			output = "anvil:"..anvil[1].."_anvil",
+			recipe = {
+				{"metals:"..anvil[1].."_doubleingot","metals:"..anvil[1].."_doubleingot","metals:"..anvil[1].."_doubleingot"},
+				{"","metals:"..anvil[1].."_doubleingot",""},
+				{"metals:"..anvil[1].."_doubleingot","metals:"..anvil[1].."_doubleingot","metals:"..anvil[1].."_doubleingot"},
+			}
+		})
+	end
+end
 
-minetest.register_tool("anvil:hammer", {
-	description = "Hammer",
-	inventory_image = "anvil_hammer.png",
-	tool_capabilities = {
-		max_drop_level=1,
-		groupcaps={
-			cracky={times={[1]=6.00, [2]=4.30, [3]=3.00}, uses=20, maxlevel=1},
-			fleshy={times={[1]=2.00, [2]=0.80, [3]=0.40}, uses=10, maxlevel=2},
-		}
-	},
-})
-
-minetest.register_node("anvil:self", {
-	description = "Anvil",
-	tiles = {"anvil_top.png","anvil_top.png","anvil_side.png"},
-	drawtype = "nodebox",
-	paramtype = "light",
-	paramtype2 = "facedir",
-	node_box = {
-		type = "fixed",
-		fixed = {
-			{-0.5,-0.5,-0.3,0.5,-0.4,0.3},
-			{-0.35,-0.4,-0.25,0.35,-0.3,0.25},
-			{-0.3,-0.3,-0.15,0.3,-0.1,0.15},
-			{-0.35,-0.1,-0.2,0.35,0.1,0.2},
+for _, anvil in ipairs(anvils) do
+	minetest.register_node("anvil:"..anvil[1].."_anvil", {
+		description = anvil[2] .. " Anvil",
+		tiles = {"anvil_"..anvil[1].."_top.png","anvil_"..anvil[1].."_top.png","anvil_"..anvil[1].."_side.png"},
+		drawtype = "nodebox",
+		paramtype = "light",
+		paramtype2 = "facedir",
+		node_box = {
+			type = "fixed",
+			fixed = {
+				{-0.5,-0.5,-0.3,0.5,-0.4,0.3},
+				{-0.35,-0.4,-0.25,0.35,-0.3,0.25},
+				{-0.3,-0.3,-0.15,0.3,-0.1,0.15},
+				{-0.35,-0.1,-0.2,0.35,0.1,0.2},
+			},
 		},
-	},
-	selection_box = {
-		type = "fixed",
-		fixed = {
-			{-0.5,-0.5,-0.3,0.5,-0.4,0.3},
-			{-0.35,-0.4,-0.25,0.35,-0.3,0.25},
-			{-0.3,-0.3,-0.15,0.3,-0.1,0.15},
-			{-0.35,-0.1,-0.2,0.35,0.1,0.2},
+		selection_box = {
+			type = "fixed",
+			fixed = {
+				{-0.5,-0.5,-0.3,0.5,-0.4,0.3},
+				{-0.35,-0.4,-0.25,0.35,-0.3,0.25},
+				{-0.3,-0.3,-0.15,0.3,-0.1,0.15},
+				{-0.35,-0.1,-0.2,0.35,0.1,0.2},
+			},
 		},
-	},
-	groups = {oddly_breakable_by_hand=2, cracky=3, dig_immediate=1},
-	sounds = default.node_sound_stone_defaults(),
-	can_dig = function(pos,player)
-		local meta = minetest.env:get_meta(pos);
-		local inv = meta:get_inventory()
-		if not inv:is_empty("hammer") then
-			return false
-		elseif not inv:is_empty("ingot") then
-			return false
-		elseif not inv:is_empty("res") then
-			return false
-		elseif not inv:is_empty("recipe") then
-			return false
-		end
-		return true
-	end,
-	on_construct = function(pos)
-		local meta = minetest.env:get_meta(pos)
-		meta:set_string("formspec", "invsize[8,10;]"..
-				"list[current_name;hammer;1,3.5;1,1;]"..
-				"list[current_name;ingot;1,1.5;1,1;]"..
-				"list[current_name;recipe;6,1.5;1,1;]"..
-				"list[current_name;res;3,1.5;1,1;]"..
-				"label[1,1;Ingot:]"..
-				"label[6,1;Recipe:]"..
-				"label[3,1;Output:]"..
-				"label[1,3;Hammer:]"..
-				"button[4,2.5;2,3;forge;Forge]"..
-				"list[current_player;main;0,6;8,4;]")
-		meta:set_string("infotext", "Anvil")
-		local inv = meta:get_inventory()
-		inv:set_size("hammer", 1)
-		inv:set_size("ingot", 1)
-		inv:set_size("recipe", 1)
-		inv:set_size("res", 1)
-	end,
-	on_receive_fields = function(pos, formname, fields, sender)
-		local meta = minetest.env:get_meta(pos)
-		local inv = meta:get_inventory()
-		
-		if fields["forge"] then
-			if inv:is_empty("hammer") or inv:is_empty("ingot") or inv:is_empty("recipe") then
-				return
+		groups = {oddly_breakable_by_hand=2, cracky=3, dig_immediate=1},
+		sounds = default.node_sound_stone_defaults(),
+		can_dig = function(pos,player)
+			local meta = minetest.env:get_meta(pos);
+			local inv = meta:get_inventory()
+			if inv:is_empty("src1") and inv:is_empty("src2") and inv:is_empty("hammer")
+				and inv:is_empty("output") and inv:is_empty("flux") then
+				return true
 			end
-			
-			local ingotstack = inv:get_stack("ingot", 1)
-			local recipestack = inv:get_stack("recipe", 1)
-			local hammerstack = inv:get_stack("hammer", 1)
-			local resstack = inv:get_stack("res", 1)
-			
-			if table_containts(HAMMERS_LIST, hammerstack:get_name()) then
-				local s = ingotstack:get_name()
-				if recipestack:get_name()=="metals:recipe_axe" then
-					inv:add_item("res","metals:tool_axe_"..string.sub(s,8,string.len(s)-6).."_head")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-				elseif recipestack:get_name()=="metals:recipe_hammer" then
-					inv:add_item("res","metals:tool_hammer_"..string.sub(s,8,string.len(s)-6).."_head")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-				elseif recipestack:get_name()=="metals:recipe_pick" then
-					inv:add_item("res","metals:tool_pick_"..string.sub(s,8,string.len(s)-6).."_head")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-				elseif recipestack:get_name()=="metals:recipe_shovel" then
-					inv:add_item("res","metals:tool_shovel_"..string.sub(s,8,string.len(s)-6).."_head")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-				elseif recipestack:get_name()=="metals:recipe_spear" then
-					inv:add_item("res","metals:tool_spear_"..string.sub(s,8,string.len(s)-6).."_head")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-				elseif recipestack:get_name()=="metals:recipe_sword" then
-					inv:add_item("res","metals:tool_sword_"..string.sub(s,8,string.len(s)-6).."_head")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-				elseif recipestack:get_name()=="metals:recipe_bucket" then
-					inv:add_item("res","metals:bucket_empty_"..string.sub(s,8,string.len(s)-6))
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-				elseif ingotstack:get_name()=="metals:pig_iron_ingot" then
-					inv:add_item("res","metals:wrought_iron_ingot")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-				--[[elseif string.sub(ingotstack:get_name(), 1, 6)=="metals" and string.sub(ingotstack:get_name(),string.len(ingotstack:get_name())-9,9)=="_unshaped" then
-					inv:add_item("res", "metals:"..string.sub(ingotstack:get_name(),7,string.len(ingotstack:get_name())-13).."_ingot")
-					ingotstack:take_item()
-					inv:set_stack("ingot",1,ingotstack)
-					hammerstack:add_wear(65535/30)
-					inv:set_stack("hammer",1,hammerstack)
-					return]]
+			return false
+		end,
+		on_construct = function(pos)
+			local meta = minetest.env:get_meta(pos)
+			meta:set_string("formspec", "size[8,7]"..
+					"button[0.5,0.25;2,1;buttonForge;Forge]"..
+					"list[current_name;src1;2.9,0.25;1,1;]"..
+					"image[3.69,0.22;0.54,1.5;anvil_arrow.png]"..
+					"list[current_name;src2;4.1,0.25;1,1;]"..
+					"button[5.5,0.25;2,1;buttonWeld;Weld]"..
+					"list[current_name;hammer;1,1.5;1,1;]"..
+					"list[current_name;output;3.5,1.5;1,1;]"..
+					"list[current_name;flux;6,1.5;1,1;]"..
+					"list[current_player;main;0,3;8,4;]")
+			meta:set_string("infotext", anvil[2].." Anvil")
+			local inv = meta:get_inventory()
+			inv:set_size("src1", 1)
+			inv:set_size("src2", 1)
+			inv:set_size("hammer", 1)
+			inv:set_size("output", 1)
+			inv:set_size("flux", 1)
+		end,
+		on_receive_fields = function(pos, formname, fields, sender)
+			local meta = minetest.env:get_meta(pos)
+			local inv = meta:get_inventory()
+	
+			local src1, src2 = inv:get_stack("src1", 1), inv:get_stack("src2", 1)
+			local hammer, flux = inv:get_stack("hammer", 1), inv:get_stack("flux", 1)
+			local output = inv:get_stack("output", 1)
+			if string.sub(hammer:get_name(), 13, 18) == "hammer" then
+				if fields["buttonForge"] then
+					for _, recipe in ipairs(realtest.registered_anvil_recipes) do
+						if recipe.type == "forge" and recipe.item1 == src1:get_name() and recipe.item2 == src2:get_name() and
+							anvil[3] >= recipe.level and
+							minetest.get_item_group(hammer:get_name(), "material_level") >= recipe.level then
+							if inv:room_for_item("output", recipe.output) then
+								if recipe.rmitem1 then
+									src1:take_item()
+									inv:set_stack("src1", 1, src1)
+								end
+								if recipe.item2 ~= "" and recipe.rmitem2 then
+									src2:take_item()
+									inv:set_stack("src2", 1, src2)
+								end
+								output:add_item(recipe.output)
+								inv:set_stack("output", 1, output)
+								hammer:add_wear(65535/minetest.get_item_group(hammer:get_name(), "durability"))
+								inv:set_stack("hammer", 1, hammer)
+							end
+							return
+						end
+					end 
+				elseif fields["buttonWeld"] then
+					if flux:get_name() == "minerals:flux" then
+						for _, recipe in ipairs(realtest.registered_anvil_recipes) do
+							if recipe.type == "weld" and recipe.item1 == src1:get_name() and recipe.item2 == src2:get_name() and
+						 		anvil[3] >= recipe.level and
+						 		minetest.get_item_group(hammer:get_name(), "material_level") >= recipe.level then
+								if inv:room_for_item("output", recipe.output) then
+									if recipe.rmitem1 then
+										src1:take_item()
+										inv:set_stack("src1", 1, src1)
+									end
+									if recipe.item2 ~= "" and recipe.rmitem2 then
+										src2:take_item()
+										inv:set_stack("src2", 1, src2)
+									end
+									output:add_item(recipe.output)
+									inv:set_stack("output", 1, output)
+									flux:take_item()
+									inv:set_stack("flux", 1, flux)
+									hammer:add_wear(65535/minetest.get_item_group(hammer:get_name(), "durability")/2)
+									inv:set_stack("hammer", 1, hammer)
+								end
+								return
+							end
+						end 
+					end
 				end
 			end
-		end
-	end,
-})
+		end,
+	})
+end

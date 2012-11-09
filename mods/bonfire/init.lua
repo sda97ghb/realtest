@@ -1,7 +1,7 @@
 bonfire = {}
 
 bonfire.formspec =
-	"invsize[8,9;]"..
+	"size[8,9]"..
 	"image[2,2;1,1;default_furnace_fire_bg.png]"..
 	"list[current_name;fuel;2,3;1,1;]"..
 	"list[current_name;src;2,1;1,1;]"..
@@ -89,20 +89,6 @@ minetest.register_node("bonfire:self_active", {
 	end,
 })
 
-function hacky_swap_node(pos,name)
-	local node = minetest.env:get_node(pos)
-	local meta = minetest.env:get_meta(pos)
-	local meta0 = meta:to_table()
-	if node.name == name then
-		return
-	end
-	node.name = name
-	local meta0 = meta:to_table()
-	minetest.env:set_node(pos,node)
-	meta = minetest.env:get_meta(pos)
-	meta:from_table(meta0)
-end
-
 minetest.register_abm({
 	nodenames = {"bonfire:self","bonfire:self_active"},
 	interval = 1.0,
@@ -121,6 +107,10 @@ minetest.register_abm({
 		end
 		
 		if meta:get_int("active") == 1 then
+			if meta:get_int("sound_play") ~= 1 then
+				meta:set_int("sound_handle", minetest.sound_play("bonfire_burning", {pos=pos, max_hear_distance = 4,loop=true}))
+				meta:set_int("sound_play", 1)
+			end
 			local inv = meta:get_inventory()
 
 			local srclist = inv:get_list("src")
@@ -158,7 +148,7 @@ minetest.register_abm({
 				meta:set_string("infotext","Bonfire active: "..percent.."%")
 				hacky_swap_node(pos,"bonfire:self_active")
 				meta:set_string("formspec",
-					"invsize[8,9;]"..
+					"size[8,9]"..
 					"image[2,2;1,1;default_furnace_fire_bg.png^[lowpart:"..
 							(100-percent)..":default_furnace_fire_fg.png]"..
 					"list[current_name;fuel;2,3;1,1;]"..
@@ -185,6 +175,8 @@ minetest.register_abm({
 				hacky_swap_node(pos,"bonfire:self")
 				meta:set_string("formspec", bonfire.formspec)
 				meta:set_int("active", 0)
+				meta:set_int("sound_play", 0)
+				minetest.sound_stop(meta:get_int("sound_handle"))
 				return
 			end
 

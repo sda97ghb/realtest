@@ -59,6 +59,13 @@ local recipes = {
 		 1,0,0,0,1,
 		 0,1,1,1,0,}
 	},
+	{"metals:recipe_chisel",
+		{0,0,1,0,0,
+		 0,0,1,0,0,
+		 0,0,1,0,0,
+		 0,0,1,0,0,
+		 0,0,1,0,0,}
+	},
 }
 
 local function check_recipe(pos)
@@ -95,7 +102,7 @@ local function check_recipe(pos)
 end
 
 minetest.register_node("scribing_table:self", {
-	description = "Scribing table",
+	description = "Scribing Table",
 	tiles = {"scribing_table_top.png", "default_wood.png", "default_wood.png^scribing_table_side.png"},
 	drawtype = "nodebox",
 	paramtype = "light",
@@ -115,16 +122,15 @@ minetest.register_node("scribing_table:self", {
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
-		local s_formspec="invsize[8,10;]"..
-				"list[current_name;paper;6,1;1,1;]"..
-				"list[current_name;dye;0,1;5,5;]"..
-				"list[current_name;res;6,4;1,1;]"..
-				"label[6,0;Paper:]"..
-				"label[2,0;Dye:]"..
-				"label[6,3;Output:]"..
-				"list[current_player;main;0,6;8,4;]"
-		meta:set_string("formspec", s_formspec)
-		meta:set_string("infotext", "Scribing table")
+		meta:set_string("formspec", 
+			"size[8,10]"..
+			"list[current_name;paper;6,0;1,1;]"..
+			"list[current_name;dye;0,0;5,5;]"..
+			"list[current_name;res;6,4;1,1;]"..
+			"image[5,1;2,3.4;scribing_table_arrow.png]"..
+			"list[current_player;main;0,6;8,4;]"
+		)
+		meta:set_string("infotext", "Scribing Table")
 		local inv = meta:get_inventory()
 		inv:set_size("paper", 1)
 		inv:set_size("dye", 25)

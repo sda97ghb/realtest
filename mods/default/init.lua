@@ -10,6 +10,7 @@ LIGHT_MAX = 14
 
 -- Definitions made by this mod that other mods can use too
 default = {}
+realtest = {}
 
 -- Load other files
 dofile(minetest.get_modpath("default").."/mapgen.lua")
@@ -29,111 +30,9 @@ minetest.register_item(":", {
 		max_drop_level = 0,
 		groupcaps = {
 			fleshy = {times={[2]=2.00, [3]=1.00}, uses=0, maxlevel=1},
-			crumbly = {times={[2]=3.00, [3]=0.70}, uses=0, maxlevel=1},
+			crumbly = {times={[2]=7.50, [3]=5.00}, uses=0, maxlevel=1},
 			snappy = {times={[3]=0.40}, uses=0, maxlevel=1},
 			oddly_breakable_by_hand = {times={[1]=7.00,[2]=4.00,[3]=1.40}, uses=0, maxlevel=3},
-		}
-	}
-})
-
-minetest.register_tool("default:pick_wood", {
-	description = "Wooden Pickaxe",
-	inventory_image = "default_tool_woodpick.png",
-	tool_capabilities = {
-		max_drop_level=0,
-		groupcaps={
-			cracky={times={[2]=2.00, [3]=1.20}, uses=10, maxlevel=1}
-		}
-	},
-})
-minetest.register_tool("default:pick_stone", {
-	description = "Stone Pickaxe",
-	inventory_image = "default_tool_stonepick.png",
-	tool_capabilities = {
-		max_drop_level=0,
-		groupcaps={
-			cracky={times={[1]=3.00, [2]=1.20, [3]=0.80}, uses=20, maxlevel=1}
-		}
-	},
-})
-minetest.register_tool("default:pick_mese", {
-	description = "Mese Pickaxe",
-	inventory_image = "default_tool_mesepick.png",
-	tool_capabilities = {
-		full_punch_interval = 1.0,
-		max_drop_level=3,
-		groupcaps={
-			cracky={times={[1]=2.0, [2]=1.0, [3]=0.5}, uses=20, maxlevel=3},
-			crumbly={times={[1]=2.0, [2]=1.0, [3]=0.5}, uses=20, maxlevel=3},
-			snappy={times={[1]=2.0, [2]=1.0, [3]=0.5}, uses=20, maxlevel=3}
-		}
-	},
-})
-minetest.register_tool("default:shovel_wood", {
-	description = "Wooden Shovel",
-	inventory_image = "default_tool_woodshovel.png",
-	tool_capabilities = {
-		max_drop_level=0,
-		groupcaps={
-			crumbly={times={[1]=3.00, [2]=0.80, [3]=0.50}, uses=10, maxlevel=1}
-		}
-	},
-})
-minetest.register_tool("default:shovel_stone", {
-	description = "Stone Shovel",
-	inventory_image = "default_tool_stoneshovel.png",
-	tool_capabilities = {
-		max_drop_level=0,
-		groupcaps={
-			crumbly={times={[1]=1.50, [2]=0.50, [3]=0.30}, uses=20, maxlevel=1}
-		}
-	},
-})
-minetest.register_tool("default:axe_wood", {
-	description = "Wooden Axe",
-	inventory_image = "default_tool_woodaxe.png",
-	tool_capabilities = {
-		max_drop_level=0,
-		groupcaps={
-			choppy={times={[2]=1.40, [3]=0.80}, uses=10, maxlevel=1},
-			fleshy={times={[2]=1.50, [3]=0.80}, uses=10, maxlevel=1}
-		}
-	},
-})
-minetest.register_tool("default:axe_stone", {
-	description = "Stone Axe",
-	inventory_image = "default_tool_stoneaxe.png",
-	tool_capabilities = {
-		max_drop_level=0,
-		groupcaps={
-			choppy={times={[1]=3.00, [2]=1.00, [3]=0.60}, uses=20, maxlevel=1},
-			fleshy={times={[2]=1.30, [3]=0.70}, uses=20, maxlevel=1}
-		}
-	},
-})
-minetest.register_tool("default:sword_wood", {
-	description = "Wooden Sword",
-	inventory_image = "default_tool_woodsword.png",
-	tool_capabilities = {
-		full_punch_interval = 1.0,
-		max_drop_level=0,
-		groupcaps={
-			fleshy={times={[2]=1.10, [3]=0.60}, uses=10, maxlevel=1},
-			snappy={times={[2]=1.00, [3]=0.50}, uses=10, maxlevel=1},
-			choppy={times={[3]=1.00}, uses=20, maxlevel=0}
-		}
-	}
-})
-minetest.register_tool("default:sword_stone", {
-	description = "Stone Sword",
-	inventory_image = "default_tool_stonesword.png",
-	tool_capabilities = {
-		full_punch_interval = 1.0,
-		max_drop_level=0,
-		groupcaps={
-			fleshy={times={[2]=0.80, [3]=0.40}, uses=20, maxlevel=1},
-			snappy={times={[2]=0.80, [3]=0.40}, uses=20, maxlevel=1},
-			choppy={times={[3]=0.90}, uses=20, maxlevel=0}
 		}
 	}
 })
@@ -156,78 +55,6 @@ minetest.register_craft({
 		{'default:wood', 'default:wood', 'default:wood'},
 		{'default:wood', 'default:wood', 'default:wood'},
 		{'', 'default:stick', ''},
-	}
-})
-
-minetest.register_craft({
-	output = 'default:pick_wood',
-	recipe = {
-		{'default:stick', 'default:stick', 'default:stick'},
-		{'', 'default:stick', ''},
-		{'', 'default:stick', ''},
-	}
-})
-
-minetest.register_craft({
-	output = 'default:pick_stone',
-	recipe = {
-		{'default:cobble', 'default:cobble', 'default:cobble'},
-		{'', 'default:stick', ''},
-		{'', 'default:stick', ''},
-	}
-})
-
-minetest.register_craft({
-	output = 'default:shovel_wood',
-	recipe = {
-		{'default:wood'},
-		{'default:stick'},
-		{'default:stick'},
-	}
-})
-
-minetest.register_craft({
-	output = 'default:shovel_stone',
-	recipe = {
-		{'default:cobble'},
-		{'default:stick'},
-		{'default:stick'},
-	}
-})
-
-minetest.register_craft({
-	output = 'default:axe_wood',
-	recipe = {
-		{'default:wood', 'default:wood'},
-		{'default:wood', 'default:stick'},
-		{'', 'default:stick'},
-	}
-})
-
-minetest.register_craft({
-	output = 'default:axe_stone',
-	recipe = {
-		{'default:cobble', 'default:cobble'},
-		{'default:cobble', 'default:stick'},
-		{'', 'default:stick'},
-	}
-})
-
-minetest.register_craft({
-	output = 'default:sword_wood',
-	recipe = {
-		{'default:wood'},
-		{'default:wood'},
-		{'default:stick'},
-	}
-})
-
-minetest.register_craft({
-	output = 'default:sword_stone',
-	recipe = {
-		{'default:cobble'},
-		{'default:cobble'},
-		{'default:stick'},
 	}
 })
 
@@ -507,8 +334,18 @@ minetest.register_node("default:stone", {
 	tiles = {"default_stone.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
-	drop = 'default:cobble',
-	legacy_mineral = true,
+	drop = {
+		max_items = 1,
+		items = {
+			{
+				items = {'default:cobble', 'minerals:borax'},
+				rarity = 50,
+			},
+			{
+				items = {'default:cobble'}
+			},
+		},
+	},
 	sounds = default.node_sound_stone_defaults(),
 })
 
@@ -518,7 +355,30 @@ minetest.register_node("default:desert_stone", {
 	is_ground_content = true,
 	groups = {cracky=3},
 	drop = 'default:desert_stone',
-	legacy_mineral = true,
+	sounds = default.node_sound_stone_defaults(),
+})
+
+minetest.register_node("default:stone_flat", {
+	description = "Flat Stone",
+	tiles = {"default_stone_flat.png"},
+	is_ground_content = true,
+	groups = {cracky=3},
+	sounds = default.node_sound_stone_defaults(),
+})
+
+minetest.register_node("default:desert_stone_flat", {
+	description = "Desert Flat Stone",
+	tiles = {"default_desert_stone_flat.png"},
+	is_ground_content = true,
+	groups = {cracky=3},
+	sounds = default.node_sound_stone_defaults(),
+})
+
+minetest.register_node("default:cobbleblock_flat", {
+	description = "Stone Brick Block",
+	tiles = {"default_cobbleblock_flat.png"},
+	is_ground_content = true,
+	groups = {cracky=3},
 	sounds = default.node_sound_stone_defaults(),
 })
 
@@ -625,7 +485,7 @@ minetest.register_node("default:cactus", {
 	description = "Cactus",
 	tiles = {"default_cactus_top.png", "default_cactus_top.png", "default_cactus_side.png"},
 	is_ground_content = true,
-	groups = {snappy=2,choppy=3,flammable=2},
+	groups = {snappy=2,choppy=3,flammable=2,dropping_node=1},
 	sounds = default.node_sound_wood_defaults(),
 })
 
@@ -638,7 +498,7 @@ minetest.register_node("default:papyrus", {
 	paramtype = "light",
 	is_ground_content = true,
 	walkable = false,
-	groups = {snappy=3,flammable=2},
+	groups = {snappy=3,flammable=2, dropping_node=1},
 	sounds = default.node_sound_leaves_defaults(),
 })
 
@@ -713,7 +573,6 @@ minetest.register_node("default:ladder", {
 		--wall_side = = <default>
 	},
 	groups = {snappy=1,choppy=2,oddly_breakable_by_hand=3,flammable=2},
-	legacy_wallmounted = true,
 	sounds = default.node_sound_wood_defaults(),
 })
 
@@ -844,7 +703,6 @@ minetest.register_node("default:torch", {
 		wall_side = {-0.5, -0.3, -0.1, -0.5+0.3, 0.3, 0.1},
 	},
 	groups = {choppy=2,dig_immediate=3,flammable=1},
-	legacy_wallmounted = true,
 	sounds = default.node_sound_defaults(),
 })
 
@@ -865,7 +723,6 @@ minetest.register_node("default:sign_wall", {
 		--wall_side = <default>
 	},
 	groups = {choppy=2,dig_immediate=2},
-	legacy_wallmounted = true,
 	sounds = default.node_sound_defaults(),
 	on_construct = function(pos)
 		--local n = minetest.env:get_node(pos)
@@ -890,7 +747,6 @@ minetest.register_node("default:chest", {
 		"default_chest_side.png", "default_chest_side.png", "default_chest_front.png"},
 	paramtype2 = "facedir",
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
-	legacy_facedir_simple = true,
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
@@ -934,7 +790,6 @@ minetest.register_node("default:chest_locked", {
 		"default_chest_side.png", "default_chest_side.png", "default_chest_lock.png"},
 	paramtype2 = "facedir",
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
-	legacy_facedir_simple = true,
 	sounds = default.node_sound_wood_defaults(),
 	after_place_node = function(pos, placer)
 		local meta = minetest.env:get_meta(pos)
@@ -1005,12 +860,27 @@ minetest.register_node("default:chest_locked", {
 	end,
 })
 
-minetest.register_node("default:cobble", {
-	description = "Cobblestone",
-	tiles = {"default_cobble.png"},
+minetest.register_node("default:cobbleblock", {
+	description = "Block of Cobble",
+	tiles = {"default_cobbleblock.png"},
 	is_ground_content = true,
-	groups = {cracky=3},
+	drop = "default:cobble 9",
+	groups = {crumbly=2, oddly_breakable_by_hand=1, falling_node=1},
 	sounds = default.node_sound_stone_defaults(),
+})
+
+minetest.register_craftitem("default:cobble", {
+	description = "Stone",
+	inventory_image = "default_cobble.png",
+})
+
+minetest.register_craft({
+	output = "default:cobbleblock",
+	recipe = {
+		{"default:cobble","default:cobble","default:cobble"},
+		{"default:cobble","default:cobble","default:cobble"},
+		{"default:cobble","default:cobble","default:cobble"}, 
+	},
 })
 
 minetest.register_node("default:sapling", {
@@ -1207,6 +1077,15 @@ function nodeupdate_single(p)
 				not minetest.registered_nodes[n_bottom.name].walkable then
 			minetest.env:remove_node(p)
 			default.spawn_falling_node(p, n.name)
+			nodeupdate(p)
+		end
+	end
+	if minetest.get_node_group(n.name, "dropping_node") ~= 0 then
+		p_bottom = {x=p.x, y=p.y-1, z=p.z}
+		n_bottom = minetest.env:get_node(p_bottom)
+		if not minetest.registered_nodes[n_bottom.name].walkable and n_bottom.name ~= n.name then
+			minetest.env:remove_node(p)
+			minetest.env:add_item(p, n.name)
 			nodeupdate(p)
 		end
 	end

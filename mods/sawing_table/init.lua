@@ -49,7 +49,7 @@ minetest.register_node("sawing_table:self", {
 	end,
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
-		meta:set_string("formspec", "invsize[8,10;]"..
+		meta:set_string("formspec", "size[8,10]"..
 				"list[current_name;input;1,1.5;1,1;]"..
 				"list[current_name;recipe;6,1.5;1,1;]"..
 				"list[current_name;res;3,1.5;1,1;]"..

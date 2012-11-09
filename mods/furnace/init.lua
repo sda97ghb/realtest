@@ -4,7 +4,7 @@ function furnace.check_furnace_blocks(pos)
 	local furnace_blocks = {{x=1,y=0,z=-1}, {x=1,y=0,z=0}, {x=1,y=0,z=1}, {x=0,y=0,z=-1}, {x=0,y=0,z=1}, {x=-1,y=0,z=-1}, {x=-1,y=0,z=0}, {x=-1,y=0,z=1}, {x=0,y=-1,z=0}, {x=1,y=-1,z=-1}, {x=1,y=-1,z=0}, {x=1,y=-1,z=1}, {x=0,y=-1,z=-1}, {x=0,y=-1,z=1}, {x=-1,y=-1,z=-1}, {x=-1,y=-1,z=0}, {x=-1,y=-1,z=1}}
 	for n = 1,#furnace_blocks do
 		local v = furnace_blocks[n]
-			if minetest.env:get_node({x=pos.x+v.x,y=pos.y+v.y,z=pos.z+v.z}).name ~= "default:cobble" then
+			if minetest.env:get_node({x=pos.x+v.x,y=pos.y+v.y,z=pos.z+v.z}).name ~= "default:cobbleblock" then
 				return false
 			end
 		end
@@ -12,7 +12,7 @@ function furnace.check_furnace_blocks(pos)
 end
 
 furnace.formspec = 
-	"invsize[8,10;]"..
+	"size[8,10]"..
 	"list[current_name;src1;1.5,0;1,1;]"..
 	"list[current_name;dst1;1.5,1;1,1;]"..
 	"list[current_name;src2;2.5,1;1,1;]"..
@@ -122,20 +122,6 @@ minetest.register_node("furnace:self_active", {
 	end,
 })
 
-function hacky_swap_node(pos,name)
-	local node = minetest.env:get_node(pos)
-	local meta = minetest.env:get_meta(pos)
-	local meta0 = meta:to_table()
-	if node.name == name then
-		return
-	end
-	node.name = name
-	local meta0 = meta:to_table()
-	minetest.env:set_node(pos,node)
-	meta = minetest.env:get_meta(pos)
-	meta:from_table(meta0)
-end
-
 minetest.register_abm({
 	nodenames = {"furnace:self","furnace:self_active"},
 	interval = 1.0,
@@ -156,7 +142,11 @@ minetest.register_abm({
 				local name, size = v[1], v[2]
 				for n = 1,size do
 					if not inv:is_empty(name) then
-						minetest.env:add_item(pos, inv:get_stack(name, n):get_name() .. " " .. inv:get_stack(name, n):get_count())
+						minetest.env:add_item(pos, 
+							{name=inv:get_stack(name, 1):get_name(),
+							 count=inv:get_stack(name, 1):get_count(),
+							 wear=inv:get_stack(name, 1):get_wear(),
+							 metadata=inv:get_stack(name, n):get_metadata()})
 					end
 				end
 			end
@@ -184,6 +174,10 @@ minetest.register_abm({
 		end
 		
 		if meta:get_int("active") == 1 then
+			if meta:get_int("sound_play") ~= 1 then
+				meta:set_int("sound_handle", minetest.sound_play("bonfire_burning", {pos=pos, max_hear_distance = 8,loop=true}))
+				meta:set_int("sound_play", 1)
+			end
 			local srclists = {}
 			local cookeds = {}
 			for i = 1,5 do
@@ -224,7 +218,7 @@ minetest.register_abm({
 				meta:set_string("infotext","Furnace active: "..percent.."%")
 				hacky_swap_node(pos,"furnace:self_active")
 				meta:set_string("formspec",
-					"invsize[8,10;]"..
+					"size[8,10]"..
 					"list[current_name;src1;1.5,0;1,1;]"..
 					"list[current_name;dst1;1.5,1;1,1;]"..
 					"list[current_name;src2;2.5,1;1,1;]"..
@@ -261,6 +255,8 @@ minetest.register_abm({
 				hacky_swap_node(pos,"furnace:self")
 				meta:set_string("formspec", furnace.formspec)
 				meta:set_int("active", 0)
+				meta:set_int("sound_play", 0)
+				minetest.sound_stop(meta:get_int("sound_handle"))
 				return
 			end
 
