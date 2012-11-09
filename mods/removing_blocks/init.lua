@@ -1,8 +1,10 @@
-DISABLE_BLOCKS={
+removing_blocks = {}
+removing_blocks.blocks = {
+	"default:tree",
+	"default:leaves",
 }
-
-for i=1, #DISABLE_BLOCKS do
-	minetest.register_node(":"..DISABLE_BLOCKS[i], {
+for i, block in ipairs(removing_blocks.blocks) do
+	minetest.register_node(":"..block, {
 		drawtype = "airlike",
 		paramtype = "light",
 		light_propagates = true,

@@ -1,20 +1,13 @@
 dofile(minetest.get_modpath("trees").."/treegen.lua")
 
-GROUND_LIST={
-	'default:dirt',
-	'default:dirt_with_grass',
+trees = {}
+
+trees.grounds = {
+	"default:dirt",
+	"default:dirt_with_grass",
 }
 
-local table_containts = function(t, v)
-	for _, i in ipairs(t) do
-		if i==v then
-			return true
-		end
-	end
-	return false
-end
-
-TREES_LIST={
+trees.list = {
 	"ash",
 	"aspen",
 	"birch",
@@ -23,10 +16,19 @@ TREES_LIST={
 	"pine",
 }
 
-for i=1,#TREES_LIST do
-	minetest.register_node("trees:"..TREES_LIST[i].."_trunk", {
-		description = "Log of "..TREES_LIST[i],
-		tiles = {"trees_"..TREES_LIST[i].."_trunk_top.png", "trees_"..TREES_LIST[i].."_trunk_top.png", "trees_"..TREES_LIST[i].."_trunk.png"},
+trees.desc_list = {
+	"Ash",
+	"Aspen",
+	"Birch",
+	"Chestnut",
+	"Mapple",
+	"Pine",
+}
+
+for i, tree in ipairs(trees.list) do
+	minetest.register_node("trees:"..tree.."_trunk", {
+		description = "Log of "..trees.desc_list[i],
+		tiles = {"trees_"..tree.."_trunk_top.png", "trees_"..tree.."_trunk_top.png", "trees_"..tree.."_trunk.png"},
 		is_ground_content = true,
 		groups = {tree=1,snappy=1,choppy=2,flammable=2},
 		sounds = default.node_sound_wood_defaults(),
@@ -44,29 +46,28 @@ for i=1,#TREES_LIST do
 				{-0.4,-0.5,-0.4,0.4,0.5,0.4},
 			},
 		},
-		climbable = true,
 	})
 	
-	minetest.register_node("trees:"..TREES_LIST[i].."_leaves", {
-		description = "Leaves of "..TREES_LIST[i],
+	minetest.register_node("trees:"..tree.."_leaves", {
+		description = "Leaves of "..trees.desc_list[i],
 		drawtype = "allfaces_optional",
 		visual_scale = 1.3,
-		tiles = {"trees_"..TREES_LIST[i].."_leaves.png"},
+		tiles = {"trees_"..tree.."_leaves.png"},
 		paramtype = "light",
 		groups = {snappy=3, leafdecay=3, flammable=2},
 		drop = {
 			max_items = 1,
 			items = {
 				{
-					items = {'trees:'..TREES_LIST[i]..'_sapling'},
+					items = {'trees:'..tree..'_sapling'},
 					rarity = 15,
 				},
 				{
-					items = {'trees:'..TREES_LIST[i]..'_stick'},
+					items = {'trees:'..tree..'_stick'},
 					rarity = 2,
 				},
 				{
-					items = {"trees:"..TREES_LIST[i].."_leaves"},
+					items = {"trees:"..tree.."_leaves"},
 				}
 			}
 		},
@@ -75,18 +76,17 @@ for i=1,#TREES_LIST do
 		climbable = true,
 	})
 	
-	minetest.register_node("trees:"..TREES_LIST[i].."_wood", {
-		description = "Wooden Planks of "..TREES_LIST[i],
-		tiles = {"trees_"..TREES_LIST[i].."_wood.png"},
-		inventory_image = "",
+	minetest.register_node("trees:"..tree.."_wood", {
+		description = "Wooden Planks of "..trees.desc_list[i],
+		tiles = {"trees_"..tree.."_wood.png"},
 		is_ground_content = true,
 		groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=3},
 		sounds = default.node_sound_wood_defaults(),
 	})
 	
-	minetest.register_craftitem("trees:"..TREES_LIST[i].."_stick", {
-		description = "Stick of "..TREES_LIST[i],
-		inventory_image = "trees_"..TREES_LIST[i].."_stick.png",
+	minetest.register_craftitem("trees:"..tree.."_stick", {
+		description = "Stick of "..trees.desc_list[i],
+		inventory_image = "trees_"..tree.."_stick.png",
 		groups = {sticks=3},
 		--[[on_use = function(itemstack, user, pointed_thing)
 			if pointed_thing.type ~= "node" then
@@ -97,13 +97,13 @@ for i=1,#TREES_LIST do
 		end,]]
 	})
 	
-	minetest.register_node("trees:"..TREES_LIST[i].."_sapling", {
-		description = "Sapling of "..TREES_LIST[i],
+	minetest.register_node("trees:"..tree.."_sapling", {
+		description = "Sapling of "..trees.desc_list[i],
 		drawtype = "plantlike",
 		visual_scale = 1.0,
-		tiles = {"trees_"..TREES_LIST[i].."_sapling.png"},
-		inventory_image = "trees_"..TREES_LIST[i].."_sapling.png",
-		wield_image = "trees_"..TREES_LIST[i].."_sapling.png",
+		tiles = {"trees_"..tree.."_sapling.png"},
+		inventory_image = "trees_"..tree.."_sapling.png",
+		wield_image = "trees_"..tree.."_sapling.png",
 		paramtype = "light",
 		walkable = false,
 		groups = {snappy=2,dig_immediate=3,flammable=2},
@@ -124,22 +124,22 @@ for i=1,#TREES_LIST do
 	})]]
 	
 	minetest.register_abm({
-	nodenames = {"trees:"..TREES_LIST[i].."_trunk"},
-	interval = 1.0,
-	chance = 1.0,
-	action = function(pos, node, active_object_count, active_object_count_wider)
-		if table_containts(GROUND_LIST, minetest.env:get_node({x = pos.x, y = pos.y-1, z = pos.z}).name) then return end
-		for x = -1, 1 do
-			for z = -1, 1 do
-				local posn={x = pos.x+x, y = pos.y-1, z = pos.z+z}
-				if minetest.env:get_node(posn).name == "trees:"..TREES_LIST[i].."_trunk" then
-					return
+		nodenames = {"trees:"..tree.."_trunk"},
+		interval = 1.0,
+		chance = 1.0,
+		action = function(pos, node, active_object_count, active_object_count_wider)
+			if table.contains(trees.grounds, minetest.env:get_node({x = pos.x, y = pos.y-1, z = pos.z}).name) then return end
+			for x = -1, 1 do
+				for z = -1, 1 do
+					local posn={x = pos.x+x, y = pos.y-1, z = pos.z+z}
+					if minetest.env:get_node(posn).name == "trees:"..tree.."_trunk" then
+						return
+					end
 				end
 			end
-		end
-		minetest.env:add_item(pos, "trees:"..TREES_LIST[i].."_trunk")
-		minetest.env:add_node(pos, {name="air"})
-	end,
+			minetest.env:add_item(pos, "trees:"..tree.."_trunk")
+			minetest.env:add_node(pos, {name="air"})
+		end,
 	})
 end
 
