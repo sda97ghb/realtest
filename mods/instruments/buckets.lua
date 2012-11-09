@@ -23,18 +23,16 @@ function buckets.register_liquid(name, source, flowing, itemname, inventory_imag
 					if pointed_thing.type ~= "node" then
 						return
 					end
-					-- Check if pointing to a liquid
 					n = minetest.env:get_node(pointed_thing.under)
-					if buckets.liquids[n.name] == nil then
-						-- Not a liquid
-						if minetest.env:get_node(pointed_thing.above).name == "air" then
+					if minetest.registered_nodes[n.name].buildable_to then
+						minetest.env:add_node(pointed_thing.under, {name=source})
+					else
+						n = minetest.env:get_node(pointed_thing.above)
+						if minetest.registered_nodes[n.name].buildable_to then
 							minetest.env:add_node(pointed_thing.above, {name=source})
 						else
-							return itemstack
+							return
 						end
-					elseif n.name ~= source then
-						-- It's a liquid
-						minetest.env:add_node(pointed_thing.under, {name=source})
 					end
 					return {name="instruments:bucket_empty_"..metals.list[i]}
 				end
