@@ -18,6 +18,8 @@ minetest.register_alias("mapgen_mossycobble", "default:mossycobble")
 minetest.register_alias("mapgen_dirt_with_grass", "default:dirt_with_grass")
 minetest.register_alias("mapgen_desert_sand", "default:desert_sand")
 minetest.register_alias("mapgen_desert_stone", "default:desert_stone")
+minetest.register_alias("mapgen_tree", "air")
+minetest.register_alias("mapgen_leaves", "air")
 
 --
 -- Ore generation
