@@ -134,7 +134,7 @@ function trees.make_tree(pos, arlenght, height, genlist, trunk, leaves)
 	end
 	for i = 1,#genlist do
 		local p = {x=pos.x+genlist[i][1], y=pos.y+height+genlist[i][2], z=pos.z+genlist[i][3]}
-		if minetest.env:get_node(p).name == "air" then
+		if minetest.env:get_node(p).name == "air" or minetest.env:get_node(p).name == "ignore" then
 			minetest.env:add_node(p, {name=leaves})
 		end
 	end
@@ -152,7 +152,7 @@ function trees.get_tree_height(trunk)
 	return height[trunk]
 end
 
-local function generate(genlist, arlenght, trunk, leaves, wherein, minp, maxp, seed, chunks_per_volume, ore_per_chunk, height_min, height_max)
+local function generate(genlist, arlenght, trunk, leaves, grounds, minp, maxp, seed, chunks_per_volume, ore_per_chunk, height_min, height_max)
 	if maxp.y < height_min or minp.y > height_max then
 		return
 	end
@@ -181,8 +181,8 @@ local function generate(genlist, arlenght, trunk, leaves, wherein, minp, maxp, s
 							local z2 = z0+z1
 							local p2 = {x=x2, y=y2, z=z2}
 							local p3 = {x=x2, y=y2+1, z=z2}
-							if (minetest.env:get_node(p2).name == wherein) and (minetest.env:get_node(p3).name == "air") then
-								trees.make_tree(p2, arlenght, trees.get_tree_height(trunk), genlist, trunk, leaves)
+							if table.contains(grounds, minetest.env:get_node(p2).name) and minetest.env:get_node(p3).name == "air" then
+								trees.make_tree(p3, arlenght, trees.get_tree_height(trunk), genlist, trunk, leaves)
 							end
 						end
 					end
@@ -195,21 +195,21 @@ end
 minetest.register_on_generated(function(minp, maxp, seed)
 	local pr = PseudoRandom(seed)
 	if pr:next(1,3) == 1 then
-		generate(TREES_GEN_ASH_LIST, 5, "trees:ash_trunk","trees:ash_leaves", "default:dirt_with_grass", minp, maxp, seed, 1/8/2, 1, -50, 100)
+		generate(TREES_GEN_ASH_LIST, 5, "trees:ash_trunk","trees:ash_leaves", trees.grounds, minp, maxp, seed, 1/8/2, 1, -50, 100)
 	end
 	if pr:next(1,6) == 1 then
-		generate(TREES_GEN_MAPPLE_LIST, 5,"trees:mapple_trunk", "trees:mapple_leaves", "default:dirt_with_grass", minp, maxp, seed, 1/8/2, 1, -50, 100)
+		generate(TREES_GEN_MAPPLE_LIST, 5, "trees:mapple_trunk", "trees:mapple_leaves", trees.grounds, minp, maxp, seed, 1/8/2, 1, -50, 100)
 	end
 	if pr:next(1,6) == 1 then
-		generate(TREES_GEN_BIRCH_LIST, 5, "trees:birch_trunk", "trees:birch_leaves", "default:dirt_with_grass", minp, maxp, seed, 1/8/2, 1, -50, 100)
+		generate(TREES_GEN_BIRCH_LIST, 5, "trees:birch_trunk", "trees:birch_leaves", trees.grounds, minp, maxp, seed, 1/8/2, 1, -50, 100)
 	end
 	if pr:next(1,6) == 1 then
-		generate(TREES_GEN_ASPEN_LIST, 5, "trees:aspen_trunk", "trees:aspen_leaves", "default:dirt_with_grass", minp, maxp, seed, 1/8/2, 1, -50, 100)
+		generate(TREES_GEN_ASPEN_LIST, 5, "trees:aspen_trunk", "trees:aspen_leaves", trees.grounds, minp, maxp, seed, 1/8/2, 1, -50, 100)
 	end
 	if pr:next(1,6) == 1 then
-		generate(TREES_GEN_CHESTNUT_LIST, 10, "trees:chestnut_trunk", "trees:chestnut_leaves", "default:dirt_with_grass", minp, maxp, seed, 1/8/2, 1, -50, 100)
+		generate(TREES_GEN_CHESTNUT_LIST, 10, "trees:chestnut_trunk", "trees:chestnut_leaves", trees.grounds, minp, maxp, seed, 1/8/2, 1, -50, 100)
 	end
 	if pr:next(1,6) == 1 then
-		generate(TREES_GEN_PINE_LIST, 6, "trees:pine_trunk", "trees:pine_leaves", "default:dirt_with_grass", minp, maxp, seed, 1/8/2, 1, -50, 100)
+		generate(TREES_GEN_PINE_LIST, 6, "trees:pine_trunk", "trees:pine_leaves", trees.grounds, minp, maxp, seed, 1/8/2, 1, -50, 100)
 	end
 end)
