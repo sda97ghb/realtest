@@ -1,7 +1,7 @@
 --Mod by PilzAdam
 
 function minetest.handle_node_drops(pos, drops, digger)
-	for _,item in ipairs(drops) do
+	local function drop(item)
 		local count, name
 		if type(item) == "string" then
 			count = 1
@@ -27,6 +27,22 @@ function minetest.handle_node_drops(pos, drops, digger)
 					z = -z
 				end
 				obj:setvelocity({x=1/x, y=obj:getvelocity().y, z=1/z})
+			end
+		end
+	end
+	local function drop_all()
+		for _, item in ipairs(drops) do
+			drop(item)
+		end
+	end
+	if minetest.get_node_group(minetest.env:get_node(pos).name, "drop_on_dig") == 1 then
+		drop_all()
+	elseif digger:get_inventory() then
+		for _, dropped_item in ipairs(drops) do
+			if digger:get_inventory():room_for_item("main", dropped_item) then
+				digger:get_inventory():add_item("main", dropped_item)
+			else
+				drop(dropped_item)
 			end
 		end
 	end
