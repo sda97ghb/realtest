@@ -1,16 +1,14 @@
 trees = {}
 
 dofile(minetest.get_modpath("trees").."/leavesgen.lua")
-dofile(minetest.get_modpath("trees").."/registration.lua")
 
 function trees.make_tree(pos, tree)
 	local tree = realtest.registered_trees[tree]
-	if not table.contains(tree.grounds, minetest.env:get_node({x=pos.x,y=pos.y-1,z=pos.z}).name) or
-		minetest.env:find_node_near(pos, tree.radius, "group:tree") then
+	if not table.contains(tree.grounds, minetest.env:get_node({x=pos.x,y=pos.y-1,z=pos.z}).name) then
 		return
 	end
 	local height = tree.height()
-	for i = 0,height do
+	for i = 1,height do
 		if minetest.env:get_node({x=pos.x, y=pos.y+i, z=pos.z}).name ~= "air" then
 			return
 		end
@@ -55,7 +53,8 @@ local function generate(tree, minp, maxp, seed, chunks_per_volume, ore_per_chunk
 							local z2 = z0+z1
 							local p2 = {x=x2, y=y2, z=z2}
 							local p3 = {x=x2, y=y2+1, z=z2}
-							if minetest.env:get_node(p3).name == "air" then
+							if minetest.env:get_node(p3).name == "air" and 
+								not minetest.env:find_node_near(p3, realtest.registered_trees[tree].radius, "group:tree") then
 								trees.make_tree(p3, tree)
 							end
 						end
@@ -65,6 +64,8 @@ local function generate(tree, minp, maxp, seed, chunks_per_volume, ore_per_chunk
 		end
 	end
 end
+
+dofile(minetest.get_modpath("trees").."/registration.lua")
 
 minetest.register_on_generated(function(minp, maxp, seed)
 	local pr = PseudoRandom(seed)

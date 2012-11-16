@@ -8,6 +8,9 @@ function realtest.register_tree(name, TreeDef)
 		height = TreeDef.height or function() return 10 end,
 		radius = TreeDef.radius or 5,
 		textures = TreeDef.textures or {{},"","","",""},
+		grow_interval = TreeDef.grow_interval or 60,
+		grow_chance = TreeDef.grow_chance or 20,
+		grow_light = TreeDef.grow_light or 8
 	}
 	realtest.registered_trees[name] = tree
 	
@@ -54,7 +57,7 @@ function realtest.register_tree(name, TreeDef)
 		wield_image = tree.textures[5],
 		paramtype = "light",
 		walkable = false,
-		groups = {snappy=2,dig_immediate=3,flammable=2},
+		groups = {snappy=2,dig_immediate=3,flammable=2,dropping_node=1},
 		sounds = default.node_sound_defaults(),
 	})
 	
@@ -84,6 +87,21 @@ function realtest.register_tree(name, TreeDef)
 		sounds = default.node_sound_leaves_defaults(),
 		walkable = false,
 		climbable = true,
+	})
+	
+	minetest.register_abm({
+		nodenames = {tree.name.."_sapling"},
+		neighbors = tree.grounds,
+		interval = tree.grow_interval,
+		chance = tree.grow_chance,
+		action = function(pos, node)
+			if not minetest.env:get_node_light(pos) then
+				return
+			end
+			if minetest.env:get_node_light(pos) >= tree.grow_light then
+				trees.make_tree(pos, tree.name)
+			end
+		end,
 	})
 end
 
