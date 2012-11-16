@@ -1,4 +1,5 @@
-TREES_GEN_ASH_LIST={
+trees.gen_lists={}
+trees.gen_lists.ash={
 	{0,2,0},
 	{-1,2,0},
 	{1,2,0},
@@ -112,7 +113,7 @@ TREES_GEN_ASH_LIST={
 	{0,-3,2},
 }
 
-TREES_GEN_MAPPLE_LIST={
+trees.gen_lists.mapple={
 	{0,1,0},
 	{-1,1,0},
 	{1,1,0},
@@ -193,7 +194,7 @@ TREES_GEN_MAPPLE_LIST={
 	{1,-4,0},
 }
 
-TREES_GEN_BIRCH_LIST={
+trees.gen_lists.birch={
 	{1,1,0},
 	{0,1,1},
 	{-1,1,0},
@@ -453,7 +454,7 @@ TREES_GEN_BIRCH_LIST={
 	{1,-9,1},
 }
 
-TREES_GEN_ASPEN_LIST={
+trees.gen_lists.aspen={
 	{-1,1,0},
 	{1,1,0},
 	{0,1,-1},
@@ -602,7 +603,7 @@ TREES_GEN_ASPEN_LIST={
 	{0,-6,1},
 }
 
-TREES_GEN_CHESTNUT_LIST={
+trees.gen_lists.chestnut={
 	{0,1,0},
 	{-1,1,0},
 	{1,1,0},
@@ -1218,7 +1219,7 @@ TREES_GEN_CHESTNUT_LIST={
 	{1,-7,2},
 }
 	
-TREES_GEN_PINE_LIST={
+trees.gen_lists.pine={
 	{-1,1,0},
 	{1,1,0},
 	{0,1,-1},
