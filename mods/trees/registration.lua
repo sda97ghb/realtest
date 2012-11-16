@@ -17,7 +17,7 @@ function realtest.register_tree(name, TreeDef)
 	minetest.register_node(tree.name.."_planks", {
 		description = tree.description.." Planks",
 		tiles = {tree.textures[3]},
-		groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=3},
+		groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=3,drop_on_dig=1},
 		sounds = default.node_sound_wood_defaults(),
 	})
 	
@@ -46,7 +46,7 @@ function realtest.register_tree(name, TreeDef)
 		visual_scale = 1.3,
 		tiles = {tree.textures[2]},
 		paramtype = "light",
-		groups = {snappy=3, leafdecay=3, flammable=2},
+		groups = {snappy=3, leafdecay=3, flammable=2,drop_on_dig=1},
 		drop = {
 			max_items = 1,
 			items = {
@@ -71,7 +71,7 @@ function realtest.register_tree(name, TreeDef)
 		minetest.register_node(tree.name.."_trunk", {
 		description = tree.description.." Trunk",
 		tiles = tree.textures[1],
-		groups = {tree=1,snappy=1,choppy=2,flammable=2,dropping_node=1},
+		groups = {tree=1,snappy=1,choppy=2,flammable=2,dropping_node=1,drop_on_dig=1},
 		sounds = default.node_sound_wood_defaults(),
 		drawtype = "nodebox",
 		paramtype = "light",

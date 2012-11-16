@@ -50,7 +50,7 @@ for i=1, #ORES_LIST do
 		description = ORES_DESC_LIST[i],
 		tile_images = {"default_stone.png^ores_"..ORES_LIST[i]..".png"},
 		is_ground_content = true,
-		groups = {cracky=3},
+		groups = {cracky=3,drop_on_dig=1},
 		drop = {
 			max_items = 1,
 			items = {
@@ -66,7 +66,7 @@ minetest.register_node("ores:native_copper_desert", {
 	description = "Native copper ore",
 	tile_images = {"default_desert_stone.png^ores_native_copper.png"},
 	is_ground_content = true,
-	groups = {cracky=3},
+	groups = {cracky=3,drop_on_dig=1},
 	drop = {
 		max_items = 1,
 		items = {
@@ -81,7 +81,7 @@ minetest.register_node("ores:native_gold_desert", {
 	description = "Native gold ore",
 	tile_images = {"default_desert_stone.png^ores_native_gold.png"},
 	is_ground_content = true,
-	groups = {cracky=3},
+	groups = {cracky=3,drop_on_dig=1},
 	drop = {
 		max_items = 1,
 		items = {
@@ -96,7 +96,7 @@ minetest.register_node("ores:peat", {
 	description = "Peat",
 	tile_images = {"ores_peat.png"},
 	is_ground_content = true,
-	groups = {crumbly=3},
+	groups = {crumbly=3,drop_on_dig=1},
 	sounds = default.node_sound_stone_defaults(),
 })
 

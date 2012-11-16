@@ -102,7 +102,8 @@ for i=1, #metals.list do
 		description = "Block of "..metals.desc_list[i],
 		tiles = {"metals_"..metals.list[i].."_block.png"},
 		is_ground_content = true,
-		groups = {snappy=1,bendy=2,cracky=1,melty=2,level=2},
+		drop = "metals:"..metals.list[i].."_doubleingot",
+		groups = {snappy=1,bendy=2,cracky=1,melty=2,level=2,drop_on_dig=1},
 		sounds = default.node_sound_stone_defaults(),
 	})
 	
@@ -113,8 +114,8 @@ for i=1, #metals.list do
 	minetest.register_craft({
 		output = "metals:"..metals.list[i].."_block",
 		recipe = {
-			{"metals:"..metals.list[i].."_ingot", "metals:"..metals.list[i].."_ingot"},
-			{"metals:"..metals.list[i].."_ingot", "metals:"..metals.list[i].."_ingot"},
+			{"metals:"..metals.list[i].."_doubleingot", "metals:"..metals.list[i].."_doubleingot"},
+			{"metals:"..metals.list[i].."_doubleingot", "metals:"..metals.list[i].."_doubleingot"},
 		}
 	})
 	

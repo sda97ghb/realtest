@@ -6,7 +6,8 @@ minetest.register_node("decorations:malachite_block", {
 	description = "Malachite Block",
 	tiles = {"decorations_malachite.png"},
 	is_ground_content = true,
-	groups = {cracky=3},
+	drop = "minerals:malachite 4",
+	groups = {cracky=3,drop_on_dig=1},
 	sounds = default.node_sound_stone_defaults(),
 })
 
@@ -194,12 +195,6 @@ minetest.register_craft({
 	recipe = {
 		{"minerals:malachite","minerals:malachite"},
 		{"minerals:malachite","minerals:malachite"},
-	}
-})
-minetest.register_craft({
-	output = "minerals:malachite 4",
-	recipe = {
-		{"decorations:malachite_block"},
 	}
 })
 

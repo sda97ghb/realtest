@@ -115,32 +115,26 @@ function stairs.register_stair_and_slab(subname, recipeitem, groups, images, des
 	stairs.register_slab(subname, recipeitem, groups, images, desc_slab)
 end
 
-stairs.register_stair_and_slab("wood", "default:wood",
-		{snappy=2,choppy=2,oddly_breakable_by_hand=2},
-		{"default_wood.png"},
-		"Wooden stair",
-		"Wooden slab")
-
 stairs.register_stair_and_slab("stone", "default:stone",
 		{cracky=3},
-		{"default_stone.png"},
-		"Stone stair",
-		"Stone slab")
+		{"default_stone.png",drop_on_dig=1},
+		"Stone Stair",
+		"Stone Slab")
 
 stairs.register_stair_and_slab("cobble", "default:cobbleblock",
 		{cracky=3},
-		{"default_cobbleblock.png"},
-		"Cobble stair",
-		"Cobble slab")
+		{"default_cobbleblock.png",drop_on_dig=1},
+		"Cobble Stair",
+		"Cobble Slab")
 
 stairs.register_stair_and_slab("brick", "default:brick",
 		{cracky=3},
-		{"default_brick.png"},
-		"Brick stair",
-		"Brick slab")
+		{"default_brick.png",drop_on_dig=1},
+		"Brick Stair",
+		"Brick Slab")
 
 stairs.register_stair_and_slab("sandstone", "default:sandstone",
 		{crumbly=2,cracky=2},
-		{"default_sandstone.png"},
-		"Sandstone stair",
-		"Sandstone slab")
+		{"default_sandstone.png",drop_on_dig=1},
+		"Sandstone Stair",
+		"Sandstone Slab")
