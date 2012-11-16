@@ -14,27 +14,6 @@ function realtest.register_tree(name, TreeDef)
 	}
 	realtest.registered_trees[name] = tree
 	
-	minetest.register_node(tree.name.."_trunk", {
-		description = tree.description.." Trunk",
-		tiles = tree.textures[1],
-		groups = {tree=1,snappy=1,choppy=2,flammable=2,dropping_node=1},
-		sounds = default.node_sound_wood_defaults(),
-		drawtype = "nodebox",
-		paramtype = "light",
-		node_box = {
-			type = "fixed",
-			fixed = {
-				{-0.4,-0.5,-0.4,0.4,0.5,0.4},
-			},
-		},
-		selection_box = {
-			type = "fixed",
-			fixed = {
-				{-0.4,-0.5,-0.4,0.4,0.5,0.4},
-			},
-		},
-	})
-	
 	minetest.register_node(tree.name.."_planks", {
 		description = tree.description.." Planks",
 		tiles = {tree.textures[3]},
@@ -73,7 +52,7 @@ function realtest.register_tree(name, TreeDef)
 			items = {
 				{
 					items = {tree.name..'_sapling'},
-					rarity = 15,
+					rarity = 30,
 				},
 				{
 					items = {tree.name..'_stick'},
@@ -81,12 +60,49 @@ function realtest.register_tree(name, TreeDef)
 				},
 				{
 					items = {},
-				},
+				}
 			}
 		},
 		sounds = default.node_sound_leaves_defaults(),
 		walkable = false,
 		climbable = true,
+	})
+	
+		minetest.register_node(tree.name.."_trunk", {
+		description = tree.description.." Trunk",
+		tiles = tree.textures[1],
+		groups = {tree=1,snappy=1,choppy=2,flammable=2,dropping_node=1},
+		sounds = default.node_sound_wood_defaults(),
+		drawtype = "nodebox",
+		paramtype = "light",
+		node_box = {
+			type = "fixed",
+			fixed = {
+				{-0.4,-0.5,-0.4,0.4,0.5,0.4},
+			},
+		},
+		selection_box = {
+			type = "fixed",
+			fixed = {
+				{-0.4,-0.5,-0.4,0.4,0.5,0.4},
+			},
+		},
+		after_dropping = function(pos, node, meta)
+			for i = 1,#tree.leaves do
+				local p = {x=pos.x+tree.leaves[i][1], y=pos.y+tree.leaves[i][2], z=pos.z+tree.leaves[i][3]}
+				if minetest.env:get_node(p).name == tree.name.."_leaves" then
+					minetest.env:dig_node(p)
+				end
+			end
+		end,
+		after_dig_node = function(pos, oldnode, oldmetadata, digger)
+			for i = 1,#tree.leaves do
+				local p = {x=pos.x+tree.leaves[i][1], y=pos.y+tree.leaves[i][2], z=pos.z+tree.leaves[i][3]}
+				if minetest.env:get_node(p).name == tree.name.."_leaves" then
+					minetest.env:dig_node(p)
+				end
+			end
+		end,
 	})
 	
 	minetest.register_abm({
