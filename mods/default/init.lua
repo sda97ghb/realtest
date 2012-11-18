@@ -353,9 +353,9 @@ minetest.register_node("default:stone", {
 				items = {'default:cobble', 'minerals:borax'},
 				rarity = 50,
 			},
-			{
-				items = {'default:cobble'}
-			},
+			{items = {'default:cobble 3'},rarity = 5},
+			{items = {'default:cobble 2'}},
+			{items = {'default:cobble 1'},rarity = 5},
 		},
 	},
 	sounds = default.node_sound_stone_defaults(),
