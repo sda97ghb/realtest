@@ -16,110 +16,180 @@ seasons.months = {
 	"Tredecimber"
 }
 
-realtest.get_day = function()
-	local f = io.open(minetest.get_worldpath()..'/season', "r")
-	local n
-	if f then
-		n = f:read("*n")
-		io.close(f)
+seasons.week = {
+	"Monday",
+	"Tuesday",
+	"Wednesday",
+	"Thursday",
+	"Friday",
+	"Saturday",
+	"Sunday",
+}
+
+seasons.seasons = {
+	"Spring",
+	"Summer",
+	"Autumn",
+	"Winter"
+}
+
+seasons.day = 1
+seasons.year = 0
+seasons.timer = 0
+
+local F = io.open(minetest.get_worldpath()..'/season', "r")
+local d, y
+if F then
+	d = F:read("*n")
+	y = F:read("*n")
+	io.close(F)
+end
+seasons.day = d or seasons.day
+seasons.year = y or seasons.year
+
+local function sync()
+	local F = io.open(minetest.get_worldpath()..'/season', "w")
+	if F then
+		F:write(seasons.day.."\n")
+		F:write(seasons.year)
+		io.close(F)
 	end
-	return n or 1
-end
-
-realtest.set_day = function(n)
-	local f = io.open(minetest.get_worldpath()..'/season', "w")
-	f:write((n % 360).."\n")
-	f:write(math.floor(n / 360))
-	io.close(f)
-end
-
-realtest.get_day_and_year = function()
-	local f = io.open(minetest.get_worldpath()..'/season', "r")
-	local n = 1
-	local y = 0 
-	if f then
-		n = f:read("*n")
-		y = f:read("*n")
-		io.close(f)
+	if not F then
+		minetest.log("error", "Can't access the \""..minetest.get_worldpath().."/season".."\" file.")
 	end
-	return y, n
 end
 
-realtest.get_year =  function()
-	local f = io.open(minetest.get_worldpath()..'/season', "r")
-	local y
-	if f then
-		f:read("*n")
-		y = f:read("*n")
-		io.close(f)
-	end
-	return y or 0
+function seasons.get_day()
+	return seasons.day
 end
 
-realtest.set_year = function(y)
-	local n = realtest.get_day()
-	local f = io.open(minetest.get_worldpath()..'/season', "w")
-	f:write(n.."\n")
-	f:write(y)
-	io.close(f)
+function seasons.get_year()
+	return seasons.year
 end
 
-realtest.leap_year = function()
-	return realtest.get_year() % 62 > 51
+function seasons.leap_year()
+	return seasons.year % 62 > 51
 end
 
-realtest.get_season = function()
-	local day = realtest.get_day()
-	if day > 0 and day <= 91 then return "Spring" end
-	if day > 91 and day <= 182 then return "Summer" end
-	if day > 181 and day <= 273 then return "Autumn" end
-	if realtest.leap_year then
-		if day > 272 and  day <= 371 then return "Winter" end
+function seasons.get_current_year_length()
+	if seasons.leap_year() then
+		return 371
 	else
-		if day > 272 and  day <= 364 then return "Winter" end
+		return 364
 	end
 end
 
-realtest.get_month = function()
-	local n = math.floor(realtest.get_day() / 28)
-	if n < 13 then n = n + 1 end
-	return seasons.months[n], n
+function seasons.set_day(day)
+	local year = 0
+	while true do
+		if year % 62 > 51 then
+			if day > 371 then
+				day = day - 371
+				year = year + 1
+			else break end
+		else
+			if day > 364 then
+				day = day - 364
+				year = year + 1
+			else break end
+		end
+	end
+	seasons.day = day
+	seasons.year = year
+	sync()
 end
 
-realtest.get_day_of_month = function()
-	local n = math.floor(realtest.get_day() / 28)
-	local n2 = realtest.get_day() % 28
-	if n == 13 then n2 = n2 + 28 end
-	return n2
+function seasons.set_year(year)
+	seasons.year = year
+	sync()
 end
 
-add_day = function()
-	local f
-	if realtest.leap_year() then
-		f = 371
+function seasons.get_day_of_month()
+	local m = math.floor(seasons.day / 28)
+	local d = seasons.day % 28
+	if m == 13 then d = d + 28 end
+	return d
+end
+
+function seasons.get_month()
+	local m = math.floor(seasons.day / 28) + 1
+	return seasons.months[m]
+end
+
+function seasons.get_day_of_week()
+	local w = seasons.day % 7
+	return seasons.week[w]
+end
+
+function seasons.get_season()
+	local d = seasons.day
+	if d >=   1 and d <=  91 then return seasons.seasons[1] end
+	if d >=  92 and d <= 182 then return seasons.seasons[2] end
+	if d >= 183 and d <= 273 then return seasons.seasons[3] end
+	if d >= 274 and d <= 371 then return seasons.seasons[4] end
+end
+
+local function add_day()
+	if seasons.day + 1 > seasons.get_current_year_length() then
+		seasons.year = seasons.year + 1
+		seasons.day = 1
 	else
-		f = 364
+		seasons.day = seasons.day + 1
 	end
-	if realtest.get_day() + 1 > f then
-		realtest.set_year(realtest.get_year() + 1)
-		realtest.set_day(1)
-	else
-		realtest.set_day(realtest.get_day() + 1)
-	end
-	minetest.after(math.floor(86400 / minetest.setting_get("time_speed")), add_day)
+	sync()
 end
 
-if minetest.setting_get("time_speed") ~= 0 then
-	minetest.after(math.floor(86400 / minetest.setting_get("time_speed")), add_day)
-end
+minetest.after(0, function()
+	seasons.timer = math.floor(minetest.env:get_timeofday() * 1200)
+	local delta = 0
+	minetest.register_globalstep(function(dtime)
+		delta = delta + dtime
+		local q = 72/minetest.setting_get("time_speed")
+		while delta >= q do
+		    delta = delta - q
+		    seasons.timer = seasons.timer + 1
+		    if seasons.timer == 1200 then
+		    	seasons.timer = 0
+		    	add_day()
+		    end
+		end
+	end)
+end)
+
+minetest.register_chatcommand("time", {
+	params = "<0...24000>",
+	description = "set time of day",
+	privs = {settime=true},
+	func = function(name, param)
+		if param == "" then
+			minetest.chat_send_player(name, "Missing parameter")
+			return
+		end
+		local newtime = tonumber(param)
+		if newtime == nil then
+			minetest.chat_send_player(name, "Invalid time")
+		else
+			minetest.env:set_timeofday((newtime % 24000) / 24000)
+			seasons.timer = (newtime % 24000) / 20
+			minetest.chat_send_player(name, "Time of day changed.")
+			minetest.log("action", name .. " sets time " .. newtime)
+		end
+	end,
+})
 
 minetest.register_chatcommand("calendar", {
 	params = "",
 	description = "get the calendar",
 	privs = {server=true},
 	func = function(name, param)
-		minetest.chat_send_player(name, "Date: "..realtest.get_month().." "..realtest.get_day_of_month()..", "..realtest.get_year())
-		minetest.chat_send_player(name, "Season: "..realtest.get_season())
+		minetest.chat_send_player(name, "Date: "..seasons.get_day_of_week().." "..seasons.get_day_of_month().." "..seasons.get_month().." "..seasons.get_year())
+		local h = math.floor(minetest.env:get_timeofday() * 24)
+		local m = math.floor((minetest.env:get_timeofday() * 24000 - h * 1000) * 0.06)
+		if m < 10 then
+			m = "0"..m
+		end
+		minetest.chat_send_player(name, "Time: "..h..":"..m)
+		minetest.chat_send_player(name, "Season: "..seasons.get_season())
 	end,
 })
 
@@ -128,7 +198,7 @@ minetest.register_chatcommand("setday", {
 	description = "set the day",
 	privs = {server=true},
 	func = function(name, param)
-		realtest.set_day(param)
+		seasons.set_day(tonumber(param))
 		minetest.chat_send_player(name, "Day was changed to "..param)
 	end,
 })
@@ -138,7 +208,7 @@ minetest.register_chatcommand("setyear", {
 	description = "set the year",
 	privs = {server=true},
 	func = function(name, param)
-		realtest.set_year(param)
+		seasons.set_year(tonumber(param))
 		minetest.chat_send_player(name, "Year was changed to "..param)
 	end,
 })

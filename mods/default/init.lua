@@ -353,9 +353,17 @@ minetest.register_node("default:stone", {
 				items = {'default:cobble', 'minerals:borax'},
 				rarity = 50,
 			},
-			{items = {'default:cobble 3'},rarity = 5},
-			{items = {'default:cobble 2'}},
-			{items = {'default:cobble 1'},rarity = 5},
+			{
+				items = {'default:cobble', 'default:cobble', 'default:cobble'},
+				rarity = 5
+			},
+			{
+				items = {'default:cobble', 'default:cobble'}
+			},
+			{
+				items = {'default:cobble 1'},
+				rarity = 5
+			},
 		},
 	},
 	sounds = default.node_sound_stone_defaults(),
@@ -504,7 +512,20 @@ minetest.register_node("default:leaves", {
 minetest.register_node("default:cactus", {
 	description = "Cactus",
 	tiles = {"default_cactus_top.png", "default_cactus_top.png", "default_cactus_side.png"},
-	is_ground_content = true,
+	drawtype = "nodebox",
+	paramtype = "light",
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-0.4, -0.5, -0.4, 0.4, 0.5, 0.4},
+		},
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = {
+			{-0.4, -0.5, -0.4, 0.4, 0.5, 0.4},
+		},
+	},
 	groups = {snappy=2,choppy=3,flammable=2,dropping_node=1},
 	sounds = default.node_sound_wood_defaults(),
 })
