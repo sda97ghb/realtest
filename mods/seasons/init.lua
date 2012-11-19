@@ -129,14 +129,48 @@ function seasons.get_season()
 	if d >= 274 and d <= 371 then return seasons.seasons[4] end
 end
 
+realtest.registered_on_day_changes = {}
+function realtest.register_on_day_change(func)
+	if func ~= nil then
+		table.insert(realtest.registered_on_day_changes, func)
+	end
+end
+
+realtest.registered_on_season_changes = {}
+function realtest.register_on_season_change(func)
+	if func ~= nil then
+		table.insert(realtest.registered_on_season_changes, func)
+	end
+end
+
+realtest.registered_on_new_year = {}
+function realtest.register_on_new_year(func)
+	if func ~= nil then
+		table.insert(realtest.registered_on_new_year, func)
+	end
+end
+
 local function add_day()
+	local s1 = seasons.get_season()
 	if seasons.day + 1 > seasons.get_current_year_length() then
 		seasons.year = seasons.year + 1
 		seasons.day = 1
+		for _, callback in ipairs(realtest.registered_on_new_year) do
+			callback()
+		end
 	else
 		seasons.day = seasons.day + 1
 	end
 	sync()
+	for _, callback in ipairs(realtest.registered_on_day_changes) do
+		callback()
+	end
+	local s2 = seasons.get_season()
+	if s1 ~= s2 then
+		for _, callback in ipairs(realtest.registered_on_season_changes) do
+			callback()
+		end
+	end
 end
 
 minetest.after(0, function()
@@ -212,3 +246,7 @@ minetest.register_chatcommand("setyear", {
 		minetest.chat_send_player(name, "Year was changed to "..param)
 	end,
 })
+
+realtest.register_on_new_year(function()
+	minetest.chat_send_all("Happy New Year!")
+end)
