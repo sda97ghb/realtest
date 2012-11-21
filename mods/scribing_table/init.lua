@@ -16,7 +16,8 @@ function realtest.register_instrument_plan(name, PlanDef)
 			name = name,
 			description = PlanDef.description or "Plan",
 			bitmap = PlanDef.bitmap,
-			inventory_image = PlanDef.inventory_image or "scribing_table_plan.png"
+			inventory_image = PlanDef.inventory_image or "scribing_table_plan.png",
+			paper = PlanDef.paper or "default:paper"
 		}
 		minetest.register_craftitem(name, {
 			description = plan.description,
@@ -102,9 +103,9 @@ realtest.register_instrument_plan("scribing_table:plan_chisel", {
 local function check_recipe(pos)
 	local meta = minetest.env:get_meta(pos)
 	local inv = meta:get_inventory()
-	local paperstack, res_craft = inv:get_stack("paper", 1)
-	if paperstack:get_name() == "default:paper" then
-		for _, plan in pairs(realtest.registered_instrument_plans) do
+	for _, plan in pairs(realtest.registered_instrument_plans) do
+		local paperstack, res_craft = inv:get_stack("paper", 1)
+		if paperstack:get_name() == plan.paper then
 			local f = true
 			for j = 1,25 do
 				local dye = inv:get_stack("dye", j)
