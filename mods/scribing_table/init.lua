@@ -9,83 +9,113 @@ minetest.register_craft({
 	}
 })
 
-local recipes = {
-	{"metals:recipe_axe", 
-		{0,1,0,0,0,
-		 1,1,1,1,0,
-		 1,1,1,1,1,
-		 1,1,1,1,0,
-		 0,1,0,0,0,}
-	},
-	{"metals:recipe_hammer", 
-	    {1,1,1,1,1,
-		 1,1,1,1,1,
-		 1,1,1,1,1,
-		 0,0,1,0,0,
-		 0,0,0,0,0,}
-	},
-	{"metals:recipe_pick", 
-		{0,1,1,1,0,
-		 1,0,0,0,1,
-		 0,0,0,0,0,
-		 0,0,0,0,0,
-		 0,0,0,0,0,}
-	},
-	{"metals:recipe_shovel", 
-		{0,1,1,1,0,
-		 0,1,1,1,0,
-		 0,1,1,1,0,
-		 0,1,1,1,0,
-		 0,0,1,0,0,}
-	},
-	{"metals:recipe_spear", 
-		{1,1,0,0,0,
-		 1,1,1,0,0,
-		 0,1,0,0,0,
-		 0,0,0,0,0,
-		 0,0,0,0,0,}
-	},
-	{"metals:recipe_sword", 
-		{0,0,0,1,1,
-		 0,0,1,1,1,
-		 0,1,1,1,0,
-		 0,1,1,0,0,
-		 1,0,0,0,0,}
-	},
-	{"metals:recipe_bucket",
-		{1,0,0,0,1,
-		 1,0,0,0,1,
-		 1,0,0,0,1,
-		 1,0,0,0,1,
-		 0,1,1,1,0,}
-	},
-	{"metals:recipe_chisel",
-		{0,0,1,0,0,
-		 0,0,1,0,0,
-		 0,0,1,0,0,
-		 0,0,1,0,0,
-		 0,0,1,0,0,}
-	},
-}
+realtest.registered_instrument_plans = {}
+function realtest.register_instrument_plan(name, PlanDef)
+	if PlanDef.bitmap then
+		local plan = {
+			name = name,
+			description = PlanDef.description or "Plan",
+			bitmap = PlanDef.bitmap,
+			inventory_image = PlanDef.inventory_image or "scribing_table_plan.png"
+		}
+		minetest.register_craftitem(name, {
+			description = plan.description,
+			inventory_image = plan.inventory_image,
+			stack_max = 1,
+		})
+		table.insert(realtest.registered_instrument_plans, plan)
+	end
+end
+
+realtest.register_instrument_plan("scribing_table:plan_axe", {
+	description = "Axe Plan",
+	bitmap = {0,1,0,0,0,
+			  1,1,1,1,0,
+			  1,1,1,1,1,
+			  1,1,1,1,0,
+			  0,1,0,0,0,}
+})
+
+realtest.register_instrument_plan("scribing_table:plan_hammer", {
+	description = "Hammer Plan",
+	bitmap = {1,1,1,1,1,
+			  1,1,1,1,1,
+			  1,1,1,1,1,
+			  0,0,1,0,0,
+			  0,0,0,0,0,}
+})
+
+realtest.register_instrument_plan("scribing_table:plan_pick", {
+	description = "Pick Plan",
+	bitmap = {0,1,1,1,0,
+			  1,0,0,0,1,
+			  0,0,0,0,0,
+			  0,0,0,0,0,
+			  0,0,0,0,0,}
+})
+
+realtest.register_instrument_plan("scribing_table:plan_shovel", {
+	description = "Shovel Plan",
+	bitmap = {0,1,1,1,0,
+			  0,1,1,1,0,
+			  0,1,1,1,0,
+			  0,1,1,1,0,
+			  0,0,1,0,0,}
+})
+
+realtest.register_instrument_plan("scribing_table:plan_spear", {
+	description = "Spear Plan",
+	bitmap = {1,1,0,0,0,
+			  1,1,1,0,0,
+			  0,1,0,0,0,
+			  0,0,0,0,0,
+			  0,0,0,0,0,}
+})
+
+realtest.register_instrument_plan("scribing_table:plan_sword", {
+	description = "Sword Plan",
+	bitmap = {0,0,0,1,1,
+			  0,0,1,1,1,
+			  0,1,1,1,0,
+			  0,1,1,0,0,
+			  1,0,0,0,0,}
+})
+
+realtest.register_instrument_plan("scribing_table:plan_bucket", {
+	description = "Bucket Plan",
+	bitmap = {1,0,0,0,1,
+			  1,0,0,0,1,
+			  1,0,0,0,1,
+			  1,0,0,0,1,
+			  0,1,1,1,0,}
+})
+
+realtest.register_instrument_plan("scribing_table:plan_chisel", {
+	description = "Chisel Plan",
+	bitmap = {0,0,1,0,0,
+			  0,0,1,0,0,
+			  0,0,1,0,0,
+			  0,0,1,0,0,
+			  0,0,1,0,0,}
+})
 
 local function check_recipe(pos)
 	local meta = minetest.env:get_meta(pos)
 	local inv = meta:get_inventory()
 	local paperstack, res_craft = inv:get_stack("paper", 1)
 	if paperstack:get_name() == "default:paper" then
-		for i = 1,#recipes do
+		for _, plan in pairs(realtest.registered_instrument_plans) do
 			local f = true
 			for j = 1,25 do
 				local dye = inv:get_stack("dye", j)
-				if  (minetest.registered_items[dye:get_name()].groups["dye"] == 1   and recipes[i][2][j] == 0) or
-					(minetest.registered_items[dye:get_name()].groups["dye"] == nil and recipes[i][2][j] == 1) then
+				if  (minetest.registered_items[dye:get_name()].groups["dye"] == 1   and plan.bitmap[j] == 0) or
+					(minetest.registered_items[dye:get_name()].groups["dye"] == nil and plan.bitmap[j] == 1) then
 					f = false
 					break
 				end
 			end
 			if f then
-				res_craft = recipes[i][1]
-				if inv:room_for_item("res", res_craft) then
+				if inv:room_for_item("res", plan.name) then
 					paperstack:take_item()
 					inv:set_stack("paper", 1, paperstack)
 					for i=1,25 do
@@ -93,7 +123,7 @@ local function check_recipe(pos)
 						dye:take_item()
 						inv:set_stack("dye", i, dye)
 					end
-					inv:add_item("res", res_craft)
+					inv:add_item("res", plan.name)
 				end
 				break
 			end
