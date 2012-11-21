@@ -74,7 +74,7 @@ instruments.list = {"pick", "axe", "shovel", "hammer", "sword", "spear", "chisel
 instruments.spear.entity = {
 	physical = false,
 	timer=0,
-	textures = {"spear_back.png"},
+	textures = {"instruments_spear_back.png"},
 	lastpos={},
 	collisionbox = {0,0,0,0,0,0},
 	material = "stone",
@@ -93,7 +93,8 @@ instruments.spear.entity.on_step = function(self, dtime)
 				if obj:get_hp()<=0 then 
 					obj:remove()
 				end
-				self.object:remove() 
+				minetest.env:add_item(self.lastpos, 'instruments:spear_'..self.object:get_luaentity().material)
+				self.object:remove()
 			end
 		end
 	end
