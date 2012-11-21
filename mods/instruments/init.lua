@@ -52,7 +52,7 @@ instruments.stone_recipes = {
 	 {"", "default:stick", ""},
 	 {"", "default:stick", ""}},
 	 
-	{{"default:cobble","default:cobble"},
+	{{"default:cobble","default:stick"},
 	 {"", "default:stick"},
 	 {"", "default:stick"}},
 	 
