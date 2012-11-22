@@ -47,22 +47,11 @@ instruments.desc_list = {
 	"Black Steel",
 }
 
-instruments.stone_recipes = {
-	{{"default:cobble","default:cobble","default:cobble"},
-	 {"", "default:stick", ""},
-	 {"", "default:stick", ""}},
-	 
-	{{"default:cobble","default:stick"},
-	 {"", "default:stick"},
-	 {"", "default:stick"}},
-	 
-	{{"default:cobble"},
-	 {"default:stick"},
-	 {"default:stick"}},
-	 
-	{{"default:cobble","default:cobble","default:cobble"},
-	 {"default:cobble", "default:stick", "default:cobble"},
-	 {"", "default:stick", ""}},
+instruments.stone_head_recipes = {
+	pick = {{{"default:cobble","default:cobble","default:cobble"}},3},
+	axe = {{{"default:cobble","default:cobble"}},2},
+	shovel = {{{"default:cobble","default:cobble"},{"default:cobble","default:cobble"}},4},
+	hammer = {{{"default:cobble","default:cobble","default:cobble"},{"default:cobble","default:cobble","default:cobble"}},6},
 }
 
 instruments.levels = {0,0,0,0,1,2,2,2,2,2,3,4,5}
@@ -153,23 +142,29 @@ for i, material in ipairs(instruments.materials) do
 			groups = {material_level=instruments.levels[i], durability=instruments.durability[i]},
 		})
 	end
-	--Heads (stone heads are not exist too)
+	--Heads
 	for j, instrument in ipairs(instruments.list) do
-		if material ~= "stone" then
+		if not (material == "stone" and (instrument == "chisel" or instrument == "sword" or instrument == "spear")) then
 			minetest.register_craftitem("instruments:"..instrument.."_"..material.."_head", {
 				description = instruments.desc_list[i].." "..instrument:capitalize() .. " Head",
 				inventory_image = "instruments_"..instrument.."_"..material.."_head.png",
 			})
+			if material == "stone" then
+				minetest.register_craft({
+				output = "instruments:"..instrument.."_"..material.."_head "..instruments.stone_head_recipes[instrument][2],
+				recipe = instruments.stone_head_recipes[instrument][1],
+			})
+			end
 			minetest.register_craft({
 				output = "instruments:"..instrument.."_"..material,
 				recipe = {
-					{"instruments:"..instrument.."_"..material.."_head",},
+					{"instruments:"..instrument.."_"..material.."_head"},
 					{'default:stick'},
 				},
 			})
 		end
 	end
-	--Instruments (without chisels and spears) and stone craft recipes
+	--Instruments (without chisels and spears)
 	for j, instrument in ipairs({"pick", "axe", "shovel", "hammer", "sword"}) do
 		--Stone swords are not exist
 		if not (material == "stone" and instrument == "sword") then
@@ -182,12 +177,6 @@ for i, material in ipairs(instruments.materials) do
 				},
 				groups = {material_level=instruments.levels[i], durability=instruments.durability[i]},
 			})
-			if material == "stone" then
-				minetest.register_craft({
-					output = "instruments:"..instrument.."_"..material,
-					recipe = instruments.stone_recipes[j],
-				})
-			end
 		end
 	end
 end
@@ -195,8 +184,8 @@ end
 minetest.register_craft({
 	output = "instruments:spear_stone",
 	recipe = {
-		{"default:cobble", "default:cobble", ""},
-		{"default:cobble", "default:stick", ""},
+		{"default:cobble", "", ""},
+		{"", "default:stick", ""},
 		{"","","default:stick"},
 	},
 })
