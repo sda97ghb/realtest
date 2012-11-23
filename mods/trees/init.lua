@@ -62,9 +62,19 @@ dofile(minetest.get_modpath("trees").."/registration.lua")
 
 minetest.register_on_generated(function(minp, maxp, seed)
 	local pr = PseudoRandom(seed)
-	for key, value in pairs(realtest.registered_trees) do
-		if pr:next(1, 10) == 1 then
-			generate(key, minp, maxp, seed, 1/8/2, 1)
+	local n = 0
+	if pr:next(1,5) == 1 then
+		n = n + 1
+	end
+	if pr:next(1, 10) == 1 then
+		n = n + 1
+	end
+	if pr:next(1, 20) == 1 then
+		n = n + 1
+	end
+	if n > 0 then
+		for i = 1, n do
+			generate(realtest.registered_trees_list[pr:next(1,#realtest.registered_trees_list)], minp, maxp, seed, 1/8/2, 1)
 		end
 	end
 end)

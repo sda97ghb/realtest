@@ -1,4 +1,5 @@
 realtest.registered_trees = {}
+realtest.registered_trees_list = {}
 function realtest.register_tree(name, TreeDef)
 	local tree = {
 		name = name,
@@ -13,6 +14,7 @@ function realtest.register_tree(name, TreeDef)
 		grow_light = TreeDef.grow_light or 8
 	}
 	realtest.registered_trees[name] = tree
+	table.insert(realtest.registered_trees_list, tree.name)
 	
 	minetest.register_node(tree.name.."_planks", {
 		description = tree.description.." Planks",
