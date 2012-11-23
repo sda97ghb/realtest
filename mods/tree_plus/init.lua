@@ -3,6 +3,7 @@ minetest.register_node(":default:leaves", {
 	drawtype = "allfaces_optional",
 	visual_scale = 1.3,
 	tiles = {"default_leaves.png"},
+	particle_image = {"default_leaves.png"},
 	paramtype = "light",
 	groups = {snappy=3, leafdecay=3, flammable=2},
 	drop = {

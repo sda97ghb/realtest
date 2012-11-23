@@ -11,6 +11,7 @@ bonfire.formspec =
 minetest.register_node("bonfire:self", {
 	description = "Bonfire",
 	tiles = {"bonfire_top.png", "bonfire_bottom.png", "bonfire_side.png"},
+	particle_image = {"bonfire_bottom.png"},
 	drawtype = "nodebox",
 	paramtype = "light",
 	node_box = {
@@ -51,6 +52,7 @@ minetest.register_node("bonfire:self", {
 minetest.register_node("bonfire:self_active", {
 	description = "Bonfire",
 	tiles = {"bonfire_top_active.png", "bonfire_bottom.png", "bonfire_side_active.png"},
+	particle_image = {"bonfire_bottom.png"},
 	drawtype = "nodebox",
 	paramtype = "light",
 	node_box = {

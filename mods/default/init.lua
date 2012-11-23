@@ -344,6 +344,7 @@ end
 minetest.register_node("default:stone", {
 	description = "Stone",
 	tiles = {"default_stone.png"},
+	particle_image = {"default_cobble.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
 	drop = {
@@ -372,6 +373,7 @@ minetest.register_node("default:stone", {
 minetest.register_node("default:desert_stone", {
 	description = "Desert Stone",
 	tiles = {"default_desert_stone.png"},
+	particle_image = {"default_desert_stone.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
 	drop = 'default:desert_stone',
@@ -381,6 +383,7 @@ minetest.register_node("default:desert_stone", {
 minetest.register_node("default:stone_flat", {
 	description = "Flat Stone",
 	tiles = {"default_stone_flat.png"},
+	particle_image = {"default_stone_flat.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
 	sounds = default.node_sound_stone_defaults(),
@@ -389,6 +392,7 @@ minetest.register_node("default:stone_flat", {
 minetest.register_node("default:desert_stone_flat", {
 	description = "Desert Flat Stone",
 	tiles = {"default_desert_stone_flat.png"},
+	particle_image = {"default_desert_stone_flat.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
 	sounds = default.node_sound_stone_defaults(),
@@ -397,6 +401,7 @@ minetest.register_node("default:desert_stone_flat", {
 minetest.register_node("default:cobbleblock_flat", {
 	description = "Stone Brick Block",
 	tiles = {"default_cobbleblock_flat.png"},
+	particle_image = {"default_cobble.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
 	sounds = default.node_sound_stone_defaults(),
@@ -405,6 +410,7 @@ minetest.register_node("default:cobbleblock_flat", {
 minetest.register_node("default:dirt_with_grass", {
 	description = "Dirt with Grass",
 	tiles = {"default_grass.png", "default_dirt.png", "default_dirt.png^default_grass_side.png"},
+	particle_image = {"default_dirt.png"},
 	is_ground_content = true,
 	groups = {crumbly=3},
 	drop = 'default:dirt',
@@ -416,6 +422,7 @@ minetest.register_node("default:dirt_with_grass", {
 minetest.register_node("default:dirt", {
 	description = "Dirt",
 	tiles = {"default_dirt.png"},
+	particle_image = {"default_dirt.png"},
 	is_ground_content = true,
 	groups = {crumbly=3},
 	sounds = default.node_sound_dirt_defaults(),
@@ -424,6 +431,7 @@ minetest.register_node("default:dirt", {
 minetest.register_node("default:sand", {
 	description = "Sand",
 	tiles = {"default_sand.png"},
+	particle_image = {"default_sand.png"},
 	is_ground_content = true,
 	groups = {crumbly=3, falling_node=1},
 	sounds = default.node_sound_sand_defaults(),
@@ -432,6 +440,7 @@ minetest.register_node("default:sand", {
 minetest.register_node("default:desert_sand", {
 	description = "Desert Sand",
 	tiles = {"default_desert_sand.png"},
+	particle_image = {"default_desert_sand.png"},
 	is_ground_content = true,
 	groups = {sand=1, crumbly=3, falling_node=1},
 	sounds = default.node_sound_sand_defaults(),
@@ -440,6 +449,7 @@ minetest.register_node("default:desert_sand", {
 minetest.register_node("default:gravel", {
 	description = "Gravel",
 	tiles = {"default_gravel.png"},
+	particle_image = {"default_gravel.png"},
 	is_ground_content = true,
 	groups = {crumbly=2, falling_node=1},
 	sounds = default.node_sound_dirt_defaults({
@@ -450,6 +460,7 @@ minetest.register_node("default:gravel", {
 minetest.register_node("default:sandstone", {
 	description = "Sandstone",
 	tiles = {"default_sandstone.png"},
+	particle_image = {"default_sandstone.png"},
 	is_ground_content = true,
 	groups = {crumbly=2,cracky=2},
 	drop = 'default:sand',
@@ -459,6 +470,7 @@ minetest.register_node("default:sandstone", {
 minetest.register_node("default:sand_with_clay", {
 	description = "Clay",
 	tiles = {"default_sand.png^default_clay.png"},
+	particle_image = {"default_clay_lump.png"},
 	is_ground_content = true,
 	groups = {crumbly=3},
 	drop = 'default:clay_lump 4',
@@ -470,6 +482,7 @@ minetest.register_node("default:sand_with_clay", {
 minetest.register_node("default:dirt_with_clay", {
 	description = "Clay",
 	tiles = {"default_dirt.png^default_clay.png"},
+	particle_image = {"default_clay_lump.png"},
 	is_ground_content = true,
 	groups = {crumbly=3},
 	drop = 'default:clay_lump 4',
@@ -481,6 +494,7 @@ minetest.register_node("default:dirt_with_clay", {
 minetest.register_node("default:dirt_with_grass_and_clay", {
 	description = "Clay",
 	tiles = {"default_grass.png", "default_dirt.png^default_clay.png", "default_dirt.png^default_clay.png^default_grass_side.png"},
+	particle_image = {"default_clay_lump.png"},
 	is_ground_content = true,
 	groups = {crumbly=3},
 	drop = 'default:clay_lump 4',
@@ -493,6 +507,7 @@ minetest.register_node("default:dirt_with_grass_and_clay", {
 minetest.register_node("default:brick", {
 	description = "Brick Block",
 	tiles = {"default_brick.png"},
+	particle_image = {"default_clay_brick.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
 	drop = 'default:clay_brick 4',
@@ -502,6 +517,7 @@ minetest.register_node("default:brick", {
 minetest.register_node("default:tree", {
 	description = "Tree",
 	tiles = {"default_tree_top.png", "default_tree_top.png", "default_tree.png"},
+	particle_image = {"default_tree.png"},
 	is_ground_content = true,
 	groups = {tree=1,snappy=1,choppy=2,flammable=2},
 	sounds = default.node_sound_wood_defaults(),
@@ -512,6 +528,7 @@ minetest.register_node("default:leaves", {
 	drawtype = "allfaces_optional",
 	visual_scale = 1.3,
 	tiles = {"default_leaves.png"},
+	particle_image = {"default_leaves.png"},
 	paramtype = "light",
 	groups = {snappy=3, leafdecay=3, flammable=2},
 	drop = {
@@ -535,6 +552,7 @@ minetest.register_node("default:leaves", {
 minetest.register_node("default:cactus", {
 	description = "Cactus",
 	tiles = {"default_cactus_top.png", "default_cactus_top.png", "default_cactus_side.png"},
+	particle_image = {"default_cactus_side.png"},
 	drawtype = "nodebox",
 	paramtype = "light",
 	node_box = {
@@ -557,6 +575,7 @@ minetest.register_node("default:papyrus", {
 	description = "Papyrus",
 	drawtype = "plantlike",
 	tiles = {"default_papyrus.png"},
+	particle_image = {"default_papyrus.png"},
 	inventory_image = "default_papyrus.png",
 	wield_image = "default_papyrus.png",
 	paramtype = "light",
@@ -579,6 +598,7 @@ minetest.register_node("default:glass", {
 	drawtype = "glasslike",
 	tiles = {"default_glass.png"},
 	inventory_image = minetest.inventorycube("default_glass.png"),
+	particle_image = {"default_glass.png"},
 	paramtype = "light",
 	sunlight_propagates = true,
 	is_ground_content = true,
@@ -590,6 +610,7 @@ minetest.register_node("default:fence_wood", {
 	description = "Wooden Fence",
 	drawtype = "fencelike",
 	tiles = {"default_wood.png"},
+	particle_image = {"default_wood.png"},
 	inventory_image = "default_fence.png",
 	wield_image = "default_fence.png",
 	paramtype = "light",
@@ -606,6 +627,7 @@ minetest.register_node("default:rail", {
 	description = "Rail",
 	drawtype = "raillike",
 	tiles = {"default_rail.png", "default_rail_curved.png", "default_rail_t_junction.png", "default_rail_crossing.png"},
+	particle_image = {"default_rail.png"},
 	inventory_image = "default_rail.png",
 	wield_image = "default_rail.png",
 	paramtype = "light",
@@ -623,6 +645,7 @@ minetest.register_node("default:ladder", {
 	description = "Ladder",
 	drawtype = "signlike",
 	tiles = {"default_ladder.png"},
+	particle_image = {"default_wood.png"},
 	inventory_image = "default_ladder.png",
 	wield_image = "default_ladder.png",
 	paramtype = "light",
@@ -643,6 +666,7 @@ minetest.register_node("default:ladder", {
 minetest.register_node("default:wood", {
 	description = "Wooden Planks",
 	tiles = {"default_wood.png"},
+	particle_image = {"default_wood.png"},
 	is_ground_content = true,
 	groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=3},
 	sounds = default.node_sound_wood_defaults(),
@@ -935,6 +959,7 @@ minetest.register_node("default:chest_locked", {
 minetest.register_node("default:cobbleblock", {
 	description = "Block of Cobble",
 	tiles = {"default_cobbleblock.png"},
+	particle_image = {"default_cobble.png"},
 	is_ground_content = true,
 	drop = "default:cobble 9",
 	groups = {crumbly=2, oddly_breakable_by_hand=1, falling_node=1},
@@ -989,6 +1014,7 @@ minetest.register_node("default:dry_shrub", {
 	visual_scale = 1.0,
 	tiles = {"default_dry_shrub.png"},
 	inventory_image = "default_dry_shrub.png",
+	particle_image = {"default_dry_shrub.png"},
 	wield_image = "default_dry_shrub.png",
 	paramtype = "light",
 	walkable = false,

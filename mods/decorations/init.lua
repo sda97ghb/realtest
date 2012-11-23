@@ -5,6 +5,7 @@
 minetest.register_node("decorations:malachite_block", {
 	description = "Malachite Block",
 	tiles = {"decorations_malachite.png"},
+	particle_image = {"minerals_malachite.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
 	sounds = default.node_sound_stone_defaults(),
@@ -25,6 +26,7 @@ minetest.register_node("decorations:malachite_pyramid", {
 			},
 		},
 	tiles = {"decorations_malachite.png"},
+	particle_image = {"minerals_malachite.png"},
 	is_ground_content = true,
 	groups = {cracky = 3},
 	sounds = default.node_sound_stone_defaults(),
@@ -143,6 +145,7 @@ minetest.register_node("decorations:malachite_cylinder", {
 			},
 		},
 	tiles = {"decorations_malachite.png"},
+	particle_image = {"minerals_malachite.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
 	sounds = default.node_sound_stone_defaults(),
