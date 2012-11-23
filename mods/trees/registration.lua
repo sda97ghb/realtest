@@ -42,6 +42,11 @@ function realtest.register_tree(name, TreeDef)
 		sounds = default.node_sound_defaults(),
 	})
 	
+	minetest.register_craftitem(tree.name.."_log", {
+		description = tree.description.." Log",
+		inventory_image = tree.textures[6],
+	})
+	
 	minetest.register_node(tree.name.."_leaves", {
 		description = tree.description.." Leaves",
 		drawtype = "allfaces_optional",
@@ -75,6 +80,7 @@ function realtest.register_tree(name, TreeDef)
 		tiles = tree.textures[1],
 		groups = {tree=1,snappy=1,choppy=2,flammable=2,dropping_node=1,drop_on_dig=1},
 		sounds = default.node_sound_wood_defaults(),
+		drop = tree.name.."_log",
 		drawtype = "nodebox",
 		paramtype = "light",
 		node_box = {
@@ -89,14 +95,6 @@ function realtest.register_tree(name, TreeDef)
 				{-0.4,-0.5,-0.4,0.4,0.5,0.4},
 			},
 		},
-		after_dropping = function(pos, node, meta)
-			for i = 1,#tree.leaves do
-				local p = {x=pos.x+tree.leaves[i][1], y=pos.y+tree.leaves[i][2], z=pos.z+tree.leaves[i][3]}
-				if minetest.env:get_node(p).name == tree.name.."_leaves" then
-					minetest.env:dig_node(p)
-				end
-			end
-		end,
 		after_dig_node = function(pos, oldnode, oldmetadata, digger)
 			for i = 1,#tree.leaves do
 				local p = {x=pos.x+tree.leaves[i][1], y=pos.y+tree.leaves[i][2], z=pos.z+tree.leaves[i][3]}
@@ -130,7 +128,7 @@ realtest.register_tree("trees:ash", {
 		return 4 + math.random(4)
 	end,
 	textures = {{"trees_ash_trunk_top.png", "trees_ash_trunk_top.png", "trees_ash_trunk.png"},"trees_ash_leaves.png",
-		"trees_ash_planks.png", "trees_ash_stick.png", "trees_ash_sapling.png"}
+		"trees_ash_planks.png", "trees_ash_stick.png", "trees_ash_sapling.png", "trees_ash_log.png"}
 })
 realtest.register_tree("trees:aspen", {
 	description = "Aspen",
@@ -139,7 +137,7 @@ realtest.register_tree("trees:aspen", {
 		return 10 + math.random(4)
 	end,
 	textures = {{"trees_aspen_trunk_top.png", "trees_aspen_trunk_top.png", "trees_aspen_trunk.png"},"trees_aspen_leaves.png",
-		"trees_aspen_planks.png", "trees_aspen_stick.png", "trees_aspen_sapling.png"}
+		"trees_aspen_planks.png", "trees_aspen_stick.png", "trees_aspen_sapling.png", "trees_aspen_log.png"}
 })
 realtest.register_tree("trees:birch", {
 	description = "Birch",
@@ -148,7 +146,7 @@ realtest.register_tree("trees:birch", {
 		return 10 + math.random(4)
 	end,
 	textures = {{"trees_birch_trunk_top.png", "trees_birch_trunk_top.png", "trees_birch_trunk.png"},"trees_birch_leaves.png",
-		"trees_birch_planks.png", "trees_birch_stick.png", "trees_birch_sapling.png"}
+		"trees_birch_planks.png", "trees_birch_stick.png", "trees_birch_sapling.png", "trees_birch_log.png"}
 })
 realtest.register_tree("trees:mapple", {
 	description = "Mapple",
@@ -157,7 +155,7 @@ realtest.register_tree("trees:mapple", {
 		return 7 + math.random(5)
 	end,
 	textures = {{"trees_mapple_trunk_top.png", "trees_mapple_trunk_top.png", "trees_mapple_trunk.png"},"trees_mapple_leaves.png",
-		"trees_mapple_planks.png", "trees_mapple_stick.png", "trees_mapple_sapling.png"}
+		"trees_mapple_planks.png", "trees_mapple_stick.png", "trees_mapple_sapling.png", "trees_mapple_log.png"}
 })
 realtest.register_tree("trees:chestnut", {
 	description = "Chestnut",
@@ -167,7 +165,7 @@ realtest.register_tree("trees:chestnut", {
 	end,
 	radius = 10,
 	textures = {{"trees_chestnut_trunk_top.png", "trees_chestnut_trunk_top.png", "trees_chestnut_trunk.png"},"trees_chestnut_leaves.png",
-		"trees_chestnut_planks.png", "trees_chestnut_stick.png", "trees_chestnut_sapling.png"}
+		"trees_chestnut_planks.png", "trees_chestnut_stick.png", "trees_chestnut_sapling.png", "trees_chestnut_log.png"}
 })
 realtest.register_tree("trees:pine", {
 	description = "Pine",
@@ -175,6 +173,7 @@ realtest.register_tree("trees:pine", {
 	height = function()
 		return 13 + math.random(4)
 	end,
+	radius = 8,
 	textures = {{"trees_pine_trunk_top.png", "trees_pine_trunk_top.png", "trees_pine_trunk.png"},"trees_pine_leaves.png",
-		"trees_pine_planks.png", "trees_pine_stick.png", "trees_pine_sapling.png"}
+		"trees_pine_planks.png", "trees_pine_stick.png", "trees_pine_sapling.png",  "trees_pine_log.png"}
 })
