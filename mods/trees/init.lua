@@ -24,41 +24,34 @@ function trees.make_tree(pos, tree)
 	end
 end
 
-local function generate(tree, minp, maxp, seed, chunks_per_volume, ore_per_chunk, height_min, height_max)
-	if maxp.y < height_min or minp.y > height_max then
-		return
-	end
-	local y_min = math.max(minp.y, height_min)
-	local y_max = math.min(maxp.y, height_max)
-	local volume = (maxp.x-minp.x+1)*(y_max-y_min+1)*(maxp.z-minp.z+1)
-	local pr = PseudoRandom(seed)
-	local num_chunks = math.floor(chunks_per_volume * volume)
-	local chunk_size = 3
-	if ore_per_chunk <= 4 then
-		chunk_size = 2
-	end
-	local inverse_chance = math.floor(chunk_size*chunk_size*chunk_size / ore_per_chunk)
-	for i=1,num_chunks do
-		local y0 = pr:next(y_min, y_max-chunk_size+1)
-		if y0 >= height_min and y0 <= height_max then
-			local x0 = pr:next(minp.x, maxp.x-chunk_size+1)
-			local z0 = pr:next(minp.z, maxp.z-chunk_size+1)
-			local p0 = {x=x0, y=y0, z=z0}
-			for x1=0,chunk_size-1 do
-				for y1=0,chunk_size-1 do
-					for z1=0,chunk_size-1 do
-						if pr:next(1,inverse_chance) == 1 then
-							local x2 = x0+x1
-							local y2 = y0+y1
-							local z2 = z0+z1
-							local p2 = {x=x2, y=y2, z=z2}
-							local p3 = {x=x2, y=y2+1, z=z2}
-							if minetest.env:get_node(p3).name == "air" and 
-								not minetest.env:find_node_near(p3, realtest.registered_trees[tree].radius, "group:tree") then
-								trees.make_tree(p3, tree)
-							end
-						end
+local function generate(tree, minp, maxp, seed)
+	local perlin1 = minetest.env:get_perlin(329, 3, 0.6, 100)
+	-- Assume X and Z lengths are equal
+	local divlen = 16
+	local divs = (maxp.x-minp.x)/divlen+1;
+	for divx=0,divs-1 do
+		for divz=0,divs-1 do
+			local x0 = minp.x + math.floor((divx+0)*divlen)
+			local z0 = minp.z + math.floor((divz+0)*divlen)
+			local x1 = minp.x + math.floor((divx+1)*divlen)
+			local z1 = minp.z + math.floor((divz+1)*divlen)
+			-- Determine trees amount from perlin noise
+			local trees_amount = math.floor(perlin1:get2d({x=x0, y=z0}) * 5 + 0)
+			-- Find random positions for trees based on this random
+			local pr = PseudoRandom(seed)
+			for i=0,trees_amount do
+				local x = pr:next(x0, x1)
+				local z = pr:next(z0, z1)
+				-- Find ground level (0...30)
+				local ground_y = nil
+				for y=30,0,-1 do
+					if minetest.env:get_node({x=x,y=y,z=z}).name ~= "air" then
+						ground_y = y
+						break
 					end
+				end
+				if ground_y then
+					trees.make_tree({x=x,y=ground_y+1,z=z}, tree)
 				end
 			end
 		end
@@ -71,7 +64,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	local pr = PseudoRandom(seed)
 	for key, value in pairs(realtest.registered_trees) do
 		if pr:next(1, 10) == 1 then
-			generate(key, minp, maxp, seed, 1/8/2, 1, -50, 100)
+			generate(key, minp, maxp, seed, 1/8/2, 1)
 		end
 	end
 end)

@@ -56,7 +56,7 @@ function realtest.register_tree(name, TreeDef)
 				},
 				{
 					items = {tree.name..'_stick'},
-					rarity = 2,
+					rarity = 10,
 				},
 				{
 					items = {},
@@ -68,7 +68,7 @@ function realtest.register_tree(name, TreeDef)
 		climbable = true,
 	})
 	
-		minetest.register_node(tree.name.."_trunk", {
+	minetest.register_node(tree.name.."_trunk", {
 		description = tree.description.." Trunk",
 		tiles = tree.textures[1],
 		groups = {tree=1,snappy=1,choppy=2,flammable=2,dropping_node=1,drop_on_dig=1},
