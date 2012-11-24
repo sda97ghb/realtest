@@ -67,9 +67,9 @@ creative_inventory.set_creative_formspec = function(player, start_i, pagenum)
 	pagenum = math.floor(pagenum)
 	local pagemax = math.floor((creative_inventory.creative_inventory_size-1) / (6*4) + 1)
 	player:set_inventory_formspec("size[13,7.5]"..
-			--"image[6,0.6;1,2;player.png]"..
+			"image[6,0.6;1,2;player.png]"..
 			"list[current_player;main;5,3.5;8,4;]"..
-			"list[current_player;craft;8,0;3,3;]"..
+			"list[current_player;craft;9,0.5;2,2;]"..
 			"list[current_player;craftpreview;12,1;1,1;]"..
 			"list[detached:creative;main;0.3,0.5;4,6;"..tostring(start_i).."]"..
 			"label[2.0,6.55;"..tostring(pagenum).."/"..tostring(pagemax).."]"..

@@ -105,6 +105,18 @@ function realtest.register_tree(name, TreeDef)
 		end,
 	})
 	
+	for i, material in ipairs(instruments.materials) do
+		minetest.register_craft({
+			type = "shapeless",
+			output = tree.name.."_planks",
+			recipe = {
+				tree.name.."_log",
+				"instruments:axe_"..material,
+			},
+			replacements = {{"instruments:axe_"..material,"instruments:axe_"..material}}
+		})
+	end
+	
 	minetest.register_abm({
 		nodenames = {tree.name.."_sapling"},
 		neighbors = tree.grounds,

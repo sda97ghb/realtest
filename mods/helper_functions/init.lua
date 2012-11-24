@@ -32,10 +32,3 @@ end
 function string:capitalize()
 	return self:sub(1,1):upper()..self:sub(2):lower()
 end
-
-function minetest.get_item_group(name, group)
-	if not minetest.registered_items[name] or not minetest.registered_items[name].groups[group] then
-		return 0
-	end
-	return minetest.registered_items[name].groups[group]  
-end

@@ -126,7 +126,7 @@ for i, material in ipairs(instruments.materials) do
 			obj:get_luaentity().material = material
 			return ""
 		end,
-		groups = {material_level=instruments.levels[i], durability=instruments.durability[i]},
+		groups = {material_level=instruments.levels[i], durability=instruments.durability[i], spear=1},
 	})
 	--Chisels (stone chisels are not exist)
 	if material ~= "stone" then
@@ -149,7 +149,7 @@ for i, material in ipairs(instruments.materials) do
 				item:add_wear(65535/instruments.durability[i])
 				return item
 			end,
-			groups = {material_level=instruments.levels[i], durability=instruments.durability[i]},
+			groups = {material_level=instruments.levels[i], durability=instruments.durability[i], chisel=1},
 		})
 	end
 	--Heads (stone heads are not exist too)
@@ -179,7 +179,7 @@ for i, material in ipairs(instruments.materials) do
 					max_drop_level=1,
 					groupcaps=instruments.groupcaps[j][i],
 				},
-				groups = {material_level=instruments.levels[i], durability=instruments.durability[i]},
+				groups = {material_level=instruments.levels[i], durability=instruments.durability[i], [instrument] = 1},
 			})
 			if material == "stone" then
 				minetest.register_craft({
