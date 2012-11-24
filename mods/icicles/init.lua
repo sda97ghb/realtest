@@ -31,7 +31,7 @@ function icicles.make_stalactite(pos, length)
 end
 
 function icicles.make_stalagmite(pos, length)
-	for i = length,1,-1 do
+	for i = 1,length do
 		if minetest.env:get_node({x=pos.x,y=pos.y+i-1,z=pos.z}).name == "air" then
 			minetest.env:set_node({x=pos.x,y=pos.y+i-1,z=pos.z}, {name = "icicles:icicle_"..5-i})
 		else return end

@@ -258,29 +258,6 @@ for i=1, #MINERALS_LIST do
 end
 
 --
--- Recipes
---
-
-metals.recipes = {
-	{"metals:recipe_pick", "Pick Recipe"},
-	{"metals:recipe_axe", "Axe Recipe"},
-	{"metals:recipe_shovel", "Shovel Recipe"},
-	{"metals:recipe_sword", "Sword Recipe"},
-	{"metals:recipe_hammer", "Hammer Recipe"},
-	{"metals:recipe_spear", "Spear Recipe"},
-	{"metals:recipe_bucket","Bucket Recipe"},
-	{"metals:recipe_chisel", "Chisel Recipe"},
-}
-
-for _, recipe in ipairs(metals.recipes) do
-	minetest.register_craftitem(recipe[1], {
-		description = recipe[2],
-		inventory_image = "metals_recipe.png",
-		stack_max = 1,
-	})
-end
-
---
 -- Alloys
 --
 

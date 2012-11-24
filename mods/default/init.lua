@@ -14,7 +14,6 @@ realtest = {}
 
 -- Load other files
 dofile(minetest.get_modpath("default").."/mapgen.lua")
---dofile(minetest.get_modpath("default").."/leafdecay.lua")
 
 --
 -- Tool definition
@@ -342,7 +341,15 @@ minetest.register_node("default:stone", {
 				rarity = 50,
 			},
 			{
-				items = {'default:cobble'}
+				items = {'default:cobble', 'default:cobble', 'default:cobble'},
+				rarity = 5
+			},
+			{
+				items = {'default:cobble', 'default:cobble'}
+			},
+			{
+				items = {'default:cobble 1'},
+				rarity = 5
 			},
 		},
 	},
@@ -435,9 +442,9 @@ minetest.register_node("default:sandstone", {
 	sounds = default.node_sound_stone_defaults(),
 })
 
-minetest.register_node("default:clay", {
+minetest.register_node("default:sand_with_clay", {
 	description = "Clay",
-	tiles = {"default_clay.png"},
+	tiles = {"default_sand.png^default_clay.png"},
 	is_ground_content = true,
 	groups = {crumbly=3,drop_on_dig=1},
 	drop = 'default:clay_lump 4',
@@ -445,6 +452,29 @@ minetest.register_node("default:clay", {
 		footstep = "",
 	}),
 })
+
+minetest.register_node("default:dirt_with_clay", {
+	description = "Clay",
+	tiles = {"default_dirt.png^default_clay.png"},
+	is_ground_content = true,
+	groups = {crumbly=3},
+	drop = 'default:clay_lump 4',
+	sounds = default.node_sound_dirt_defaults({
+		footstep = "",
+	}),
+})
+
+minetest.register_node("default:dirt_with_grass_and_clay", {
+	description = "Clay",
+	tiles = {"default_grass.png", "default_dirt.png^default_clay.png", "default_dirt.png^default_clay.png^default_grass_side.png"},
+	is_ground_content = true,
+	groups = {crumbly=3},
+	drop = 'default:clay_lump 4',
+	sounds = default.node_sound_dirt_defaults({
+		footstep = "",
+	}),
+})
+
 
 minetest.register_node("default:brick", {
 	description = "Brick Block",
@@ -458,8 +488,21 @@ minetest.register_node("default:brick", {
 minetest.register_node("default:cactus", {
 	description = "Cactus",
 	tiles = {"default_cactus_top.png", "default_cactus_top.png", "default_cactus_side.png"},
-	is_ground_content = true,
 	groups = {snappy=2,choppy=3,flammable=2,dropping_node=1,drop_on_dig=1},
+	drawtype = "nodebox",
+	paramtype = "light",
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-0.4, -0.5, -0.4, 0.4, 0.5, 0.4},
+		},
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = {
+			{-0.4, -0.5, -0.4, 0.4, 0.5, 0.4},
+		},
+	},
 	sounds = default.node_sound_wood_defaults(),
 })
 
@@ -1094,3 +1137,47 @@ minetest.register_on_dignode(function(pos, oldnode, digger)
 		end
 	end
 end)
+
+minetest.register_abm({
+	nodenames = {"default:dirt_with_clay"},
+	interval = 2,
+	chance = 200,
+	action = function(pos, node)
+		pos.y = pos.y+1
+		local n = minetest.registered_nodes[minetest.env:get_node(pos).name]
+		if not n then
+			return
+		end
+		if not n.sunlight_propagates then
+			return
+		end
+		if n.liquidtype and n.liquidtype ~= "none" then
+			return
+		end
+		if not minetest.env:get_node_light(pos) then
+			return
+		end
+		if minetest.env:get_node_light(pos) < 13 then
+			return
+		end
+		pos.y = pos.y-1
+		minetest.env:set_node(pos, {name="default:dirt_with_grass_and_clay"})
+	end
+})
+
+minetest.register_abm({
+ 	nodenames = {"default:dirt_with_grass_and_clay"},
+	interval = 2,
+	chance = 20,
+	action = function(pos, node)
+		pos.y = pos.y+1
+		local n = minetest.registered_nodes[minetest.env:get_node(pos).name]
+		if not n then
+			return
+		end
+		if not n.sunlight_propagates or (n.liquidtype and n.liquidtype ~= "none") then
+			pos.y = pos.y-1
+			minetest.env:set_node(pos, {name="default:dirt_with_clay"})
+		end
+	end
+})
