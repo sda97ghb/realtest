@@ -63,7 +63,7 @@ dofile(minetest.get_modpath("trees").."/registration.lua")
 minetest.register_on_generated(function(minp, maxp, seed)
 	local pr = PseudoRandom(seed)
 	local n = 0
-	if pr:next(1,5) == 1 then
+	if pr:next(1,2) == 1 then
 		n = n + 1
 	end
 	if pr:next(1, 10) == 1 then

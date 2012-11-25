@@ -1074,7 +1074,18 @@ function nodeupdate_single(p)
 		p_bottom = {x=p.x, y=p.y-1, z=p.z}
 		n_bottom = minetest.env:get_node(p_bottom)
 		if not minetest.registered_nodes[n_bottom.name].walkable and n_bottom.name ~= n.name then
-			minetest.env:dig_node(p)
+			if not minetest.registered_nodes[n.name].drop_on_dropping then
+				minetest.env:dig_node(p)
+			else
+				minetest.env:remove_node(p)
+				local stack = ItemStack(minetest.registered_nodes[n.name].drop_on_dropping)
+				for i = 1,stack:get_count() do
+					local obj = minetest.env:add_item(p, stack:get_name())
+					local x = math.random(-5,5)
+					local z = math.random(-5,5)
+					obj:setvelocity({x=1/x, y=obj:getvelocity().y, z=1/z})
+				end
+			end
 			nodeupdate(p)
 		end
 	end
