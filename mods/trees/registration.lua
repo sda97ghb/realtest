@@ -47,6 +47,19 @@ function realtest.register_tree(name, TreeDef)
 		inventory_image = tree.textures[7],
 	})
 	
+	minetest.register_craft({
+		output = tree.name.."_planks",
+		recipe = {
+			{tree.name.."_plank",tree.name.."_plank"},
+			{tree.name.."_plank",tree.name.."_plank"}
+		}
+	})
+	
+	minetest.register_craft({
+		output = tree.name.."_plank 4",
+		recipe = {{tree.name.."_planks"}}
+	})
+	
 	minetest.register_node(tree.name.."_log", {
 		description = tree.description.." Log",
 		tiles = tree.textures[1],
