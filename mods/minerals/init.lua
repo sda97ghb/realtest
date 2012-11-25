@@ -92,9 +92,3 @@ minetest.register_craft({
 	recipe = "minerals:bituminous_coal",
 	burntime = 25,
 })
-
-minetest.register_craft({
-	type="cooking",
-	output="default:coal_lump",
-	recipe="group:log",
-})

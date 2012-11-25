@@ -178,29 +178,40 @@ function realtest.register_tree(name, TreeDef)
 		recipe = tree.name.."_plank",
 		burntime = 2,
 	})
+	realtest.add_bonfire_fuel(tree.name.."_plank")
 
 	minetest.register_craft({
 		type = "fuel",
 		recipe = tree.name.."_planks",
 		burntime = 7,
 	})
+	realtest.add_bonfire_fuel(tree.name.."_planks")
 
 	minetest.register_craft({
 		type = "fuel",
 		recipe = tree.name.."_log",
 		burntime = 7,
 	})
+	realtest.add_bonfire_fuel(tree.name.."_log")
 	
 	minetest.register_craft({
 		type = "fuel",
 		recipe = tree.name.."_stick",
 		burntime = 1,
 	})
+	realtest.add_bonfire_fuel(tree.name.."_stick")
 	
 	minetest.register_craft({
 		type = "fuel",
 		recipe = tree.name.."_sapling",
 		burntime = 5,
+	})
+	realtest.add_bonfire_fuel(tree.name.."_sapling")
+	
+	minetest.register_craft({
+		type="cooking",
+		output="default:coal_lump",
+		recipe=tree.name.."_log",
 	})
 	
 	minetest.register_abm({
