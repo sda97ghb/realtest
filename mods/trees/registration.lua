@@ -19,7 +19,7 @@ function realtest.register_tree(name, TreeDef)
 	minetest.register_node(tree.name.."_planks", {
 		description = tree.description.." Planks",
 		tiles = {tree.textures[3]},
-		groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=3,drop_on_dig=1},
+		groups = {planks=1,snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=3,drop_on_dig=1},
 		sounds = default.node_sound_wood_defaults(),
 	})
 	
@@ -45,6 +45,7 @@ function realtest.register_tree(name, TreeDef)
 	minetest.register_craftitem(tree.name.."_plank", {
 		description = tree.description.." Plank",
 		inventory_image = tree.textures[7],
+		group = {plank=1},
 	})
 	
 	minetest.register_craft({
@@ -65,7 +66,7 @@ function realtest.register_tree(name, TreeDef)
 		tiles = tree.textures[1],
 		inventory_image = tree.textures[6],
 		wield_image = tree.textures[6],
-		groups = {tree=1,snappy=1,choppy=2,flammable=2,dropping_node=1,drop_on_dig=1},
+		groups = {log=1,snappy=1,choppy=2,flammable=2,dropping_node=1,drop_on_dig=1},
 		sounds = default.node_sound_wood_defaults(),
 		drop = tree.name.."_plank 4",
 		drop_on_dropping = tree.name.."_log",

@@ -41,95 +41,86 @@ minetest.register_item(":", {
 --
 
 minetest.register_craft({
-	output = 'default:fence_wood 2',
+	output = "default:fence_wood 2",
 	recipe = {
-		{'default:stick', 'default:stick', 'default:stick'},
-		{'default:stick', 'default:stick', 'default:stick'},
+		{"default:stick", "default:stick", "default:stick"},
+		{"default:stick", "default:stick", "default:stick"},
 	}
 })
 
 minetest.register_craft({
-	output = 'default:sign_wall',
+	output = "default:sign_wall",
 	recipe = {
-		{'default:wood', 'default:wood', 'default:wood'},
-		{'default:wood', 'default:wood', 'default:wood'},
-		{'', 'default:stick', ''},
+		{"group:plank", "group:plank", "group:plank"},
+		{"group:plank", "group:plank", "group:plank"},
+		{"", "group:stick", ""},
 	}
 })
 
 minetest.register_craft({
-	output = 'default:chest',
+	output = "default:chest",
 	recipe = {
-		{'default:wood', 'default:wood', 'default:wood'},
-		{'default:wood', '', 'default:wood'},
-		{'default:wood', 'default:wood', 'default:wood'},
+		{"group:plank", "group:plank", "group:plank"},
+		{"group:plank", "", "group:plank"},
+		{"group:plank", "group:plank", "group:plank"},
 	}
 })
 
 minetest.register_craft({
-	output = 'default:chest_locked',
+	output = "default:chest_locked",
 	recipe = {
-		{'default:wood', 'default:wood', 'default:wood'},
-		{'default:wood', 'default:cobble', 'default:wood'},
-		{'default:wood', 'default:wood', 'default:wood'},
+		{"group:plank", "group:plank", "group:plank"},
+		{"group:plank", "default:cobble", "group:plank"},
+		{"group:plank", "group:plank", "group:plank"},
 	}
 })
 
 minetest.register_craft({
-	output = 'default:sandstone',
+	output = "default:sandstone",
 	recipe = {
-		{'default:sand', 'default:sand'},
-		{'default:sand', 'default:sand'},
+		{"default:sand", "default:sand"},
+		{"default:sand", "default:sand"},
 	}
 })
 
 minetest.register_craft({
-	output = 'default:clay',
+	output = "default:clay",
 	recipe = {
-		{'default:clay_lump', 'default:clay_lump'},
-		{'default:clay_lump', 'default:clay_lump'},
+		{"default:clay_lump", "default:clay_lump"},
+		{"default:clay_lump", "default:clay_lump"},
 	}
 })
 
 minetest.register_craft({
-	output = 'default:brick',
+	output = "default:brick",
 	recipe = {
-		{'default:clay_brick', 'default:clay_brick'},
-		{'default:clay_brick', 'default:clay_brick'},
+		{"default:clay_brick", "default:clay_brick"},
+		{"default:clay_brick", "default:clay_brick"},
 	}
 })
 
 minetest.register_craft({
-	output = 'default:paper',
+	output = "default:paper",
 	recipe = {
-		{'default:papyrus', 'default:papyrus', 'default:papyrus'},
+		{"default:papyrus", "default:papyrus", "default:papyrus"},
 	}
 })
 
 minetest.register_craft({
-	output = 'default:book',
+	output = "default:book",
 	recipe = {
-		{'default:paper'},
-		{'default:paper'},
-		{'default:paper'},
+		{"default:paper"},
+		{"default:paper"},
+		{"default:paper"},
 	}
 })
 
 minetest.register_craft({
-	output = 'default:bookshelf',
+	output = "default:ladder",
 	recipe = {
-		{'default:wood', 'default:wood', 'default:wood'},
-		{'default:book', 'default:book', 'default:book'},
-		{'default:wood', 'default:wood', 'default:wood'},
-	}
-})
-
-minetest.register_craft({
-	output = 'default:ladder',
-	recipe = {
-		{'default:stick', '', 'default:stick'},
-		{'default:stick', 'default:stick', 'default:stick'},
-		{'default:stick', '', 'default:stick'},
+		{"default:stick", "", "default:stick"},
+		{"default:stick", "default:stick", "default:stick"},
+		{"default:stick", "", "default:stick"},
 	}
 })
 
@@ -205,7 +196,20 @@ minetest.register_craft({
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "default:wood",
+	recipe = "group:plank",
+	burntime = 2,
+})
+
+minetest.register_craft({
+	type = "fuel",
+	recipe = "group:planks",
+	burntime = 7,
+})
+
+
+minetest.register_craft({
+	type = "fuel",
+	recipe = "group:log",
 	burntime = 7,
 })
 
@@ -337,18 +341,18 @@ minetest.register_node("default:stone", {
 		max_items = 1,
 		items = {
 			{
-				items = {'default:cobble', 'minerals:borax'},
+				items = {"default:cobble", "minerals:borax"},
 				rarity = 50,
 			},
 			{
-				items = {'default:cobble', 'default:cobble', 'default:cobble'},
+				items = {"default:cobble", "default:cobble", "default:cobble"},
 				rarity = 5
 			},
 			{
-				items = {'default:cobble', 'default:cobble'}
+				items = {"default:cobble", "default:cobble"}
 			},
 			{
-				items = {'default:cobble 1'},
+				items = {"default:cobble 1"},
 				rarity = 5
 			},
 		},
@@ -393,7 +397,7 @@ minetest.register_node("default:dirt_with_grass", {
 	tiles = {"default_grass.png", "default_dirt.png", "default_dirt.png^default_grass_side.png"},
 	is_ground_content = true,
 	groups = {crumbly=3,drop_on_dig=1},
-	drop = 'default:dirt',
+	drop = "default:dirt",
 	sounds = default.node_sound_dirt_defaults({
 		footstep = {name="default_grass_footstep", gain=0.4},
 	}),
@@ -438,7 +442,7 @@ minetest.register_node("default:sandstone", {
 	tiles = {"default_sandstone.png"},
 	is_ground_content = true,
 	groups = {crumbly=2,cracky=2,drop_on_dig=1},
-	drop = 'default:sand',
+	drop = "default:sand",
 	sounds = default.node_sound_stone_defaults(),
 })
 
@@ -447,7 +451,7 @@ minetest.register_node("default:sand_with_clay", {
 	tiles = {"default_sand.png^default_clay.png"},
 	is_ground_content = true,
 	groups = {crumbly=3,drop_on_dig=1},
-	drop = 'default:clay_lump 4',
+	drop = "default:clay_lump 4",
 	sounds = default.node_sound_dirt_defaults({
 		footstep = "",
 	}),
@@ -458,7 +462,7 @@ minetest.register_node("default:dirt_with_clay", {
 	tiles = {"default_dirt.png^default_clay.png"},
 	is_ground_content = true,
 	groups = {crumbly=3},
-	drop = 'default:clay_lump 4',
+	drop = "default:clay_lump 4",
 	sounds = default.node_sound_dirt_defaults({
 		footstep = "",
 	}),
@@ -469,7 +473,7 @@ minetest.register_node("default:dirt_with_grass_and_clay", {
 	tiles = {"default_grass.png", "default_dirt.png^default_clay.png", "default_dirt.png^default_clay.png^default_grass_side.png"},
 	is_ground_content = true,
 	groups = {crumbly=3},
-	drop = 'default:clay_lump 4',
+	drop = "default:clay_lump 4",
 	sounds = default.node_sound_dirt_defaults({
 		footstep = "",
 	}),
@@ -481,7 +485,7 @@ minetest.register_node("default:brick", {
 	tiles = {"default_brick.png"},
 	is_ground_content = true,
 	groups = {cracky=3,drop_on_dig=1},
-	drop = 'default:clay_brick 4',
+	drop = "default:clay_brick 4",
 	sounds = default.node_sound_stone_defaults(),
 })
 
@@ -517,14 +521,6 @@ minetest.register_node("default:papyrus", {
 	walkable = false,
 	groups = {snappy=3,flammable=2, dropping_node=1,drop_on_dig=1},
 	sounds = default.node_sound_leaves_defaults(),
-})
-
-minetest.register_node("default:bookshelf", {
-	description = "Bookshelf",
-	tiles = {"default_wood.png", "default_wood.png", "default_bookshelf.png"},
-	is_ground_content = true,
-	groups = {snappy=2,choppy=3,oddly_breakable_by_hand=2,flammable=3},
-	sounds = default.node_sound_wood_defaults(),
 })
 
 minetest.register_node("default:glass", {
@@ -754,7 +750,7 @@ minetest.register_node("default:sign_wall", {
 		print((sender:get_player_name() or "").." wrote \""..fields.text..
 				"\" to sign at "..minetest.pos_to_string(pos))
 		meta:set_string("text", fields.text)
-		meta:set_string("infotext", '"'..fields.text..'"')
+		meta:set_string("infotext", "\""..fields.text.."\"")
 	end,
 })
 
@@ -1009,10 +1005,10 @@ minetest.register_entity("default:falling_node", {
 		if minetest.registered_nodes[bcn.name] and
 				minetest.registered_nodes[bcn.name].walkable then
 			local np = {x=bcp.x, y=bcp.y+1, z=bcp.z}
-			-- Check what's here
+			-- Check what"s here
 			local n2 = minetest.env:get_node(np)
-			-- If it's not air or liquid, remove node and replace it with
-			-- it's drops
+			-- If it"s not air or liquid, remove node and replace it with
+			-- it"s drops
 			if n2.name ~= "air" and (not minetest.registered_nodes[n2.name] or
 					minetest.registered_nodes[n2.name].liquidtype == "none") then
 				local drops = minetest.get_node_drops(n2.name, "")
@@ -1043,11 +1039,11 @@ function default.spawn_falling_node(p, nodename)
 end
 
 -- Horrible crap to support old code
--- Don't use this and never do what this does, it's completely wrong!
--- (More specifically, the client and the C++ code doesn't get the group)
+-- Don"t use this and never do what this does, it"s completely wrong!
+-- (More specifically, the client and the C++ code doesn"t get the group)
 function default.register_falling_node(nodename, texture)
 	minetest.log("error", debug.traceback())
-	minetest.log('error', "WARNING: default.register_falling_node is deprecated")
+	minetest.log("error", "WARNING: default.register_falling_node is deprecated")
 	if minetest.registered_nodes[nodename] then
 		minetest.registered_nodes[nodename].groups.falling_node = 1
 	end
