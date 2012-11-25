@@ -1,6 +1,6 @@
 minetest.register_tool("sticks:sticks", {
 	description = "Sticks",
-	inventory_image = "default_sticks.png",
+	inventory_image = "sticks_sticks.png",
 	on_use = function(item, user, pointed_thing)
 		local pos
 		if pointed_thing.type == "node" then	
@@ -24,10 +24,10 @@ minetest.register_tool("sticks:sticks", {
 			for _, v in ipairs(objects) do
 					if not v:is_player() and v:get_luaentity() and v:get_luaentity().name == "__builtin:item" then
 						local istack = ItemStack(v:get_luaentity().itemstring)
-						if istack:get_name() == "default:stick" then
+						if minetest.get_item_group(istack:get_name(), "stick") == 1 then
 							bonfireb = bonfireb + istack:get_count() * 2
 							v:remove()
-						elseif istack:get_name() == "default:leaves" then
+						elseif minetest.get_item_group(istack:get_name(), "leaves") == 1  then
 							bonfireb = bonfireb + istack:get_count()
 							v:remove()
 						elseif istack:get_name() == "default:coal_lump" then
@@ -93,8 +93,8 @@ minetest.register_tool("sticks:sticks", {
 minetest.register_craft({
 	output = "sticks:sticks",
 	recipe = {
-		{"", "default:stick"},
-		{"default:stick", ""},
+		{"", "group:stick"},
+		{"group:stick", ""},
 	},
 })
 

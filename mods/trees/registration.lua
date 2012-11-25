@@ -91,7 +91,7 @@ function realtest.register_tree(name, TreeDef)
 		visual_scale = 1.3,
 		tiles = {tree.textures[2]},
 		paramtype = "light",
-		groups = {snappy=3, leafdecay=3, flammable=2,drop_on_dig=1},
+		groups = {snappy=3, leafdecay=3, flammable=2,drop_on_dig=1,leaves=1},
 		drop = {
 			max_items = 1,
 			items = {

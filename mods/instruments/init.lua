@@ -82,7 +82,7 @@ instruments.spear.entity.on_step = function(self, dtime)
 				if obj:get_hp()<=0 then 
 					obj:remove()
 				end
-				minetest.env:add_item(self.lastpos, 'instruments:spear_'..self.object:get_luaentity().material)
+				minetest.env:add_item(self.lastpos, "instruments:spear_"..self.object:get_luaentity().material)
 				self.object:remove()
 			end
 		end
@@ -90,7 +90,7 @@ instruments.spear.entity.on_step = function(self, dtime)
 
 	if self.lastpos.x~=nil then
 		if node.name ~= "air" then
-			minetest.env:add_item(self.lastpos, 'instruments:spear_'..self.object:get_luaentity().material)
+			minetest.env:add_item(self.lastpos, "instruments:spear_"..self.object:get_luaentity().material)
 			self.object:remove()
 		end
 	end
@@ -159,7 +159,7 @@ for i, material in ipairs(instruments.materials) do
 				output = "instruments:"..instrument.."_"..material,
 				recipe = {
 					{"instruments:"..instrument.."_"..material.."_head"},
-					{'default:stick'},
+					{"group:stick"},
 				},
 			})
 		end
@@ -185,7 +185,7 @@ minetest.register_craft({
 	output = "instruments:spear_stone",
 	recipe = {
 		{"default:cobble", "", ""},
-		{"", "default:stick", ""},
-		{"","","default:stick"},
+		{"", "group:stick", ""},
+		{"","","group:stick"},
 	},
 })

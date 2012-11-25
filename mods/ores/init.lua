@@ -286,7 +286,7 @@ end)
 minetest.register_craft({
 	type = "cooking",
 	output = "default:torch 2",
-	recipe = "default:stick",
+	recipe = "group:stick",
 })
 
 minetest.register_craft({
