@@ -48,20 +48,7 @@ function realtest.register_tree(name, TreeDef)
 		group = {plank=1},
 	})
 	
-	minetest.register_craft({
-		output = tree.name.."_planks",
-		recipe = {
-			{tree.name.."_plank",tree.name.."_plank"},
-			{tree.name.."_plank",tree.name.."_plank"}
-		}
-	})
-	
-	minetest.register_craft({
-		output = tree.name.."_plank 4",
-		recipe = {{tree.name.."_planks"}}
-	})
-	
-	minetest.register_node(tree.name.."_log", {
+		minetest.register_node(tree.name.."_log", {
 		description = tree.description.." Log",
 		tiles = tree.textures[1],
 		inventory_image = tree.textures[6],
@@ -142,6 +129,76 @@ function realtest.register_tree(name, TreeDef)
 				end
 			end
 		end,
+	})
+	
+	minetest.register_craft({
+		output = "default:sign_wall",
+		recipe = {
+			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
+			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
+			{"", tree.name.."_stick", ""},
+		}
+	})
+
+	minetest.register_craft({
+		output = "default:chest",
+		recipe = {
+			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
+			{tree.name.."_plank", "", tree.name.."_plank"},
+			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
+		}
+	})
+
+	minetest.register_craft({
+		output = "default:chest_locked",
+		recipe = {
+			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
+			{tree.name.."_plank", "default:cobble", tree.name.."_plank"},
+			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
+		}
+	})
+	
+	minetest.register_craft({
+		output = tree.name.."_planks",
+		recipe = {
+			{tree.name.."_plank",tree.name.."_plank"},
+			{tree.name.."_plank",tree.name.."_plank"}
+		}
+	})
+	
+	minetest.register_craft({
+		output = tree.name.."_plank 4",
+		recipe = {{tree.name.."_planks"}}
+	})
+	
+	minetest.register_craft({
+		type = "fuel",
+		recipe = tree.name.."_plank",
+		burntime = 2,
+	})
+
+	minetest.register_craft({
+		type = "fuel",
+		recipe = tree.name.."_planks",
+		burntime = 7,
+	})
+
+	minetest.register_craft({
+		type = "fuel",
+		recipe = tree.name.."_log",
+		burntime = 7,
+	})
+	
+	minetest.register_craft({
+		type = "fuel",
+		recipe = tree.name.."_stick",
+		burntime = 1,
+	})
+	
+	minetest.register_craft({
+		type = "fuel",
+		recipe = tree.name.."_sapling",
+		burntime = 5,
 	})
 	
 	minetest.register_abm({

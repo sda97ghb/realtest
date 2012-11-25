@@ -49,33 +49,6 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "default:sign_wall",
-	recipe = {
-		{"group:plank", "group:plank", "group:plank"},
-		{"group:plank", "group:plank", "group:plank"},
-		{"", "group:stick", ""},
-	}
-})
-
-minetest.register_craft({
-	output = "default:chest",
-	recipe = {
-		{"group:plank", "group:plank", "group:plank"},
-		{"group:plank", "", "group:plank"},
-		{"group:plank", "group:plank", "group:plank"},
-	}
-})
-
-minetest.register_craft({
-	output = "default:chest_locked",
-	recipe = {
-		{"group:plank", "group:plank", "group:plank"},
-		{"group:plank", "default:cobble", "group:plank"},
-		{"group:plank", "group:plank", "group:plank"},
-	}
-})
-
-minetest.register_craft({
 	output = "default:sandstone",
 	recipe = {
 		{"default:sand", "default:sand"},
@@ -184,33 +157,8 @@ minetest.register_craft({
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "default:stick",
-	burntime = 1,
-})
-
-minetest.register_craft({
-	type = "fuel",
 	recipe = "default:ladder",
 	burntime = 15,
-})
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "group:plank",
-	burntime = 2,
-})
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "group:planks",
-	burntime = 7,
-})
-
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "group:log",
-	burntime = 7,
 })
 
 minetest.register_craft({
@@ -235,12 +183,6 @@ minetest.register_craft({
 	type = "fuel",
 	recipe = "default:chest_locked",
 	burntime = 40,
-})
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "default:sapling",
-	burntime = 5,
 })
 
 minetest.register_craft({
