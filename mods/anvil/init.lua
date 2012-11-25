@@ -194,7 +194,7 @@ for _, anvil in ipairs(anvils) do
 					for _, recipe in ipairs(realtest.registered_anvil_recipes) do
 						if recipe.type == "forge" and recipe.item1 == src1:get_name() and recipe.item2 == src2:get_name() and
 							anvil[3] >= recipe.level and
-							minetest.get_item_group(hammer:get_name(), "material_level") >= recipe.level then
+							minetest.get_item_group(hammer:get_name(), "material_level") >= recipe.level - 1 then
 							if inv:room_for_item("output", recipe.output) then
 								if recipe.rmitem1 then
 									src1:take_item()
