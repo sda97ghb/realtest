@@ -94,6 +94,11 @@ for i=1, #metals.list do
 		inventory_image = "metals_ceramic_mold.png^metals_"..metals.list[i].."_ingot.png",
 	})
 	
+	minetest.register_craftitem("metals:"..metals.list[i].."_lock", {
+		description = metals.desc_list[i].." Lock",
+		inventory_image = "metals_"..metals.list[i].."_lock.png",
+	})
+	
 	--
 	-- Nodes
 	--

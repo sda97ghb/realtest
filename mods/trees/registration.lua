@@ -136,7 +136,7 @@ function realtest.register_tree(name, TreeDef)
 		recipe = {
 			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
 			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
-			{"", tree.name.."_stick", ""},
+			{"", "group:stick", ""},
 		}
 	})
 
@@ -149,14 +149,16 @@ function realtest.register_tree(name, TreeDef)
 		}
 	})
 
-	minetest.register_craft({
-		output = "default:chest_locked",
-		recipe = {
-			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
-			{tree.name.."_plank", "default:cobble", tree.name.."_plank"},
-			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
-		}
-	})
+	for i,metal in ipairs(metals.list) do
+		minetest.register_craft({
+			output = "default:chest_locked",
+			recipe = {
+				{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
+				{tree.name.."_plank", "metals:"..metal.."_lock", tree.name.."_plank"},
+				{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
+			}
+		})
+	end
 	
 	minetest.register_craft({
 		output = tree.name.."_planks",

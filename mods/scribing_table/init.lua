@@ -91,6 +91,15 @@ realtest.register_instrument_plan("scribing_table:plan_chisel", {
 			  0,0,1,0,0,}
 })
 
+realtest.register_instrument_plan("scribing_table:plan_lock", {
+	description = "Lock Plan",
+	bitmap = {0,1,1,1,0,
+			  0,1,0,1,0,
+			  0,1,1,1,0,
+			  0,1,1,1,0,
+			  0,1,1,1,0,}
+})
+
 local function check_recipe(pos)
 	local meta = minetest.env:get_meta(pos)
 	local inv = meta:get_inventory()

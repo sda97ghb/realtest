@@ -25,7 +25,7 @@ function realtest.register_anvil_recipe(RecipeDef)
 	end
 end
 
---Unshaped metals, buckets, double ingots, sheets and hammers
+--Unshaped metals, buckets, double ingots, sheets, hammers and locks
 for i, metal in ipairs(metals.list) do
 	realtest.register_anvil_recipe({
 		item1 = "metals:"..metal.."_unshaped",
@@ -56,6 +56,12 @@ for i, metal in ipairs(metals.list) do
 		item2 = "metals:"..metal.."_sheet",
 		output = "metals:"..metal.."_doublesheet",
 		level = metals.levels[i] - 1,
+	})
+	realtest.register_anvil_recipe({
+		item1 = "metals:"..metal.."_ingot",
+		item2 = "scribing_table:plan_lock",
+		output = "metals:"..metal.."_lock",
+		level = metals.levels[i]
 	})
 end
 --Pig iron --> Wrought iron
@@ -110,7 +116,7 @@ minetest.register_craft({
 for _, anvil in ipairs(anvils) do
 	if anvil[1] ~= "stone" then
 		minetest.register_craft({
-			output = "anvil:"..anvil[1].."_anvil",
+			output = "anvil:anvil_"..anvil[1],
 			recipe = {
 				{"metals:"..anvil[1].."_doubleingot","metals:"..anvil[1].."_doubleingot","metals:"..anvil[1].."_doubleingot"},
 				{"","metals:"..anvil[1].."_doubleingot",""},
@@ -121,7 +127,7 @@ for _, anvil in ipairs(anvils) do
 end
 
 for _, anvil in ipairs(anvils) do
-	minetest.register_node("anvil:"..anvil[1].."_anvil", {
+	minetest.register_node("anvil:anvil_"..anvil[1], {
 		description = anvil[2] .. " Anvil",
 		tiles = {"anvil_"..anvil[1].."_top.png","anvil_"..anvil[1].."_top.png","anvil_"..anvil[1].."_side.png"},
 		drawtype = "nodebox",
