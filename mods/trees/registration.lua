@@ -131,6 +131,28 @@ function realtest.register_tree(name, TreeDef)
 		end,
 	})
 	
+	minetest.register_node(tree.name.."_fence", {
+		description = tree.description.." Fence",
+		drawtype = "fencelike",
+		tiles = {tree.textures[3]},
+		paramtype = "light",
+		is_ground_content = true,
+		selection_box = {
+			type = "fixed",
+			fixed = {-1/7, -1/2, -1/7, 1/7, 1/2, 1/7},
+		},
+		groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=2},
+		sounds = default.node_sound_wood_defaults(),
+	})
+	
+	minetest.register_craft({
+		output = tree.name.."_fence 2",
+		recipe = {
+			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
+			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
+		}
+	})
+	
 	minetest.register_craft({
 		output = "default:sign_wall",
 		recipe = {

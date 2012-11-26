@@ -41,14 +41,6 @@ minetest.register_item(":", {
 --
 
 minetest.register_craft({
-	output = "default:fence_wood 2",
-	recipe = {
-		{"default:stick", "default:stick", "default:stick"},
-		{"default:stick", "default:stick", "default:stick"},
-	}
-})
-
-minetest.register_craft({
 	output = "default:sandstone",
 	recipe = {
 		{"default:sand", "default:sand"},
@@ -469,22 +461,6 @@ minetest.register_node("default:glass", {
 	is_ground_content = true,
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3},
 	sounds = default.node_sound_glass_defaults(),
-})
-
-minetest.register_node("default:fence_wood", {
-	description = "Wooden Fence",
-	drawtype = "fencelike",
-	tiles = {"default_wood.png"},
-	inventory_image = "default_fence.png",
-	wield_image = "default_fence.png",
-	paramtype = "light",
-	is_ground_content = true,
-	selection_box = {
-		type = "fixed",
-		fixed = {-1/7, -1/2, -1/7, 1/7, 1/2, 1/7},
-	},
-	groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=2},
-	sounds = default.node_sound_wood_defaults(),
 })
 
 minetest.register_node("default:rail", {
