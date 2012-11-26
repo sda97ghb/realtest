@@ -106,7 +106,7 @@ local anvils = {
 }
 
 minetest.register_craft({
-	output = 'anvil:stone_anvil',
+	output = 'anvil:anvil_stone',
 	recipe = {
 		{'default:stone','default:stone','default:stone'},
 		{'','default:stone',''},
