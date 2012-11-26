@@ -140,15 +140,6 @@ for i=1, #metals.list do
 		}
 	})
 	
-	minetest.register_craft({
-		output = 'sawing_table:self',
-		recipe = {
-			{'default:tree',"metals:"..metals.list[i].."_ingot",'default:tree'},
-			{'default:tree','','default:tree'},
-			{'default:tree',"metals:"..metals.list[i].."_ingot",'default:tree'},
-		}
-	})
-	
 	--
 	-- Cooking
 	--
