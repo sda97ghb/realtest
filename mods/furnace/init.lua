@@ -30,6 +30,7 @@ furnace.formspec =
 minetest.register_node("furnace:self", {
 	description = "Furnace",
 	tiles = {"furnace_top.png", "furnace_bottom.png", "furnace_side.png"},
+	particle_image = {"furnace_top.png"},
 	drawtype = "nodebox",
 	paramtype = "light",
 	node_box = {
@@ -77,6 +78,7 @@ minetest.register_node("furnace:self", {
 minetest.register_node("furnace:self_active", {
 	description = "Furnace",
 	tiles = {"furnace_top_active.png", "furnace_bottom.png", "furnace_side_active.png"},
+	particle_image = {"furnace_top_active.png"},
 	drawtype = "nodebox",
 	paramtype = "light",
 	node_box = {

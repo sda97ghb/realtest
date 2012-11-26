@@ -51,6 +51,7 @@ for i,ore in ipairs(ores.list) do
 	minetest.register_node("ores:"..ore, {
 		description = ores.desc_list[i],
 		tile_images = {"default_stone.png^ores_"..ore..".png"},
+		particle_image = {"ores_"..ore..".png"},
 		is_ground_content = true,
 		groups = {cracky=3,drop_on_dig=1},
 		drop = {
@@ -72,6 +73,7 @@ end
 minetest.register_node("ores:native_copper_desert", {
 	description = "Native copper ore",
 	tile_images = {"default_desert_stone.png^ores_native_copper.png"},
+	particle_image = {"ores_native_copper.png"},
 	is_ground_content = true,
 	groups = {cracky=3,drop_on_dig=1},
 	drop = {
@@ -92,6 +94,7 @@ minetest.register_node("ores:native_copper_desert", {
 minetest.register_node("ores:native_gold_desert", {
 	description = "Native gold ore",
 	tile_images = {"default_desert_stone.png^ores_native_gold.png"},
+	particle_image = {"ores_native_gold.png"},
 	is_ground_content = true,
 	groups = {cracky=3,drop_on_dig=1},
 	drop = {
@@ -112,6 +115,7 @@ minetest.register_node("ores:native_gold_desert", {
 minetest.register_node("ores:peat", {
 	description = "Peat",
 	tile_images = {"ores_peat.png"},
+	particle_image = {"ores_peat.png"},
 	is_ground_content = true,
 	groups = {crumbly=3,drop_on_dig=1},
 	sounds = default.node_sound_stone_defaults(),

@@ -106,6 +106,7 @@ for i=1, #metals.list do
 	minetest.register_node("metals:"..metals.list[i].."_block", {
 		description = "Block of "..metals.desc_list[i],
 		tiles = {"metals_"..metals.list[i].."_block.png"},
+		particle_image = {"metals_"..metals.list[i].."_block.png"},
 		is_ground_content = true,
 		drop = "metals:"..metals.list[i].."_doubleingot",
 		groups = {snappy=1,bendy=2,cracky=1,melty=2,level=2,drop_on_dig=1},
