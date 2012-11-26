@@ -32,3 +32,11 @@ end
 function string:capitalize()
 	return self:sub(1,1):upper()..self:sub(2):lower()
 end
+
+function string:remove_modname_prefix()
+	local i = self:find(":")
+	if i then
+		return self:sub(i+1)
+	end
+	return nil
+end
