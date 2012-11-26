@@ -60,6 +60,7 @@ for i, metal in ipairs(metals.list) do
 	realtest.register_anvil_recipe({
 		item1 = "metals:"..metal.."_ingot",
 		item2 = "scribing_table:plan_lock",
+		rmitem2 = false,
 		output = "metals:"..metal.."_lock",
 		level = metals.levels[i]
 	})
