@@ -69,7 +69,7 @@ end
 realtest.register_anvil_recipe({
 	item1 = "metals:pig_iron_ingot",
 	output = "metals:wrought_iron_ingot",
-	level = 3,
+	level = 2,
 })
 --Instruments
 local instruments = 
