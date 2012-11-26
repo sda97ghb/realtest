@@ -184,14 +184,14 @@ minetest.register_node("decorations:malachite_vase", {
 
 for i, tree_name in ipairs(realtest.registered_trees_list) do
 	local tree = realtest.registered_trees[tree_name]
-	minetest.register_node("decorations:bookshelf_"..i, {
+	minetest.register_node("decorations:bookshelf_"..tree.name:remove_modname_prefix(), {
 		description = tree.description.." Bookshelf",
 		tiles = {tree.textures[3], tree.textures[3], tree.textures[3].."^decorations_bookshelf.png"},
 		groups = {bookshelf=1,snappy=2,choppy=3,oddly_breakable_by_hand=2,flammable=3},
 		sounds = default.node_sound_wood_defaults(),
 	})
 	minetest.register_craft({
-		output = "decorations:bookshelf_"..i,
+		output = "decorations:bookshelf_"..tree.name:remove_modname_prefix(),
 		recipe = {
 			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
 			{"default:book", "default:book", tree.name.."_plank"},
