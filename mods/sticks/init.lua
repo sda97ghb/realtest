@@ -36,7 +36,7 @@ minetest.register_tool("sticks:sticks", {
 						end
 					end
 			end
-			if furnaceb >= 9 then
+			if furnaceb >= 9 and math.random(6) == 1 and minetest.env:get_node(pos).name == "air" then
 				if furnace.check_furnace_blocks(pos) then
 					for _, v in ipairs(coals) do
 						v:remove()
@@ -68,7 +68,7 @@ minetest.register_tool("sticks:sticks", {
 					end
 				end
 			end
-			if bonfireb >= 10 and minetest.env:get_node(pos).name == "air" then
+			if bonfireb >= 10 and math.random(2) == 1 and minetest.env:get_node(pos).name == "air" then
 				minetest.env:set_node(pos, {name = "bonfire:self"})
 				local meta = minetest.env:get_meta(pos)
 				meta:set_int("active", 1)
@@ -91,11 +91,9 @@ minetest.register_tool("sticks:sticks", {
 
 
 minetest.register_craft({
+	type = "shapeless",
 	output = "sticks:sticks",
-	recipe = {
-		{"", "group:stick"},
-		{"group:stick", ""},
-	},
+	recipe = {"group:stick", "group:stick"},
 })
 
 minetest.register_alias("sticks", "sticks:sticks")
