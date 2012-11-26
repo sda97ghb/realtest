@@ -134,7 +134,7 @@ end
 
 for i, tree_name in ipairs(realtest.registered_trees_list) do
 	local tree = realtest.registered_trees[tree_name]
-	minetest.register_node("scribing_table:scribing_table_"..i, {
+	minetest.register_node("scribing_table:scribing_table_"..tree.name:remove_modname_prefix(), {
 		description = tree.description.." Scribing Table",
 		tiles = {tree.textures[3].."^scribing_table_top.png", tree.textures[3], tree.textures[3].."^scribing_table_side.png"},
 		drawtype = "nodebox",
@@ -188,11 +188,11 @@ for i, tree_name in ipairs(realtest.registered_trees_list) do
 		end,
 	})
 	minetest.register_craft({
-	output = "scribing_table:scribing_table_"..i,
+	output = "scribing_table:scribing_table_"..tree.name:remove_modname_prefix(),
 	recipe = {
 		{"","group:stick",""},
-		{tree.name.."_planks","default:glass",tree.name.."_planks"},
-		{tree.name.."_planks",tree.name.."_planks",tree.name.."_planks"},
+		{tree.name.."_plank","default:glass",tree.name.."_plank"},
+		{tree.name.."_plank",tree.name.."_plank",tree.name.."_plank"},
 	}
 })
 end
