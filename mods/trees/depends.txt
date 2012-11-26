@@ -1,4 +1,3 @@
 default
 helper_functions
-instruments
 metals
