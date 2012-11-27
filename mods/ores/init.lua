@@ -51,7 +51,7 @@ for i,ore in ipairs(ores.list) do
 	minetest.register_node("ores:"..ore, {
 		description = ores.desc_list[i],
 		tile_images = {"default_stone.png^ores_"..ore..".png"},
-		particle_image = {"ores_"..ore..".png"},
+		particle_image = {"minerals_"..ore..".png"},
 		is_ground_content = true,
 		groups = {cracky=3,drop_on_dig=1},
 		drop = {
