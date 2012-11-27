@@ -145,6 +145,73 @@ function realtest.register_tree(name, TreeDef)
 		sounds = default.node_sound_wood_defaults(),
 	})
 	
+	minetest.register_node(tree.name.."_stair", {
+		description = tree.description.." Stair",
+		drawtype = "nodebox",
+		tiles = {tree.textures[3]},
+		paramtype = "light",
+		paramtype2 = "facedir",
+		is_ground_content = true,
+		groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=2},
+		node_box = {
+			type = "fixed",
+			fixed = {
+				{-0.5, -0.5, -0.5, 0.5, 0, 0.5},
+				{-0.5, 0, 0, 0.5, 0.5, 0.5},
+			},
+		},
+	})
+	
+	minetest.register_node(tree.name.."_slab", {
+		description = tree.description.." Slab",
+		drawtype = "nodebox",
+		tiles = {tree.textures[3]},
+		paramtype = "light",
+		is_ground_content = true,
+		groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=2},
+		node_box = {
+			type = "fixed",
+			fixed = {-0.5, -0.5, -0.5, 0.5, 0, 0.5},
+		},
+		selection_box = {
+			type = "fixed",
+			fixed = {-0.5, -0.5, -0.5, 0.5, 0, 0.5},
+		},
+	})
+
+	minetest.register_craft({
+		output = tree.name.."_slab",
+		recipe = {
+			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
+		},
+	})
+	
+	minetest.register_craft({
+		output = tree.name.."_planks",
+		recipe = {
+			{tree.name.."_slab"},
+			{tree.name.."_slab"},
+		},
+	})
+	
+	minetest.register_craft({
+		output = tree.name.."_stair 2",
+		recipe = {
+			{tree.name.."_plank", "", ""},
+			{tree.name.."_plank", tree.name.."_plank", ""},
+			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
+		},
+	})
+	
+	minetest.register_craft({
+		output = tree.name.."_stair 2",
+		recipe = {
+			{"", "", tree.name.."_plank"},
+			{"", tree.name.."_plank", tree.name.."_plank"},
+			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
+		},
+	})
+	
 	minetest.register_craft({
 		output = tree.name.."_fence 2",
 		recipe = {
@@ -194,6 +261,20 @@ function realtest.register_tree(name, TreeDef)
 		output = tree.name.."_plank 4",
 		recipe = {{tree.name.."_planks"}}
 	})
+	
+	minetest.register_craft({
+		type = "fuel",
+		recipe = tree.name.."_stair",
+		burntime = 3.5,
+	})
+	realtest.add_bonfire_fuel(tree.name.."_stair")
+	
+	minetest.register_craft({
+		type = "fuel",
+		recipe = tree.name.."_slab",
+		burntime = 3.5,
+	})
+	realtest.add_bonfire_fuel(tree.name.."_slab")
 	
 	minetest.register_craft({
 		type = "fuel",
