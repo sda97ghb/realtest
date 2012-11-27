@@ -126,7 +126,7 @@ for i=1, #metals.list do
 	})
 	
 	minetest.register_craft({
-		output = "metals:"..metals.list[i].."_ingot 4",
+		output = "metals:"..metals.list[i].."_doubleingot 4",
 		recipe = {
 			{"metals:"..metals.list[i].."_block"},
 		}
