@@ -117,7 +117,7 @@ minetest.register_node("ores:peat", {
 	tile_images = {"ores_peat.png"},
 	particle_image = {"ores_peat.png"},
 	is_ground_content = true,
-	groups = {crumbly=3,drop_on_dig=1},
+	groups = {crumbly=3,drop_on_dig=1,falling_node=1},
 	sounds = default.node_sound_stone_defaults(),
 })
 
