@@ -80,15 +80,6 @@ minetest.register_craft({
 	}
 })
 
-minetest.register_craft({
-	output = "default:ladder",
-	recipe = {
-		{"default:stick", "", "default:stick"},
-		{"default:stick", "default:stick", "default:stick"},
-		{"default:stick", "", "default:stick"},
-	}
-})
-
 --
 -- Crafting (tool repair)
 --
@@ -496,28 +487,6 @@ minetest.register_node("default:rail", {
                 fixed = {-1/2, -1/2, -1/2, 1/2, -1/2+1/16, 1/2},
 	},
 	groups = {bendy=2,snappy=1,dig_immediate=2},
-})
-
-minetest.register_node("default:ladder", {
-	description = "Ladder",
-	drawtype = "signlike",
-	tiles = {"default_ladder.png"},
-	particle_image = {"default_wood.png"},
-	inventory_image = "default_ladder.png",
-	wield_image = "default_ladder.png",
-	paramtype = "light",
-	paramtype2 = "wallmounted",
-	is_ground_content = true,
-	walkable = false,
-	climbable = true,
-	selection_box = {
-		type = "wallmounted",
-		--wall_top = = <default>
-		--wall_bottom = = <default>
-		--wall_side = = <default>
-	},
-	groups = {snappy=1,choppy=2,oddly_breakable_by_hand=3,flammable=2},
-	sounds = default.node_sound_wood_defaults(),
 })
 
 minetest.register_node("default:water_flowing", {
