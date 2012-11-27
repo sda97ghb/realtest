@@ -133,8 +133,8 @@ dyelocal = nil
 
 minetest.register_craft({
 	type = "shapeless",
-	output = 'dye:dark_green',
-	recipe = {'default:cactus'},
+	output = "dye:dark_green 4",
+	recipe = {"default:cactus"},
 })
 
 -- EOF
