@@ -281,7 +281,7 @@ minetest.register_node("default:stone", {
 				items = {"default:cobble", "default:cobble"}
 			},
 			{
-				items = {"default:cobble 1"},
+				items = {"default:cobble"},
 				rarity = 5
 			},
 		},
@@ -342,7 +342,7 @@ minetest.register_node("default:dirt", {
 	tiles = {"default_dirt.png"},
 	particle_image = {"default_dirt.png"},
 	is_ground_content = true,
-	groups = {crumbly=3,drop_on_dig=1},
+	groups = {crumbly=3,drop_on_dig=1, falling_node=1},
 	sounds = default.node_sound_dirt_defaults(),
 })
 
@@ -402,7 +402,7 @@ minetest.register_node("default:dirt_with_clay", {
 	tiles = {"default_dirt.png^default_clay.png"},
 	particle_image = {"default_clay_lump.png"},
 	is_ground_content = true,
-	groups = {crumbly=3},
+	groups = {crumbly=3, drop_on_dig=1},
 	drop = "default:clay_lump 4",
 	sounds = default.node_sound_dirt_defaults({
 		footstep = "",
@@ -414,7 +414,7 @@ minetest.register_node("default:dirt_with_grass_and_clay", {
 	tiles = {"default_grass.png", "default_dirt.png^default_clay.png", "default_dirt.png^default_clay.png^default_grass_side.png"},
 	particle_image = {"default_clay_lump.png"},
 	is_ground_content = true,
-	groups = {crumbly=3},
+	groups = {crumbly=3, drop_on_dig=1},
 	drop = "default:clay_lump 4",
 	sounds = default.node_sound_dirt_defaults({
 		footstep = "",
@@ -1074,6 +1074,18 @@ minetest.register_on_dignode(function(pos, oldnode, digger)
 end)
 
 minetest.register_abm({
+	nodenames = {"default:dirt_with_grass"},
+	interval = 2,
+	chance = 200,
+	action = function(pos, node)
+		if minetest.env:get_node({x=pos.x, y=pos.y-1, z=pos.z}).name == "air" then
+			minetest.env:set_node(pos, {name="default:dirt"})
+			nodeupdate_single(pos)
+		end
+	end
+})
+
+minetest.register_abm({
 	nodenames = {"default:dirt_with_clay"},
 	interval = 2,
 	chance = 200,
@@ -1103,7 +1115,7 @@ minetest.register_abm({
 minetest.register_abm({
  	nodenames = {"default:dirt_with_grass_and_clay"},
 	interval = 2,
-	chance = 20,
+	chance = 200,
 	action = function(pos, node)
 		pos.y = pos.y+1
 		local n = minetest.registered_nodes[minetest.env:get_node(pos).name]
