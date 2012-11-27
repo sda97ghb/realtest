@@ -236,7 +236,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	generate_peat("ores:peat", "default:dirt", minp, maxp, seed+19, 1/8/16/24, 10, 1000, -31000, 200)
 	generate_ore("ores:native_copper_desert", "default:desert_stone", minp, maxp, seed+20, 1/8/8/8/8/8/8, 6, 200, -31000, 200)
 	generate_ore("ores:native_gold_desert", "default:desert_stone", minp, maxp, seed+21, 1/8/8/8/8/8/8, 5, 100, -31000, 200)
-	generate_ore("ores:platinum", "ores:magnetite", minp, maxp, seed+22, 1/8/8/8/8/8/8, 3, 850, -31000, 200)
+	generate_ore("ores:platinum", "ores:magnetite", minp, maxp, seed+22, 1/8/8/8/8/8/8, 10, 850, -31000, 200)
 	
 	if pr:next(1,2) == 1 then
 		-- Generate clay
