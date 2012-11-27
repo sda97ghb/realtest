@@ -97,7 +97,7 @@ minetest.register_node("decorations:casket", {
 		local meta = minetest.env:get_meta(pos)
 		meta:set_string("formspec",
 				"size[8,8]"..
-				"list[current_name;main;1,0;6,3;]"..
+				"list[current_name;main;1,0.5;6,3;]"..
 				"list[current_player;main;0,4;8,4;]")
 		meta:set_string("infotext", "Casket")
 		local inv = meta:get_inventory()
