@@ -27,6 +27,9 @@ function minetest.handle_node_drops(pos, drops, digger)
 					z = -z
 				end
 				obj:setvelocity({x=1/x, y=obj:getvelocity().y, z=1/z})
+				minetest.after(3600, function(obj)
+					obj:remove()
+				end, obj)
 			end
 		end
 	end
