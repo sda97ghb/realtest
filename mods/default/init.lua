@@ -788,6 +788,25 @@ minetest.register_craftitem("default:cobble", {
 	inventory_image = "default_cobble.png",
 })
 
+minetest.register_node("default:cobble_node", {
+	description = "Stone",
+	tiles = {"default_stone.png"},
+	paramtype = "light",
+	sunlight_propagates = true,
+	drawtype = "nodebox",
+	node_box = {
+		type = "fixed",
+		fixed = {-0.5+9/32, -0.5, -0.5+12/32, 0.5-9/32, -0.5+1/8, 0.5-12/32},
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = {-0.5+9/32, -0.5, -0.5+12/32, 0.5-9/32, -0.5+1/8, 0.5-12/32},
+	},
+	drop = "default:cobble",
+	groups = {dig_immediate=2},
+	sounds = default.node_sound_stone_defaults(),
+})
+
 minetest.register_craft({
 	output = "default:cobbleblock",
 	recipe = {

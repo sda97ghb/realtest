@@ -120,7 +120,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 					end
 				end
 				if ground_y and minetest.env:get_node({x=x,y=ground_y,z=z}).name == "default:dirt_with_grass" then
-					minetest.env:add_item({x=x,y=ground_y+1,z=z}, "default:cobble")
+					minetest.env:add_node({x=x,y=ground_y+1,z=z}, {name = "default:cobble_node"})
 				end
 			end
 		end
