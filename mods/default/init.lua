@@ -803,7 +803,7 @@ minetest.register_node("default:cobble_node", {
 		fixed = {-0.5+9/32, -0.5, -0.5+12/32, 0.5-9/32, -0.5+1/8, 0.5-12/32},
 	},
 	drop = "default:cobble",
-	groups = {dig_immediate=2},
+	groups = {dig_immediate=2,dropping_node=1,drop_on_dig=1},
 	sounds = default.node_sound_stone_defaults(),
 })
 
@@ -812,7 +812,7 @@ minetest.register_craft({
 	recipe = {
 		{"default:cobble","default:cobble","default:cobble"},
 		{"default:cobble","default:cobble","default:cobble"},
-		{"default:cobble","default:cobble","default:cobble"}, 
+		{"default:cobble","default:cobble","default:cobble"},
 	},
 })
 
