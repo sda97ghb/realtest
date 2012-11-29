@@ -1,14 +1,5 @@
 scribing_table = {}
 
-minetest.register_craft({
-	output = 'scribing_table:self',
-	recipe = {
-		{'','default:stick',''},
-		{'default:wood','default:glass','default:wood'},
-		{'default:wood','default:wood','default:wood'},
-	}
-})
-
 realtest.registered_instrument_plans = {}
 function realtest.register_instrument_plan(name, PlanDef)
 	if PlanDef.bitmap then
@@ -100,6 +91,15 @@ realtest.register_instrument_plan("scribing_table:plan_chisel", {
 			  0,0,1,0,0,}
 })
 
+realtest.register_instrument_plan("scribing_table:plan_lock", {
+	description = "Lock Plan",
+	bitmap = {0,1,1,1,0,
+			  0,1,0,1,0,
+			  0,1,1,1,0,
+			  0,1,1,1,0,
+			  0,1,1,1,0,}
+})
+
 local function check_recipe(pos)
 	local meta = minetest.env:get_meta(pos)
 	local inv = meta:get_inventory()
@@ -132,56 +132,67 @@ local function check_recipe(pos)
 	end
 end
 
-minetest.register_node("scribing_table:self", {
-	description = "Scribing Table",
-	tiles = {"scribing_table_top.png", "default_wood.png", "default_wood.png^scribing_table_side.png"},
-	drawtype = "nodebox",
-	paramtype = "light",
-	node_box = {
-		type = "fixed",
-		fixed = {
-			{-0.5,-0.5,-0.5,0.5,0.3,0.5},
+for i, tree_name in ipairs(realtest.registered_trees_list) do
+	local tree = realtest.registered_trees[tree_name]
+	minetest.register_node("scribing_table:scribing_table_"..tree.name:remove_modname_prefix(), {
+		description = tree.description.." Scribing Table",
+		tiles = {tree.textures[3].."^scribing_table_top.png", tree.textures[3], tree.textures[3].."^scribing_table_side.png"},
+		drawtype = "nodebox",
+		paramtype = "light",
+		node_box = {
+			type = "fixed",
+			fixed = {
+				{-0.5,-0.5,-0.5,0.5,0.3,0.5},
+			},
 		},
-	},
-	selection_box = {
-		type = "fixed",
-		fixed = {
-			{-0.5,-0.5,-0.5,0.5,0.3,0.5},
+		selection_box = {
+			type = "fixed",
+			fixed = {
+				{-0.5,-0.5,-0.5,0.5,0.3,0.5},
+			},
 		},
-	},
-	groups = {oddly_breakable_by_hand=3, dig_immediate=2},
-	sounds = default.node_sound_stone_defaults(),
-	on_construct = function(pos)
-		local meta = minetest.env:get_meta(pos)
-		meta:set_string("formspec", 
-			"size[8,10]"..
-			"list[current_name;paper;6,0;1,1;]"..
-			"list[current_name;dye;0,0;5,5;]"..
-			"list[current_name;res;6,4;1,1;]"..
-			"image[5,1;2,3.4;scribing_table_arrow.png]"..
-			"list[current_player;main;0,6;8,4;]"
-		)
-		meta:set_string("infotext", "Scribing Table")
-		local inv = meta:get_inventory()
-		inv:set_size("paper", 1)
-		inv:set_size("dye", 25)
-		inv:set_size("res", 1)
-	end,
-	on_metadata_inventory_move = function(pos, from_list, from_index,to_list, to_index, count, player)
-		check_recipe(pos)
-	end,
-	on_metadata_inventory_put = function(pos, listname, index, stack, player)
-		check_recipe(pos)
-	end,
-	on_metadata_inventory_take = function(pos, listname, index, stack, player)
-		check_recipe(pos)
-	end,
-	can_dig = function(pos,player)
-		local meta = minetest.env:get_meta(pos)
-		local inv = meta:get_inventory()
-		if inv:is_empty("paper") and inv:is_empty("dye") and inv:is_empty("res") then
-			return true
-		end
-		return false
-	end,
+		groups = {oddly_breakable_by_hand=3, dig_immediate=2},
+		sounds = default.node_sound_stone_defaults(),
+		on_construct = function(pos)
+			local meta = minetest.env:get_meta(pos)
+			meta:set_string("formspec", 
+				"size[8,10]"..
+				"list[current_name;paper;6.5,0.5;1,1;]"..
+				"list[current_name;dye;0.5,0.5;5,5;]"..
+				"list[current_name;res;6.5,4.5;1,1;]"..
+				"image[5.5,1.5;2,3.4;scribing_table_arrow.png]"..
+				"list[current_player;main;0,6;8,4;]"
+			)
+			meta:set_string("infotext", "Scribing Table")
+			local inv = meta:get_inventory()
+			inv:set_size("paper", 1)
+			inv:set_size("dye", 25)
+			inv:set_size("res", 1)
+		end,
+		on_metadata_inventory_move = function(pos, from_list, from_index,to_list, to_index, count, player)
+			check_recipe(pos)
+		end,
+		on_metadata_inventory_put = function(pos, listname, index, stack, player)
+			check_recipe(pos)
+		end,
+		on_metadata_inventory_take = function(pos, listname, index, stack, player)
+			check_recipe(pos)
+		end,
+		can_dig = function(pos,player)
+			local meta = minetest.env:get_meta(pos)
+			local inv = meta:get_inventory()
+			if inv:is_empty("paper") and inv:is_empty("dye") and inv:is_empty("res") then
+				return true
+			end
+			return false
+		end,
+	})
+	minetest.register_craft({
+	output = "scribing_table:scribing_table_"..tree.name:remove_modname_prefix(),
+	recipe = {
+		{"","group:stick",""},
+		{tree.name.."_plank","default:glass",tree.name.."_plank"},
+		{tree.name.."_plank",tree.name.."_plank",tree.name.."_plank"},
+	}
 })
+end

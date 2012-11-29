@@ -1,6 +1,6 @@
 minetest.register_tool("sticks:sticks", {
 	description = "Sticks",
-	inventory_image = "default_sticks.png",
+	inventory_image = "sticks_sticks.png",
 	on_use = function(item, user, pointed_thing)
 		local pos
 		if pointed_thing.type == "node" then	
@@ -24,10 +24,10 @@ minetest.register_tool("sticks:sticks", {
 			for _, v in ipairs(objects) do
 					if not v:is_player() and v:get_luaentity() and v:get_luaentity().name == "__builtin:item" then
 						local istack = ItemStack(v:get_luaentity().itemstring)
-						if istack:get_name() == "default:stick" then
+						if minetest.get_item_group(istack:get_name(), "stick") == 1 then
 							bonfireb = bonfireb + istack:get_count() * 2
 							v:remove()
-						elseif istack:get_name() == "default:leaves" then
+						elseif minetest.get_item_group(istack:get_name(), "leaves") == 1  then
 							bonfireb = bonfireb + istack:get_count()
 							v:remove()
 						elseif istack:get_name() == "default:coal_lump" then
@@ -36,7 +36,7 @@ minetest.register_tool("sticks:sticks", {
 						end
 					end
 			end
-			if furnaceb >= 9 then
+			if furnaceb >= 9 and math.random(6) == 1 and minetest.env:get_node(pos).name == "air" then
 				if furnace.check_furnace_blocks(pos) then
 					for _, v in ipairs(coals) do
 						v:remove()
@@ -68,7 +68,7 @@ minetest.register_tool("sticks:sticks", {
 					end
 				end
 			end
-			if bonfireb >= 10 and minetest.env:get_node(pos).name == "air" then
+			if bonfireb >= 10 and math.random(2) == 1 and minetest.env:get_node(pos).name == "air" then
 				minetest.env:set_node(pos, {name = "bonfire:self"})
 				local meta = minetest.env:get_meta(pos)
 				meta:set_int("active", 1)
@@ -91,11 +91,9 @@ minetest.register_tool("sticks:sticks", {
 
 
 minetest.register_craft({
+	type = "shapeless",
 	output = "sticks:sticks",
-	recipe = {
-		{"", "default:stick"},
-		{"default:stick", ""},
-	},
+	recipe = {"group:stick", "group:stick"},
 })
 
 minetest.register_alias("sticks", "sticks:sticks")

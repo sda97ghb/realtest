@@ -7,7 +7,8 @@ minetest.register_node("decorations:malachite_block", {
 	tiles = {"decorations_malachite.png"},
 	particle_image = {"minerals_malachite.png"},
 	is_ground_content = true,
-	groups = {cracky=3},
+	drop = "minerals:malachite 4",
+	groups = {cracky=3,drop_on_dig=1},
 	sounds = default.node_sound_stone_defaults(),
 })
 
@@ -32,31 +33,42 @@ minetest.register_node("decorations:malachite_pyramid", {
 	sounds = default.node_sound_stone_defaults(),
 })
 
-minetest.register_node("decorations:malachite_table", {
-	description = "Malachite Table",
-	drawtype = "nodebox",
-	paramtype = "light",
-	node_box = {
-			type = "fixed",
-			fixed = {
-				{-0.5, 0.245, -0.5, 0.5, 0.4375, 0.5},
-				{-0.4375, -0.5, -0.4375, -0.25, 0.25, -0.25},
-				{-0.4375, -0.5, 0.25, -0.25, 0.25, 0.4375},
-				{0.25, -0.5, -0.4375, 0.4375, 0.25, -0.25},
-				{0.25, -0.5, 0.25, 0.4375, 0.25, 0.4375},
+for i, tree_name in ipairs(realtest.registered_trees_list) do
+	local tree = realtest.registered_trees[tree_name]
+	minetest.register_node("decorations:malachite_table_"..i, {
+		description = "Malachite Table",
+		drawtype = "nodebox",
+		paramtype = "light",
+		node_box = {
+				type = "fixed",
+				fixed = {
+					{-0.5, 0.245, -0.5, 0.5, 0.4375, 0.5},
+					{-0.4375, -0.5, -0.4375, -0.25, 0.25, -0.25},
+					{-0.4375, -0.5, 0.25, -0.25, 0.25, 0.4375},
+					{0.25, -0.5, -0.4375, 0.4375, 0.25, -0.25},
+					{0.25, -0.5, 0.25, 0.4375, 0.25, 0.4375},
+				},
 			},
-		},
-	selection_box = {
-			type = "fixed",
-			fixed = {
-				{-0.5, -0.5, -0.5, 0.5, 0.4375, 0.5},
+		selection_box = {
+				type = "fixed",
+				fixed = {
+					{-0.5, -0.5, -0.5, 0.5, 0.4375, 0.5},
+				},
 			},
-		},
-	tiles = {"decorations_malachite.png", "default_wood.png^decorations_malachite_table_bottom.png", "default_wood.png^decorations_malachite_table_side.png"},
-	is_ground_content = true,
-	groups = {cracky=3, oddly_breakable_by_hand = 2},
-	sounds = default.node_sound_stone_defaults(),
+		tiles = {"decorations_malachite.png", tree.textures[3].."^decorations_malachite_table_bottom.png",
+			tree.textures[3].."^decorations_malachite_table_side.png"},
+		groups = {cracky=3, oddly_breakable_by_hand = 2},
+		sounds = default.node_sound_stone_defaults(),
+	})
+	minetest.register_craft({
+	output = "decorations:malachite_table_"..i,
+	recipe = {
+		{"minerals:malachite","minerals:malachite","minerals:malachite"},
+		{tree.name.."_plank","",tree.name.."_plank"},
+		{tree.name.."_plank","",tree.name.."_plank"},
+	}
 })
+end
 
 minetest.register_node("decorations:casket", {
 	description = "Casket",
@@ -85,7 +97,7 @@ minetest.register_node("decorations:casket", {
 		local meta = minetest.env:get_meta(pos)
 		meta:set_string("formspec",
 				"size[8,8]"..
-				"list[current_name;main;1,0;6,3;]"..
+				"list[current_name;main;1,0.5;6,3;]"..
 				"list[current_player;main;0,4;8,4;]")
 		meta:set_string("infotext", "Casket")
 		local inv = meta:get_inventory()
@@ -173,6 +185,24 @@ minetest.register_node("decorations:malachite_vase", {
 	sounds = default.node_sound_stone_defaults(),
 })
 
+for i, tree_name in ipairs(realtest.registered_trees_list) do
+	local tree = realtest.registered_trees[tree_name]
+	minetest.register_node("decorations:bookshelf_"..tree.name:remove_modname_prefix(), {
+		description = tree.description.." Bookshelf",
+		tiles = {tree.textures[3], tree.textures[3], tree.textures[3].."^decorations_bookshelf.png"},
+		groups = {bookshelf=1,snappy=2,choppy=3,oddly_breakable_by_hand=2,flammable=3},
+		sounds = default.node_sound_wood_defaults(),
+	})
+	minetest.register_craft({
+		output = "decorations:bookshelf_"..tree.name:remove_modname_prefix(),
+		recipe = {
+			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
+			{"default:book", "default:book", tree.name.."_plank"},
+			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
+		}
+	})
+end
+
 ------CRAFT RECIPES------
 
 minetest.register_craft({
@@ -199,27 +229,12 @@ minetest.register_craft({
 		{"minerals:malachite","minerals:malachite"},
 	}
 })
-minetest.register_craft({
-	output = "minerals:malachite 4",
-	recipe = {
-		{"decorations:malachite_block"},
-	}
-})
 
 minetest.register_craft({
 	output = "decorations:malachite_pyramid",
 	recipe = {
 		{"","minerals:malachite",""},
 		{"minerals:malachite","minerals:malachite","minerals:malachite"},
-	}
-})
-
-minetest.register_craft({
-	output = "decorations:malachite_table",
-	recipe = {
-		{"minerals:malachite","minerals:malachite","minerals:malachite"},
-		{"default:wood","","default:wood"},
-		{"default:wood","","default:wood"},
 	}
 })
 

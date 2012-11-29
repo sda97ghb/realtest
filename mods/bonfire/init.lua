@@ -8,6 +8,23 @@ bonfire.formspec =
 	"list[current_name;dst;5,1;2,1;]"..
 	"list[current_player;main;0,5;8,4;]"
 
+realtest.bonfire_fuels = {}
+function realtest.add_bonfire_fuel(fuel)
+	if fuel then
+		table.insert(realtest.bonfire_fuels, fuel)
+	end
+end
+realtest.add_bonfire_fuel("default:cactus")
+realtest.add_bonfire_fuel("default:papyrus")
+realtest.add_bonfire_fuel("default:bookshelf")
+realtest.add_bonfire_fuel("default:fence_wood")
+realtest.add_bonfire_fuel("default:ladder")
+realtest.add_bonfire_fuel("default:torch")
+realtest.add_bonfire_fuel("default:sign_wall")
+realtest.add_bonfire_fuel("default:chest")
+realtest.add_bonfire_fuel("default:chest_locked")
+realtest.add_bonfire_fuel("ores:peat")
+
 minetest.register_node("bonfire:self", {
 	description = "Bonfire",
 	tiles = {"bonfire_top.png", "bonfire_bottom.png", "bonfire_side.png"},
@@ -170,6 +187,9 @@ minetest.register_abm({
 			end
 			if fuellist then
 				fuel = minetest.get_craft_result({method = "fuel", width = 1, items = fuellist})
+				if fuel and not table.contains(realtest.bonfire_fuels, inv:get_stack("fuel", 1):get_name()) then
+					fuel.time = 0
+				end 
 			end
 
 			if fuel.time <= 0 then

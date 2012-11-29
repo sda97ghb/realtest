@@ -6,8 +6,6 @@
 
 minetest.register_alias("mapgen_air", "air")
 minetest.register_alias("mapgen_stone", "default:stone")
-minetest.register_alias("mapgen_tree", "default:tree")
-minetest.register_alias("mapgen_leaves", "default:leaves")
 minetest.register_alias("mapgen_apple", "default:apple")
 minetest.register_alias("mapgen_water_source", "default:water_source")
 minetest.register_alias("mapgen_dirt", "default:dirt")
@@ -18,9 +16,10 @@ minetest.register_alias("mapgen_lava_source", "default:lava_source")
 minetest.register_alias("mapgen_cobble", "default:cobble")
 minetest.register_alias("mapgen_mossycobble", "default:mossycobble")
 minetest.register_alias("mapgen_dirt_with_grass", "default:dirt_with_grass")
-minetest.register_alias("mapgen_junglegrass", "default:junglegrass")
 minetest.register_alias("mapgen_desert_sand", "default:desert_sand")
 minetest.register_alias("mapgen_desert_stone", "default:desert_stone")
+minetest.register_alias("mapgen_tree", "air")
+minetest.register_alias("mapgen_leaves", "air")
 
 function default.make_papyrus(pos, size)
 	for y=0,size-1 do
@@ -121,7 +120,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 					end
 				end
 				if ground_y and minetest.env:get_node({x=x,y=ground_y,z=z}).name == "default:dirt_with_grass" then
-					minetest.env:add_item({x=x,y=ground_y+1,z=z}, "default:cobble")
+					minetest.env:add_node({x=x,y=ground_y+1,z=z}, {name = "default:cobble_node"})
 				end
 			end
 		end

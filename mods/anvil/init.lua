@@ -25,7 +25,7 @@ function realtest.register_anvil_recipe(RecipeDef)
 	end
 end
 
---Unshaped metals, buckets, double ingots, sheets and hammers
+--Unshaped metals, buckets, double ingots, sheets, hammers and locks
 for i, metal in ipairs(metals.list) do
 	realtest.register_anvil_recipe({
 		item1 = "metals:"..metal.."_unshaped",
@@ -57,12 +57,19 @@ for i, metal in ipairs(metals.list) do
 		output = "metals:"..metal.."_doublesheet",
 		level = metals.levels[i] - 1,
 	})
+	realtest.register_anvil_recipe({
+		item1 = "metals:"..metal.."_ingot",
+		item2 = "scribing_table:plan_lock",
+		rmitem2 = false,
+		output = "metals:"..metal.."_lock",
+		level = metals.levels[i]
+	})
 end
 --Pig iron --> Wrought iron
 realtest.register_anvil_recipe({
 	item1 = "metals:pig_iron_ingot",
 	output = "metals:wrought_iron_ingot",
-	level = 3,
+	level = 2,
 })
 --Instruments
 local instruments = 
@@ -99,7 +106,7 @@ local anvils = {
 }
 
 minetest.register_craft({
-	output = 'anvil:stone_anvil',
+	output = 'anvil:anvil_stone',
 	recipe = {
 		{'default:stone','default:stone','default:stone'},
 		{'','default:stone',''},
@@ -110,7 +117,7 @@ minetest.register_craft({
 for _, anvil in ipairs(anvils) do
 	if anvil[1] ~= "stone" then
 		minetest.register_craft({
-			output = "anvil:"..anvil[1].."_anvil",
+			output = "anvil:anvil_"..anvil[1],
 			recipe = {
 				{"metals:"..anvil[1].."_doubleingot","metals:"..anvil[1].."_doubleingot","metals:"..anvil[1].."_doubleingot"},
 				{"","metals:"..anvil[1].."_doubleingot",""},
@@ -121,7 +128,7 @@ for _, anvil in ipairs(anvils) do
 end
 
 for _, anvil in ipairs(anvils) do
-	minetest.register_node("anvil:"..anvil[1].."_anvil", {
+	minetest.register_node("anvil:anvil_"..anvil[1], {
 		description = anvil[2] .. " Anvil",
 		tiles = {"anvil_"..anvil[1].."_top.png","anvil_"..anvil[1].."_top.png","anvil_"..anvil[1].."_side.png"},
 		drawtype = "nodebox",
@@ -145,7 +152,7 @@ for _, anvil in ipairs(anvils) do
 				{-0.35,-0.1,-0.2,0.35,0.1,0.2},
 			},
 		},
-		groups = {oddly_breakable_by_hand=2, cracky=3, dig_immediate=1},
+		groups = {oddly_breakable_by_hand=2, dig_immediate=1},
 		sounds = default.node_sound_stone_defaults(),
 		can_dig = function(pos,player)
 			local meta = minetest.env:get_meta(pos);
@@ -188,7 +195,7 @@ for _, anvil in ipairs(anvils) do
 					for _, recipe in ipairs(realtest.registered_anvil_recipes) do
 						if recipe.type == "forge" and recipe.item1 == src1:get_name() and recipe.item2 == src2:get_name() and
 							anvil[3] >= recipe.level and
-							minetest.get_item_group(hammer:get_name(), "material_level") >= recipe.level then
+							minetest.get_item_group(hammer:get_name(), "material_level") >= recipe.level - 1 then
 							if inv:room_for_item("output", recipe.output) then
 								if recipe.rmitem1 then
 									src1:take_item()

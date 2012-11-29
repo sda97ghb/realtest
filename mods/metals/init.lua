@@ -94,6 +94,11 @@ for i=1, #metals.list do
 		inventory_image = "metals_ceramic_mold.png^metals_"..metals.list[i].."_ingot.png",
 	})
 	
+	minetest.register_craftitem("metals:"..metals.list[i].."_lock", {
+		description = metals.desc_list[i].." Lock",
+		inventory_image = "metals_"..metals.list[i].."_lock.png",
+	})
+	
 	--
 	-- Nodes
 	--
@@ -103,7 +108,8 @@ for i=1, #metals.list do
 		tiles = {"metals_"..metals.list[i].."_block.png"},
 		particle_image = {"metals_"..metals.list[i].."_block.png"},
 		is_ground_content = true,
-		groups = {snappy=1,bendy=2,cracky=1,melty=2,level=2},
+		drop = "metals:"..metals.list[i].."_doubleingot",
+		groups = {snappy=1,bendy=2,cracky=1,melty=2,level=2,drop_on_dig=1},
 		sounds = default.node_sound_stone_defaults(),
 	})
 	
@@ -114,13 +120,13 @@ for i=1, #metals.list do
 	minetest.register_craft({
 		output = "metals:"..metals.list[i].."_block",
 		recipe = {
-			{"metals:"..metals.list[i].."_ingot", "metals:"..metals.list[i].."_ingot"},
-			{"metals:"..metals.list[i].."_ingot", "metals:"..metals.list[i].."_ingot"},
+			{"metals:"..metals.list[i].."_doubleingot", "metals:"..metals.list[i].."_doubleingot"},
+			{"metals:"..metals.list[i].."_doubleingot", "metals:"..metals.list[i].."_doubleingot"},
 		}
 	})
 	
 	minetest.register_craft({
-		output = "metals:"..metals.list[i].."_ingot 4",
+		output = "metals:"..metals.list[i].."_doubleingot 4",
 		recipe = {
 			{"metals:"..metals.list[i].."_block"},
 		}
@@ -135,12 +141,9 @@ for i=1, #metals.list do
 	})
 	
 	minetest.register_craft({
-		output = 'sawing_table:self',
-		recipe = {
-			{'default:tree',"metals:"..metals.list[i].."_ingot",'default:tree'},
-			{'default:tree','','default:tree'},
-			{'default:tree',"metals:"..metals.list[i].."_ingot",'default:tree'},
-		}
+		output = "metals:"..metals.list[i].."_ingot",
+		recipe = {{"metals:ceramic_mold_"..metals.list[i]}},
+		replacements = {{"metals:ceramic_mold_"..metals.list[i], "metals:ceramic_mold"}},
 	})
 	
 	--
@@ -182,7 +185,9 @@ minetest.register_craft({
 	recipe = "metals:clay_mold",
 })
 
-MINERALS_LIST={
+minerals = {}
+
+minerals.list = {
 	'magnetite',
 	'hematite',
 	'limonite',
@@ -200,25 +205,25 @@ MINERALS_LIST={
 	'bauxite',
 }
 
-MINERALS_DESC_LIST={
-	'magnetite',
-	'hematite',
-	'limonite',
-	'bismuthinite',
-	'cassiterite',
-	'galena',
-	'malachite',
-	'native copper',
-	'native gold',
-	'native platinum',
-	'native silver',
-	'sphalerite',
-	'tetrahedrite',
-	'garnierite',
-	'bauxite',
+minerals.desc_list = {
+	'Magnetite',
+	'Hematite',
+	'Limonite',
+	'Bismuthinite',
+	'Cassiterite',
+	'Galena',
+	'Malachite',
+	'Native Copper',
+	'Native Gold',
+	'Native Platinum',
+	'Native Silver',
+	'Sphalerite',
+	'Tetrahedrite',
+	'Garnierite',
+	'Bauxite',
 }
 
-MINERALS_METALS_LIST={
+minerals.metals_list = {
 	'pig_iron',
 	'pig_iron',
 	'pig_iron',
@@ -236,24 +241,30 @@ MINERALS_METALS_LIST={
 	'aluminium',
 }
 
-for i=1, #MINERALS_LIST do
-	minetest.register_craftitem("metals:ceramic_mold_"..MINERALS_LIST[i], {
-		description = "Ceramic mold with "..MINERALS_DESC_LIST[i],
-		inventory_image = "metals_ceramic_mold_"..MINERALS_LIST[i]..".png",
+for i, mineral in ipairs(minerals.list) do
+	minetest.register_craftitem("metals:ceramic_mold_"..mineral, {
+		description = "Ceramic mold with "..minerals.desc_list[i],
+		inventory_image = "metals_ceramic_mold_"..mineral..".png",
 	})
 
 	minetest.register_craft({
-		output = "metals:ceramic_mold_"..MINERALS_LIST[i],
+		output = "metals:ceramic_mold_"..mineral,
 		recipe = {
-			{"minerals:"..MINERALS_LIST[i]},
+			{"minerals:"..mineral},
 			{"metals:ceramic_mold"},
 		}
+	})
+	
+	minetest.register_craft({
+		output = "minerals:"..mineral,
+		recipe = {{"metals:ceramic_mold_"..mineral}},
+		replacements = {{"metals:ceramic_mold_"..mineral, "metals:ceramic_mold"}},
 	})
 
 	minetest.register_craft({
 		type = "cooking",
-		output = "metals:"..MINERALS_METALS_LIST[i].."_unshaped",
-		recipe = "metals:ceramic_mold_"..MINERALS_LIST[i],
+		output = "metals:"..minerals.metals_list[i].."_unshaped",
+		recipe = "metals:ceramic_mold_"..mineral,
 	})
 end
 

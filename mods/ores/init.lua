@@ -51,9 +51,9 @@ for i,ore in ipairs(ores.list) do
 	minetest.register_node("ores:"..ore, {
 		description = ores.desc_list[i],
 		tile_images = {"default_stone.png^ores_"..ore..".png"},
-		particle_image = {"ores_"..ore..".png"},
+		particle_image = {"minerals_"..ore..".png"},
 		is_ground_content = true,
-		groups = {cracky=3},
+		groups = {cracky=3,drop_on_dig=1},
 		drop = {
 			max_items = 1,
 			items = {
@@ -75,7 +75,7 @@ minetest.register_node("ores:native_copper_desert", {
 	tile_images = {"default_desert_stone.png^ores_native_copper.png"},
 	particle_image = {"ores_native_copper.png"},
 	is_ground_content = true,
-	groups = {cracky=3},
+	groups = {cracky=3,drop_on_dig=1},
 	drop = {
 		max_items = 1,
 		items = {
@@ -96,7 +96,7 @@ minetest.register_node("ores:native_gold_desert", {
 	tile_images = {"default_desert_stone.png^ores_native_gold.png"},
 	particle_image = {"ores_native_gold.png"},
 	is_ground_content = true,
-	groups = {cracky=3},
+	groups = {cracky=3,drop_on_dig=1},
 	drop = {
 		max_items = 1,
 		items = {
@@ -117,7 +117,7 @@ minetest.register_node("ores:peat", {
 	tile_images = {"ores_peat.png"},
 	particle_image = {"ores_peat.png"},
 	is_ground_content = true,
-	groups = {crumbly=3},
+	groups = {crumbly=3,drop_on_dig=1,falling_node=1},
 	sounds = default.node_sound_stone_defaults(),
 })
 
@@ -230,12 +230,13 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	}
 	for i, ore in ipairs(gen_ores) do
 		if pr:next(1,2) == 1 then
-			generate_ore(ore[1], "default:stone", minp, maxp, seed+i, 1/8/8/8/8/8/8, 10, 850, ore[2] or -31000, ore[3] or 31000)
+			generate_ore(ore[1], "default:stone", minp, maxp, seed+i, 1/8/8/8/8/8/8, 10, 850, ore[2] or -31000, ore[3] or 200)
 		end
 	end
-	generate_peat("ores:peat", "default:dirt", minp, maxp, seed+19, 1/8/16/24, 10, 1000, -31000, 31000)
-	generate_ore("ores:native_copper_desert", "default:desert_stone", minp, maxp, seed+20, 1/8/8/8/8/8/8, 6, 200, -31000, 31000)
-	generate_ore("ores:native_gold_desert", "default:desert_stone", minp, maxp, seed+21, 1/8/8/8/8/8/8, 5, 100, -31000, 31000)
+	generate_peat("ores:peat", "default:dirt", minp, maxp, seed+19, 1/8/16/24, 10, 1000, -31000, 200)
+	generate_ore("ores:native_copper_desert", "default:desert_stone", minp, maxp, seed+20, 1/8/8/8/8/8/8, 6, 200, -31000, 200)
+	generate_ore("ores:native_gold_desert", "default:desert_stone", minp, maxp, seed+21, 1/8/8/8/8/8/8, 5, 100, -31000, 200)
+	generate_ore("ores:platinum", "ores:magnetite", minp, maxp, seed+22, 1/8/8/8/8/8/8, 10, 850, -31000, 200)
 	
 	if pr:next(1,2) == 1 then
 		-- Generate clay
@@ -290,7 +291,7 @@ end)
 minetest.register_craft({
 	type = "cooking",
 	output = "default:torch 2",
-	recipe = "default:stick",
+	recipe = "group:stick",
 })
 
 minetest.register_craft({

@@ -33,9 +33,10 @@ function string:capitalize()
 	return self:sub(1,1):upper()..self:sub(2):lower()
 end
 
-function minetest.get_item_group(name, group)
-	if not minetest.registered_items[name] or not minetest.registered_items[name].groups[group] then
-		return 0
+function string:remove_modname_prefix()
+	local i = self:find(":")
+	if i then
+		return self:sub(i+1)
 	end
-	return minetest.registered_items[name].groups[group]  
+	return nil
 end

@@ -82,7 +82,7 @@ instruments.spear.entity.on_step = function(self, dtime)
 				if obj:get_hp()<=0 then 
 					obj:remove()
 				end
-				minetest.env:add_item(self.lastpos, 'instruments:spear_'..self.object:get_luaentity().material)
+				minetest.env:add_item(self.lastpos, "instruments:spear_"..self.object:get_luaentity().material)
 				self.object:remove()
 			end
 		end
@@ -90,7 +90,7 @@ instruments.spear.entity.on_step = function(self, dtime)
 
 	if self.lastpos.x~=nil then
 		if node.name ~= "air" then
-			minetest.env:add_item(self.lastpos, 'instruments:spear_'..self.object:get_luaentity().material)
+			minetest.env:add_item(self.lastpos, "instruments:spear_"..self.object:get_luaentity().material)
 			self.object:remove()
 		end
 	end
@@ -116,7 +116,7 @@ for i, material in ipairs(instruments.materials) do
 			obj:get_luaentity().material = material
 			return ""
 		end,
-		groups = {material_level=instruments.levels[i], durability=instruments.durability[i]},
+		groups = {material_level=instruments.levels[i], durability=instruments.durability[i], spear=1},
 	})
 	--Chisels (stone chisels are not exist)
 	if material ~= "stone" then
@@ -139,7 +139,7 @@ for i, material in ipairs(instruments.materials) do
 				item:add_wear(65535/instruments.durability[i])
 				return item
 			end,
-			groups = {material_level=instruments.levels[i], durability=instruments.durability[i]},
+			groups = {material_level=instruments.levels[i], durability=instruments.durability[i], chisel=1},
 		})
 	end
 	--Heads
@@ -159,7 +159,7 @@ for i, material in ipairs(instruments.materials) do
 				output = "instruments:"..instrument.."_"..material,
 				recipe = {
 					{"instruments:"..instrument.."_"..material.."_head"},
-					{'default:stick'},
+					{"group:stick"},
 				},
 			})
 		end
@@ -175,7 +175,7 @@ for i, material in ipairs(instruments.materials) do
 					max_drop_level=1,
 					groupcaps=instruments.groupcaps[j][i],
 				},
-				groups = {material_level=instruments.levels[i], durability=instruments.durability[i]},
+				groups = {material_level=instruments.levels[i], durability=instruments.durability[i], [instrument] = 1},
 			})
 		end
 	end
@@ -185,7 +185,7 @@ minetest.register_craft({
 	output = "instruments:spear_stone",
 	recipe = {
 		{"default:cobble", "", ""},
-		{"", "default:stick", ""},
-		{"","","default:stick"},
+		{"", "group:stick", ""},
+		{"","","group:stick"},
 	},
 })
