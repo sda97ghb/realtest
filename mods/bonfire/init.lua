@@ -86,7 +86,7 @@ minetest.register_node("bonfire:self_active", {
 	},
 	light_source = 12,
 	drop = "",
-	groups = {crumbly=3, not_in_creative_inventory=1},
+	groups = {igniter=1,crumbly=3, not_in_creative_inventory=1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
