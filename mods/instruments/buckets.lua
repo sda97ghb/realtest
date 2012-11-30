@@ -74,17 +74,15 @@ for i, metal in ipairs(metals.list) do
 		stack_max = 1,
 		liquids_pointable = true,
 		on_use = function(itemstack, user, pointed_thing)
-			-- Must be pointing to node
-				if pointed_thing.type ~= "node" then
-					return
-				end
-				-- Check if pointing to a liquid source
-				n = minetest.env:get_node(pointed_thing.under)
-				liquiddef = realtest.registered_liquids[n.name]
-				if liquiddef then
-					minetest.env:add_node(pointed_thing.under, {name="air"})
-					return {name="instruments:bucket_"..wood}
-				end
+			if pointed_thing.type ~= "node" then
+				return
+			end
+			n = minetest.env:get_node(pointed_thing.under)
+			liquiddef = realtest.registered_liquids[n.name]
+			if liquiddef and n.name == liquiddef.source then
+				minetest.env:add_node(pointed_thing.under, {name="air"})
+				return {name="instruments:bucket_"..wood}
+			end
 		end,
 	})
 end
@@ -97,14 +95,12 @@ for i, tree in pairs(realtest.registered_trees) do
 		stack_max = 1,
 		liquids_pointable = true,
 		on_use = function(itemstack, user, pointed_thing)
-			-- Must be pointing to node
 			if pointed_thing.type ~= "node" then
 				return
 			end
-			-- Check if pointing to a liquid source
 			n = minetest.env:get_node(pointed_thing.under)
 			liquiddef = realtest.registered_liquids[n.name]
-			if liquiddef then
+			if liquiddef and n.name == liquiddef.source then
 				minetest.env:add_node(pointed_thing.under, {name="air"})
 				return {name="instruments:bucket_"..wood.."_with_"..liquiddef.name}
 			end
