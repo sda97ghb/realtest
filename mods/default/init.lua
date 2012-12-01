@@ -403,7 +403,7 @@ minetest.register_node("default:dirt_with_clay", {
 
 minetest.register_node("default:dirt_with_grass_and_clay", {
 	description = "Clay",
-	tiles = {"default_grass.png", "default_dirt.png^default_clay.png", "default_dirt.png^default_clay.png^default_grass_side.png"},
+	tiles = {"default_grass.png", "default_dirt.png^default_clay.png", "default_grass.png"},
 	particle_image = {"default_clay_lump.png"},
 	is_ground_content = true,
 	groups = {crumbly=3, drop_on_dig=1},
