@@ -1,5 +1,5 @@
-table.contains = function(t, v)
-	for _, i in ipairs(t) do
+function table:contains(v)
+	for _, i in ipairs(self) do
 		if i == v then
 			return true
 		end
