@@ -40,3 +40,9 @@ function string:remove_modname_prefix()
 	end
 	return nil
 end
+
+function set_node_instead_air(pos, node)
+	if minetest.env:get_node(pos).name == "air" then
+		minetest.env:set_node(pos, node)
+	end
+end
