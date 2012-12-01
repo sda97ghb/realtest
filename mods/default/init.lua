@@ -10,10 +10,8 @@ LIGHT_MAX = 14
 
 -- Definitions made by this mod that other mods can use too
 default = {}
-realtest = {}
 
 -- Load other files
-dofile(minetest.get_modpath("default").."/player.lua")
 dofile(minetest.get_modpath("default").."/mapgen.lua")
 
 --
@@ -403,7 +401,7 @@ minetest.register_node("default:dirt_with_clay", {
 
 minetest.register_node("default:dirt_with_grass_and_clay", {
 	description = "Clay",
-	tiles = {"default_grass.png", "default_dirt.png^default_clay.png", "default_dirt.png^default_clay.png^default_grass_side.png"},
+	tiles = {"default_grass.png", "default_dirt.png^default_clay.png", "default_grass.png"},
 	particle_image = {"default_clay_lump.png"},
 	is_ground_content = true,
 	groups = {crumbly=3, drop_on_dig=1},
@@ -470,24 +468,6 @@ minetest.register_node("default:glass", {
 	is_ground_content = true,
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3},
 	sounds = default.node_sound_glass_defaults(),
-})
-
-minetest.register_node("default:rail", {
-	description = "Rail",
-	drawtype = "raillike",
-	tiles = {"default_rail.png", "default_rail_curved.png", "default_rail_t_junction.png", "default_rail_crossing.png"},
-	particle_image = {"default_rail.png"},
-	inventory_image = "default_rail.png",
-	wield_image = "default_rail.png",
-	paramtype = "light",
-	is_ground_content = true,
-	walkable = false,
-	selection_box = {
-		type = "fixed",
-                -- but how to specify the dimensions for curved and sideways rails?
-                fixed = {-1/2, -1/2, -1/2, 1/2, -1/2+1/16, 1/2},
-	},
-	groups = {bendy=2,snappy=1,dig_immediate=2},
 })
 
 minetest.register_node("default:water_flowing", {
