@@ -48,7 +48,7 @@ function realtest.register_tree(name, TreeDef)
 		group = {plank=1},
 	})
 	
-		minetest.register_node(tree.name.."_log", {
+	minetest.register_node(tree.name.."_log", {
 		description = tree.description.." Log",
 		tiles = tree.textures[1],
 		inventory_image = tree.textures[6],
