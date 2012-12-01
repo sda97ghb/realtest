@@ -319,7 +319,7 @@ minetest.register_node("default:cobbleblock_flat", {
 
 minetest.register_node("default:dirt_with_grass", {
 	description = "Dirt with Grass",
-	tiles = {"default_grass.png", "default_dirt.png", "default_dirt.png^default_grass_side.png"},
+	tiles = {"default_grass.png", "default_dirt.png", "default_grass.png"},
 	particle_image = {"default_dirt.png"},
 	is_ground_content = true,
 	groups = {crumbly=3,drop_on_dig=1},
