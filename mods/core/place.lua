@@ -29,10 +29,6 @@ function minetest.item_place_node(itemstack, placer, pointed_thing)
 		minetest.log("info", "node under is buildable to")
 		place_to = {x = under.x, y = under.y, z = under.z}
 	end
-	
-	if #minetest.env:get_objects_inside_radius(place_to, 1) ~= 0 then
-		return
-	end
 
 	minetest.log("action", placer:get_player_name() .. " places node "
 		.. def.name .. " at " .. minetest.pos_to_string(place_to))

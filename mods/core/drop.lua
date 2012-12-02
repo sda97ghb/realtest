@@ -2,14 +2,8 @@
 
 function minetest.handle_node_drops(pos, drops, digger)
 	local function drop(item)
-		local count, name
-		if type(item) == "string" then
-			count = 1
-			name = item
-		else
-			count = item:get_count()
-			name = item:get_name()
-		end
+		local count = ItemStack(item):get_count()
+		local name = ItemStack(item):get_name()
 		for i=1,count do
 			local obj = minetest.env:add_item(pos, name)
 			if obj ~= nil then
