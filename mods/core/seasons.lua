@@ -117,7 +117,7 @@ function seasons.get_month()
 end
 
 function seasons.get_day_of_week()
-	local w = seasons.day % 7
+	local w = (seasons.day - 1) % 7 + 1
 	return seasons.week[w]
 end
 
