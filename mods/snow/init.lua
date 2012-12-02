@@ -49,7 +49,11 @@ minetest.register_abm({
 	chance = 2,
 	action = function(pos, node)
 		if seasons.get_season() ~= seasons.seasons[4] then
-			local n = tonumber(node.name:sub(-1)) - 1
+			local n = tonumber(node.name:sub(-2))
+			if not n then
+				n = tonumber(node.name:sub(-1))
+			end
+			n = n - 1
 			if n ~= 0 then
 				minetest.env:set_node(pos, {name = "snow:self_"..n})
 			else
