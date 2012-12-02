@@ -1,4 +1,4 @@
-minetest.register_entity("particles:particle", {
+minetest.register_entity("core:particle", {
 	physical = true,
 	collisionbox = {0,0,0,0,0,0},
 	timer = 0,
@@ -55,7 +55,7 @@ minetest.register_on_dignode(function(pos, oldnode, digger)
 			local dy = (math.random(0,10)-5)/10
 			local dz = (math.random(0,10)-5)/10
 			
-			local obj = minetest.env:add_entity({x=pos.x+dx, y=pos.y+dy, z=pos.z+dz}, "particles:particle")
+			local obj = minetest.env:add_entity({x=pos.x+dx, y=pos.y+dy, z=pos.z+dz}, "core:particle")
 			
 			local vis_size = math.random(5,15)/100
 			obj:set_properties({
@@ -67,12 +67,12 @@ minetest.register_on_dignode(function(pos, oldnode, digger)
 	end
 end)
 
-minetest.register_entity("particles:smoke", {
+minetest.register_entity("core:smoke", {
 	physical = true,
 	visual_size = {x=0.25, y=0.25},
 	collisionbox = {0,0,0,0,0,0},
 	visual = "sprite",
-	textures = {"smoke_puff.png"},
+	textures = {"particles_smoke.png"},
 	on_step = function(self, dtime)
 		self.object:setacceleration({x=0, y=0.5, z=0})
 		self.timer = self.timer + dtime
@@ -83,11 +83,29 @@ minetest.register_entity("particles:smoke", {
 	timer = 0,
 })
 
+minetest.register_entity("core:fire", {
+	physical = true,
+	visual_size = {x=0.25, y=0.25},
+	collisionbox = {0,0,0,0,0,0},
+	visual = "sprite",
+	textures = {"particles_fire.png"},
+	on_step = function(self, dtime)
+		self.object:setacceleration({x=0, y=0.2, z=0})
+		self.timer = self.timer + dtime
+		if self.timer > 2 then
+			self.object:remove()
+		end
+	end,
+	timer = 0,
+})
+
 minetest.register_abm({
-	nodenames = {"group:smokes"},
+	nodenames = {"group:fires"},
 	interval = 0.5,
 	chance = 1,
 	action = function(pos)
-		minetest.env:add_entity({x=pos.x+math.random()*0.5-0.25,y=pos.y+0.3,z=pos.z+math.random()*0.5-0.25}, "particles:smoke")
+		minetest.env:add_entity({x=pos.x+math.random(8)*0.1-0.4,y=pos.y-0.2+math.random()*0.25,z=pos.z+math.random(8)*0.1-0.4}, "core:fire")
+		minetest.env:add_entity({x=pos.x+math.random(8)*0.1-0.4,y=pos.y-0.2+math.random()*0.25,z=pos.z+math.random(8)*0.1-0.4}, "core:fire")
+		minetest.env:add_entity({x=pos.x+math.random(8)*0.1-0.4,y=pos.y-0.2+math.random()*0.25,z=pos.z+math.random(8)*0.1-0.4}, "core:fire")
 	end,
 })

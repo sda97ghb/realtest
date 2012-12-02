@@ -45,7 +45,6 @@ minetest.register_node("bonfire:self", {
 	},
 	drop = "",
 	groups = {crumbly=3, oddly_breakable_by_hand=1, not_in_creative_inventory=1},
-	sounds = default.node_sound_stone_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
 		meta:set_string("formspec", bonfire.formspec)
@@ -86,8 +85,7 @@ minetest.register_node("bonfire:self_active", {
 	},
 	light_source = 12,
 	drop = "",
-	groups = {igniter=1,crumbly=3, not_in_creative_inventory=1},
-	sounds = default.node_sound_stone_defaults(),
+	groups = {igniter=1,crumbly=3, not_in_creative_inventory=1,fires=1},
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
 		meta:set_string("formspec", bonfire.formspec)
@@ -127,7 +125,7 @@ minetest.register_abm({
 		
 		if meta:get_int("active") == 1 then
 			if meta:get_int("sound_play") ~= 1 then
-				meta:set_int("sound_handle", minetest.sound_play("bonfire_burning", {pos=pos, max_hear_distance = 4,loop=true}))
+				meta:set_int("sound_handle", minetest.sound_play("bonfire_burning", {pos=pos, max_hear_distance = 4,loop=true,gain=0.8}))
 				meta:set_int("sound_play", 1)
 			end
 			local inv = meta:get_inventory()
