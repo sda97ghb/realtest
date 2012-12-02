@@ -55,8 +55,8 @@ for i, tree_name in ipairs(realtest.registered_trees_list) do
 					{-0.5, -0.5, -0.5, 0.5, 0.4375, 0.5},
 				},
 			},
-		tiles = {"decorations_malachite.png", tree.textures[3].."^decorations_malachite_table_bottom.png",
-			tree.textures[3].."^decorations_malachite_table_side.png"},
+		tiles = {"decorations_malachite.png", tree.textures.planks.."^decorations_malachite_table_bottom.png",
+			tree.textures.planks.."^decorations_malachite_table_side.png"},
 		groups = {cracky=3, oddly_breakable_by_hand = 2},
 		sounds = default.node_sound_stone_defaults(),
 	})
@@ -189,7 +189,7 @@ for i, tree_name in ipairs(realtest.registered_trees_list) do
 	local tree = realtest.registered_trees[tree_name]
 	minetest.register_node("decorations:bookshelf_"..tree.name:remove_modname_prefix(), {
 		description = tree.description.." Bookshelf",
-		tiles = {tree.textures[3], tree.textures[3], tree.textures[3].."^decorations_bookshelf.png"},
+		tiles = {tree.textures.planks, tree.textures.planks, tree.textures.planks.."^decorations_bookshelf.png"},
 		groups = {bookshelf=1,snappy=2,choppy=3,oddly_breakable_by_hand=2,flammable=3},
 		sounds = default.node_sound_wood_defaults(),
 	})

@@ -1,6 +1,9 @@
 realtest.registered_trees = {}
 realtest.registered_trees_list = {}
 function realtest.register_tree(name, TreeDef)
+	if not TreeDef.textures then
+		return
+	end
 	local tree = {
 		name = name,
 		description = TreeDef.description or "",
@@ -8,7 +11,7 @@ function realtest.register_tree(name, TreeDef)
 		leaves = TreeDef.leaves or {},
 		height = TreeDef.height or function() return 10 end,
 		radius = TreeDef.radius or 5,
-		textures = TreeDef.textures or {{},"","","",""},
+		textures = TreeDef.textures or {},
 		grow_interval = TreeDef.grow_interval or 60,
 		grow_chance = TreeDef.grow_chance or 20,
 		grow_light = TreeDef.grow_light or 8
@@ -18,14 +21,14 @@ function realtest.register_tree(name, TreeDef)
 	
 	minetest.register_node(tree.name.."_planks", {
 		description = tree.description.." Planks",
-		tiles = {tree.textures[3]},
+		tiles = {tree.textures.planks},
 		groups = {planks=1,snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=3,drop_on_dig=1},
 		sounds = default.node_sound_wood_defaults(),
 	})
 	
 	minetest.register_craftitem(tree.name.."_stick", {
 		description = tree.description.." Stick",
-		inventory_image = tree.textures[4],
+		inventory_image = tree.textures.stick,
 		groups = {stick=1},
 	})
 	
@@ -33,9 +36,9 @@ function realtest.register_tree(name, TreeDef)
 		description = tree.description.." Sapling",
 		drawtype = "plantlike",
 		visual_scale = 1.0,
-		tiles = {tree.textures[5]},
-		inventory_image = tree.textures[5],
-		wield_image = tree.textures[5],
+		tiles = {tree.textures.sapling},
+		inventory_image = tree.textures.sapling,
+		wield_image = tree.textures.sapling,
 		paramtype = "light",
 		walkable = false,
 		groups = {snappy=2,dig_immediate=3,flammable=2,dropping_node=1},
@@ -44,15 +47,15 @@ function realtest.register_tree(name, TreeDef)
 	
 	minetest.register_craftitem(tree.name.."_plank", {
 		description = tree.description.." Plank",
-		inventory_image = tree.textures[7],
+		inventory_image = tree.textures.plank,
 		group = {plank=1},
 	})
 	
 	minetest.register_node(tree.name.."_log", {
 		description = tree.description.." Log",
-		tiles = tree.textures[1],
-		inventory_image = tree.textures[6],
-		wield_image = tree.textures[6],
+		tiles = tree.textures.trunk,
+		inventory_image = tree.textures.log,
+		wield_image = tree.textures.log,
 		groups = {log=1,snappy=1,choppy=2,flammable=2,dropping_node=1,drop_on_dig=1},
 		sounds = default.node_sound_wood_defaults(),
 		drop = tree.name.."_plank 4",
@@ -77,7 +80,7 @@ function realtest.register_tree(name, TreeDef)
 		description = tree.description.." Leaves",
 		drawtype = "allfaces_optional",
 		visual_scale = 1.3,
-		tiles = {tree.textures[2]},
+		tiles = {tree.textures.leaves},
 		paramtype = "light",
 		groups = {snappy=3, leafdecay=3, flammable=2,drop_on_dig=1,leaves=1},
 		drop = {
@@ -101,9 +104,65 @@ function realtest.register_tree(name, TreeDef)
 		climbable = true,
 	})
 	
+	if tree.textures.autumn_leaves then
+		minetest.register_node(tree.name.."_leaves_autumn", {
+			description = tree.description.." Leaves",
+			drawtype = "allfaces_optional",
+			visual_scale = 1.3,
+			tiles = {tree.textures.autumn_leaves},
+			paramtype = "light",
+			groups = {snappy=3, leafdecay=3, flammable=2,drop_on_dig=1,leaves=1},
+			drop = {
+				max_items = 1,
+				items = {
+					{
+						items = {tree.name..'_sapling'},
+						rarity = 30,
+					},
+					{
+						items = {tree.name..'_stick'},
+						rarity = 10,
+					},
+					{
+						items = {},
+					}
+				}
+			},
+			sounds = default.node_sound_leaves_defaults(),
+			walkable = false,
+			climbable = true,
+		})
+	end
+	
+	if tree.textures.winter_leaves then
+		minetest.register_node(tree.name.."_leaves_winter", {
+			description = tree.description.." Leaves",
+			drawtype = "allfaces_optional",
+			visual_scale = 1.3,
+			tiles = {tree.textures.autumn_leaves},
+			paramtype = "light",
+			groups = {snappy=3, leafdecay=3, flammable=2,drop_on_dig=1,leaves=1},
+			drop = {
+				max_items = 1,
+				items = {
+					{
+						items = {tree.name..'_stick'},
+						rarity = 10,
+					},
+					{
+						items = {},
+					}
+				}
+			},
+			sounds = default.node_sound_leaves_defaults(),
+			walkable = false,
+			climbable = true,
+		})
+	end
+	
 	minetest.register_node(tree.name.."_trunk", {
 		description = tree.description.." Trunk",
-		tiles = tree.textures[1],
+		tiles = tree.textures.trunk,
 		groups = {tree=1,snappy=1,choppy=2,flammable=2,dropping_node=1,drop_on_dig=1},
 		sounds = default.node_sound_wood_defaults(),
 		drop = tree.name.."_log",
@@ -134,7 +193,7 @@ function realtest.register_tree(name, TreeDef)
 	minetest.register_node(tree.name.."_fence", {
 		description = tree.description.." Fence",
 		drawtype = "fencelike",
-		tiles = {tree.textures[3]},
+		tiles = {tree.textures.planks},
 		paramtype = "light",
 		is_ground_content = true,
 		selection_box = {
@@ -148,7 +207,7 @@ function realtest.register_tree(name, TreeDef)
 	minetest.register_node(tree.name.."_stair", {
 		description = tree.description.." Stair",
 		drawtype = "nodebox",
-		tiles = {tree.textures[3]},
+		tiles = {tree.textures.planks},
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = true,
@@ -165,7 +224,7 @@ function realtest.register_tree(name, TreeDef)
 	minetest.register_node(tree.name.."_slab", {
 		description = tree.description.." Slab",
 		drawtype = "nodebox",
-		tiles = {tree.textures[3]},
+		tiles = {tree.textures.planks},
 		paramtype = "light",
 		is_ground_content = true,
 		groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=2},
@@ -182,9 +241,9 @@ function realtest.register_tree(name, TreeDef)
 	minetest.register_node(tree.name.."_ladder", {
 		description = tree.description.." Ladder",
 		drawtype = "nodebox",
-		tiles = {tree.textures[3]},
-		particle_image = {tree.textures[3]},
-		inventory_image = tree.textures[8],
+		tiles = {tree.textures.planks},
+		particle_image = {tree.textures.planks},
+		inventory_image = tree.textures.ladder,
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = true,
@@ -403,9 +462,17 @@ realtest.register_tree("trees:ash", {
 	height = function()
 		return 4 + math.random(4)
 	end,
-	textures = {{"trees_ash_trunk_top.png", "trees_ash_trunk_top.png", "trees_ash_trunk.png"},"trees_ash_leaves.png",
-		"trees_ash_planks.png", "trees_ash_stick.png", "trees_ash_sapling.png", "trees_ash_log.png", "trees_ash_plank.png",
-		"trees_ash_ladder.png"}
+	textures = {
+		trunk = {"trees_ash_trunk_top.png", "trees_ash_trunk_top.png", "trees_ash_trunk.png"},
+		leaves = "trees_ash_leaves.png",
+		autumn_leaves = "trees_ash_autumn_leaves.png",
+		planks = "trees_ash_planks.png",
+		stick = "trees_ash_stick.png",
+		sapling = "trees_ash_sapling.png",
+		log = "trees_ash_log.png",
+		plank = "trees_ash_plank.png",
+		ladder = "trees_ash_ladder.png"
+	}
 })
 realtest.register_tree("trees:aspen", {
 	description = "Aspen",
@@ -413,9 +480,16 @@ realtest.register_tree("trees:aspen", {
 	height = function()
 		return 10 + math.random(4)
 	end,
-	textures = {{"trees_aspen_trunk_top.png", "trees_aspen_trunk_top.png", "trees_aspen_trunk.png"},"trees_aspen_leaves.png",
-		"trees_aspen_planks.png", "trees_aspen_stick.png", "trees_aspen_sapling.png", "trees_aspen_log.png", "trees_aspen_plank.png",
-		"trees_aspen_ladder.png"}
+	textures = {
+		trunk = {"trees_aspen_trunk_top.png", "trees_aspen_trunk_top.png", "trees_aspen_trunk.png"},
+		leaves = "trees_aspen_leaves.png",
+		planks = "trees_aspen_planks.png",
+		stick = "trees_aspen_stick.png",
+		sapling = "trees_aspen_sapling.png",
+		log = "trees_aspen_log.png",
+		plank = "trees_aspen_plank.png",
+		ladder = "trees_aspen_ladder.png"
+	}
 })
 realtest.register_tree("trees:birch", {
 	description = "Birch",
@@ -423,9 +497,16 @@ realtest.register_tree("trees:birch", {
 	height = function()
 		return 10 + math.random(4)
 	end,
-	textures = {{"trees_birch_trunk_top.png", "trees_birch_trunk_top.png", "trees_birch_trunk.png"},"trees_birch_leaves.png",
-		"trees_birch_planks.png", "trees_birch_stick.png", "trees_birch_sapling.png", "trees_birch_log.png", "trees_birch_plank.png",
-		"trees_birch_ladder.png"}
+	textures = {
+		trunk = {"trees_birch_trunk_top.png", "trees_birch_trunk_top.png", "trees_birch_trunk.png"},
+		leaves = "trees_birch_leaves.png",
+		planks = "trees_birch_planks.png",
+		stick = "trees_birch_stick.png",
+		sapling = "trees_birch_sapling.png",
+		log = "trees_birch_log.png",
+		plank = "trees_birch_plank.png",
+		ladder = "trees_birch_ladder.png"
+	}
 })
 realtest.register_tree("trees:mapple", {
 	description = "Mapple",
@@ -433,9 +514,16 @@ realtest.register_tree("trees:mapple", {
 	height = function()
 		return 7 + math.random(5)
 	end,
-	textures = {{"trees_mapple_trunk_top.png", "trees_mapple_trunk_top.png", "trees_mapple_trunk.png"},"trees_mapple_leaves.png",
-		"trees_mapple_planks.png", "trees_mapple_stick.png", "trees_mapple_sapling.png", "trees_mapple_log.png", "trees_mapple_plank.png",
-		"trees_mapple_ladder.png"}
+	textures = {
+		trunk = {"trees_mapple_trunk_top.png", "trees_mapple_trunk_top.png", "trees_mapple_trunk.png"},
+		leaves = "trees_mapple_leaves.png",
+		planks = "trees_mapple_planks.png",
+		stick = "trees_mapple_stick.png",
+		sapling = "trees_mapple_sapling.png",
+		log = "trees_mapple_log.png",
+		plank = "trees_mapple_plank.png",
+		ladder = "trees_mapple_ladder.png"
+	}
 })
 realtest.register_tree("trees:chestnut", {
 	description = "Chestnut",
@@ -444,9 +532,16 @@ realtest.register_tree("trees:chestnut", {
 		return 9 + math.random(2)
 	end,
 	radius = 10,
-	textures = {{"trees_chestnut_trunk_top.png", "trees_chestnut_trunk_top.png", "trees_chestnut_trunk.png"},"trees_chestnut_leaves.png",
-		"trees_chestnut_planks.png", "trees_chestnut_stick.png", "trees_chestnut_sapling.png", "trees_chestnut_log.png",
-		"trees_chestnut_plank.png", "trees_chestnut_ladder.png"}
+	textures = {
+		trunk = {"trees_chestnut_trunk_top.png", "trees_chestnut_trunk_top.png", "trees_chestnut_trunk.png"},
+		leaves = "trees_chestnut_leaves.png",
+		planks = "trees_chestnut_planks.png",
+		stick = "trees_chestnut_stick.png",
+		sapling = "trees_chestnut_sapling.png",
+		log = "trees_chestnut_log.png",
+		plank = "trees_chestnut_plank.png",
+		ladder = "trees_chestnut_ladder.png"
+	}
 })
 realtest.register_tree("trees:pine", {
 	description = "Pine",
@@ -455,7 +550,14 @@ realtest.register_tree("trees:pine", {
 		return 13 + math.random(4)
 	end,
 	radius = 8,
-	textures = {{"trees_pine_trunk_top.png", "trees_pine_trunk_top.png", "trees_pine_trunk.png"},"trees_pine_leaves.png",
-		"trees_pine_planks.png", "trees_pine_stick.png", "trees_pine_sapling.png",  "trees_pine_log.png", "trees_pine_plank.png",
-		"trees_pine_ladder.png"}
+	textures = {
+		trunk = {"trees_pine_trunk_top.png", "trees_pine_trunk_top.png", "trees_pine_trunk.png"},
+		leaves = "trees_pine_leaves.png",
+		planks = "trees_pine_planks.png",
+		stick = "trees_pine_stick.png",
+		sapling = "trees_pine_sapling.png",
+		log = "trees_pine_log.png",
+		plank = "trees_pine_plank.png",
+		ladder = "trees_pine_ladder.png"
+	}
 })
