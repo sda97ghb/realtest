@@ -139,12 +139,6 @@ minetest.register_craft({
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "default:ladder",
-	burntime = 15,
-})
-
-minetest.register_craft({
-	type = "fuel",
 	recipe = "default:torch",
 	burntime = 3,
 })

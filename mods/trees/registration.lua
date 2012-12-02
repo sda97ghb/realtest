@@ -471,7 +471,10 @@ realtest.register_tree("trees:ash", {
 		sapling = "trees_ash_sapling.png",
 		log = "trees_ash_log.png",
 		plank = "trees_ash_plank.png",
-		ladder = "trees_ash_ladder.png"
+		ladder = "trees_ash_ladder.png",
+		door_inventory = "trees_ash_door_inventory.png",
+		door_top = "trees_ash_door_top.png",
+		door_bottom = "trees_ash_door_bottom.png"
 	}
 })
 realtest.register_tree("trees:aspen", {
@@ -488,7 +491,10 @@ realtest.register_tree("trees:aspen", {
 		sapling = "trees_aspen_sapling.png",
 		log = "trees_aspen_log.png",
 		plank = "trees_aspen_plank.png",
-		ladder = "trees_aspen_ladder.png"
+		ladder = "trees_aspen_ladder.png",
+		door_inventory = "trees_aspen_door_inventory.png",
+		door_top = "trees_aspen_door_top.png",
+		door_bottom = "trees_aspen_door_bottom.png"
 	}
 })
 realtest.register_tree("trees:birch", {
@@ -505,7 +511,10 @@ realtest.register_tree("trees:birch", {
 		sapling = "trees_birch_sapling.png",
 		log = "trees_birch_log.png",
 		plank = "trees_birch_plank.png",
-		ladder = "trees_birch_ladder.png"
+		ladder = "trees_birch_ladder.png",
+		door_inventory = "trees_birch_door_inventory.png",
+		door_top = "trees_birch_door_top.png",
+		door_bottom = "trees_birch_door_bottom.png"
 	}
 })
 realtest.register_tree("trees:mapple", {
@@ -522,7 +531,10 @@ realtest.register_tree("trees:mapple", {
 		sapling = "trees_mapple_sapling.png",
 		log = "trees_mapple_log.png",
 		plank = "trees_mapple_plank.png",
-		ladder = "trees_mapple_ladder.png"
+		ladder = "trees_mapple_ladder.png",
+		door_inventory = "trees_mapple_door_inventory.png",
+		door_top = "trees_mapple_door_top.png",
+		door_bottom = "trees_mapple_door_bottom.png"
 	}
 })
 realtest.register_tree("trees:chestnut", {
@@ -540,7 +552,10 @@ realtest.register_tree("trees:chestnut", {
 		sapling = "trees_chestnut_sapling.png",
 		log = "trees_chestnut_log.png",
 		plank = "trees_chestnut_plank.png",
-		ladder = "trees_chestnut_ladder.png"
+		ladder = "trees_chestnut_ladder.png",
+		door_inventory = "trees_chestnut_door_inventory.png",
+		door_top = "trees_chestnut_door_top.png",
+		door_bottom = "trees_chestnut_door_bottom.png"
 	}
 })
 realtest.register_tree("trees:pine", {
@@ -558,6 +573,9 @@ realtest.register_tree("trees:pine", {
 		sapling = "trees_pine_sapling.png",
 		log = "trees_pine_log.png",
 		plank = "trees_pine_plank.png",
-		ladder = "trees_pine_ladder.png"
+		ladder = "trees_pine_ladder.png",
+		door_inventory = "trees_pine_door_inventory.png",
+		door_top = "trees_pine_door_top.png",
+		door_bottom = "trees_pine_door_bottom.png"
 	}
 })
