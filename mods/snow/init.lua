@@ -12,6 +12,7 @@ for i = 1, 10 do
 		sounds = default.node_sound_sand_defaults(),
 		drawtype = "nodebox",
 		paramtype = "light",
+		walkable = false,
 		node_box = {
 			type = "fixed",
 			fixed = {
@@ -26,20 +27,21 @@ for i = 1, 10 do
 		},
 		drop = "snow:snowball "..i-1,
 	})
-	
-	if i<10 then
-		minetest.register_abm({
-			nodenames = {"snow:self_"..i},
-			interval = snow.interval,
-			chance = snow.chance,
-			action = function(pos, node)
-				if seasons.get_season() == seasons.seasons[4] then
-					minetest.env:set_node(pos,{name = "snow:self_"..i+1})
-				end
-			end,
-		})
-	end
 end
+
+minetest.register_abm({
+	nodenames = {"group:snow"},
+	interval = snow.interval,
+	chance = snow.chance,
+	action = function(pos, node)
+		if seasons.get_season() == seasons.seasons[4] then
+			local n = tonumber(node.name:sub(-1)) + 1
+			if n ~= 11 then
+				minetest.env:set_node(pos, {name = "snow:self_"..n})
+			end
+		end
+	end,
+})
 
 minetest.register_abm({
 	nodenames = {"group:snow"},
@@ -48,7 +50,6 @@ minetest.register_abm({
 	action = function(pos, node)
 		if seasons.get_season() ~= seasons.seasons[4] then
 			local n = tonumber(node.name:sub(-1)) - 1
-			minetest.chat_send_all(node.name)
 			if n ~= 0 then
 				minetest.env:set_node(pos, {name = "snow:self_"..n})
 			else
