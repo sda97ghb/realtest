@@ -293,6 +293,111 @@ function realtest.register_tree(name, TreeDef)
 		sounds = default.node_sound_wood_defaults(),
 	})
 	
+	minetest.register_node(tree.name.."_chest", {
+		description =  tree.description.." Chest",
+		tiles = tree.textures.chest,
+		paramtype2 = "facedir",
+		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
+		sounds = default.node_sound_wood_defaults(),
+		on_construct = function(pos)
+			local meta = minetest.env:get_meta(pos)
+			meta:set_string("formspec",
+					"size[8,9]"..
+					"list[current_name;main;0,0;8,4;]"..
+					"list[current_player;main;0,5;8,4;]")
+			meta:set_string("infotext", tree.description.." Chest")
+			local inv = meta:get_inventory()
+			inv:set_size("main", 8*4)
+		end,
+		can_dig = function(pos,player)
+			local meta = minetest.env:get_meta(pos);
+			local inv = meta:get_inventory()
+			return inv:is_empty("main")
+		end,
+	})
+	
+	local function has_locked_chest_privilege(meta, player)
+		if player:get_player_name() ~= meta:get_string("owner") then
+			return false
+		end
+		return true
+	end
+	
+	minetest.register_node(tree.name.."_chest_locked", {
+		description = tree.description.." Locked Chest",
+		tiles = tree.textures.locked_chest,
+		paramtype2 = "facedir",
+		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
+		sounds = default.node_sound_wood_defaults(),
+		after_place_node = function(pos, placer)
+			local meta = minetest.env:get_meta(pos)
+			meta:set_string("owner", placer:get_player_name() or "")
+			meta:set_string("infotext", tree.description.." Locked Chest (owned by "..
+					meta:get_string("owner")..")")
+		end,
+		on_construct = function(pos)
+			local meta = minetest.env:get_meta(pos)
+			meta:set_string("formspec",
+					"size[8,9]"..
+					"list[current_name;main;0,0;8,4;]"..
+					"list[current_player;main;0,5;8,4;]")
+			meta:set_string("infotext", tree.description.." Locked Chest")
+			meta:set_string("owner", "")
+			local inv = meta:get_inventory()
+			inv:set_size("main", 8*4)
+		end,
+		can_dig = function(pos,player)
+			local meta = minetest.env:get_meta(pos);
+			local inv = meta:get_inventory()
+			return inv:is_empty("main")
+		end,
+		allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+			local meta = minetest.env:get_meta(pos)
+			if not has_locked_chest_privilege(meta, player) then
+				minetest.log("action", player:get_player_name()..
+						" tried to access a locked chest belonging to "..
+						meta:get_string("owner").." at "..
+						minetest.pos_to_string(pos))
+				return 0
+			end
+			return count
+		end,
+	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+			local meta = minetest.env:get_meta(pos)
+			if not has_locked_chest_privilege(meta, player) then
+				minetest.log("action", player:get_player_name()..
+						" tried to access a locked chest belonging to "..
+						meta:get_string("owner").." at "..
+						minetest.pos_to_string(pos))
+				return 0
+			end
+			return stack:get_count()
+		end,
+	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
+			local meta = minetest.env:get_meta(pos)
+			if not has_locked_chest_privilege(meta, player) then
+				minetest.log("action", player:get_player_name()..
+						" tried to access a locked chest belonging to "..
+						meta:get_string("owner").." at "..
+						minetest.pos_to_string(pos))
+				return 0
+			end
+			return stack:get_count()
+		end,
+		on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+			minetest.log("action", player:get_player_name()..
+					" moves stuff in locked chest at "..minetest.pos_to_string(pos))
+		end,
+	on_metadata_inventory_put = function(pos, listname, index, stack, player)
+			minetest.log("action", player:get_player_name()..
+					" moves stuff to locked chest at "..minetest.pos_to_string(pos))
+		end,
+	on_metadata_inventory_take = function(pos, listname, index, stack, player)
+			minetest.log("action", player:get_player_name()..
+					" takes stuff from locked chest at "..minetest.pos_to_string(pos))
+		end,
+	})
+	
 	minetest.register_craft({
 		output = tree.name.."_ladder",
 		recipe = {
@@ -301,7 +406,21 @@ function realtest.register_tree(name, TreeDef)
 			{tree.name.."_stick", "", tree.name.."_stick"},
 		}
 	})
-
+	
+	minetest.register_craft({
+		output = tree.name.."_chest",
+		recipe = {
+			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
+		},
+	})
+	
+	minetest.register_craft({
+		output = tree.name.."_slab",
+		recipe = {
+			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
+		},
+	})
+	
 	minetest.register_craft({
 		output = tree.name.."_slab",
 		recipe = {
@@ -383,6 +502,18 @@ function realtest.register_tree(name, TreeDef)
 	minetest.register_craft({
 		output = tree.name.."_plank 4",
 		recipe = {{tree.name.."_planks"}}
+	})
+	
+	minetest.register_craft({
+		type = "fuel",
+		recipe = "default:chest",
+		burntime = 40,
+	})
+	
+	minetest.register_craft({
+		type = "fuel",
+		recipe = "default:chest_locked",
+		burntime = 40,
 	})
 	
 	minetest.register_craft({
@@ -474,7 +605,11 @@ realtest.register_tree("trees:ash", {
 		ladder = "trees_ash_ladder.png",
 		door_inventory = "trees_ash_door_inventory.png",
 		door_top = "trees_ash_door_top.png",
-		door_bottom = "trees_ash_door_bottom.png"
+		door_bottom = "trees_ash_door_bottom.png",
+		chest = {"trees_ash_chest_top.png", "trees_ash_chest_top.png", "trees_ash_chest_side.png",
+				"trees_ash_chest_side.png", "trees_ash_chest_side.png", "trees_ash_chest_front.png"},
+		locked_chest = {"trees_ash_chest_top.png", "trees_ash_chest_top.png", "trees_ash_chest_side.png",
+			"trees_ash_chest_side.png", "trees_ash_chest_side.png", "trees_ash_chest_lock.png"},
 	}
 })
 realtest.register_tree("trees:aspen", {
@@ -494,7 +629,11 @@ realtest.register_tree("trees:aspen", {
 		ladder = "trees_aspen_ladder.png",
 		door_inventory = "trees_aspen_door_inventory.png",
 		door_top = "trees_aspen_door_top.png",
-		door_bottom = "trees_aspen_door_bottom.png"
+		door_bottom = "trees_aspen_door_bottom.png",
+		chest = {"trees_aspen_chest_top.png", "trees_aspen_chest_top.png", "trees_aspen_chest_side.png",
+				"trees_aspen_chest_side.png", "trees_aspen_chest_side.png", "trees_aspen_chest_front.png"},
+		locked_chest = {"trees_aspen_chest_top.png", "trees_aspen_chest_top.png", "trees_aspen_chest_side.png",
+			"trees_aspen_chest_side.png", "trees_aspen_chest_side.png", "trees_aspen_chest_lock.png"},
 	}
 })
 realtest.register_tree("trees:birch", {
@@ -514,7 +653,11 @@ realtest.register_tree("trees:birch", {
 		ladder = "trees_birch_ladder.png",
 		door_inventory = "trees_birch_door_inventory.png",
 		door_top = "trees_birch_door_top.png",
-		door_bottom = "trees_birch_door_bottom.png"
+		door_bottom = "trees_birch_door_bottom.png",
+		chest = {"trees_birch_chest_top.png", "trees_birch_chest_top.png", "trees_birch_chest_side.png",
+				"trees_birch_chest_side.png", "trees_birch_chest_side.png", "trees_birch_chest_front.png"},
+		locked_chest = {"trees_birch_chest_top.png", "trees_birch_chest_top.png", "trees_birch_chest_side.png",
+			"trees_birch_chest_side.png", "trees_birch_chest_side.png", "trees_birch_chest_lock.png"},
 	}
 })
 realtest.register_tree("trees:mapple", {
@@ -534,7 +677,11 @@ realtest.register_tree("trees:mapple", {
 		ladder = "trees_mapple_ladder.png",
 		door_inventory = "trees_mapple_door_inventory.png",
 		door_top = "trees_mapple_door_top.png",
-		door_bottom = "trees_mapple_door_bottom.png"
+		door_bottom = "trees_mapple_door_bottom.png",
+		chest = {"trees_mapple_chest_top.png", "trees_mapple_chest_top.png", "trees_mapple_chest_side.png",
+				"trees_mapple_chest_side.png", "trees_mapple_chest_side.png", "trees_mapple_chest_front.png"},
+		locked_chest = {"trees_mapple_chest_top.png", "trees_mapple_chest_top.png", "trees_mapple_chest_side.png",
+			"trees_mapple_chest_side.png", "trees_mapple_chest_side.png", "trees_mapple_chest_lock.png"},
 	}
 })
 realtest.register_tree("trees:chestnut", {
@@ -555,7 +702,11 @@ realtest.register_tree("trees:chestnut", {
 		ladder = "trees_chestnut_ladder.png",
 		door_inventory = "trees_chestnut_door_inventory.png",
 		door_top = "trees_chestnut_door_top.png",
-		door_bottom = "trees_chestnut_door_bottom.png"
+		door_bottom = "trees_chestnut_door_bottom.png",
+		chest = {"trees_chestnut_chest_top.png", "trees_chestnut_chest_top.png", "trees_chestnut_chest_side.png",
+				"trees_chestnut_chest_side.png", "trees_chestnut_chest_side.png", "trees_chestnut_chest_front.png"},
+		locked_chest = {"trees_chestnut_chest_top.png", "trees_chestnut_chest_top.png", "trees_chestnut_chest_side.png",
+			"trees_chestnut_chest_side.png", "trees_chestnut_chest_side.png", "trees_chestnut_chest_lock.png"},
 	}
 })
 realtest.register_tree("trees:pine", {
@@ -576,6 +727,10 @@ realtest.register_tree("trees:pine", {
 		ladder = "trees_pine_ladder.png",
 		door_inventory = "trees_pine_door_inventory.png",
 		door_top = "trees_pine_door_top.png",
-		door_bottom = "trees_pine_door_bottom.png"
+		door_bottom = "trees_pine_door_bottom.png",
+		chest = {"trees_pine_chest_top.png", "trees_pine_chest_top.png", "trees_pine_chest_side.png",
+				"trees_pine_chest_side.png", "trees_pine_chest_side.png", "trees_pine_chest_front.png"},
+		locked_chest = {"trees_pine_chest_top.png", "trees_pine_chest_top.png", "trees_pine_chest_side.png",
+			"trees_pine_chest_side.png", "trees_pine_chest_side.png", "trees_pine_chest_lock.png"},
 	}
 })
