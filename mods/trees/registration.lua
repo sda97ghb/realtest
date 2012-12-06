@@ -397,6 +397,9 @@ function realtest.register_tree(name, TreeDef)
 					" takes stuff from locked chest at "..minetest.pos_to_string(pos))
 		end,
 	})
+	minetest.register_alias("default:chest", tree.name.."_chest")
+	minetest.register_alias("default:chest_locked", tree.name.."_chest_locked")
+	
 	
 	minetest.register_craft({
 		output = tree.name.."_ladder",
