@@ -1,119 +1,163 @@
 buckets = {}
 buckets.liquids = {}
+buckets.replacements = {}
 
-realtest.registered_liquids = {}
-function realtest.register_liquid(name, LiquidDef)
-	if name and LiquidDef.source and LiquidDef.flowing and (LiquidDef.image_for_metal_bucket or LiquidDef.image_for_wood_bucket) then
-		LiquidDef.name = name
-		realtest.registered_liquids[LiquidDef.source] = LiquidDef
-		realtest.registered_liquids[LiquidDef.flowing] = LiquidDef
-	end
-	if LiquidDef.image_for_metal_bucket then
-		for i, metal in ipairs(metals.list) do
-			minetest.register_craftitem("instruments:bucket_"..metal.."_with_"..LiquidDef.name, {
-				description = metals.desc_list[i] .. " Bucket with " .. LiquidDef.description,
-				inventory_image = "instruments_bucket_"..metal..".png^"..LiquidDef.image_for_metal_bucket,
-				stack_max = 1,
-				liquids_pointable = true,
-				on_use = function(itemstack, user, pointed_thing)
-					-- Must be pointing to node
-					if pointed_thing.type ~= "node" then
-						return
-					end
-					n = minetest.env:get_node(pointed_thing.under)
-					if minetest.registered_nodes[n.name].buildable_to then
-						minetest.env:add_node(pointed_thing.under, {name=LiquidDef.source})
-					else
-						n = minetest.env:get_node(pointed_thing.above)
-						if minetest.registered_nodes[n.name].buildable_to then
-							minetest.env:add_node(pointed_thing.above, {name=LiquidDef.source})
-						else
-							return
-						end
-					end
-					return {name="instruments:bucket_"..metal}
-				end
-			})
-		end
-	end
-	if LiquidDef.image_for_wood_bucket then
-		for i, tree in pairs(realtest.registered_trees) do
-			local wood = tree.name:remove_modname_prefix()
-			minetest.register_craftitem("instruments:bucket_"..wood.."_with_"..LiquidDef.name, {
-				description = "Empty " .. tree.description .. " Bucket with " .. LiquidDef.description,
-				inventory_image = "instruments_bucket_wood.png^"..LiquidDef.image_for_wood_bucket,
-				stack_max = 1,
-				liquids_pointable = true,
-				on_use = function(itemstack, user, pointed_thing)
-					-- Must be pointing to node
-					if pointed_thing.type ~= "node" then
-						return
-					end
-					n = minetest.env:get_node(pointed_thing.under)
-					if minetest.registered_nodes[n.name].buildable_to then
-						minetest.env:add_node(pointed_thing.under, {name=LiquidDef.source})
-					else
-						n = minetest.env:get_node(pointed_thing.above)
-						if minetest.registered_nodes[n.name].buildable_to then
-							minetest.env:add_node(pointed_thing.above, {name=LiquidDef.source})
-						else
-							return
-						end
-					end
-					return {name="instruments:bucket_"..wood}
-				end,
-			})
-		end
-	end
+local function wood_name(o)
+	return o.name:remove_modname_prefix()
 end
 
-for i, metal in ipairs(metals.list) do
-	minetest.register_craftitem("instruments:bucket_"..metal, {
-		description = "Empty " .. metals.desc_list[i] .. " Bucket",
-		inventory_image = "instruments_bucket_"..metal..".png",
-		stack_max = 1,
-		liquids_pointable = true,
-		on_use = function(itemstack, user, pointed_thing)
-			if pointed_thing.type ~= "node" then
-				return
-			end
-			n = minetest.env:get_node(pointed_thing.under)
-			liquiddef = realtest.registered_liquids[n.name]
-			if liquiddef and n.name == liquiddef.source then
-				minetest.env:add_node(pointed_thing.under, {name="air"})
-				return {name="instruments:bucket_"..wood}
-			end
-		end,
-	})
+local function wood_desc(o)
+	return o.description
 end
 
-for i, tree in pairs(realtest.registered_trees) do
-	local wood = tree.name:remove_modname_prefix()
-	minetest.register_craftitem("instruments:bucket_"..wood, {
-		description = "Empty " .. tree.description .. " Bucket",
-		inventory_image = "instruments_bucket_wood.png",
-		stack_max = 1,
-		liquids_pointable = true,
-		on_use = function(itemstack, user, pointed_thing)
-			if pointed_thing.type ~= "node" then
-				return
-			end
-			n = minetest.env:get_node(pointed_thing.under)
-			liquiddef = realtest.registered_liquids[n.name]
-			if liquiddef and n.name == liquiddef.source then
-				minetest.env:add_node(pointed_thing.under, {name="air"})
-				return {name="instruments:bucket_"..wood.."_with_"..liquiddef.name}
-			end
-		end,
-	})
+local function wood_image()
+	return "instruments_bucket_wood.png"
+end
+
+local function wood_craft(tree)
 	minetest.register_craft({
-		output = "instruments:bucket_"..wood,
+		output = "instruments:bucket_"..wood_name(tree),
 		recipe = {
 			{tree.name.."_plank", "", tree.name.."_plank"},
 			{tree.name.."_plank", "", tree.name.."_plank"},
 			{"", tree.name.."_plank", ""},
 		},
 	})
+end
+
+buckets.types = {
+	{name = "metal", list = metals.list, desc_list = metals.desc_list},
+	{name = "wood", list = realtest.registered_trees, name_func = wood_name, desc_func = wood_desc, image_func = wood_image, craft_func = wood_craft}
+}
+
+realtest.registered_liquids = {}
+
+local function bucket_name(material, liquid)
+	local s = "instruments:bucket_"..material
+	if liquid ~= nil then
+		s = s.."_with_"..liquid
+	end
+	return s
+end
+
+local function add_replacement(full, empty, liquid)
+	if buckets.replacements[liquid] == nil then
+		buckets.replacements[liquid] = {}
+	end
+	table.insert(buckets.replacements[liquid], {full, empty})
+end
+
+local function get_bucket_info(type, material, i)
+	local name = ""
+	if type.name_func then
+		name = type.name_func(material, i)
+	else
+		name = tostring(material)
+	end
+
+	local description = ""
+	if type.desc_func then
+		description = type.desc_func(material, i)
+	elseif type.desc_list then
+		description = type.desc_list[i]
+	end
+
+	local image = "instruments_bucket_"..name..".png"
+	if type.image_func then
+		image = type.image_func(material, i)
+	end
+
+	return name, description, image
+end
+
+function realtest.register_liquid(name, LiquidDef)
+	if name and LiquidDef.source and LiquidDef.flowing then
+		LiquidDef.name = name
+		realtest.registered_liquids[LiquidDef.source] = LiquidDef
+		realtest.registered_liquids[LiquidDef.flowing] = LiquidDef
+	end
+
+	for _, type in ipairs(buckets.types) do
+		if LiquidDef["image_for_"..type.name.."_bucket"] then
+			for i, material in pairs(type.list) do
+				local name, description, image = get_bucket_info(type, material, i)
+
+				local full_name = bucket_name(name, LiquidDef.name)
+				local empty_name = bucket_name(name)
+				local groups = {["bucket_with_"..LiquidDef.name]=1}
+				if LiquidDef.bucket_groups then
+					setmetatable(groups, {__index = LiquidDef.bucket_groups})
+				end
+				local stack = 1
+				if LiquidDef.bucket_stack then
+					stack = LiquidDef.bucket_stack
+				end
+
+				add_replacement(full_name, empty_name, LiquidDef.name)
+
+				minetest.register_craftitem(":"..full_name, {
+					description = description .. " Bucket with " .. LiquidDef.description,
+					inventory_image = image.."^"..LiquidDef["image_for_"..type.name.."_bucket"],
+					groups = groups,
+					stack_max = stack,
+					liquids_pointable = true,
+					on_use = function(itemstack, user, pointed_thing)
+						-- "virtual" buckets
+						if LiquidDef.source == "" then
+							return
+						end
+						-- Must be pointing to node
+						if pointed_thing.type ~= "node" then
+							return
+						end
+						n = minetest.env:get_node(pointed_thing.under)
+						if minetest.registered_nodes[n.name].buildable_to then
+							minetest.env:add_node(pointed_thing.under, {name=LiquidDef.source})
+						else
+							n = minetest.env:get_node(pointed_thing.above)
+							if minetest.registered_nodes[n.name].buildable_to then
+								minetest.env:add_node(pointed_thing.above, {name=LiquidDef.source})
+							else
+								return
+							end
+						end
+						return {name=empty_name}
+					end
+				})
+			end
+		end
+	end
+end
+
+for _, type in ipairs(buckets.types) do
+	for i, material in pairs(type.list) do
+		local name, description, image = get_bucket_info(type, material, i)
+		local empty_name = bucket_name(name)
+		table.insert(buckets, empty_name)
+
+		minetest.register_craftitem(":"..bucket_name(name), {
+			description = "Empty " .. description .. " Bucket",
+			inventory_image = image,
+			groups = {bucket_empty = 1},
+			stack_max = 1,
+			liquids_pointable = true,
+			on_use = function(itemstack, user, pointed_thing)
+				if pointed_thing.type ~= "node" then
+					return
+				end
+				n = minetest.env:get_node(pointed_thing.under)
+				liquiddef = realtest.registered_liquids[n.name]
+				if liquiddef and n.name == liquiddef.source then
+					minetest.env:add_node(pointed_thing.under, {name="air"})
+					return {name=empty_name.."_with_"..liquiddef.name}
+				end
+			end,
+		})
+
+		if type.craft_func then
+			type.craft_func(material, i)
+		end
+	end
 end
 
 realtest.register_liquid("water", {
@@ -130,4 +174,3 @@ realtest.register_liquid("lava", {
 	flowing = "default:lava_flowing",
 	image_for_metal_bucket = "instruments_lava.png",
 })
-
