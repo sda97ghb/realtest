@@ -79,9 +79,6 @@ instruments.spear.entity.on_step = function(self, dtime)
 		for k, obj in pairs(objs) do
 			obj:set_hp(obj:get_hp()-instruments.spear.damage)
 			if obj:get_entity_name() ~= "instruments:spear_entity" then
-				if obj:get_hp()<=0 then 
-					obj:remove()
-				end
 				minetest.env:add_item(self.lastpos, "instruments:spear_"..self.object:get_luaentity().material)
 				self.object:remove()
 			end
