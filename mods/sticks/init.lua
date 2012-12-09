@@ -21,15 +21,16 @@ minetest.register_tool("sticks:sticks", {
 			local bonfireb = 0
 			local furnaceb = 0
 			local coals = {}
+			local sticks_and_leaves = {}
 			for _, v in ipairs(objects) do
 					if not v:is_player() and v:get_luaentity() and v:get_luaentity().name == "__builtin:item" then
 						local istack = ItemStack(v:get_luaentity().itemstring)
 						if minetest.get_item_group(istack:get_name(), "stick") == 1 then
 							bonfireb = bonfireb + istack:get_count() * 2
-							v:remove()
+							table.insert(sticks_and_leaves,v)
 						elseif minetest.get_item_group(istack:get_name(), "leaves") == 1  then
 							bonfireb = bonfireb + istack:get_count()
-							v:remove()
+							table.insert(sticks_and_leaves,v)
 						elseif istack:get_name() == "default:coal_lump" then
 							furnaceb = furnaceb + istack:get_count()
 							table.insert(coals,v)
@@ -69,6 +70,9 @@ minetest.register_tool("sticks:sticks", {
 				end
 			end
 			if bonfireb >= 10 and math.random(2) == 1 and minetest.env:get_node(pos).name == "air" then
+				for _, v in ipairs(sticks_and_leaves) do
+					v:remove()
+				end
 				minetest.env:set_node(pos, {name = "bonfire:self"})
 				local meta = minetest.env:get_meta(pos)
 				meta:set_int("active", 1)
