@@ -211,6 +211,7 @@ function realtest.register_tree(name, TreeDef)
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = true,
+		sunlight_propagates = true,
 		groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=2},
 		node_box = {
 			type = "fixed",
@@ -227,6 +228,7 @@ function realtest.register_tree(name, TreeDef)
 		tiles = {tree.textures.planks},
 		paramtype = "light",
 		is_ground_content = true,
+		sunlight_propagates = true,
 		groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=2},
 		node_box = {
 			type = "fixed",
