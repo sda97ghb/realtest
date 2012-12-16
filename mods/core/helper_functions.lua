@@ -46,3 +46,18 @@ function set_node_instead_air(pos, node)
 		minetest.env:set_node(pos, node)
 	end
 end
+
+function merge(lhs, rhs)
+	local merged_table = {}
+	for _, v in ipairs(lhs) do
+		table.insert(merged_table, v)
+	end
+	for _, v in ipairs(rhs) do
+		table.insert(merged_table, v)
+	end
+	return merged_table
+end
+
+function rshift(x, by)
+  return math.floor(x / 2 ^ by)
+end
