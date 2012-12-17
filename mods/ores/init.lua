@@ -322,7 +322,7 @@ end
 minetest.register_on_generated(function(minp, maxp, seed)
 	local pr = PseudoRandom(seed)
 	local gen_ores = {
-		{"ores:brown_coal", -3000, -1000},
+		{"ores:lignite", -3000, -1000},
 		{"ores:coal", -6000, -3000},
 		{"ores:anthracite", -31000, -6000},
 		{"ores:bituminous_coal"},
@@ -418,6 +418,8 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	
 	
 end)
+
+minetest.register_alias("ores:brown_coal","ores:lignite")
 
 --
 -- Recipes of crafting
