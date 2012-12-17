@@ -271,8 +271,8 @@ function realtest.register_tree(name, TreeDef)
 				end
 				if param2 then
 					minetest.env:set_node(pointed_thing.above,{name = tree.name.."_ladder", param2 = param2})
+					itemstack:take_item()
 				end
-				itemstack:take_item()
 				return itemstack
 			end
 		end,
