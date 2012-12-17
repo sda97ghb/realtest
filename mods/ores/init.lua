@@ -5,7 +5,7 @@
 ores = {}
 
 ores.list = {
-	"brown_coal",
+	"lignite",
 	"coal",
 	"anthracite",
 	"bituminous_coal",
@@ -24,9 +24,28 @@ ores.list = {
 	"tetrahedrite",
 	"lapis",
 	"bauxite",
+	---------------------------
+	'cinnabar',
+	'cryolite',
+	'galena',
+	'garnierite',
+	'graphite',
+	'gypsum',
+	'jet',
+	'kaolinite',
+	'kimberlite',
+	'olovine',
+	'petrified_wood',
+--	'pitchblende',
+	'saltpeter',
+	'satinspar',
+	'selenite',
+	'serpentine',
+	'sylvite',
+	'tenorite',
 }
 ores.desc_list = {
-	"Brown Coal",
+	"Lignite",
 	"Coal",
 	"Anthracite",
 	"Bituminous Coal",
@@ -45,6 +64,25 @@ ores.desc_list = {
 	"Tetrahedrite",
 	"Lapis",
 	"Bauxite",
+	---------------------------
+	'Cinnabar',
+	'Cryolite',
+	'Galena',
+	'Garnierite',
+	'Graphite',
+	'Gypsum',
+	'Jet',
+	'Kaolinite',
+	'Kimberlite',
+	'Olovine',
+	'Petrified wood',
+-- 	'Pitchblende',
+	'Saltpeter',
+	'Satinspar',
+	'Selenite',
+	'Serpentine',
+	'Sylvite',
+	'Tenorite',
 }
 
 for i,ore in ipairs(ores.list) do
@@ -73,7 +111,7 @@ end
 minetest.register_node("ores:native_copper_desert", {
 	description = "Native copper ore",
 	tile_images = {"default_desert_stone.png^ores_native_copper.png"},
-	particle_image = {"ores_native_copper.png"},
+	particle_image = {"minerals_native_copper.png"},
 	is_ground_content = true,
 	groups = {cracky=3,drop_on_dig=1},
 	drop = {
@@ -94,7 +132,7 @@ minetest.register_node("ores:native_copper_desert", {
 minetest.register_node("ores:native_gold_desert", {
 	description = "Native gold ore",
 	tile_images = {"default_desert_stone.png^ores_native_gold.png"},
-	particle_image = {"ores_native_gold.png"},
+	particle_image = {"minerals_native_gold.png"},
 	is_ground_content = true,
 	groups = {cracky=3,drop_on_dig=1},
 	drop = {
@@ -106,6 +144,38 @@ minetest.register_node("ores:native_gold_desert", {
 			},
 			{
 				items = {"minerals:native_gold"},
+			}
+		}
+	},
+	sounds = default.node_sound_stone_defaults(),
+})
+
+minetest.register_node("ores:sulfur", {
+	description = "Sulfur ore",
+-- 	drawtype = "signlike",
+	drawtype = "nodebox",
+	tile_images = {"ores_sulfur.png"},
+	particle_image = {"minerals_sulfur.png"},
+	is_ground_content = true,
+	paramtype = "light",
+-- 	paramtype2 = "wallmounted",
+	walkable = false,
+-- 	selection_box = {
+-- 		type = "wallmounted",
+-- 		--wall_top = <default>
+-- 		--wall_bottom = <default>
+-- 		--wall_side = <default>
+-- 	},
+	groups = {cracky=3,drop_on_dig=1,dig_immediate=2},
+	drop = {
+		max_items = 1,
+		items = {
+			{
+				items = {"minerals:sulfur 3"},
+				rarity = 15,
+			},
+			{
+				items = {"minerals:sulfur 2"},
 			}
 		}
 	},
@@ -151,6 +221,63 @@ local function generate_ore(name, wherein, minp, maxp, seed, chunks_per_volume, 
 					local p2 = {x=x2, y=y2, z=z2}
 					if minetest.env:get_node(p2).name == wherein then
 						minetest.env:set_node(p2, {name=name})
+					end
+				end
+			end
+			end
+			end
+		end
+	end
+end
+
+function is_node_beside(pos, node)
+	if minetest.env:get_node({x=pos.x-1, y=pos.y, z=pos.z}).name == node then return true end
+	if minetest.env:get_node({x=pos.x+1, y=pos.y, z=pos.z}).name == node then return true end
+	if minetest.env:get_node({x=pos.x, y=pos.y-1, z=pos.z}).name == node then return true end
+	if minetest.env:get_node({x=pos.x, y=pos.y+1, z=pos.z}).name == node then return true end
+	if minetest.env:get_node({x=pos.x, y=pos.y, z=pos.z-1}).name == node then return true end
+	if minetest.env:get_node({x=pos.x, y=pos.y, z=pos.z+1}).name == node then return true end
+	return false
+end
+
+local function generate_sulfur(name, wherein, minp, maxp, seed, chunks_per_volume, chunk_size, ore_per_chunk, height_min, height_max)
+	if maxp.y < height_min or minp.y > height_max then
+		return
+	end
+	local y_min = math.max(minp.y, height_min)
+	local y_max = math.min(maxp.y, height_max)
+	local volume = (maxp.x-minp.x+1)*(y_max-y_min+1)*(maxp.z-minp.z+1)
+	local pr = PseudoRandom(seed)
+	local num_chunks = math.floor(chunks_per_volume * volume)
+	local inverse_chance = math.floor(chunk_size*chunk_size*chunk_size / ore_per_chunk)
+	for i=1,num_chunks do
+		local y0 = pr:next(y_min, y_max-chunk_size+1)
+		if y0 >= height_min and y0 <= height_max then
+			local x0 = pr:next(minp.x, maxp.x-chunk_size+1)
+			local z0 = pr:next(minp.z, maxp.z-chunk_size+1)
+			local p0 = {x=x0, y=y0, z=z0}
+			for x1=0,chunk_size-1 do
+			for y1=0,chunk_size-1 do
+			for z1=0,chunk_size-1 do
+				if pr:next(1,inverse_chance) == 1 then
+					local x2 = x0+x1
+					local y2 = y0+y1
+					local z2 = z0+z1
+					local p2 = {x=x2, y=y2, z=z2}
+					if minetest.env:get_node(p2).name == wherein then
+						--minetest.env:set_node(p2, {name=name})
+						for x3 = -5, 5 do
+							for y3 = -5, 5 do
+								for z3 = -5, 5 do
+									local p3 = {x=p2.x+x3, y=p2.y+y3, z=p2.z+z3}
+									if minetest.env:get_node(p3).name == "air" then
+										if is_node_beside(p3, "default:stone") then
+											minetest.env:set_node(p3, {name=name})
+										end
+									end
+								end
+							end
+						end
 					end
 				end
 			end
@@ -226,14 +353,33 @@ minetest.register_on_generated(function(minp, maxp, seed)
 		{"ores:sphalerite"},
 		{"ores:tetrahedrite"},
 		{"ores:bauxite"},
-		{"ores:lapis"}
+		{"ores:lapis"},
+		{'ores:cinnabar'},
+		{'ores:cryolite'},
+		{'ores:galena'},
+		{'ores:garnierite'},
+		{'ores:graphite'},
+		{'ores:gypsum'},
+		{'ores:jet'},
+		{'ores:kaolinite'},
+		{'ores:kimberlite'},
+		{'ores:olovine'},
+		{'ores:petrified_wood'},
+	--	{'ores:pitchblende'},
+		{'ores:saltpeter'},
+		{'ores:satinspar'},
+		{'ores:selenite'},
+		{'ores:serpentine'},
+		{'ores:sylvite'},
+		{'ores:tenorite'},
 	}
 	for i, ore in ipairs(gen_ores) do
 		if pr:next(1,2) == 1 then
 			generate_ore(ore[1], "default:stone", minp, maxp, seed+i, 1/8/8/8/8/8/8, 10, 850, ore[2] or -31000, ore[3] or 200)
 		end
 	end
-	generate_peat("ores:peat", "default:dirt", minp, maxp, seed+19, 1/8/16/24, 10, 1000, -31000, 200)
+	generate_sulfur("ores:sulfur", "default:lava_source", minp, maxp, seed, 1/8/8/8/8/8, 10, 850, -31000, 200)
+	generate_peat("ores:peat", "default:dirt", minp, maxp, seed+19, 1/8/16/24, 10, 1000, -100, 200)
 	generate_ore("ores:native_copper_desert", "default:desert_stone", minp, maxp, seed+20, 1/8/8/8/8/8/8, 6, 200, -31000, 200)
 	generate_ore("ores:native_gold_desert", "default:desert_stone", minp, maxp, seed+21, 1/8/8/8/8/8/8, 5, 100, -31000, 200)
 	generate_ore("ores:platinum", "ores:magnetite", minp, maxp, seed+22, 1/8/8/8/8/8/8, 10, 850, -31000, 200)
@@ -282,6 +428,8 @@ minetest.register_on_generated(function(minp, maxp, seed)
 		end
 		end
 	end
+	
+	
 end)
 
 --
