@@ -7,6 +7,8 @@ function realtest.register_fuel(FuelRef)
 			output = FuelRef.output,
 			time = FuelRef.time or 10,
 			max_temp = FuelRef.max_temp or 100,
+			used_in_furnace = FuelRef.used_in_furnace or true,
+			used_in_bonfire = FuelRef.used_in_bonfire or true,
 		}
 		realtest.registered_fuels[fuel.input] = fuel
 	end
