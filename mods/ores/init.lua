@@ -152,20 +152,16 @@ minetest.register_node("ores:native_gold_desert", {
 
 minetest.register_node("ores:sulfur", {
 	description = "Sulfur ore",
--- 	drawtype = "signlike",
-	drawtype = "nodebox",
+	drawtype = "signlike",
 	tile_images = {"ores_sulfur.png"},
 	particle_image = {"minerals_sulfur.png"},
 	is_ground_content = true,
 	paramtype = "light",
--- 	paramtype2 = "wallmounted",
+	paramtype2 = "wallmounted",
 	walkable = false,
--- 	selection_box = {
--- 		type = "wallmounted",
--- 		--wall_top = <default>
--- 		--wall_bottom = <default>
--- 		--wall_side = <default>
--- 	},
+	selection_box = {
+		type = "wallmounted",
+	},
 	groups = {cracky=3,drop_on_dig=1,dig_immediate=2},
 	drop = {
 		max_items = 1,
@@ -230,17 +226,17 @@ local function generate_ore(name, wherein, minp, maxp, seed, chunks_per_volume, 
 	end
 end
 
-function is_node_beside(pos, node)
-	if minetest.env:get_node({x=pos.x-1, y=pos.y, z=pos.z}).name == node then return true end
-	if minetest.env:get_node({x=pos.x+1, y=pos.y, z=pos.z}).name == node then return true end
-	if minetest.env:get_node({x=pos.x, y=pos.y-1, z=pos.z}).name == node then return true end
-	if minetest.env:get_node({x=pos.x, y=pos.y+1, z=pos.z}).name == node then return true end
-	if minetest.env:get_node({x=pos.x, y=pos.y, z=pos.z-1}).name == node then return true end
-	if minetest.env:get_node({x=pos.x, y=pos.y, z=pos.z+1}).name == node then return true end
+local function is_node_beside(pos, node)
+	local sides = {{x=-1,y=0,z=0}, {x=1,y=0,z=0}, {x=0,y=0,z=-1}, {x=0,y=0,z=1}, {x=0,y=-1,z=0}, {x=0,y=1,z=0},}
+	for i, s in ipairs(sides) do
+		if minetest.env:get_node({x=pos.x+s.x,y=pos.y+s.y,z=pos.z+s.z}).name == node then
+			return true, minetest.dir_to_wallmounted(s)
+		end
+	end
 	return false
 end
 
-local function generate_sulfur(name, wherein, minp, maxp, seed, chunks_per_volume, chunk_size, ore_per_chunk, height_min, height_max)
+local function generate_sulfur(name, minp, maxp, seed, chunks_per_volume, chunk_size, ore_per_chunk, height_min, height_max)
 	if maxp.y < height_min or minp.y > height_max then
 		return
 	end
@@ -264,19 +260,10 @@ local function generate_sulfur(name, wherein, minp, maxp, seed, chunks_per_volum
 					local y2 = y0+y1
 					local z2 = z0+z1
 					local p2 = {x=x2, y=y2, z=z2}
-					if minetest.env:get_node(p2).name == wherein then
-						--minetest.env:set_node(p2, {name=name})
-						for x3 = -5, 5 do
-							for y3 = -5, 5 do
-								for z3 = -5, 5 do
-									local p3 = {x=p2.x+x3, y=p2.y+y3, z=p2.z+z3}
-									if minetest.env:get_node(p3).name == "air" then
-										if is_node_beside(p3, "default:stone") then
-											minetest.env:set_node(p3, {name=name})
-										end
-									end
-								end
-							end
+					if minetest.env:get_node(p2).name == "air" and minetest.env:find_node_near(p2, 3, {"default:lava_source","default:lava_flowing"}) then
+						local inb, side = is_node_beside(p2, "default:stone")
+						if inb then
+							minetest.env:set_node(p2, {name=name, param2 = side})
 						end
 					end
 				end
@@ -378,7 +365,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 			generate_ore(ore[1], "default:stone", minp, maxp, seed+i, 1/8/8/8/8/8/8, 10, 850, ore[2] or -31000, ore[3] or 200)
 		end
 	end
-	generate_sulfur("ores:sulfur", "default:lava_source", minp, maxp, seed, 1/8/8/8/8/8, 10, 850, -31000, 200)
+	generate_sulfur("ores:sulfur", minp, maxp, seed, 1/8/8/8/8, 10, 850, -31000, 200)
 	generate_peat("ores:peat", "default:dirt", minp, maxp, seed+19, 1/8/16/24, 10, 1000, -100, 200)
 	generate_ore("ores:native_copper_desert", "default:desert_stone", minp, maxp, seed+20, 1/8/8/8/8/8/8, 6, 200, -31000, 200)
 	generate_ore("ores:native_gold_desert", "default:desert_stone", minp, maxp, seed+21, 1/8/8/8/8/8/8, 5, 100, -31000, 200)
