@@ -2,17 +2,17 @@ instruments.groupcaps = {
 	{--Picks
 		{cracky={times={[1]=10.0, [2]=7.50, [3]=5.00}, uses=instruments.durability[1], maxlevel=1}},--stone
 		{cracky={times={[1]=6.00, [2]=4.50, [3]=3.00}, uses=instruments.durability[2], maxlevel=1}},--bismuth
-		{cracky={times={[1]=5.60, [2]=4.20, [3]=2.80}, uses=instruments.durability[3], maxlevel=1}},--zinc
-		{cracky={times={[1]=5.20, [2]=3.90, [3]=2.60}, uses=instruments.durability[4], maxlevel=1}},--tin
-		{cracky={times={[1]=4.00, [2]=3.00, [3]=2.00}, uses=instruments.durability[5], maxlevel=2}},--copper
-		{cracky={times={[1]=3.20, [2]=2.40, [3]=1.60}, uses=instruments.durability[6], maxlevel=2}},--rose gold
-		{cracky={times={[1]=3.20, [2]=2.40, [3]=1.60}, uses=instruments.durability[7], maxlevel=2}},--black bronze
-		{cracky={times={[1]=3.20, [2]=2.40, [3]=1.60}, uses=instruments.durability[8], maxlevel=2}},--bismuth bronze
-		{cracky={times={[1]=2.80, [2]=2.10, [3]=1.40}, uses=instruments.durability[9], maxlevel=2}},--bronze
-		{cracky={times={[1]=2.60, [2]=1.95, [3]=1.30}, uses=instruments.durability[10], maxlevel=2}},--aluminium
-		{cracky={times={[1]=2.00, [2]=1.50, [3]=1.00}, uses=instruments.durability[11], maxlevel=3}},--wrought iron
-		{cracky={times={[1]=1.60, [2]=1.20, [3]=0.80}, uses=instruments.durability[12], maxlevel=3}},--steel
-		{cracky={times={[1]=1.00, [2]=0.75, [3]=0.50}, uses=instruments.durability[13], maxlevel=3}},--black steel
+		{cracky={times={[1]=5.90, [2]=4.40, [3]=2.90}, uses=instruments.durability[3], maxlevel=1}},--zinc
+		{cracky={times={[1]=5.80, [2]=4.30, [3]=2.80}, uses=instruments.durability[4], maxlevel=1}},--tin
+		{cracky={times={[1]=5.70, [2]=4.20, [3]=2.70}, uses=instruments.durability[5], maxlevel=2}},--copper
+		{cracky={times={[1]=5.60, [2]=4.10, [3]=2.60}, uses=instruments.durability[6], maxlevel=2}},--rose gold
+		{cracky={times={[1]=5.60, [2]=4.10, [3]=2.60}, uses=instruments.durability[7], maxlevel=2}},--black bronze
+		{cracky={times={[1]=5.60, [2]=4.10, [3]=2.60}, uses=instruments.durability[8], maxlevel=2}},--bismuth bronze
+		{cracky={times={[1]=5.60, [2]=4.10, [3]=2.60}, uses=instruments.durability[9], maxlevel=2}},--bronze
+		{cracky={times={[1]=5.60, [2]=4.10, [3]=2.60}, uses=instruments.durability[10], maxlevel=2}},--aluminium
+		{cracky={times={[1]=5.50, [2]=4.00, [3]=2.50}, uses=instruments.durability[11], maxlevel=3}},--wrought iron
+		{cracky={times={[1]=5.40, [2]=3.90, [3]=2.40}, uses=instruments.durability[12], maxlevel=3}},--steel
+		{cracky={times={[1]=5.30, [2]=3.80, [3]=2.30}, uses=instruments.durability[13], maxlevel=3}},--black steel
 	},
 	{--Axes
 		{choppy={times={[1]=10.00, [2]=7.50, [3]=5.00}, uses=instruments.durability[1], maxlevel=1},--stone
