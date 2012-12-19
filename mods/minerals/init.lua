@@ -2,7 +2,6 @@ MINERALS_LIST={
 	'lapis',
 	'anthracite',
 	'lignite',
-	'coal',
 	'bituminous_coal',
 	'magnetite',
 	'hematite',
@@ -45,7 +44,6 @@ MINERALS_DESC_LIST={
 	'Lapis',
 	'Anthracite',
 	'Lignite',
-	'Coal',
 	'Bituminous coal',
 	'Magnetite',
 	'Hematite',
@@ -111,14 +109,14 @@ minetest.register_craft({
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "minerals:brown_coal",
+	recipe = "minerals:lignite",
 	burntime = 25,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "minerals:coal",
-	burntime = 40,
+	recipe = "minerals:bituminous_coal",
+	burntime = 35,
 })
 
 minetest.register_craft({
@@ -127,8 +125,4 @@ minetest.register_craft({
 	burntime = 50,
 })
 
-minetest.register_craft({
-	type = "fuel",
-	recipe = "minerals:bituminous_coal",
-	burntime = 25,
-})
+minetest.register_alias("minerals:brown_coal", "minerals:lignite")
