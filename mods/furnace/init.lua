@@ -177,7 +177,7 @@ minetest.register_abm({
 		
 		if meta:get_int("active") == 1 then
 			if meta:get_int("sound_play") ~= 1 then
-				meta:set_int("sound_handle", minetest.sound_play("bonfire_burning", {pos=pos, max_hear_distance = 8,loop=true}))
+				meta:set_int("sound_handle", minetest.sound_play("furnace_burning", {pos=pos, max_hear_distance = 8,loop=true}))
 				meta:set_int("sound_play", 1)
 			end
 			local srclists = {}
