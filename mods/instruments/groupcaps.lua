@@ -43,7 +43,7 @@ instruments.groupcaps = {
 		 fleshy={times={[2]=1.10, [3]=0.60},           uses=instruments.durability[13]*1.2, maxlevel=2}},
 	},
 	{--Shovels
-		{crumbly={times={[1]=9.40, [2]=6.00, [3]=4.70}, uses=instruments.durability[1], maxlevel=1}},--stone
+		{crumbly={times={[1]=9.40, [2]=6.00, [3]=4.20}, uses=instruments.durability[1], maxlevel=1}},--stone
 		{crumbly={times={[1]=5.40, [2]=4.00, [3]=2.70}, uses=instruments.durability[2], maxlevel=1}},--bismuth
 		{crumbly={times={[1]=5.30, [2]=3.90, [3]=2.60}, uses=instruments.durability[3], maxlevel=1}},--zinc
 		{crumbly={times={[1]=5.20, [2]=3.80, [3]=2.50}, uses=instruments.durability[4], maxlevel=1}},--tin
