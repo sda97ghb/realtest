@@ -322,10 +322,9 @@ end
 minetest.register_on_generated(function(minp, maxp, seed)
 	local pr = PseudoRandom(seed)
 	local gen_ores = {
-		{"ores:brown_coal", -3000, -1000},
-		{"ores:coal", -6000, -3000},
-		{"ores:anthracite", -31000, -6000},
-		{"ores:bituminous_coal"},
+		{"ores:lignite", -3000, -500},
+		{"ores:bituminous_coal", -6000, -3000},
+		{"ores:anthracite", -8000, -6000},
 		{"ores:bismuthinite"},
 		{"ores:magnetite"},
 		{"ores:hematite"},
@@ -345,7 +344,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 		{'ores:cryolite'},
 		{'ores:galena'},
 		{'ores:garnierite'},
-		{'ores:graphite'},
+		{'ores:graphite', -31000, -8000},
 		{'ores:gypsum'},
 		{'ores:jet'},
 		{'ores:kaolinite'},
@@ -419,6 +418,8 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	
 end)
 
+minetest.register_alias("ores:brown_coal","ores:lignite")
+
 --
 -- Recipes of crafting
 --
@@ -432,5 +433,5 @@ minetest.register_craft({
 minetest.register_craft({
 	type = "fuel",
 	recipe = "ores:peat",
-	burntime = 25,
+	burntime = 15,
 })

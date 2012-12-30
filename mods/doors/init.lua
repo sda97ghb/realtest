@@ -258,9 +258,9 @@ for i, tree_name in ipairs(realtest.registered_trees_list) do
 	minetest.register_craft({
 		output = "doors:door_"..tree_name:remove_modname_prefix(),
 		recipe = {
-			{tree.name.."_planks",tree.name.."_planks"},
-			{tree.name.."_planks",tree.name.."_planks"},
-			{tree.name.."_planks",tree.name.."_planks"}
+			{tree.name.."_plank",tree.name.."_plank"},
+			{tree.name.."_plank",tree.name.."_plank"},
+			{tree.name.."_plank",tree.name.."_plank"}
 		}
 	})
 	minetest.register_craft({
