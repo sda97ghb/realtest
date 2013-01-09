@@ -1,3 +1,5 @@
+spawn_falling_node = function(a,b) end
+
 function nodeupdate_single(p)
 	n = minetest.env:get_node(p)
 	if minetest.get_node_group(n.name, "falling_node") ~= 0 then
