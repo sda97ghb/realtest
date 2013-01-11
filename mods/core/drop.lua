@@ -31,7 +31,7 @@ function minetest.handle_node_drops(pos, drops, digger)
 	end
 	if minetest.get_node_group(minetest.env:get_node(pos).name, "drop_on_dig") == 1 then
 		drop_all()
-	elseif digger:get_inventory() then
+	elseif digger and digger:get_inventory() then
 		for _, dropped_item in ipairs(drops) do
 			if digger:get_inventory():room_for_item("main", dropped_item) then
 				digger:get_inventory():add_item("main", dropped_item)
@@ -39,5 +39,7 @@ function minetest.handle_node_drops(pos, drops, digger)
 				drop(dropped_item)
 			end
 		end
+	else
+		drop_all()
 	end
 end

@@ -180,6 +180,27 @@ function realtest.register_tree(name, TreeDef)
 				{-0.4,-0.5,-0.4,0.4,0.5,0.4},
 			},
 		},
+	})
+	
+	minetest.register_node(tree.name.."_trunk_top", {
+		tiles = tree.textures.trunk,
+		groups = {tree=1,snappy=1,choppy=2,flammable=2,dropping_node=1,drop_on_dig=1},
+		sounds = default.node_sound_wood_defaults(),
+		drop = tree.name.."_log",
+		drawtype = "nodebox",
+		paramtype = "light",
+		node_box = {
+			type = "fixed",
+			fixed = {
+				{-0.4,-0.5,-0.4,0.4,0.5,0.4},
+			},
+		},
+		selection_box = {
+			type = "fixed",
+			fixed = {
+				{-0.4,-0.5,-0.4,0.4,0.5,0.4},
+			},
+		},
 		after_dig_node = function(pos, oldnode, oldmetadata, digger)
 			for i = 1,#tree.leaves do
 				local p = {x=pos.x+tree.leaves[i][1], y=pos.y+tree.leaves[i][2], z=pos.z+tree.leaves[i][3]}

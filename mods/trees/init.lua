@@ -13,9 +13,10 @@ function trees.make_tree(pos, tree)
 			return
 		end
 	end
-	for i = 0,height do
+	for i = 0,height-1 do
 		minetest.env:add_node({x=pos.x, y=pos.y+i, z=pos.z}, {name=tree.name.."_trunk"})
 	end
+	minetest.env:add_node({x=pos.x, y=pos.y+height, z=pos.z}, {name=tree.name.."_trunk_top"})
 	for i = 1,#tree.leaves do
 		local p = {x=pos.x+tree.leaves[i][1], y=pos.y+height+tree.leaves[i][2], z=pos.z+tree.leaves[i][3]}
 		if minetest.env:get_node(p).name == "air" or minetest.env:get_node(p).name == "ignore" then

@@ -441,6 +441,13 @@ minetest.register_node("default:papyrus", {
 	walkable = false,
 	groups = {snappy=3,flammable=2, dropping_node=1,drop_on_dig=1},
 	sounds = default.node_sound_leaves_defaults(),
+	cause_drop = function(pos, node)
+		local b_pos = {x=pos.x,y=pos.y-1,z=pos.z}
+		local b_node = minetest.env:get_node(b_pos)
+		if b_node.name ~= node.name and minetest.registered_nodes[b_node.name].walkable == false then
+			return true
+		end
+	end
 })
 
 minetest.register_node("default:glass", {
@@ -662,6 +669,7 @@ minetest.register_node("default:cobble_node", {
 	},
 	drop = "default:cobble",
 	groups = {dig_immediate=2,dropping_node=1,drop_on_dig=1},
+	buildable_to = true,
 	sounds = default.node_sound_stone_defaults(),
 })
 
