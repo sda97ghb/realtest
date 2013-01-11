@@ -4,7 +4,8 @@ function minetest.register_node(name, nodedef)
 		nodedef.cause_drop = function(pos, node)
 			local b_pos = {x=pos.x,y=pos.y-1,z=pos.z}
 			local b_node = minetest.env:get_node(b_pos)
-			if minetest.registered_nodes[b_node.name].walkable == false then
+			if minetest.registered_nodes[b_node.name].walkable == false or
+				minetest.registered_nodes[b_node.name].buildable_to then
 				return true
 			end
 		end
@@ -13,7 +14,8 @@ function minetest.register_node(name, nodedef)
 		nodedef.cause_fall = function(pos, node)
 			local b_pos = {x=pos.x,y=pos.y-1,z=pos.z}
 			local b_node = minetest.env:get_node(b_pos)
-			if minetest.registered_nodes[b_node.name].walkable == false then
+			if minetest.registered_nodes[b_node.name].walkable == false or
+				minetest.registered_nodes[b_node.name].buildable_to then
 				return true
 			end
 		end
