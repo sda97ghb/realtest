@@ -6,7 +6,6 @@ ores = {}
 
 ores.list = {
 	"lignite",
-	"coal",
 	"anthracite",
 	"bituminous_coal",
 	"magnetite",
@@ -46,7 +45,6 @@ ores.list = {
 }
 ores.desc_list = {
 	"Lignite",
-	"Coal",
 	"Anthracite",
 	"Bituminous Coal",
 	"Magnetite",
