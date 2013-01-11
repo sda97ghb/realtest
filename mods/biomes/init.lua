@@ -166,6 +166,15 @@ for i, sand in ipairs(biomes.sands_list) do
 		groups = {crumbly=3,drop_on_dig=1,falling_node=1},
 		sounds = default.node_sound_sand_defaults(),
 	})
+	minetest.register_node("biomes:sand_with_clay_"..sand, {
+		description = "Sand",
+		tiles = {"biomes_sand_"..sand..".png^biomes_clay.png"},
+		particle_image = {"default_clay_lump.png"},
+		is_ground_content = true,
+		groups = {crumbly=3,drop_on_dig=1},
+		sounds = default.node_sound_sand_defaults(),
+		drop = "default:clay_lump 4"
+	})
 end
 
 for i, dirt in ipairs(biomes.dirts_list) do
@@ -176,5 +185,35 @@ for i, dirt in ipairs(biomes.dirts_list) do
 		is_ground_content = true,
 		groups = {crumbly=3,drop_on_dig=1,falling_node=1},
 		sounds = default.node_sound_dirt_defaults(),
+	})
+	minetest.register_node("biomes:dirt_with_grass_"..dirt, {
+		description = "Dirt with Grass",
+		tiles = {"default_grass.png", "biomes_dirt_"..dirt..".png", "default_grass.png"},
+		particle_image = {"biomes_dirt_"..dirt..".png"},
+		is_ground_content = true,
+		groups = {crumbly=3,drop_on_dig=1},
+		sounds = default.node_sound_dirt_defaults({
+			footstep = {name="default_grass_footstep", gain=0.4},
+		}),
+		drop = "biomes:dirt_"..dirt
+	})
+	minetest.register_node("biomes:dirt_with_clay_"..dirt, {
+		description = "Dirt with Clay",
+		tiles = {"biomes_dirt_"..dirt..".png^biomes_clay.png"},
+		particle_image = {"default_clay_lump.png"},
+		is_ground_content = true,
+		groups = {crumbly=3,drop_on_dig=1,falling_node=1},
+		sounds = default.node_sound_dirt_defaults(),
+		drop = "default:clay_lump 4"
+	})
+	minetest.register_node("biomes:dirt_with_grass_and_clay_"..dirt, {
+		description = "Dirt with Grass and Clay",
+		tiles = {"default_grass.png", "biomes_dirt_"..dirt..".png^biomes_clay.png", "default_grass.png"},
+		particle_image = {"default_clay_lump.png"},
+		is_ground_content = true,
+		groups = {crumbly=3,drop_on_dig=1},
+		sounds = default.node_sound_dirt_defaults({
+			footstep = {name="default_grass_footstep", gain=0.4},
+		}),
 	})
 end
