@@ -18,9 +18,10 @@ minetest.register_node("fire:basic_flame", {
 		fire.on_flame_add_at(pos)
 	end,
 	
-	after_dig_node = function(pos, oldnode, oldmetadata, digger)
+	after_destruct = function(pos, oldnode)
 		fire.on_flame_remove_at(pos)
 	end,
+	buildable_to=true,
 })
 
 fire = {}
