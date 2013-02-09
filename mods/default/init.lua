@@ -488,6 +488,7 @@ minetest.register_node("default:water_flowing", {
 	inventory_image = minetest.inventorycube("default_water.png"),
 	drawtype = "flowingliquid",
 	tiles = {"default_water.png"},
+	drop = "",
 	special_tiles = {
 		{
 			image="default_water_flowing_animated.png",
@@ -525,6 +526,7 @@ minetest.register_node("default:water_source", {
 		-- New-style water source material (mostly unused)
 		{name="default_water.png", backface_culling=false},
 	},
+	drop = "",
 	alpha = WATER_ALPHA,
 	paramtype = "light",
 	walkable = false,
@@ -556,6 +558,7 @@ minetest.register_node("default:lava_flowing", {
 			animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=3.3}
 		},
 	},
+	drop = "",
 	paramtype = "light",
 	light_source = LIGHT_MAX - 1,
 	walkable = false,
@@ -582,6 +585,7 @@ minetest.register_node("default:lava_source", {
 		-- New-style lava source material (mostly unused)
 		{name="default_lava.png", backface_culling=false},
 	},
+	drop = "",
 	paramtype = "light",
 	light_source = LIGHT_MAX - 1,
 	walkable = false,
