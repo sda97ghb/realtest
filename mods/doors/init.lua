@@ -99,7 +99,7 @@ function doors:register_door(name, def)
 		end
 	end
 	
-	local function on_punch(pos, dir, check_name, replace, replace_dir, params)
+	local function on_rightclick(pos, dir, check_name, replace, replace_dir, params)
 		pos.y = pos.y+dir
 		if not minetest.env:get_node(pos).name == check_name then
 			return
@@ -147,9 +147,9 @@ function doors:register_door(name, def)
 			after_dig_node(pos, name.."_t_1")
 		end,
 		
-		on_punch = function(pos, node, puncher)
-			if check_player_priv(pos, puncher) then
-				on_punch(pos, 1, name.."_t_1", name.."_b_2", name.."_t_2", {1,2,3,0})
+		on_rightclick = function(pos, node, clicker)
+			if check_player_priv(pos, clicker) then
+				on_rightclick(pos, 1, name.."_t_1", name.."_b_2", name.."_t_2", {1,2,3,0})
 			end
 		end,
 		
@@ -177,9 +177,9 @@ function doors:register_door(name, def)
 			after_dig_node(pos, name.."_b_1")
 		end,
 		
-		on_punch = function(pos, node, puncher)
-			if check_player_priv(pos, puncher) then
-				on_punch(pos, -1, name.."_b_1", name.."_t_2", name.."_b_2", {1,2,3,0})
+		on_rightclick = function(pos, node, clicker)
+			if check_player_priv(pos, clicker) then
+				on_rightclick(pos, -1, name.."_b_1", name.."_t_2", name.."_b_2", {1,2,3,0})
 			end
 		end,
 		
@@ -207,9 +207,9 @@ function doors:register_door(name, def)
 			after_dig_node(pos, name.."_t_2")
 		end,
 		
-		on_punch = function(pos, node, puncher)
-			if check_player_priv(pos, puncher) then
-				on_punch(pos, 1, name.."_t_2", name.."_b_1", name.."_t_1", {3,0,1,2})
+		on_rightclick = function(pos, node, clicker)
+			if check_player_priv(pos, clicker) then
+				on_rightclick(pos, 1, name.."_t_2", name.."_b_1", name.."_t_1", {3,0,1,2})
 			end
 		end,
 		
@@ -237,9 +237,9 @@ function doors:register_door(name, def)
 			after_dig_node(pos, name.."_b_2")
 		end,
 		
-		on_punch = function(pos, node, puncher)
-			if check_player_priv(pos, puncher) then
-				on_punch(pos, -1, name.."_b_2", name.."_t_1", name.."_b_1", {3,0,1,2})
+		on_rightclick = function(pos, node, clicker)
+			if check_player_priv(pos, clicker) then
+				on_rightclick(pos, -1, name.."_b_2", name.."_t_1", name.."_b_1", {3,0,1,2})
 			end
 		end,
 		
