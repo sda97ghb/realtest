@@ -210,43 +210,7 @@ function realtest.register_tree(name, TreeDef)
 			end
 		end,
 	})
-	
-	minetest.register_node(tree.name.."_stair", {
-		description = tree.description.." Stair",
-		drawtype = "nodebox",
-		tiles = {tree.textures.planks},
-		paramtype = "light",
-		paramtype2 = "facedir",
-		is_ground_content = true,
-		sunlight_propagates = true,
-		groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=2},
-		node_box = {
-			type = "fixed",
-			fixed = {
-				{-0.5, -0.5, -0.5, 0.5, 0, 0.5},
-				{-0.5, 0, 0, 0.5, 0.5, 0.5},
-			},
-		},
-	})
-	
-	minetest.register_node(tree.name.."_slab", {
-		description = tree.description.." Slab",
-		drawtype = "nodebox",
-		tiles = {tree.textures.planks},
-		paramtype = "light",
-		is_ground_content = true,
-		sunlight_propagates = true,
-		groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=2},
-		node_box = {
-			type = "fixed",
-			fixed = {-0.5, -0.5, -0.5, 0.5, 0, 0.5},
-		},
-		selection_box = {
-			type = "fixed",
-			fixed = {-0.5, -0.5, -0.5, 0.5, 0, 0.5},
-		},
-	})
-	
+
 	minetest.register_node(tree.name.."_ladder", {
 		description = tree.description.." Ladder",
 		drawtype = "nodebox",
@@ -436,44 +400,35 @@ function realtest.register_tree(name, TreeDef)
 		})
 	end
 	
+	realtest.register_stair(tree.name.."_planks",nil,nil,nil,tree.description.." Stair")
+	realtest.register_slab(tree.name.."_planks",nil,nil,nil,tree.description.." Slab")
 	minetest.register_craft({
-		output = tree.name.."_slab",
+		output = tree.name.."_planks_slab",
 		recipe = {
-			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
+			{tree.name.."_plank",tree.name.."_plank"},
 		},
 	})
-	
 	minetest.register_craft({
-		output = tree.name.."_slab",
+		output = tree.name.."_planks_stair",
 		recipe = {
-			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
+			{tree.name.."_plank",""},
+			{tree.name.."_plank",tree.name.."_plank"},
 		},
 	})
-	
 	minetest.register_craft({
-		output = tree.name.."_planks",
+		output = tree.name.."_planks_stair",
 		recipe = {
-			{tree.name.."_slab"},
-			{tree.name.."_slab"},
+			{"",tree.name.."_plank"},
+			{tree.name.."_plank",tree.name.."_plank"},
 		},
 	})
-	
 	minetest.register_craft({
-		output = tree.name.."_stair 2",
-		recipe = {
-			{tree.name.."_plank", "", ""},
-			{tree.name.."_plank", tree.name.."_plank", ""},
-			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
-		},
+		output = tree.name.."_plank 3",
+		recipe = {{tree.name.."_planks_stair"}}
 	})
-	
 	minetest.register_craft({
-		output = tree.name.."_stair 2",
-		recipe = {
-			{"", "", tree.name.."_plank"},
-			{"", tree.name.."_plank", tree.name.."_plank"},
-			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
-		},
+		output = tree.name.."_plank 2",
+		recipe = {{tree.name.."_planks_slab"}}
 	})
 	
 	minetest.register_craft({

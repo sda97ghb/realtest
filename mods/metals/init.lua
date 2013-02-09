@@ -125,11 +125,29 @@ for i=1, #metals.list do
 		}
 	})
 	
+	realtest.register_stair("metals:"..metals.list[i].."_block",nil,nil,nil,metals.desc_list[i].." Stair",nil,
+			"metals:"..metals.list[i].."_doubleingot 3")
+	realtest.register_slab("metals:"..metals.list[i].."_block",nil,nil,nil,metals.desc_list[i].." Slab",nil,
+			"metals:"..metals.list[i].."_doubleingot 2")
 	minetest.register_craft({
-		output = "metals:"..metals.list[i].."_doubleingot 4",
+		output = "metals:"..metals.list[i].."_block_slab",
 		recipe = {
-			{"metals:"..metals.list[i].."_block"},
-		}
+			{"metals:"..metals.list[i].."_doubleingot","metals:"..metals.list[i].."_doubleingot"},
+		},
+	})
+	minetest.register_craft({
+		output = "metals:"..metals.list[i].."_block_stair",
+		recipe = {
+			{"metals:"..metals.list[i].."_doubleingot",""},
+			{"metals:"..metals.list[i].."_doubleingot","metals:"..metals.list[i].."_doubleingot"},
+		},
+	})
+	minetest.register_craft({
+		output = "metals:"..metals.list[i].."_block_stair",
+		recipe = {
+			{"","metals:"..metals.list[i].."_doubleingot"},
+			{"metals:"..metals.list[i].."_doubleingot","metals:"..metals.list[i].."_doubleingot"},
+		},
 	})
 	
 	minetest.register_craft({

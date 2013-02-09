@@ -654,7 +654,6 @@ minetest.register_craftitem("default:cobble", {
 })
 
 minetest.register_node("default:cobble_node", {
-	description = "Stone",
 	tiles = {"default_stone.png"},
 	paramtype = "light",
 	sunlight_propagates = true,
@@ -727,6 +726,34 @@ minetest.register_craftitem("default:clay_lump", {
 minetest.register_craftitem("default:clay_brick", {
 	description = "Clay Brick",
 	inventory_image = "default_clay_brick.png",
+})
+
+realtest.register_stair_and_slab("default:stone")
+realtest.register_stair_and_slab("default:stone_flat")
+realtest.register_stair_and_slab("default:desert_stone")
+realtest.register_stair_and_slab("default:desert_stone_flat")
+realtest.register_stair_and_slab("default:cobbleblock_flat")
+realtest.register_stair("default:brick",nil,nil,nil,"Brick Stair",nil,"default:clay_brick 3")
+realtest.register_slab("default:brick",nil,nil,nil,"Brick Slab",nil,"default:clay_brick 2")
+minetest.register_craft({
+	output = "default:brick_slab",
+	recipe = {
+		{"default:clay_brick","default:clay_brick"},
+	},
+})
+minetest.register_craft({
+	output = "default:brick_stair",
+	recipe = {
+		{"default:clay_brick",""},
+		{"default:clay_brick","default:clay_brick"},
+	},
+})
+minetest.register_craft({
+	output = "default:brick_stair",
+	recipe = {
+		{"","default:clay_brick"},
+		{"default:clay_brick","default:clay_brick"},
+	},
 })
 
 --

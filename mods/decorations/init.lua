@@ -230,6 +230,30 @@ minetest.register_craft({
 	}
 })
 
+realtest.register_stair("decorations:malachite_block","Malachite Stair",nil,nil,nil,nil,"minerals:malachite 3")
+realtest.register_slab("decorations:malachite_block","Malachite Slab",nil,nil,nil,nil,"minerals:malachite 2")
+
+minetest.register_craft({
+	output = "decorations:malachite_block_slab",
+	recipe = {
+		{"minerals:malachite","minerals:malachite"},
+	},
+})
+minetest.register_craft({
+	output = "decorations:malachite_block_stair",
+	recipe = {
+		{"minerals:malachite",""},
+		{"minerals:malachite","minerals:malachite"},
+	},
+})
+minetest.register_craft({
+	output = "decorations:malachite_block_stair",
+	recipe = {
+		{"","minerals:malachite"},
+		{"minerals:malachite","minerals:malachite"},
+	},
+})
+
 minetest.register_craft({
 	output = "decorations:malachite_pyramid",
 	recipe = {
