@@ -44,9 +44,7 @@ minetest.after(0, function()
 	table.sort(creative_list)
 	inv:set_size("main", #creative_list)
 	for _,itemstring in ipairs(creative_list) do
-		local stack = ItemStack(itemstring)
-		local stack2 = ItemStack(stack:get_name().." "..(stack:get_stack_max()))
-		inv:add_item("main", stack2)
+		inv:add_item("main", ItemStack(itemstring))
 	end
 	creative_inventory.creative_inventory_size = #creative_list
 	print("creative inventory size: "..dump(creative_inventory.creative_inventory_size))
