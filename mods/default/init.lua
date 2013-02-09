@@ -223,7 +223,7 @@ end
 function default.node_sound_glass_defaults(table)
 	table = table or {}
 	table.footstep = table.footstep or
-			{name="default_stone_footstep", gain=0.25}
+			{name="default_hard_footstep", gain=0.25}
 	table.dug = table.dug or
 			{name="default_break_glass", gain=1.0}
 	default.node_sound_defaults(table)
@@ -459,7 +459,7 @@ minetest.register_node("default:glass", {
 	paramtype = "light",
 	sunlight_propagates = true,
 	is_ground_content = true,
-	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3},
+	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3,drop_on_dig=1},
 	sounds = default.node_sound_glass_defaults(),
 })
 

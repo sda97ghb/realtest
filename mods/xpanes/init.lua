@@ -73,7 +73,7 @@ for i = 1, 15 do
 		drawtype = "nodebox",
 		tile_images = {"xpanes_white.png", "xpanes_white.png", texture},
 		paramtype = "light",
-		groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3},
+		groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3,drop_on_dig=1},
 		drop = "xpanes:pane",
 		node_box = {
 			type = "fixed",
@@ -82,7 +82,8 @@ for i = 1, 15 do
 		selection_box = {
 			type = "fixed",
 			fixed = take
-		}
+		},
+		sounds = default.node_sound_glass_defaults(),
 	})
 end
 
