@@ -83,13 +83,18 @@ local instruments =
 	}
 for _, instrument in ipairs(instruments) do
 	for i, metal in ipairs(metals.list) do
-		realtest.register_anvil_recipe({
-			item1 = "metals:"..metal..instrument[2],
-			item2 = "scribing_table:plan_"..instrument[1],
-			rmitem2 = false,
-			output = "instruments:"..instrument[1].."_"..metal.."_head",
-			level = metals.levels[i],
-		})
+		-- the proper way to do that is to check whether we have metal in instruments.metals list or not
+		-- but who cares?
+		local output_name = "instruments:"..instrument[1].."_"..metal.."_head"
+		if minetest.registered_items[output_name] then
+			realtest.register_anvil_recipe({
+				item1 = "metals:"..metal..instrument[2],
+				item2 = "scribing_table:plan_"..instrument[1],
+				rmitem2 = false,
+				output = output_name,
+				level = metals.levels[i],
+			})
+		end
 	end
 end
 
