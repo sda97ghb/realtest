@@ -147,6 +147,9 @@ for _, type in ipairs(buckets.types) do
 				end
 				local n = minetest.env:get_node(pointed_thing.under)
 				local liquiddef = realtest.registered_liquids[n.name]
+				if not liquiddef then
+					return
+				end
 				local full_name = empty_name.."_with_"..liquiddef.name
 				if liquiddef and n.name == liquiddef.source and minetest.registered_items[full_name] then
 					minetest.env:add_node(pointed_thing.under, {name="air"})
