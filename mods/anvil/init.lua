@@ -35,7 +35,7 @@ for i, metal in ipairs(metals.list) do
 		item1 = "metals:"..metal.."_sheet",
 		item2 = "scribing_table:plan_bucket",
 		rmitem2 = false,
-		output = "instruments:bucket_empty_"..metal,
+		output = "instruments:bucket_"..metal,
 		level = metals.levels[i],
 	})
 	realtest.register_anvil_recipe({
