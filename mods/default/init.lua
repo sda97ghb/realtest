@@ -470,6 +470,40 @@ minetest.register_node("default:papyrus", {
 	end
 })
 
+minetest.register_abm({
+	nodenames = {"default:papyrus"},
+	interval = 40,
+	chance = 20,
+	action = function(pos, node, active_object_count, active_object_count_wider)
+		if not minetest.env:get_node_light(pos) or
+			minetest.env:get_node_light(pos) < 8 then
+			return
+		end
+		local h = 1
+		repeat
+			if minetest.env:get_node({x=pos.x,y=pos.y-h,z=pos.z}).name == node.name then
+				h = h + 1
+			else
+				break
+			end
+			if h > 2 then
+				return
+			end
+		until h > 2
+		local sides = {{x=-1,y=-1,z=0},{x=1,y=-1,z=0},{x=0,y=-1,z=-1},{x=0,y=-1,z=1}}
+		local water = false
+		for _, side in ipairs(sides) do
+			if minetest.env:get_node({x=pos.x+side.x,y=pos.y+side.y-h+1,z=pos.z+side.z}).name == "default:water_source" then
+				water = true
+				break
+			end
+		end
+		if water and minetest.env:get_node({x=pos.x,y=pos.y+1,z=pos.z}).name == "air" then
+			minetest.env:set_node({x=pos.x,y=pos.y+1,z=pos.z}, {name=node.name})
+		end
+	end
+})
+
 minetest.register_node("default:glass", {
 	description = "Glass",
 	drawtype = "glasslike",
