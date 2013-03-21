@@ -105,6 +105,12 @@ minetest.register_craft({
 	recipe = {"minerals:borax"},
 })
 
+minetest.register_craft({
+	type = "shapeless",
+	output = "minerals:flux 4",
+	recipe = {"minerals:sylvite"},
+})
+
 -------------------------------------------------
 
 minetest.register_craft({
