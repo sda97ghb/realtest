@@ -449,6 +449,41 @@ minetest.register_node("default:cactus", {
 	sounds = default.node_sound_wood_defaults(),
 })
 
+minetest.register_abm({
+	nodenames = {"default:cactus"},
+	interval = 60,
+	chance = 30,
+	action = function(pos, node, active_object_count, active_object_count_wider)
+		if not minetest.env:get_node_light(pos) or
+			minetest.env:get_node_light(pos) < 8 then
+			return
+		end
+		local h = 1
+		repeat
+			if minetest.env:get_node({x=pos.x,y=pos.y-h,z=pos.z}).name == node.name then
+				h = h + 1
+			else
+				break
+			end
+			if h > 2 then
+				return
+			end
+		until h > 2
+		local grounds = {
+			"default:sand",
+			"default:desert_sand",
+			"default:dirt",
+			"default:dirt_with_clay",
+			"default:dirt_with_grass",
+			"default:dirt_with_grass_and_clay"
+		}
+		if  minetest.registered_nodes[minetest.env:get_node({x=pos.x,y=pos.y+1,z=pos.z}).name].buildable_to
+			and table.contains(grounds, minetest.env:get_node({x=pos.x,y=pos.y-h,z=pos.z}).name) then
+			minetest.env:set_node({x=pos.x,y=pos.y+1,z=pos.z}, {name=node.name})
+		end
+	end
+})
+
 minetest.register_node("default:papyrus", {
 	description = "Papyrus",
 	drawtype = "plantlike",
@@ -498,7 +533,16 @@ minetest.register_abm({
 				break
 			end
 		end
-		if water and minetest.env:get_node({x=pos.x,y=pos.y+1,z=pos.z}).name == "air" then
+		local grounds = {
+			"default:sand",
+			"default:desert_sand",
+			"default:dirt",
+			"default:dirt_with_clay",
+			"default:dirt_with_grass",
+			"default:dirt_with_grass_and_clay"
+		}
+		if water and minetest.registered_nodes[minetest.env:get_node({x=pos.x,y=pos.y+1,z=pos.z}).name].buildable_to
+			and table.contains(grounds, minetest.env:get_node({x=pos.x,y=pos.y-h,z=pos.z}).name) then
 			minetest.env:set_node({x=pos.x,y=pos.y+1,z=pos.z}, {name=node.name})
 		end
 	end
