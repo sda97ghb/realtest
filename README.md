@@ -1,4 +1,4 @@
-RealTest
+The RealTest Game
 ========
 
-Realistic game for Minetest 0.4.4
+Realistic game for Minetest 0.4.5
