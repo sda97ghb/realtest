@@ -5,7 +5,7 @@ function furnace.check_furnace_blocks(pos)
 	for n = 1,#furnace_blocks do
 		local v = furnace_blocks[n]
 			if minetest.env:get_node({x=pos.x+v.x,y=pos.y+v.y,z=pos.z+v.z}).name ~= "default:cobbleblock_flat" and
-				minetest.env:get_node_or_nil({x=pos.x+v.x,y=pos.y+v.y,z=pos.z+v.z}).name then
+				minetest.env:get_node_or_nil({x=pos.x+v.x,y=pos.y+v.y,z=pos.z+v.z}) then
 				return false
 			end
 		end
