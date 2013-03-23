@@ -132,9 +132,11 @@ function realtest.register_slab(name, recipeitem, groups, images, description, s
 			wall_side = {-0.5, -0.5, -0.5, 0, 0.5, 0.5},
 		}
 	})
+	groups.not_in_creative_inventory = 0
 	minetest.register_node(":"..name.."_slab", {
 		description = description,
 		drawtype = "nodebox",
+		groups = groups,
 		tiles = images,
 		paramtype = "light",
 		node_box = {
@@ -152,8 +154,10 @@ function realtest.register_slab(name, recipeitem, groups, images, description, s
 			local p1 = pointed_thing.under
 			local p2 = pointed_thing.above
 			local dir = {x=p1.x-p2.x,y=p1.y-p2.y,z=p1.z-p2.z}
-			if minetest.env:get_node(pointed_thing.under).name == name.."_slab_r"
-				and minetest.env:get_node(pointed_thing.under).param2 == minetest.dir_to_wallmounted(dir) then
+			if (minetest.env:get_node(pointed_thing.under).name == name.."_slab_r"
+				and minetest.env:get_node(pointed_thing.under).param2 == minetest.dir_to_wallmounted(dir)) or
+					(minetest.env:get_node(pointed_thing.under).name == name.."_slab"
+					and minetest.env:get_node(pointed_thing.under).param2 == 0) then
 				minetest.env:set_node(pointed_thing.under, {name=name})
 			elseif minetest.registered_nodes[minetest.env:get_node(pointed_thing.above).name].buildable_to then
 				minetest.env:set_node(pointed_thing.above, {name=name.."_slab_r", param2=minetest.dir_to_wallmounted(dir)})
