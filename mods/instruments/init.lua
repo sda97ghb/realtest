@@ -74,18 +74,19 @@ instruments.spear.entity.on_step = function(self, dtime)
 	local pos = self.object:getpos()
 	local node = minetest.env:get_node(pos)
 
-	if self.timer>0.2 then
+	if self.timer > 0.2 and self.lastpos.x then
 		local objs = minetest.env:get_objects_inside_radius({x=pos.x,y=pos.y,z=pos.z}, 2)
 		for k, obj in pairs(objs) do
 			obj:set_hp(obj:get_hp()-instruments.spear.damage)
 			if obj:get_entity_name() ~= "instruments:spear_entity" then
 				minetest.env:add_item(self.lastpos, "instruments:spear_"..self.object:get_luaentity().material)
 				self.object:remove()
+				return
 			end
 		end
 	end
 
-	if self.lastpos.x~=nil then
+	if self.lastpos.x then
 		if node.name ~= "air" then
 			minetest.env:add_item(self.lastpos, "instruments:spear_"..self.object:get_luaentity().material)
 			self.object:remove()
