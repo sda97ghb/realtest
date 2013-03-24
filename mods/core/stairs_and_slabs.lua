@@ -88,7 +88,7 @@ function realtest.register_stair(name, recipeitem, groups, images, description, 
 	})
 
 	minetest.register_craft({
-		output = name.."_stair 4",
+		output = name.."_stair 8",
 		recipe = {
 			{"", "", recipeitem},
 			{"", recipeitem, recipeitem},
