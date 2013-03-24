@@ -125,15 +125,30 @@ for i, material in ipairs(instruments.materials) do
 				if pointed_thing.type ~= "node" then
 					return
 				end
-				local n_name = minetest.env:get_node(pointed_thing.under).name
-				if  n_name == "default:stone" then
+				local n = minetest.env:get_node(pointed_thing.under)
+				if  n.name == "default:stone" then
 					minetest.env:add_node(pointed_thing.under, {name="default:stone_flat"})
-				elseif n_name == "default:desert_stone" then
+				elseif n.name == "default:desert_stone" then
 					minetest.env:add_node(pointed_thing.under, {name="default:desert_stone_flat"})
-				elseif n_name == "default:cobbleblock" then
+				elseif n.name == "default:cobbleblock" then
 					minetest.env:add_node(pointed_thing.under, {name="default:cobbleblock_flat"})
+				elseif n.name == "default:stone_slab_r" then
+					minetest.env:add_node(pointed_thing.under, {name="default:stone_flat_slab_r", param2=n.param2})
+				elseif n.name == "default:stone_slab" then
+					minetest.env:add_node(pointed_thing.under, {name="default:stone_flat_slab_r", param2=1})
+				elseif n.name == "default:desert_stone_slab_r" then
+					minetest.env:add_node(pointed_thing.under, {name="default:desert_stone_flat_slab_r", param2=n.param2})
+				elseif n.name == "default:desert_stone_slab" then
+					minetest.env:add_node(pointed_thing.under, {name="default:desert_stone_flat_slab_r", param2=1})
+				elseif n.name == "default:stone_stair" then
+					minetest.env:add_node(pointed_thing.under, {name="default:stone_flat_stair", param2=n.param2})
+				elseif n.name == "default:stone_stair_upside_down" then
+					minetest.env:add_node(pointed_thing.under, {name="default:stone_flat_stair_upside_down", param2=n.param2})
+				elseif n.name == "default:desert_stone_stair" then
+					minetest.env:add_node(pointed_thing.under, {name="default:desert_stone_flat_stair", param2=n.param2})
+				elseif n.name == "default:desert_stone_stair_upside_down" then
+					minetest.env:add_node(pointed_thing.under, {name="default:desert_stone_flat_stair_upside_down", param2=n.param2})
 				end
-				
 				item:add_wear(65535/instruments.durability[i])
 				return item
 			end,
