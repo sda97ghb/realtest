@@ -45,7 +45,7 @@ else
 				drop(item)
 			end
 		end
-		if minetest.get_node_group(minetest.env:get_node(pos).name, "drop_on_dig") == 1 then
+		if ALWAYS_DROP_NODES_AS_ITEMS and minetest.get_node_group(minetest.env:get_node(pos).name, "drop_on_dig") == 1 then
 			drop_all()
 		elseif digger and digger:get_inventory() then
 			for _, dropped_item in ipairs(drops) do
