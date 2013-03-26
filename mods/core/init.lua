@@ -2,7 +2,7 @@ realtest = {}
 
 local worldconf = minetest.get_worldpath().."/realtest.conf.lua"
 
-dofile(minetest.get_modpath("core").."/default_config.lua")
+--dofile(minetest.get_modpath("core").."/default_config.lua")
 local f = io.open(worldconf)
 if f then
 	dofile(worldconf)
