@@ -93,20 +93,29 @@ function coke_furnace.check_furnace_blocks(pos)
 	return true
 end
 
-minetest.register_node("coke:coal_block", {
+minetest.register_node("coke:bituminous_coal_block", {
 	description = "Coal Block",
-	tiles = {"metals_black_steel_block.png"},
-	drop = "default:coal_lump 9",
-	particle_image = {"metals_black_steel_block.png"},
+	tiles = {"coke_coal_block.png"},
+	drop = "minerals:bituminous_coal 9",
+	particle_image = {"coke_coal_block.png"},
+	groups = {crumbly=3, oddly_breakable_by_hand=1},
+	sounds = default.node_sound_stone_defaults(),
+})
+
+minetest.register_node("coke:lignite_block", {
+	description = "Coal Block",
+	tiles = {"coke_coal_block.png"},
+	drop = "minerals:lignite 9",
+	particle_image = {"coke_coal_block.png"},
 	groups = {crumbly=3, oddly_breakable_by_hand=1},
 	sounds = default.node_sound_stone_defaults(),
 })
 
 minetest.register_node("coke:coke_block", {
 	description = "Coke Block",
-	tiles = {"metals_black_bronse_block.png"},
+	tiles = {"coke_coke_block.png"},
 	drop = "coke:coke 8",
-	particle_image = {"metals_black_steel_block.png"},
+	particle_image = {"coke_coke_block.png"},
 	groups = {crumbly=3, oddly_breakable_by_hand=1},
 	sounds = default.node_sound_stone_defaults(),
 })
@@ -117,10 +126,30 @@ minetest.register_craftitem("coke:coke", {
 })
 
 minetest.register_craft({
-	output = "coke:coal_block",
-	recipe = {{"default:coal_lump","default:coal_lump","default:coal_lump"},
-			{"default:coal_lump","default:coal_lump","default:coal_lump"},
-			{"default:coal_lump","default:coal_lump","default:coal_lump"}},
+	type = "fuel",
+	recipe = "coke:coke",
+	burntime = 45,
+})
+
+minetest.register_craft({
+	output = "coke:bituminous_coal_block",
+	recipe = {{"minerals:bituminous_coal","minerals:bituminous_coal","minerals:bituminous_coal"},
+			{"minerals:bituminous_coal","minerals:bituminous_coal","minerals:bituminous_coal"},
+			{"minerals:bituminous_coal","minerals:bituminous_coal","minerals:bituminous_coal"}},
+})
+
+minetest.register_craft({
+	output = "coke:lignite_block",
+	recipe = {{"minerals:lignite","minerals:lignite","minerals:lignite"},
+			{"minerals:lignite","minerals:lignite","minerals:lignite"},
+			{"minerals:lignite","minerals:lignite","minerals:lignite"}},
+})
+
+minetest.register_craft({
+	output = "coke:furnace",
+	recipe = {{"metals:bronze_ingot","","metals:bronze_ingot"},
+			{"metals:bronze_sheet","default:coal_lump","metals:bronze_sheet"},
+			{"","metals:bronze_doubleingot",""}},
 })
 
 coke_furnace.formspec = 
@@ -131,8 +160,8 @@ coke_furnace.formspec =
 
 minetest.register_node("coke:furnace", {
 	description = "Coke Furnace",
-	tiles = {"metals_bronze_block.png"},
-	particle_image = {"metals_bronze_block.png"},
+	tiles = {"coke_furnace_top.png","coke_furnace.png","coke_furnace.png","coke_furnace.png","coke_furnace.png","coke_furnace_front.png"},
+	particle_image = {"coke_furnace_front.png"},
 	groups = {crumbly=3, oddly_breakable_by_hand=1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = function(pos)
@@ -155,8 +184,8 @@ minetest.register_node("coke:furnace", {
 
 minetest.register_node("coke:furnace_active", {
 	description = "Coke Furnace",
-	tiles = {"metals_bronze_block.png"},
-	particle_image = {"metals_bronze_block.png"},
+	tiles = {"coke_furnace_top_active.png","coke_furnace.png","coke_furnace.png","coke_furnace.png","coke_furnace.png","coke_furnace_front_active.png"},
+	particle_image = {"coke_furnace_front.png"},
 	light_source = 12,
 	drop = "coke:furnace",
 	groups = {igniter=1,crumbly=3, not_in_creative_inventory=1},
@@ -222,7 +251,8 @@ minetest.register_abm({
 					for z=1,3 do
 						if b and math.random(128) == 1 then
 							local p ={x=pos.x, y=pos.y+y, z=pos.z+z}
-							if minetest.env:get_node(p).name == "coke:coal_block" then
+							if minetest.env:get_node(p).name == "coke:bituminous_coal_block" or 
+								minetest.env:get_node(p).name == "coke:lignite_block" then
 								minetest.env:set_node(p,{name="coke:coke_block"})
 								b = false
 							end
