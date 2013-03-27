@@ -148,33 +148,77 @@ function coke.register_coke_furnace(metal)
 					meta:set_float("fuel_time", meta:get_float("fuel_time") + 1)
 					local b = true
 					local side = minetest.env:get_node(pos).param2
-					local xmin, xmax, zmin, zmax = 0, 0, 0, 0
+					local xmin, xmax, zmin, zmax, ymax = 0, 0, 0, 0, 10
 					if side==0 then
 						xmin =0
 						xmax = 0
 						zmin =1
 						zmax = 3
+						local bb = true
+						for j=0,10 do
+							if bb then
+								local block = minetest.env:get_node({x=pos.x,y=pos.y+j,z=pos.z+1})
+								if block.name ~= "air" and block.name ~= "coke:lignite_block" and
+									block.name ~= "coke:bituminous_coal_block" and block.name ~= "coke:coke_block" then
+									ymax=j
+									bb=false
+								end
+							end
+						end
 					end
 					if side==1 then
 						xmin =1
 						xmax = 3
 						zmin =0
 						zmax = 0
+						local bb = true
+						for j=0,10 do
+							if bb then
+								local block = minetest.env:get_node({x=pos.x+1,y=pos.y+j,z=pos.z})
+								if block.name ~= "air" and block.name ~= "coke:lignite_block" and
+									block.name ~= "coke:bituminous_coal_block" and block.name ~= "coke:coke_block" then
+									ymax=j
+									bb=false
+								end
+							end
+						end
 					end
 					if side==2 then
 						xmin =0
 						xmax = 0
 						zmin =-3
 						zmax = -1
+						local bb = true
+						for j=0,10 do
+							if bb then
+								local block = minetest.env:get_node({x=pos.x,y=pos.y+j,z=pos.z-1})
+								if block.name ~= "air" and block.name ~= "coke:lignite_block" and
+									block.name ~= "coke:bituminous_coal_block" and block.name ~= "coke:coke_block" then
+									ymax=j
+									bb=false
+								end
+							end
+						end
 					end
 					if side==3 then
 						xmin =-3
 						xmax = -1
 						zmin =0
 						zmax = 0
+						local bb = true
+						for j=0,10 do
+							if bb then
+								local block = minetest.env:get_node({x=pos.x-1,y=pos.y+j,z=pos.z})
+								if block.name ~= "air" and block.name ~= "coke:lignite_block" and
+									block.name ~= "coke:bituminous_coal_block" and block.name ~= "coke:coke_block" then
+									ymax=j
+									bb=false
+								end
+							end
+						end
 					end
 					for x=xmin, xmax do
-					for y=0,3 do
+					for y=0,ymax-1 do
 					for z=zmin, zmax do
 						if b and math.random(128) == 1 then
 							local p ={x=pos.x+x, y=pos.y+y, z=pos.z+z}
