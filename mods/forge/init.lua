@@ -96,7 +96,7 @@ function forge.register(metal)
 					meta:set_float("fuel_time", meta:get_float("fuel_time") + 1)
 					local b, bb = true, true
 					local side = minetest.env:get_node(pos).param2
-					local xd, zd, ymax = 0, 0, 6
+					local xd, zd, ymax = 0, 0, 16
 					if side==0 then
 						xd = 0
 						zd = 1
@@ -116,9 +116,11 @@ function forge.register(metal)
 					for y=0,ymax-1 do
 						if b --[[and math.random(128) == 1]] then
 							local p ={x=pos.x+xd, y=pos.y+y, z=pos.z+zd}
-							if minetest.env:get_node(p).name == "default:dirt" then
-								minetest.env:set_node(p,{name="default:stone"})
-								b = false
+							for m in ipairs(minerals.list) do
+								if minetest.env:get_node(p).name == "mineral:"..m.name.."_block" then
+									minetest.env:set_node(p,{name = "metals:"..m.metal.."_block"})
+									b = false
+								end
 							end
 						end
 					end
