@@ -35,7 +35,7 @@ function doors:register_door(name, def)
 	end
 	
 	minetest.register_craftitem(name, {
-		description = def.description,
+		description = def.description .. " Door",
 		inventory_image = def.inventory_image,
 		
 		on_place = function(itemstack, placer, pointed_thing)
