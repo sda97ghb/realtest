@@ -624,7 +624,7 @@ realtest.register_tree("trees:birch", {
 	}
 })
 realtest.register_tree("trees:mapple", {
-	description = "Mapple",
+	description = "Maple",
 	leaves = trees.gen_lists.mapple,
 	height = function()
 		return 7 + math.random(5)
