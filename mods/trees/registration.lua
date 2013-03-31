@@ -56,7 +56,7 @@ function realtest.register_tree(name, TreeDef)
 		tiles = tree.textures.trunk,
 		inventory_image = tree.textures.log,
 		wield_image = tree.textures.log,
-		groups = {log=1,snappy=1,choppy=2,flammable=2,dropping_node=1,drop_on_dig=1},
+		groups = {log=1,immediately_breakable_by_hand=2,snappy=1,choppy=2,flammable=2,dropping_node=1,drop_on_dig=1},
 		sounds = default.node_sound_wood_defaults(),
 		drop = tree.name.."_plank 4",
 		drop_on_dropping = tree.name.."_log",
@@ -74,6 +74,66 @@ function realtest.register_tree(name, TreeDef)
 				{-0.4,-0.5,-0.4,0.4,0.5,0.4},
 			},
 		},
+		on_dig = function(pos, node, digger)
+			minetest.debug("node_dig")
+
+			local def = ItemStack({name=node.name}):get_definition()
+			-- Check if def ~= 0 because we always want to be able to remove unknown nodes
+			if #def ~= 0 and not def.diggable or (def.can_dig and not def.can_dig(pos,digger)) and digger:get_wielded_item():get_name() ~= ":" then
+				minetest.debug("not diggable")
+				minetest.log("info", digger:get_player_name() .. " tried to dig "
+					.. node.name .. " which is not diggable "
+					.. minetest.pos_to_string(pos))
+				return
+			end
+
+			minetest.log('action', digger:get_player_name() .. " digs "
+				.. node.name .. " at " .. minetest.pos_to_string(pos))
+
+			local wielded = digger:get_wielded_item()
+			local drops = {}
+			if string.find(wielded:get_name(), "instruments:saw_") then
+				drops = {tree.name.."_plank 8"}
+			elseif string.find(wielded:get_name(), "instruments:axe_") then
+				drops = {tree.name.."_plank 4"}
+			else
+				drops = {tree.name.."_log"}
+			end
+
+			-- Wear out tool
+			local tp = wielded:get_tool_capabilities()
+			local dp = minetest.get_dig_params(def.groups, tp)
+			wielded:add_wear(dp.wear)
+			digger:set_wielded_item(wielded)
+			
+			-- Handle drops
+			minetest.handle_node_drops(pos, drops, digger)
+
+			local oldmetadata = nil
+			if def.after_dig_node then
+				oldmetadata = minetest.env:get_meta(pos):to_table()
+			end
+
+			-- Remove node and update
+			minetest.env:remove_node(pos)
+			
+			-- Run callback
+			if def.after_dig_node then
+				-- Copy pos and node because callback can modify them
+				local pos_copy = {x=pos.x, y=pos.y, z=pos.z}
+				local node_copy = {name=node.name, param1=node.param1, param2=node.param2}
+				def.after_dig_node(pos_copy, node_copy, oldmetadata, digger)
+			end
+
+			-- Run script hook
+			local _, callback
+			for _, callback in ipairs(minetest.registered_on_dignodes) do
+				-- Copy pos and node because callback can modify them
+				local pos_copy = {x=pos.x, y=pos.y, z=pos.z}
+				local node_copy = {name=node.name, param1=node.param1, param2=node.param2}
+				callback(pos_copy, node_copy, digger)
+			end
+		end,
 	})
 	
 	minetest.register_node(tree.name.."_leaves", {

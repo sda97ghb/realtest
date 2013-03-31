@@ -49,6 +49,7 @@ else
 				fleshy = {times={[2]=2.00, [3]=1.00}, uses=0, maxlevel=1},
 				crumbly = {times={[2]=7.50, [3]=5.00}, uses=0, maxlevel=1},
 				snappy = {times={[3]=0.40}, uses=0, maxlevel=1},
+				immediately_breakable_by_hand = {times={[2]=0.50, [3]=0.00}, uses=0, maxlevel=3},
 				oddly_breakable_by_hand = {times={[1]=7.00,[2]=4.00,[3]=1.40}, uses=0, maxlevel=3},
 			}
 		}
