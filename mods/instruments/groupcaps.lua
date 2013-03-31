@@ -111,6 +111,33 @@ instruments.groupcaps = {
 		 snappy={times={[2]=1.00, [3]=0.50},           uses=instruments.durability[1], maxlevel=2},
 		 choppy={times={[3]=2.50},                     uses=instruments.durability[1], maxlevel=0}},
 	},
+	{--Saws
+		{},--stone
+		{choppy={times={[1]=5.70, [2]=4.30, [3]=2.80}, uses=instruments.durability[2], maxlevel=1},--bismuth
+		 fleshy={times={[2]=1.00, [3]=0.50},           uses=instruments.durability[2]*1.2, maxlevel=1}},
+		{choppy={times={[1]=5.60, [2]=4.20, [3]=2.80}, uses=instruments.durability[3], maxlevel=1},--zinc
+		 fleshy={times={[2]=1.00, [3]=0.50},           uses=instruments.durability[3]*1.2, maxlevel=1}},
+		{choppy={times={[1]=5.50, [2]=4.10, [3]=2.60}, uses=instruments.durability[4], maxlevel=1},--tin
+		 fleshy={times={[2]=1.00, [3]=0.50},           uses=instruments.durability[4]*1.2, maxlevel=1}},
+		{choppy={times={[1]=5.40, [2]=4.00, [3]=2.50}, uses=instruments.durability[5], maxlevel=2},--copper
+		 fleshy={times={[2]=1.00, [3]=0.50},           uses=instruments.durability[5]*1.2, maxlevel=2}},
+		{choppy={times={[1]=5.30, [2]=3.90, [3]=2.50}, uses=instruments.durability[6], maxlevel=2},--rose gold
+		 fleshy={times={[2]=1.00, [3]=0.50},           uses=instruments.durability[6]*1.2, maxlevel=2}},
+		{choppy={times={[1]=5.30, [2]=3.90, [3]=2.50}, uses=instruments.durability[7], maxlevel=2},--black bronze
+		 fleshy={times={[2]=1.00, [3]=0.50},           uses=instruments.durability[7]*1.2, maxlevel=2}},
+		{choppy={times={[1]=5.30, [2]=3.90, [3]=2.50}, uses=instruments.durability[8], maxlevel=2},--bismuth bronze
+		 fleshy={times={[2]=1.00, [3]=0.50},           uses=instruments.durability[8]*1.2, maxlevel=2}},
+		{choppy={times={[1]=5.30, [2]=3.90, [3]=2.50}, uses=instruments.durability[9], maxlevel=2},--bronze
+		 fleshy={times={[2]=1.00, [3]=0.50},           uses=instruments.durability[9]*1.2, maxlevel=2}},
+		{choppy={times={[1]=5.30, [2]=3.90, [3]=2.50}, uses=instruments.durability[10], maxlevel=2},--aluminium
+		 fleshy={times={[2]=1.00, [3]=0.50},           uses=instruments.durability[10]*1.2, maxlevel=2}},
+		{choppy={times={[1]=5.20, [2]=3.70, [3]=2.40}, uses=instruments.durability[11], maxlevel=3},--wrought iron
+		 fleshy={times={[2]=1.00, [3]=0.50},           uses=instruments.durability[11]*1.2, maxlevel=2}},
+		{choppy={times={[1]=5.10, [2]=3.70, [3]=2.30}, uses=instruments.durability[12], maxlevel=3},--steel
+		 fleshy={times={[2]=1.00, [3]=0.50},           uses=instruments.durability[12]*1.2, maxlevel=2}},
+		{choppy={times={[1]=5.00, [2]=3.60, [3]=2.20}, uses=instruments.durability[13], maxlevel=3},--black steel
+		 fleshy={times={[2]=1.00, [3]=0.50},           uses=instruments.durability[13]*1.2, maxlevel=2}},
+	},
 	{--Spears
 	},
 	{--Chisels

@@ -22,82 +22,91 @@ end
 realtest.register_instrument_plan("scribing_table:plan_axe", {
 	description = "Axe Plan",
 	bitmap = {0,1,0,0,0,
-			  1,1,1,1,0,
-			  1,1,1,1,1,
-			  1,1,1,1,0,
-			  0,1,0,0,0,}
+		  1,1,1,1,0,
+		  1,1,1,1,1,
+		  1,1,1,1,0,
+		  0,1,0,0,0,}
 })
 
 realtest.register_instrument_plan("scribing_table:plan_hammer", {
 	description = "Hammer Plan",
 	bitmap = {1,1,1,1,1,
-			  1,1,1,1,1,
-			  1,1,1,1,1,
-			  0,0,1,0,0,
-			  0,0,0,0,0,}
+		  1,1,1,1,1,
+		  1,1,1,1,1,
+		  0,0,1,0,0,
+		  0,0,0,0,0,}
 })
 
 realtest.register_instrument_plan("scribing_table:plan_pick", {
 	description = "Pick Plan",
 	bitmap = {0,1,1,1,0,
-			  1,0,0,0,1,
-			  0,0,0,0,0,
-			  0,0,0,0,0,
-			  0,0,0,0,0,}
+		  1,0,0,0,1,
+		  0,0,0,0,0,
+		  0,0,0,0,0,
+		  0,0,0,0,0,}
 })
 
 realtest.register_instrument_plan("scribing_table:plan_shovel", {
 	description = "Shovel Plan",
 	bitmap = {0,1,1,1,0,
-			  0,1,1,1,0,
-			  0,1,1,1,0,
-			  0,1,1,1,0,
-			  0,0,1,0,0,}
+		  0,1,1,1,0,
+		  0,1,1,1,0,
+		  0,1,1,1,0,
+		  0,0,1,0,0,}
 })
 
 realtest.register_instrument_plan("scribing_table:plan_spear", {
 	description = "Spear Plan",
 	bitmap = {1,1,0,0,0,
-			  1,1,1,0,0,
-			  0,1,0,0,0,
-			  0,0,0,0,0,
-			  0,0,0,0,0,}
+		  1,1,1,0,0,
+		  0,1,0,0,0,
+		  0,0,0,0,0,
+		  0,0,0,0,0,}
 })
 
 realtest.register_instrument_plan("scribing_table:plan_sword", {
 	description = "Sword Plan",
 	bitmap = {0,0,0,1,1,
-			  0,0,1,1,1,
-			  0,1,1,1,0,
-			  0,1,1,0,0,
-			  1,0,0,0,0,}
+		  0,0,1,1,1,
+		  0,1,1,1,0,
+		  0,1,1,0,0,
+		  1,0,0,0,0,}
 })
 
 realtest.register_instrument_plan("scribing_table:plan_bucket", {
 	description = "Bucket Plan",
 	bitmap = {1,0,0,0,1,
-			  1,0,0,0,1,
-			  1,0,0,0,1,
-			  1,0,0,0,1,
-			  0,1,1,1,0,}
+		  1,0,0,0,1,
+		  1,0,0,0,1,
+		  1,0,0,0,1,
+		  0,1,1,1,0,}
 })
 
 realtest.register_instrument_plan("scribing_table:plan_chisel", {
 	description = "Chisel Plan",
 	bitmap = {0,0,1,0,0,
-			  0,0,1,0,0,
-			  0,0,1,0,0,
-			  0,0,1,0,0,
-			  0,0,1,0,0,}
+		  0,0,1,0,0,
+		  0,0,1,0,0,
+		  0,0,1,0,0,
+		  0,0,1,0,0,}
 })
 
 realtest.register_instrument_plan("scribing_table:plan_lock", {
 	description = "Lock Plan",
 	bitmap = {0,1,1,1,0,
-			  0,1,0,1,0,
-			  0,1,1,1,0,
-			  0,1,1,1,0,
-			  0,1,1,1,0,}
+		  0,1,0,1,0,
+		  0,1,1,1,0,
+		  0,1,1,1,0,
+		  0,1,1,1,0,}
+})
+
+realtest.register_instrument_plan("scribing_table:plan_saw", {
+	description = "Saw Plan",
+	bitmap = {1,1,0,0,0,
+		  1,1,1,0,0,
+		  0,1,1,1,0,
+		  0,1,1,1,1,
+		  0,0,0,1,1,}
 })
 
 local function check_recipe(pos)

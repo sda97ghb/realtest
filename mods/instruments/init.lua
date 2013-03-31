@@ -59,7 +59,7 @@ instruments.levels = {0,0,0,0,1,2,2,2,2,2,3,4,5}
 --instruments.durability = {50, 211, 281, 296, 411, 521, 531, 581, 601, 731, 801, 1101, 1501}
 instruments.durability = {13, 53, 71, 74, 103, 131, 133, 151, 151, 183, 201, 326, 376}
 
-instruments.list = {"pick", "axe", "shovel", "hammer", "sword", "spear", "chisel"}
+instruments.list = {"pick", "axe", "shovel", "hammer", "sword", "spear", "chisel", "saw"}
 
 instruments.spear.entity = {
 	physical = false,
@@ -158,7 +158,7 @@ for i, material in ipairs(instruments.materials) do
 	end
 	--Heads
 	for j, instrument in ipairs(instruments.list) do
-		if not (material == "stone" and (instrument == "chisel" or instrument == "sword" or instrument == "spear")) then
+		if not (material == "stone" and (instrument == "chisel" or instrument == "sword" or instrument == "spear" or instrument == "saw")) then
 			minetest.register_craftitem("instruments:"..instrument.."_"..material.."_head", {
 				description = instruments.desc_list[i].." "..instrument:capitalize() .. " Head",
 				inventory_image = "instruments_"..instrument.."_"..material.."_head.png",
@@ -179,9 +179,9 @@ for i, material in ipairs(instruments.materials) do
 		end
 	end
 	--Instruments (without chisels and spears)
-	for j, instrument in ipairs({"pick", "axe", "shovel", "hammer", "sword"}) do
+	for j, instrument in ipairs({"pick", "axe", "shovel", "hammer", "sword", "saw"}) do
 		--Stone swords are not exist
-		if not (material == "stone" and instrument == "sword") then
+		if not (material == "stone" and (instrument == "sword" or instrument == "saw")) then
 			minetest.register_tool("instruments:"..instrument.."_"..material, {
 				description = instruments.desc_list[i].." "..instrument:capitalize(),
 				inventory_image = "instruments_"..instrument.."_"..material..".png",

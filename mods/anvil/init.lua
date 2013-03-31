@@ -79,7 +79,8 @@ local instruments =
 	 {"spear", "_ingot"},
 	 {"chisel", "_ingot"},
 	 {"sword", "_doubleingot"},
-	 {"hammer", "_doubleingot"}
+	 {"hammer", "_doubleingot"},
+	 {"saw", "_doubleingot"}
 	}
 for _, instrument in ipairs(instruments) do
 	for i, metal in ipairs(metals.list) do
