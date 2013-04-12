@@ -99,18 +99,6 @@ minetest.register_craftitem("minerals:borax", {
 	inventory_image = "minerals_borax.png",
 })
 
-minetest.register_craft({
-	type = "shapeless",
-	output = "minerals:flux 8",
-	recipe = {"minerals:borax"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "minerals:flux 4",
-	recipe = {"minerals:sylvite"},
-})
-
 -------------------------------------------------
 
 minetest.register_craft({

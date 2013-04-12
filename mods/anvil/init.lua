@@ -64,6 +64,14 @@ for i, metal in ipairs(metals.list) do
 		output = "metals:"..metal.."_lock",
 		level = metals.levels[i]
 	})
+	realtest.register_anvil_recipe({
+		item1 = "minerals:borax",
+		output = "minerals:flux 8"
+	})
+	realtest.register_anvil_recipe({
+		item1 = "minerals:sylvite",
+		output = "minerals:flux 4"
+	})
 end
 --Pig iron --> Wrought iron
 realtest.register_anvil_recipe({
@@ -172,11 +180,13 @@ for _, anvil in ipairs(anvils) do
 		on_construct = function(pos)
 			local meta = minetest.env:get_meta(pos)
 			meta:set_string("formspec", "size[8,7]"..
-					"button[0.5,0.25;2,1;buttonForge;Forge]"..
+					"button[0.5,0.25;1.35,1;buttonForge;Forge]"..
+					"button[1.6,0.25;0.9,1;buttonForge10;x10]"..
 					"list[current_name;src1;2.9,0.25;1,1;]"..
 					"image[3.69,0.22;0.54,1.5;anvil_arrow.png]"..
 					"list[current_name;src2;4.1,0.25;1,1;]"..
-					"button[5.5,0.25;2,1;buttonWeld;Weld]"..
+					"button[5.5,0.25;1.35,1;buttonWeld;Weld]"..
+					"button[6.6,0.25;0.9,1;buttonWeld10;x10]"..
 					"list[current_name;hammer;1,1.5;1,1;]"..
 					"list[current_name;output;3.5,1.5;1,1;]"..
 					"list[current_name;flux;6,1.5;1,1;]"..
@@ -197,7 +207,7 @@ for _, anvil in ipairs(anvils) do
 			local hammer, flux = inv:get_stack("hammer", 1), inv:get_stack("flux", 1)
 			local output = inv:get_stack("output", 1)
 			if string.sub(hammer:get_name(), 13, 18) == "hammer" then
-				if fields["buttonForge"] then
+				local forge = function()
 					for _, recipe in ipairs(realtest.registered_anvil_recipes) do
 						if recipe.type == "forge" and recipe.item1 == src1:get_name() and recipe.item2 == src2:get_name() and
 							anvil[3] >= recipe.level and
@@ -218,8 +228,9 @@ for _, anvil in ipairs(anvils) do
 							end
 							return
 						end
-					end 
-				elseif fields["buttonWeld"] then
+					end
+				end
+				local weld = function()
 					if flux:get_name() == "minerals:flux" then
 						for _, recipe in ipairs(realtest.registered_anvil_recipes) do
 							if recipe.type == "weld" and recipe.item1 == src1:get_name() and recipe.item2 == src2:get_name() and
@@ -244,6 +255,19 @@ for _, anvil in ipairs(anvils) do
 								return
 							end
 						end 
+					end
+				end
+				if fields["buttonForge"] then
+					forge()
+				elseif fields["buttonForge10"] then
+					for i = 0, 9 do
+						forge()
+					end
+				elseif fields["buttonWeld"] then
+					weld()
+				elseif fields["buttonWeld10"] then
+					for i = 0, 9 do
+						weld()
 					end
 				end
 			end
