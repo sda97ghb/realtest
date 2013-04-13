@@ -134,7 +134,24 @@ realtest.register_flower("flowers:grass", {
 			type = "fixed",
 			fixed = {-0.4,-0.5,-0.4,0.4,0.4,0.4}
 		},
-		groups = {dig_immediate=3,dropping_node=1}
+		groups = {dig_immediate=3,dropping_node=1},
+		drop = {
+			max_items = 1,
+			items = {
+				{
+					rarity = 10,
+					items = {"farming:wheat_hard_seeds"},
+				},
+				{
+					rarity = 10,
+					items = {"farming:wheat_soft_seeds"},
+				},
+				{
+					rarity = 2,
+					items = {"flowers:grass"},
+				},
+			}
+		}
 	},
 })
 
