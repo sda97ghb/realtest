@@ -147,6 +147,22 @@ realtest.register_flower("flowers:grass", {
 					items = {"farming:wheat_soft_seeds"},
 				},
 				{
+					rarity = 10,
+					items = {"farming:rye"},
+				},
+				{
+					rarity = 10,
+					items = {"farming:oat"},
+				},
+				{
+					rarity = 10,
+					items = {"farming:barley"},
+				},
+				{
+					rarity = 10,
+					items = {"farming:rice"},
+				},
+				{
 					rarity = 2,
 					items = {"flowers:grass"},
 				},

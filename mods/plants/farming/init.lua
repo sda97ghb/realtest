@@ -1,11 +1,11 @@
 farming = {}
 farming.grains = {
 	"wheat_hard",
-	"wheat_soft",--[[
+	"wheat_soft",
 	"rye",
 	"rice",
-	"oast",
-	"barley",
+	"oat",
+	"barley",--[[
 	"maize",
 	"millet",
 	"siberian_millet",
@@ -21,7 +21,7 @@ farming.grains_desc = {
 	"Soft Wheat",
 	"Rye",
 	"Rice",
-	"Oast",
+	"Oat",
 	"Barley",
 	"Maize",
 	"Millet",
@@ -132,7 +132,9 @@ for i, grain in ipairs(farming.grains) do
 		inventory_image = "farming_"..grain.."_seeds.png",
 		on_place = function(itemstack, placer, pointed_thing)
 			minetest.item_place(ItemStack("farming:"..grain.."_stage_1"), placer, pointed_thing)
-			itemstack:take_item()
+			if not minetest.setting_getbool("creative_mode") then
+				itemstack:take_item()
+			end
 			return itemstack
 		end,
 	})
@@ -144,8 +146,8 @@ for i, grain in ipairs(farming.grains) do
 	
 	minetest.register_abm({
 		nodenames = nnames,
-		interval = 40,
-		chance = 20,
+		interval = 1,
+		chance = 1,
 		action = function(pos, node, active_object_count, active_object_count_wider)
 			if not minetest.env:get_node_light(pos) or
 				minetest.env:get_node_light(pos) < 8 then
