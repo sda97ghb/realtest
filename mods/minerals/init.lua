@@ -28,7 +28,7 @@ MINERALS_LIST={
 	'jet',
 	'kaolinite',
 	'kimberlite',
-	'olovine',
+	'olivine',
 	'petrified_wood',
 	'pitchblende',
 	'saltpeter',
@@ -41,7 +41,7 @@ MINERALS_LIST={
 }
 
 MINERALS_DESC_LIST={
-	'Lapis',
+	'Lazurite',
 	'Anthracite',
 	'Lignite',
 	'Bituminous coal',
@@ -70,7 +70,7 @@ MINERALS_DESC_LIST={
 	'Jet',
 	'Kaolinite',
 	'Kimberlite',
-	'Olovine',
+	'Olivine',
 	'Petrified wood',
 	'Pitchblende',
 	'Saltpeter',
@@ -81,6 +81,8 @@ MINERALS_DESC_LIST={
 	'Sylvite',
 	'Tenorite',
 }
+
+minetest.register_alias("minerals:olovine", "minerals:olivine")
 
 for i=1, #MINERALS_LIST do
 	minetest.register_craftitem("minerals:"..MINERALS_LIST[i], {

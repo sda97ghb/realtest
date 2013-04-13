@@ -1,0 +1,300 @@
+VanessaE's Unified Dyes
+=======================
+
+This is a pretty extensive dyes mod, which has the sole purpose of supplying a 
+complete set of colors and a few greys, all of which are intended to be used by 
+other mods as needed to make colored objects.  It uses Ironzorg's Flowers mod 
+as the source of the actual pigments, which can be had from one of the links 
+below.
+
+In total, this mod provides 89 colors and greys.
+
+IMPORTANT: This mod is not intended to suggest that you should use the entire 
+palette.  Rather, I was hoping people would just choose maybe the dozen or so 
+most useful colors to use in their mods.  The modding template at the bottom of 
+this post, while intended to render the entire palette, is still just a 
+template - please trim out the colors and shades you don't actually need.
+
+Dependencies: Nature Pack OR flowers
+
+Recommends: buckets, junglegrass
+
+License: For the buckets of paint, cc-by-sa 3.0.  For everything else, GPL.
+
+Install: Unzip the distribution file, rename the resultant 
+VanessaE-unifieddyes-blahblah folder to just "unifieddyes", and move it into 
+Minetest's mods folder.
+
+Changelog:
+https://github.com/VanessaE/unifieddyes/blob/master/changelog.txt
+
+The Palette:
+
+[ https://github.com/VanessaE/unifieddyes/raw/master/color-swatches.png ]
+[ The complete official palette, showing all 84 colors and 5 greys. ]
+
+In the image above, the "50%" markings on the left next to each shade mean 50% 
+saturation for all hues in that shade line.  Note that the "light" shades don't 
+have (or need) that variant.  For the greys, the percentages shown are of 
+brightness relative to pure white.
+
+Usage instructions, technical information
+=========================================
+
+Getting Started
+---------------
+
+First thing's first: you're going to need something in which to contain your 
+dyes - namely, glass bottles.  Making them is very simple: Craft 5 blocks of 
+glass in a U shape, and you get 15 glass bottles as the output.
+
+[ https://github.com/VanessaE/unifieddyes/raw/master/empty-bottles.png ]
+
+Now, let's fill them up with some dye base.  Craft six glass bottles with one 
+piece of jungle grass and one bucket of water, in any positions in the grid.  
+The result will be 6 individual bottles of uncolored dye base and an empty 
+bucket.
+
+[ https://github.com/VanessaE/unifieddyes/raw/master/dye-base.png ]
+
+Next, we need to harvest some materials to make the pigments themselves from.  
+For this, you need one or more of the following: roses (red), tulips (orange), 
+dandelions (yellow), cactus or waterlilies (green), violas (blue), coal 
+("carbon black"), or stone+junglegrass+water (white, "titanium dioxide").  
+Simply wander around your world and collect whichever of the above you need to 
+get your colors.
+
+Once that's done, simply smelt a flower, coal, or stone to get the associated 
+pigment.  One flower or lump of coal yields 2 portions of pigment powder, 
+cactus yields 6, while stone yields 10 (of titanium dioxide).
+
+Now that you have your pigments, take one bottle of the dye base you made above 
+and craft it with one portion of a pigment to get a usable bottle of dye of 
+that color.
+
+[ https://github.com/VanessaE/unifieddyes/raw/master/craft-red-dye.png ]
+
+When all is said and done, the above ingredients and process can be repeated 
+for all 7 of these "root" colors, resulting in...
+
+[ https://github.com/VanessaE/unifieddyes/raw/master/unifieddyes1.png ]
+
+The 7 "root" color pigments along with their sources and resultant dyes: Red, 
+Orange, Yellow, Green, Blue, White, and Black.
+
+The 17 Color standard set:
+
+All colors are fashioned using mixtures of the 'root' colors created above.
+
+[ https://github.com/VanessaE/unifieddyes/raw/master/unifieddyes2.png ]
+[ The 12 "full" colors and the five grey shades. ]
+
+These 17 colors and greys can be formed using these recipes:
+
+ *   Red (0°): smelt one rose (yields 2 portions of red dye)
+ *   Orange (30°): smelt one tulip (yields 2) or mix red+yellow (yields 2)
+ *   Yellow (60°): smelt one yellow dandelion (yields 2)
+ *   Lime (90°): mix yellow + green (yields 2)
+ *   Green (120°): smelt one cactus or one waterlily (yields 2),
+                  or mix yellow + blue (yields 2)
+ *   Aqua (150°): mix green + cyan (yields 2)
+ *   Cyan (180°): green + blue (yields 2)
+ *   Sky blue (210°): mix cyan + blue (yields 2)
+ *   Blue (240°): Smelt one viola (yields 2)
+ *   Violet (270°): mix blue + magenta (yields 2) 
+                    or mix 2 blues + 1 red (yields 3)
+ *   Magenta (300°): Mix blue + red (yields 2)
+ *   Red-violet (330°): mix magenta + red (yields 2)
+
+ *   Black (7.5%): smelt one piece of coal (yields 2) -- Note that this dye is
+                   only used with other dyes, not with the paints.
+ *   Dark grey (25%): mix one portion of white paint with two portions of
+                      carbon black powder (not the above black dye) (yields 3)
+ *   Medium grey (50%): mix one white and one carbon black (yields 2)
+ *   Light grey (75%): Mix two white and one carbon black (yields 3)
+ *   White (95%): Craft one piece of jungle grass with one bucket of
+                  water and one portion of titanium dioxide (yields 1).
+
+The degree figures are the colors' hues on a standard HSV color wheel, and are 
+what I used in the textures supplied with this mod.  For the greys, the figures 
+in parenthesis indicate the intended brightness of the shade, relative to 
+white.  Note that black and white don't go all the way to the bottom/top of the 
+scale, as doing so may crush some details in textures made in those shades (see 
+below, regarding semi-automatic texture generation).
+
+Darker/Lighter colors
+---------------------
+
+To obtain a dark (33%) version of a given color, use two portions of black dye 
+along with the base color, which yields three portions of the final color.
+
+To obtain a medium-brightness (66%) version of a given color, mix the desired 
+base color from the list above with one portion of black dye (for example, 
+medium lime = lime + black).  All such mixtures yield two portions of the final 
+color.
+
+To obtain a light (150% over full) version of a given color, mix one portion of 
+the base color with one portion of white paint.  Yields 2 portions of the final 
+color.
+
+Low-saturation colors
+---------------------
+
+To get the low saturation (50%) version of one of the base colors, mix one or 
+more of white, black, or a shade of grey with the desired base color:
+
+Dark, low saturation: dark grey paint + color (yields 2), or two blacks + 1 
+white + color (yields 4).  For example, dark, low-saturation red = red + dark 
+grey paint, or red + two black + one white.
+
+Medium brightness, low saturation: medium grey paint + color (yields 2), or 
+black + white + color (yields 3).  For example, medium, low-saturation green = 
+green + medium grey, or green + black + white.
+
+Full, low saturation: light grey + color (yields 2), or 1 black + 2 whites + 
+color (yields 4).  For example, bright, low-saturation blue = blue + light 
+grey, or blue + black + 2 white.
+
+There is no low-saturation version of the "light" colors.
+
+RGB values
+----------
+
+All RGB values and filenames for all colors and shades of grey are represented 
+in the file "colors.txt" (which is generated with the bash script 
+"listcolors.sh"), included in the distribution directory.
+
+Misc. Notes
+-----------
+
+If you need to use /give commands, the item names are of the following format:
+
+unifieddyes:{"light_" or nothing or "medium_" or "dark_"}{color}{nothing or 
+"_s50"}.
+
+For example, low saturation dark yellow is "unifieddyes:dark_yellow_s50", while 
+bright, full-saturation red is simply "unifieddyes:red".  For the greys, the 
+names are unifieddyes:white_paint, unifieddyes:lightgrey_paint, 
+unifieddyes:grey_paint, unifieddyes:darkgrey_paint, or unifieddyes:black.
+
+See the texture filenames in the textures/ folder for further hints - all of 
+the item names follow the same format as the filenames, save for having a colon 
+(:) instead of the first underscore (_).
+
+Mods should use the replacements= parameter in their crafting recipes, to 
+return the empty bottles and buckets after they've been used.  Something like 
+this should do in the case of a bottle of dye:
+
+replacements = { { 'unifieddyes:some_color_here', 'unifieddyes:empty_bottle' }, 
+},
+
+Empty bottles can be crafted back into 9-pack sets, which can then be recycled 
+into glass blocks by smelting them.
+
+
+Semi-automatic generation of nodes, crafting recipes, and textures
+==================================================================
+
+The modding template
+--------------------
+
+Along with this mod, you should also download my modding template, which is 
+quite easy to transform into whatever mod you want to create that needs 
+unifieddyes.
+
+It's just a skeleton, but all you should need to do to get started is to rename 
+the folder to whatever your mod will be named, tweak a few variables near the 
+start of the template's init.lua, and follow the above instructions regarding 
+the creation of your textures.
+
+If you do it right, you should end up with a very basic mod giving you craft 
+and /give access to your various items.  After that part is confirmed working, 
+just add whatever code you need to the end of the init.lua to define additional 
+functions, items, crafts, and smelting recipes, etc., as needed by your mod, 
+and start coding and testing like usual.
+
+The template is configured by default to return the empty glass bottles 
+whenever a dye is used.
+
+This template is not supplied as part of the unifieddyes mod, rather you need 
+fetch it separately from here:
+
+Download Template: https://github.com/VanessaE/modtemplate/zipball/master
+  ...or browse the code: https://github.com/VanessaE/modtemplate
+
+The texture generator script
+----------------------------
+
+Obviously, in order for this mod or the above template to be useful, you'll 
+need textures.  If you plan to support the entire range of colors offered by 
+Unified Dyes, there is a BASH script included with this mod as well with the 
+above template named gentextures.sh, which will, with an appropriately- colored 
+and appropriately-named source texture, and possibly an overlay texture, 
+generate a complete set of colored and greyscale textures.
+
+The script requires bc (the calculator program) to handle some basic math 
+regarding the hue adjustments, and Imagemagick's "convert" program handles all 
+of the actual conversions.
+
+First thing's first though - you need source textures.  Using your favorite 
+image editor, create a single version of your desired texture.  Draw it in the 
+brightest, deepest shade of RED you can muster without losing any detail, and 
+save it out.  Ideally, you will want the average color of the texture, when 
+taking into account all bright and dark areas, to be as close as possible to 
+the hex value #FF0000 (0 degrees, 100% saturation, pure red) without losing any 
+appreciable #detail.
+
+Save this source texture out as a PNG image, with a filename of 
+"whatever_base.png", where "whatever" is the one-word name of your mod - for 
+example, mymod_base.png.
+
+If you want to add an image on top of the colored blocks, such as a frame, 
+which you want to be the same color throughout all of the textures, create it 
+now.  It should consist only of those parts of the textures that you want to 
+leave unchanged, with some level of alpha transparency everywhere else, 
+depending on how much of the image needs to remain unchanged.  Save it out as a 
+PNG image, using any filename you want, for example myoverlay.png.
+
+Now, use chmod to make the script executable, if necessary, and run it.
+
+If you don't need the overlay, you just need to supply one command line 
+argument: the base name of your mod.  The script will use that parameter as the 
+basis of its texture filenames. For example:
+
+./gentextures.sh mymod
+
+The script will then look for mymod_base.png and copy and convert it into 
+things like mymod_red.png, mymod_dark_blue.png, and so on.
+
+If you want to use an overlay also, skip the above step and run the script with 
+the base name as the first parameter, and the complete filename of your overlay 
+as the second instead.  For example:
+
+./gentextures.sh mymod myoverlay.png
+
+Otherwise, the program will iterate through all of the hues and shades that are 
+supported by unifieddyes (though this is done manually, not by reading anything 
+from the mod), compositing your overlay image in after the recolor step, if 
+you're using that option.
+
+All of the output files will be placed in a new folder, generated-textures/ in 
+the current directory.  Note that the script looks for the above files in the 
+current directory also.
+
+The script has a third mode as well:
+
+./gentextures.sh -t mymod myoverlay.png
+
+In this mode, the script will leave the base texture mymod_base.png unchanged, 
+and instead will rotate the colors of the overlay image and then composite that 
+onto the base texture.  The same color changes will happen with the overlay in 
+this mode, so it's a good idea to make the overlay some fairly saturated shade 
+of red.  Along with that, the base image should be some neutral color; any 
+color is fine as long as the result is what you wanted.
+
+The program attempts to verify that the files you've asked it to use will 
+actually work, and will exit immediately if the any are invalid, missing, etc.
+
+Use your favorite image browser or file manager to review the results in 
+generated-textures/, and if they're right, copy them over to the textures/ 
+folder in your mod.
