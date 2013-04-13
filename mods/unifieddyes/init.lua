@@ -75,11 +75,6 @@ for _, paint in ipairs(paints) do
         end
 end
 
-minetest.register_craftitem("unifieddyes:empty_bottle", {
-        description = "Glass Bottle (empty) (Deprecated)",
-        inventory_image = "unifieddyes_empty_bottle.png",
-})
-
 minetest.register_craft( {
         type = "shapeless",
         output = "vessels:glass_fragments",
@@ -91,24 +86,35 @@ minetest.register_craft( {
 
 -- Now the current stuff, using vessels:glass_bottle.
 
-minetest.register_craftitem("unifieddyes:dye_base", {
-        description = "Uncolored Dye Base Liquid",
-        inventory_image = "unifieddyes_dye_base.png",
+minetest.register_craftitem(":vessels:glass_bottle", {
+	description = "Glass Bottle",
+	inventory_image = "vessels_glass_bottle_inv.png",
+	wield_image = "vessels_glass_bottle.png",
+	groups = {vessel=1},
+	liquids_pointable = true,
+	on_use = function(itemstack, user, pointed_thing)
+		if pointed_thing.type ~= "node" then
+			return
+		end
+		local n = minetest.env:get_node(pointed_thing.under)
+		local liquiddef = realtest.registered_liquids[n.name]
+		if not liquiddef then
+			return
+		elseif itemstack:get_count() == 1 then
+			return "unifieddyes:dye_base"
+		else
+			if user:get_inventory():room_for_item("main", "unifieddyes:dye_base") then
+				user:get_inventory():add_item("main", "unifieddyes:dye_base")
+				itemstack:take_item()
+				return itemstack
+			end
+		end
+	end,
 })
 
-minetest.register_craft( {
-	type = "shapeless",
-	output = "unifieddyes:dye_base 6",
-	recipe = {
-		"vessels:glass_bottle",
-		"vessels:glass_bottle",
-		"vessels:glass_bottle",
-		"vessels:glass_bottle",
-		"vessels:glass_bottle",
-		"vessels:glass_bottle",
-		"group:bucket_with_water",
-	},
-	replacements = buckets.replacements.water,
+minetest.register_craftitem("unifieddyes:dye_base", {
+        description = "Uncolored Dye Base Liquid",
+        inventory_image = "unifieddyes_dye_base.png"
 })
 
 --==========================================================================
@@ -168,27 +174,27 @@ end
 
 realtest.register_anvil_recipe({
 	item1 = "minerals:hematite",
-	output = "unifieddyes:pigment_red 2"
+	output = "unifieddyes:pigment_red 4"
 })
 
 realtest.register_anvil_recipe({
 	item1 = "minerals:cinnabar",
-	output = "unifieddyes:pigment_red 2"
+	output = "unifieddyes:pigment_red 4"
 })
 
 realtest.register_anvil_recipe({
 	item1 = "minerals:tenorite",
-	output = "unifieddyes:pigment_red 2"
+	output = "unifieddyes:pigment_red 4"
 })
 
 realtest.register_anvil_recipe({
 	item1 = "minerals:olivine",
-	output = "unifieddyes:pigment_green 2"
+	output = "unifieddyes:pigment_green 4"
 })
 
 realtest.register_anvil_recipe({
 	item1 = "minerals:malachite",
-	output = "unifieddyes:pigment_green 2"
+	output = "unifieddyes:pigment_green 4"
 })
 
 minetest.register_craftitem("unifieddyes:pigment_white", {
@@ -198,12 +204,12 @@ minetest.register_craftitem("unifieddyes:pigment_white", {
 
 realtest.register_anvil_recipe({
 	item1 = "minerals:kaolinite",
-	output = "unifieddyes:pigment_white 2"
+	output = "unifieddyes:pigment_white 4"
 })
 
 realtest.register_anvil_recipe({
 	item1 = "minerals:sphalerite",
-	output = "unifieddyes:pigment_white 2"
+	output = "unifieddyes:pigment_white 4"
 })
 
 minetest.register_alias("unifieddyes:titanium_dioxide", "unifieddyes:pigment_white")
@@ -221,27 +227,27 @@ minetest.register_craftitem("unifieddyes:carbon_black", {
 
 realtest.register_anvil_recipe({
 	item1 = "default:coal_lump",
-	output = "unifieddyes:carbon_black 2"
+	output = "unifieddyes:carbon_black 4"
 })
 
 realtest.register_anvil_recipe({
 	item1 = "minerals:lignite",
-	output = "unifieddyes:carbon_black 2"
+	output = "unifieddyes:carbon_black 4"
 })
 
 realtest.register_anvil_recipe({
 	item1 = "minerals:bituminous_coal",
-	output = "unifieddyes:carbon_black 2"
+	output = "unifieddyes:carbon_black 4"
 })
 
 realtest.register_anvil_recipe({
 	item1 = "minerals:anthracite",
-	output = "unifieddyes:carbon_black 2"
+	output = "unifieddyes:carbon_black 4"
 })
 
 realtest.register_anvil_recipe({
 	item1 = "minerals:graphite",
-	output = "unifieddyes:carbon_black 2"
+	output = "unifieddyes:carbon_black 4"
 })
 
 minetest.register_craftitem("unifieddyes:black", {

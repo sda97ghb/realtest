@@ -2,7 +2,7 @@
 -- See README.txt for licensing and other information.
 
 minetest.register_craftitem("vessels:glass_bottle", {
-	description = "Glass Bottle (empty)",
+	description = "Glass Bottle",
 	inventory_image = "vessels_glass_bottle_inv.png",
 	wield_image = "vessels_glass_bottle.png",
 	groups = {vessel=1},
@@ -18,7 +18,7 @@ minetest.register_craft( {
 })
 
 minetest.register_craftitem("vessels:drinking_glass", {
-	description = "Drinking Glass (empty)",
+	description = "Drinking Glass",
 	inventory_image = "vessels_drinking_glass_inv.png",
 	wield_image = "vessels_drinking_glass.png",
 	groups = {vessel=1},
@@ -34,7 +34,7 @@ minetest.register_craft( {
 })
 
 minetest.register_craftitem("vessels:steel_bottle", {
-	description = "Heavy Steel Bottle (empty)",
+	description = "Heavy Steel Bottle",
 	inventory_image = "vessels_steel_bottle_inv.png",
 	wield_image = "vessels_steel_bottle.png",
 	groups = {vessel=1},
