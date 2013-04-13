@@ -446,6 +446,10 @@ minetest.register_craft( {
 	}
 })
 
+minetest.register_craft({
+	recipe = {{"flowers:grass"}},
+	output = "unifieddyes:pigment_green"
+})
 
 -- =================================================================
 

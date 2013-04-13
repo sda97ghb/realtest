@@ -134,8 +134,7 @@ realtest.register_flower("flowers:grass", {
 			type = "fixed",
 			fixed = {-0.4,-0.5,-0.4,0.4,0.4,0.4}
 		},
-		drop = "",
-		groups = {dig_immediate=3,dropping_node=1},
+		groups = {dig_immediate=3,dropping_node=1}
 	},
 })
 
@@ -163,6 +162,7 @@ minetest.register_node("flowers:pot_unroasted", {
 			{6/16,-6/16,-0.5,0.5,0.5,0.5},
 		},
 	},
+	groups = {oddly_breakable_by_hand=3},
 })
 
 minetest.register_craft({
@@ -186,6 +186,7 @@ minetest.register_node("flowers:pot", {
 			{6/16,-6/16,-0.5,0.5,0.5,0.5},
 		},
 	},
+	groups = {oddly_breakable_by_hand=3},
 })
 
 minetest.register_craft({
@@ -198,6 +199,7 @@ minetest.register_node("flowers:pot_with_dirt", {
 	tiles = {"default_dirt.png^flowers_pot_top.png","flowers_pot_bottom.png","flowers_pot.png"},
 	drawtype = "nodebox",
 	paramtype = "light",
+	groups = {oddly_breakable_by_hand=3},
 })
 
 local function generate(flower, minp, maxp, seed)
