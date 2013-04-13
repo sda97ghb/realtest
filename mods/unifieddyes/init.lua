@@ -148,12 +148,6 @@ for color in ipairs(colorsources) do
 		inventory_image = "unifieddyes_pigment_"..pigments[color]..".png",
 	})
 
-	minetest.register_craft({
-		type = "cooking",
-		output = "unifieddyes:pigment_"..pigments[color].." 2",
-		recipe = colorsources[color],
-	})
-
 	-- The recipes to turn pigments into usable dyes
 
 	minetest.register_craftitem("unifieddyes:"..pigments[color], {
@@ -437,35 +431,20 @@ minetest.register_craft( {
                "unifieddyes:red",
 		},
 })
+	       
+minetest.register_craftitem("unifieddyes:pigment_violet", {
+	description = "Violet Pigment",
+	inventory_image = "unifieddyes_pigment_violet.png",
+})
 
-if minetest.registered_nodes["flowers:flower_geranium"] then
-
-	minetest.register_craftitem("unifieddyes:pigment_violet", {
-	        description = "Violet Pigment",
-	        inventory_image = "unifieddyes_pigment_violet.png",
-	})
-
-	minetest.register_craft({
-		type = "cooking",
-		output = "unifieddyes:pigment_blue 2",
-		recipe = "flowers:flower_geranium",
-	})
-
-	minetest.register_craft({
-		type = "cooking",
-		output = "unifieddyes:pigment_violet 2",
-		recipe = "flowers:flower_viola",
-	})
-
-	minetest.register_craft( {
-		type = "shapeless",
-		output = "unifieddyes:violet",
-		recipe = {
-			"unifieddyes:pigment_violet",
-			"unifieddyes:dye_base"
-		}
-	})
-end
+minetest.register_craft( {
+	type = "shapeless",
+	output = "unifieddyes:violet",
+	recipe = {
+		"unifieddyes:pigment_violet",
+		"unifieddyes:dye_base"
+	}
+})
 
 
 -- =================================================================
