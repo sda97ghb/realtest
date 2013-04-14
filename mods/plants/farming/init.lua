@@ -6,7 +6,6 @@ function realtest.register_crop(name, CropDef)
 		name = name,
 		description = CropDef.description or "Crop",
 		stages = CropDef.stages or 8,
-		grounds = CropDef.grounds or {"default:dirt", "default:dirt_with_grass", "default:dirt_with_clay", "default:dirt_with_grass_and_clay"},
 		grow_light = CropDef.grow_light or 8,
 		grow_interval = CropDef.grow_interval or 40,
 		grow_chance = CropDef.grow_chance or 20,
@@ -96,7 +95,7 @@ function realtest.register_crop(name, CropDef)
 				minetest.env:get_node_light(pos) < crop.grow_light then
 				return
 			end
-			if table.contains(crop.grounds, minetest.env:get_node({x=pos.x,y=pos.y-1,z=pos.z}).name) then
+			if minetest.get_node_group(minetest.env:get_node({x=pos.x,y=pos.y-1,z=pos.z}).name, "farm") == 1 then
 				local stage = minetest.get_node_group(node.name, "grow_stage")
 				minetest.env:set_node(pos, {name=name.."_stage_"..stage+1})
 			end

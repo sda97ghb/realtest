@@ -58,7 +58,7 @@ function realtest.register_dirt(name, DirtRef)
 			description = dirt.description .. " with Grass",
 			tiles = {name_.."_grass.png", name_..".png", name_.."_grass.png"},
 			particle_image = {name_..".png"},
-			groups = {crumbly=3,drop_on_dig=1,dirt_with_grass=1},
+			groups = {crumbly=3,drop_on_dig=1,dirt=1,grass=1},
 			drop = name,
 			sounds = default.node_sound_dirt_defaults({
 				footstep = {name="default_grass_footstep", gain=0.4},
@@ -71,7 +71,7 @@ function realtest.register_dirt(name, DirtRef)
 			description = dirt.description .. " with Clay",
 			tiles = {name_..".png^grounds_clay.png"},
 			particle_image = {"grounds_clay_lump.png"},
-			groups = {crumbly=3, drop_on_dig=1, dirt_with_clay=1, falling_node=1},
+			groups = {crumbly=3, drop_on_dig=1, dirt=1,clay=1, falling_node=1},
 			drop = "grounds:clay_lump 4",
 			sounds = default.node_sound_dirt_defaults(),
 		})
@@ -83,7 +83,7 @@ function realtest.register_dirt(name, DirtRef)
 			tiles = {name_.."_farm.png", name_..".png", name_..".png"},
 			particle_image = {name_..".png"},
 			drop = name,
-			groups = {crumbly=3,drop_on_dig=1, falling_node=1, dirt_farm=1},
+			groups = {crumbly=3,drop_on_dig=1, falling_node=1, dirt=1, farm=1},
 			sounds = default.node_sound_dirt_defaults(),
 			on_falling = function(pos, node)
 				minetest.env:set_node(pos, {name = farm_nofarm[node.name]})
@@ -97,7 +97,7 @@ function realtest.register_dirt(name, DirtRef)
 			description = dirt.description .. " with Grass and Clay",
 			tiles = {name_.."_grass.png", name_..".png^grounds_clay.png", name_.."_grass.png"},
 			particle_image = {"grounds_clay_lump.png"},
-			groups = {crumbly=3, drop_on_dig=1, dirt_with_grass_and_clay=1},
+			groups = {crumbly=3, drop_on_dig=1, dirt=1, grass=1, clay=1},
 			drop = "grounds:clay_lump 4",
 			sounds = default.node_sound_dirt_defaults({
 				footstep = {name="default_grass_footstep", gain=0.4},
@@ -111,7 +111,7 @@ function realtest.register_dirt(name, DirtRef)
 			tiles = {name_.."_farm.png", name_..".png", name_.."_grass.png"},
 			particle_image = {name_..".png"},
 			drop = name,
-			groups = {crumbly=3,drop_on_dig=1, dirt_farm_with_grass=1},
+			groups = {crumbly=3,drop_on_dig=1, dirt=1, grass=1, farm=1},
 			sounds = default.node_sound_dirt_defaults(),
 			on_falling = function(pos, node)
 				minetest.env:set_node(pos, {name = farm_nofarm[node.name]})
@@ -125,7 +125,7 @@ function realtest.register_dirt(name, DirtRef)
 			description = "Farm " .. dirt.description .. " with Clay",
 			tiles = {name_.."_farm.png",name_..".png^grounds_clay.png",name_..".png^grounds_clay.png"},
 			particle_image = {"grounds_clay_lump.png"},
-			groups = {crumbly=3, drop_on_dig=1, dirt_farm_with_clay=1, falling_node=1},
+			groups = {crumbly=3, drop_on_dig=1, dirt=1, farm=1, clay=1, falling_node=1},
 			drop = "grounds:clay_lump 4",
 			sounds = default.node_sound_dirt_defaults(),
 			on_falling = function(pos, node)
@@ -140,7 +140,7 @@ function realtest.register_dirt(name, DirtRef)
 			description = "Farm " .. dirt.description .. " with Grass and Clay",
 			tiles = {name_.."_farm.png", name_..".png^grounds_clay.png", name_.."_grass.png"},
 			particle_image = {"grounds_clay_lump.png"},
-			groups = {crumbly=3, drop_on_dig=1, dirt_farm_with_grass_and_clay=1},
+			groups = {crumbly=3, drop_on_dig=1, dirt=1, farm=1, grass=1, clay=1},
 			drop = "grounds:clay_lump 4",
 			sounds = default.node_sound_dirt_defaults({
 				footstep = {name="default_grass_footstep", gain=0.4},
