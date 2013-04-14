@@ -8,10 +8,13 @@ function realtest.register_crop(name, CropDef)
 		stages = CropDef.stages or 8,
 		grounds = CropDef.grounds or {"default:dirt", "default:dirt_with_grass", "default:dirt_with_clay", "default:dirt_with_grass_and_clay"},
 		grow_light = CropDef.grow_light or 8,
-		grow_interval = CropDef.grow_interval or 40,
-		grow_chance = CropDef.grow_chance or 20,
-		gen_sheaf = CropDef.gen_sheaf or true,
+		grow_interval = CropDef.grow_interval or 1,--140,
+		grow_chance = CropDef.grow_chance or 1,--20,
+		gen_sheaf = true
 	}
+	if CropDef.gen_sheaf == false then
+		crop.gen_sheaf = false
+	end
 	realtest.registered_crops[name] = crop
 	table.insert(realtest.registered_crops_list,name)
 	local nnames = {}
@@ -93,7 +96,7 @@ function realtest.register_crop(name, CropDef)
 				minetest.env:get_node_light(pos) < crop.grow_light then
 				return
 			end
-			if table.contains(grounds, minetest.env:get_node({x=pos.x,y=pos.y-1,z=pos.z}).name) then
+			if table.contains(crop.grounds, minetest.env:get_node({x=pos.x,y=pos.y-1,z=pos.z}).name) then
 				local stage = minetest.get_node_group(node.name, "grow_stage")
 				minetest.env:set_node(pos, {name=name.."_stage_"..stage+1})
 			end
@@ -125,7 +128,39 @@ realtest.register_crop("farming:barley", {
 	description = "Barley"
 })
 
--- realtest.register_crop
+-- Tomato
+
+realtest.register_crop("farming:tomato", {
+	description = "Tomato",
+	gen_sheaf = false,
+})
+
+local TomatoDef = minetest.registered_nodes["farming:tomato_stage_8"]
+TomatoDef.drop = {
+	max_items = 1,
+	items = {
+		{
+			rarity = 2,
+			items = {"farming:tomato 4"},
+		},
+		{
+			items = {"farming:tomato 3"},
+		}
+	}
+}
+minetest.register_node(":farming:tomato_stage_8", TomatoDef)
+
+minetest.register_craftitem("farming:tomato", {
+	description = "Tomato",
+	inventory_image = "farming_tomato.png"
+})
+
+minetest.register_craft({
+	recipe = {{"farming:tomato"}},
+	output = "farming:tomato_seeds"
+})
+
+-- Tomato end
 
 farming.grains = {
 	"wheat_hard",
