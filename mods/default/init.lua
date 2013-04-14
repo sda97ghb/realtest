@@ -318,47 +318,6 @@ minetest.register_node("default:cobbleblock_flat", {
 	sounds = default.node_sound_stone_defaults(),
 })
 
-minetest.register_node("default:dirt_with_grass", {
-	description = "Dirt with Grass",
-	tiles = {"default_grass.png", "default_dirt.png", "default_grass.png"},
-	particle_image = {"default_dirt.png"},
-	is_ground_content = true,
-	groups = {crumbly=3,drop_on_dig=1},
-	drop = "default:dirt",
-	sounds = default.node_sound_dirt_defaults({
-		footstep = {name="default_grass_footstep", gain=0.4},
-	}),
-})
-
-minetest.register_node("default:farmdirt_with_grass", {
-	tiles = {"default_farmdirt.png", "default_dirt.png", "default_grass.png"},
-	particle_image = {"default_dirt.png"},
-	is_ground_content = true,
-	groups = {crumbly=3,drop_on_dig=1},
-	drop = "default:dirt",
-	sounds = default.node_sound_dirt_defaults({
-		footstep = {name="default_grass_footstep", gain=0.4},
-	}),
-})
-
-minetest.register_node("default:dirt", {
-	description = "Dirt",
-	tiles = {"default_dirt.png"},
-	particle_image = {"default_dirt.png"},
-	is_ground_content = true,
-	groups = {crumbly=3,drop_on_dig=1, falling_node=1},
-	sounds = default.node_sound_dirt_defaults(),
-})
-
-minetest.register_node("default:farmdirt", {
-	tiles = {"default_farmdirt.png", "default_dirt.png", "default_dirt.png"},
-	particle_image = {"default_dirt.png"},
-	drop = "default:dirt",
-	is_ground_content = true,
-	groups = {crumbly=3,drop_on_dig=1, falling_node=1},
-	sounds = default.node_sound_dirt_defaults(),
-})
-
 minetest.register_node("default:sand", {
 	description = "Sand",
 	tiles = {"default_sand.png"},
@@ -409,31 +368,6 @@ minetest.register_node("default:sand_with_clay", {
 		footstep = "",
 	}),
 })
-
-minetest.register_node("default:dirt_with_clay", {
-	description = "Clay",
-	tiles = {"default_dirt.png^default_clay.png"},
-	particle_image = {"default_clay_lump.png"},
-	is_ground_content = true,
-	groups = {crumbly=3, drop_on_dig=1},
-	drop = "default:clay_lump 4",
-	sounds = default.node_sound_dirt_defaults({
-		footstep = "",
-	}),
-})
-
-minetest.register_node("default:dirt_with_grass_and_clay", {
-	description = "Clay",
-	tiles = {"default_grass.png", "default_dirt.png^default_clay.png", "default_grass.png"},
-	particle_image = {"default_clay_lump.png"},
-	is_ground_content = true,
-	groups = {crumbly=3, drop_on_dig=1},
-	drop = "default:clay_lump 4",
-	sounds = default.node_sound_dirt_defaults({
-		footstep = "",
-	}),
-})
-
 
 minetest.register_node("default:brick", {
 	description = "Brick Block",
@@ -918,59 +852,3 @@ minetest.register_on_dignode(function(pos, oldnode, digger)
 		end
 	end
 end)
-
-minetest.register_abm({
-	nodenames = {"default:dirt_with_grass"},
-	interval = 2,
-	chance = 200,
-	action = function(pos, node)
-		if minetest.env:get_node({x=pos.x, y=pos.y-1, z=pos.z}).name == "air" then
-			minetest.env:set_node(pos, {name="default:dirt"})
-			nodeupdate_single(pos)
-		end
-	end
-})
-
-minetest.register_abm({
-	nodenames = {"default:dirt_with_clay"},
-	interval = 2,
-	chance = 200,
-	action = function(pos, node)
-		pos.y = pos.y+1
-		local n = minetest.registered_nodes[minetest.env:get_node(pos).name]
-		if not n then
-			return
-		end
-		if not n.sunlight_propagates then
-			return
-		end
-		if n.liquidtype and n.liquidtype ~= "none" then
-			return
-		end
-		if not minetest.env:get_node_light(pos) then
-			return
-		end
-		if minetest.env:get_node_light(pos) < 13 then
-			return
-		end
-		pos.y = pos.y-1
-		minetest.env:set_node(pos, {name="default:dirt_with_grass_and_clay"})
-	end
-})
-
-minetest.register_abm({
- 	nodenames = {"default:dirt_with_grass_and_clay"},
-	interval = 2,
-	chance = 200,
-	action = function(pos, node)
-		pos.y = pos.y+1
-		local n = minetest.registered_nodes[minetest.env:get_node(pos).name]
-		if not n then
-			return
-		end
-		if not n.sunlight_propagates or (n.liquidtype and n.liquidtype ~= "none") then
-			pos.y = pos.y-1
-			minetest.env:set_node(pos, {name="default:dirt_with_clay"})
-		end
-	end
-})

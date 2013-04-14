@@ -45,7 +45,7 @@ function realtest.register_dirt(name, DirtRef)
 	}
 	
 	
-	minetest.register_node(name, {
+	minetest.register_node(":"..name, {
 		description = dirt.description,
 		tiles = {name_..".png"},
 		particle_image = {name_..".png"},
@@ -54,7 +54,7 @@ function realtest.register_dirt(name, DirtRef)
 	})
 	
 	if dirt.grass then
-		minetest.register_node(name .. "_with_grass", {
+		minetest.register_node(":"..name .. "_with_grass", {
 			description = dirt.description .. " with Grass",
 			tiles = {name_.."_grass.png", name_..".png", name_.."_grass.png"},
 			particle_image = {name_..".png"},
@@ -67,7 +67,7 @@ function realtest.register_dirt(name, DirtRef)
 	end
 	
 	if dirt.clay then
-		minetest.register_node(name.."_with_clay", {
+		minetest.register_node(":"..name.."_with_clay", {
 			description = dirt.description .. " with Clay",
 			tiles = {name_..".png^grounds_clay.png"},
 			particle_image = {"grounds_clay_lump.png"},
@@ -78,7 +78,7 @@ function realtest.register_dirt(name, DirtRef)
 	end
 	
 	if dirt.farm then
-		minetest.register_node(name.."_farm", {
+		minetest.register_node(":"..name.."_farm", {
 			description = "Farm " .. dirt.description,
 			tiles = {name_.."_farm.png", name_..".png", name_..".png"},
 			particle_image = {name_..".png"},
@@ -93,7 +93,7 @@ function realtest.register_dirt(name, DirtRef)
 	end
 	
 	if dirt.grass and dirt.clay then
-		minetest.register_node(name.."_with_grass_and_clay", {
+		minetest.register_node(":"..name.."_with_grass_and_clay", {
 			description = dirt.description .. " with Grass and Clay",
 			tiles = {name_.."_grass.png", name_..".png^grounds_clay.png", name_.."_grass.png"},
 			particle_image = {"grounds_clay_lump.png"},
@@ -106,7 +106,7 @@ function realtest.register_dirt(name, DirtRef)
 	end
 	
 	if dirt.farm and dirt.grass then
-		minetest.register_node(name.."_farm_with_grass", {
+		minetest.register_node(":"..name.."_farm_with_grass", {
 			description = "Farm " .. dirt.description .. " with Grass",
 			tiles = {name_.."_farm.png", name_..".png", name_.."_grass.png"},
 			particle_image = {name_..".png"},
@@ -121,7 +121,7 @@ function realtest.register_dirt(name, DirtRef)
 	end
 	
 	if dirt.farm and dirt.clay then
-		minetest.register_node(name.."_farm_with_clay", {
+		minetest.register_node(":"..name.."_farm_with_clay", {
 			description = "Farm " .. dirt.description .. " with Clay",
 			tiles = {name_.."_farm.png",name_..".png^grounds_clay.png",name_..".png^grounds_clay.png"},
 			particle_image = {"grounds_clay_lump.png"},
@@ -136,7 +136,7 @@ function realtest.register_dirt(name, DirtRef)
 	end
 	
 	if dirt.farm and dirt.grass and dirt.clay then
-		minetest.register_node(name.."_farm_with_grass_and_clay", {
+		minetest.register_node(":"..name.."_farm_with_grass_and_clay", {
 			description = "Farm " .. dirt.description .. " with Grass and Clay",
 			tiles = {name_.."_farm.png", name_..".png^grounds_clay.png", name_.."_grass.png"},
 			particle_image = {"grounds_clay_lump.png"},
@@ -154,7 +154,7 @@ function realtest.register_dirt(name, DirtRef)
 
 	minetest.register_abm({
 		nodenames = {name, name.."_farm", name.."_with_clay", name.."_farm_with_clay"},
-		interval = 2,
+		interval = 200,
 		chance = 200,
 		action = function(pos, node)
 			pos.y = pos.y+1
@@ -181,7 +181,7 @@ function realtest.register_dirt(name, DirtRef)
 	
 	minetest.register_abm({
 		nodenames = {name.."_with_grass", name.."_farm_with_grass", name.."_with_grass_and_clay", name.."_farm_with_grass_and_clay"},
-		interval = 2,
+		interval = 200,
 		chance = 200,
 		action = function(pos, node)
 			pos.y = pos.y+1
@@ -190,7 +190,7 @@ function realtest.register_dirt(name, DirtRef)
 				return
 			end
 			if (n.liquidtype and n.liquidtype ~= "none")
-				or (minetest.env:get_node_light(pos) and minetest.env:get_node_light(pos) < 13)
+				or (minetest.env:get_node_light(pos) and minetest.env:get_node_light(pos) < 5)
 				or minetest.registered_nodes[minetest.env:get_node({x=pos.x,y=pos.y-2,z=pos.z}).name].buildable_to then
 				pos.y = pos.y-1
 				minetest.env:set_node(pos, {name=grass_nograss[node.name]})
@@ -217,4 +217,4 @@ function realtest.register_dirt(name, DirtRef)
 	})
 end
 
-realtest.register_dirt("grounds:dirt", {description = "New Dirt"})
+realtest.register_dirt("default:dirt", {description = "Dirt"})
