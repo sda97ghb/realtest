@@ -35,6 +35,10 @@ end
 
 function string:remove_modname_prefix()
 	local i = self:find(":")
+	if i == 1 then
+		self = self:sub(2, -1)
+	end
+	i = self:find(":")
 	if i then
 		return self:sub(i+1)
 	end
@@ -43,6 +47,10 @@ end
 
 function string:get_modname_prefix()
 	local i = self:find(":")
+	if i == 1 then
+		self = self:sub(2, -1)
+	end
+	i = self:find(":")
 	if i then
 		return self:sub(1, i-1)
 	end

@@ -8,7 +8,7 @@ function realtest.register_crop(name, CropDef)
 		stages = CropDef.stages or 8,
 		grounds = CropDef.grounds or {"default:dirt", "default:dirt_with_grass", "default:dirt_with_clay", "default:dirt_with_grass_and_clay"},
 		grow_light = CropDef.grow_light or 8,
-		grow_interval = CropDef.grow_interval or 140,
+		grow_interval = CropDef.grow_interval or 40,
 		grow_chance = CropDef.grow_chance or 20,
 		gen_sheaf = true
 	}
@@ -40,7 +40,7 @@ function realtest.register_crop(name, CropDef)
 		minetest.register_node(name.."_stage_"..j, {
 			description = crop.description,
 			tiles = {name_.."_"..j..".png"},
-			groups = {cracky=3, dig_immediate=3, not_in_creative_inventory=1, grow_stage=j},
+			groups = {cracky=3, dig_immediate=3, not_in_creative_inventory=1, grow_stage=j, dropping_node=1},
 			drop = drop,
 			sounds = default.node_sound_leaves_defaults(),
 			walkable = false,

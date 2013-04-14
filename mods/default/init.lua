@@ -330,10 +330,30 @@ minetest.register_node("default:dirt_with_grass", {
 	}),
 })
 
+minetest.register_node("default:farmdirt_with_grass", {
+	tiles = {"default_farmdirt.png", "default_dirt.png", "default_grass.png"},
+	particle_image = {"default_dirt.png"},
+	is_ground_content = true,
+	groups = {crumbly=3,drop_on_dig=1},
+	drop = "default:dirt",
+	sounds = default.node_sound_dirt_defaults({
+		footstep = {name="default_grass_footstep", gain=0.4},
+	}),
+})
+
 minetest.register_node("default:dirt", {
 	description = "Dirt",
 	tiles = {"default_dirt.png"},
 	particle_image = {"default_dirt.png"},
+	is_ground_content = true,
+	groups = {crumbly=3,drop_on_dig=1, falling_node=1},
+	sounds = default.node_sound_dirt_defaults(),
+})
+
+minetest.register_node("default:farmdirt", {
+	tiles = {"default_farmdirt.png", "default_dirt.png", "default_dirt.png"},
+	particle_image = {"default_dirt.png"},
+	drop = "default:dirt",
 	is_ground_content = true,
 	groups = {crumbly=3,drop_on_dig=1, falling_node=1},
 	sounds = default.node_sound_dirt_defaults(),
@@ -819,11 +839,6 @@ minetest.register_craftitem("default:book", {
 minetest.register_craftitem("default:coal_lump", {
 	description = "Charcoal",
 	inventory_image = "default_charcoal.png",
-})
-
-minetest.register_craftitem("default:clay_lump", {
-	description = "Clay Lump",
-	inventory_image = "default_clay_lump.png",
 })
 
 minetest.register_craftitem("default:clay_brick", {
