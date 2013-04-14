@@ -1,21 +1,22 @@
 farming = {}
-realtest.registered_grains = {}
-realtest.registered_grains_list = {}
-function realtest.register_grain(name, GrainDef)
-	local grain = {
+realtest.registered_crops = {}
+realtest.registered_crops_list = {}
+function realtest.register_crop(name, CropDef)
+	local crop = {
 		name = name,
-		description = GrainDef.description or "Grain",
-		stages = GrainDef.stages or 8,
-		grounds = GrainDef.grounds or {"default:dirt", "default:dirt_with_grass", "default:dirt_with_clay", "default:dirt_with_grass_and_clay"},
-		grow_light = GrainDef.grow_light or 8,
-		grow_interval = GrainDef.grow_interval or 40,
-		grow_chance = GrainDef.grow_chance or 20,
+		description = CropDef.description or "Crop",
+		stages = CropDef.stages or 8,
+		grounds = CropDef.grounds or {"default:dirt", "default:dirt_with_grass", "default:dirt_with_clay", "default:dirt_with_grass_and_clay"},
+		grow_light = CropDef.grow_light or 8,
+		grow_interval = CropDef.grow_interval or 40,
+		grow_chance = CropDef.grow_chance or 20,
+		gen_sheaf = CropDef.gen_sheaf or true,
 	}
-	realtest.registered_grains[name] = grain
-	table.insert(realtest.registered_grains_list,name)
+	realtest.registered_crops[name] = crop
+	table.insert(realtest.registered_crops_list,name)
 	local nnames = {}
 	local name_ = name:get_modname_prefix().."_"..name:remove_modname_prefix()
-	for j = 1,grain.stages do
+	for j = 1,crop.stages do
 		local drop
 		if j == 8 then
 			drop = name.."_sheaf"
@@ -34,7 +35,7 @@ function realtest.register_grain(name, GrainDef)
 			}
 		end
 		minetest.register_node(name.."_stage_"..j, {
-			description = grain.description,
+			description = crop.description,
 			tiles = {name_.."_"..j..".png"},
 			groups = {cracky=3, dig_immediate=3, not_in_creative_inventory=1, grow_stage=j},
 			drop = drop,
@@ -59,13 +60,13 @@ function realtest.register_grain(name, GrainDef)
 				},
 			}
 		})
-		if j ~= grain.stages then
+		if j ~= crop.stages then
 			table.insert(nnames, name.."_stage_"..j)
 		end
 	end
 	
 	minetest.register_craftitem(name.."_seeds", {
-		description = grain.description.." Seeds",
+		description = crop.description.." Seeds",
 		inventory_image = name_.."_seeds.png",
 		on_place = function(itemstack, placer, pointed_thing)
 			minetest.item_place(ItemStack(name.."_stage_1"), placer, pointed_thing)
@@ -76,18 +77,20 @@ function realtest.register_grain(name, GrainDef)
 		end,
 	})
 	
-	minetest.register_craftitem(name.."_sheaf", {
-		description = grain.description.." Sheaf",
-		inventory_image = name_.."_sheaf.png",
-	})
+	if crop.gen_sheaf then
+		minetest.register_craftitem(name.."_sheaf", {
+			description = crop.description.." Sheaf",
+			inventory_image = name_.."_sheaf.png",
+		})
+	end
 	
 	minetest.register_abm({
 		nodenames = nnames,
-		interval = grain.grow_interval,
-		chance = grain.grow_chance,
+		interval = crop.grow_interval,
+		chance = crop.grow_chance,
 		action = function(pos, node, active_object_count, active_object_count_wider)
 			if not minetest.env:get_node_light(pos) or
-				minetest.env:get_node_light(pos) < grain.grow_light then
+				minetest.env:get_node_light(pos) < crop.grow_light then
 				return
 			end
 			if table.contains(grounds, minetest.env:get_node({x=pos.x,y=pos.y-1,z=pos.z}).name) then
@@ -98,29 +101,31 @@ function realtest.register_grain(name, GrainDef)
 	})
 end
 
-realtest.register_grain("farming:wheat_hard", {
+realtest.register_crop("farming:wheat_hard", {
 	description = "Hard Wheat"
 })
 
-realtest.register_grain("farming:wheat_soft", {
+realtest.register_crop("farming:wheat_soft", {
 	description = "Soft Wheat"
 })
 
-realtest.register_grain("farming:rye", {
+realtest.register_crop("farming:rye", {
 	description = "Rye"
 })
 
-realtest.register_grain("farming:rice", {
+realtest.register_crop("farming:rice", {
 	description = "Rice"
 })
 
-realtest.register_grain("farming:oat", {
+realtest.register_crop("farming:oat", {
 	description = "Oat"
 })
 
-realtest.register_grain("farming:barley", {
+realtest.register_crop("farming:barley", {
 	description = "Barley"
 })
+
+-- realtest.register_crop
 
 farming.grains = {
 	"wheat_hard",
