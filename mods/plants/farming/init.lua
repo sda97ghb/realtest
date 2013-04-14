@@ -8,8 +8,8 @@ function realtest.register_crop(name, CropDef)
 		stages = CropDef.stages or 8,
 		grounds = CropDef.grounds or {"default:dirt", "default:dirt_with_grass", "default:dirt_with_clay", "default:dirt_with_grass_and_clay"},
 		grow_light = CropDef.grow_light or 8,
-		grow_interval = CropDef.grow_interval or 1,--140,
-		grow_chance = CropDef.grow_chance or 1,--20,
+		grow_interval = CropDef.grow_interval or 140,
+		grow_chance = CropDef.grow_chance or 20,
 		gen_sheaf = true
 	}
 	if CropDef.gen_sheaf == false then
