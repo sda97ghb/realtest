@@ -136,34 +136,37 @@ realtest.register_flower("flowers:grass", {
 		},
 		groups = {dig_immediate=3,dropping_node=1},
 		drop = {
-			max_items = 1,
+			max_items = 2,
 			items = {
 				{
-					rarity = 10,
+					rarity = 50,
 					items = {"farming:wheat_hard_seeds"},
 				},
 				{
-					rarity = 10,
+					rarity = 50,
 					items = {"farming:wheat_soft_seeds"},
 				},
 				{
-					rarity = 10,
-					items = {"farming:rye"},
+					rarity = 50,
+					items = {"farming:rye_seeds"},
 				},
 				{
-					rarity = 10,
-					items = {"farming:oat"},
+					rarity = 50,
+					items = {"farming:oat_seeds"},
 				},
 				{
-					rarity = 10,
-					items = {"farming:barley"},
+					rarity = 50,
+					items = {"farming:barley_seeds"},
 				},
 				{
-					rarity = 10,
-					items = {"farming:rice"},
+					rarity = 50,
+					items = {"farming:rice_seeds"},
 				},
 				{
-					rarity = 2,
+					rarity = 50,
+					items = {"farming:tomato_seeds"},
+				},
+				{
 					items = {"flowers:grass"},
 				},
 			}
