@@ -24,6 +24,7 @@ realtest.add_bonfire_fuel("default:sign_wall")
 realtest.add_bonfire_fuel("default:chest")
 realtest.add_bonfire_fuel("default:chest_locked")
 realtest.add_bonfire_fuel("ores:peat")
+realtest.add_bonfire_fuel("default:coal_lump")
 
 minetest.register_node("bonfire:self", {
 	description = "Bonfire",
