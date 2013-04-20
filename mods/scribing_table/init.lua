@@ -161,7 +161,7 @@ for i, tree_name in ipairs(realtest.registered_trees_list) do
 			},
 		},
 		groups = {oddly_breakable_by_hand=3, dig_immediate=2},
-		sounds = default.node_sound_stone_defaults(),
+		sounds = default.node_sound_wood_defaults(),
 		on_construct = function(pos)
 			local meta = minetest.env:get_meta(pos)
 			meta:set_string("formspec", 

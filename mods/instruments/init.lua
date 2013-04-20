@@ -180,7 +180,7 @@ for i, material in ipairs(instruments.materials) do
 	end
 	--Instruments (without chisels and spears)
 	for j, instrument in ipairs({"pick", "axe", "shovel", "hammer", "sword", "saw"}) do
-		--Stone swords are not exist
+		--Stone swords and saws are not exist
 		if not (material == "stone" and (instrument == "sword" or instrument == "saw")) then
 			minetest.register_tool("instruments:"..instrument.."_"..material, {
 				description = instruments.desc_list[i].." "..instrument:capitalize(),
