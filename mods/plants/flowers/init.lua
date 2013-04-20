@@ -7,7 +7,7 @@ function realtest.register_flower(name, FlowerDef)
 		texture = FlowerDef.texture,
 		grounds = FlowerDef.grounds or {"default:dirt", "default:dirt_with_grass", "default:dirt_with_clay", "default:dirt_with_grass_and_clay"},
 		grow_light = FlowerDef.grow_light or 8,
-		grow_interval = FlowerDef.grow_interval or 1000,
+		grow_interval = FlowerDef.grow_interval or 300,
 		grow_chance = FlowerDef.grow_chance or 5,
 		death_cause = FlowerDef.death_cause or
 		function(flowers_around)
