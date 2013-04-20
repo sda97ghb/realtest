@@ -309,8 +309,17 @@ minetest.register_node("default:desert_stone_flat", {
 	sounds = default.node_sound_stone_defaults(),
 })
 
+minetest.register_node("default:desert_stone_bricks", {
+	description = "Desert Stone Bricks",
+	tiles = {"default_desert_stone_bricks.png"},
+	particle_image = {"default_desert_stone_bricks.png"},
+	is_ground_content = true,
+	groups = {cracky=3,drop_on_dig=1},
+	sounds = default.node_sound_stone_defaults(),
+})
+
 minetest.register_node("default:cobbleblock_flat", {
-	description = "Stone Brick Block",
+	description = "Stone Bricks",
 	tiles = {"default_cobbleblock_flat.png"},
 	particle_image = {"default_cobble.png"},
 	is_ground_content = true,

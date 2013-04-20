@@ -131,8 +131,6 @@ for i, material in ipairs(instruments.materials) do
 					minetest.env:add_node(pointed_thing.under, {name="default:stone_flat"})
 				elseif n.name == "default:desert_stone" then
 					minetest.env:add_node(pointed_thing.under, {name="default:desert_stone_flat"})
-				elseif n.name == "default:cobbleblock" then
-					minetest.env:add_node(pointed_thing.under, {name="default:cobbleblock_flat"})
 				elseif n.name == "default:stone_slab_r" then
 					minetest.env:add_node(pointed_thing.under, {name="default:stone_flat_slab_r", param2=n.param2})
 				elseif n.name == "default:stone_slab" then

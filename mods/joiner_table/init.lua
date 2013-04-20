@@ -44,10 +44,25 @@ realtest.register_joiner_table_recipe({
 	instrument = "chisel"
 })
 
+realtest.register_joiner_table_recipe({
+	item1 = "default:stone_flat",
+	item2 = "scribing_table:stonebricks",
+	output = "default:cobbleblock_flat",
+	rmitem2 = false,
+	instrument = "chisel"
+})
+
+realtest.register_joiner_table_recipe({
+	item1 = "default:desert_stone_flat",
+	item2 = "scribing_table:stonebricks",
+	output = "default:desert_stone_bricks",
+	rmitem2 = false,
+	instrument = "chisel"
+})
+
 for _, tree in pairs(realtest.registered_trees) do
 	local planks = tree.textures.planks
-	minetest.register_node("joiner_table:joiner_table_"..tree.name:remove_modname_prefix(),
-	{
+	minetest.register_node("joiner_table:joiner_table_"..tree.name:remove_modname_prefix(), {
 		description = tree.description .. " Joiner Table",
 		tiles = {planks.."^joiner_table_top.png", planks, planks.."^joiner_table_side.png",
 				planks.."^joiner_table_side.png", planks.."^joiner_table_side.png", planks.."^joiner_table_face.png"},
@@ -98,7 +113,6 @@ for _, tree in pairs(realtest.registered_trees) do
 						instr_stack = inv:get_stack("instruments", instr)
 					end
 					if instr_stack and recipe.item1 == src1:get_name() and recipe.item2 == src2:get_name() then
-						minetest.chat_send_all("sdf")
 						if inv:room_for_item("output", recipe.output) then
 							if recipe.rmitem1 then
 								src1:take_item()
