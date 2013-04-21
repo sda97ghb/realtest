@@ -8,6 +8,7 @@ if f then
 	dofile(worldconf)
 	f:close()
 end
+dofile(minetest.get_modpath("core").."/../config.lua")
 dofile(minetest.get_modpath("core").."/helper_functions.lua")
 dofile(minetest.get_modpath("core").."/drop.lua")
 dofile(minetest.get_modpath("core").."/place.lua")
