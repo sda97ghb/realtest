@@ -39,8 +39,32 @@ realtest.register_joiner_table_recipe({
 })
 
 realtest.register_joiner_table_recipe({
+	item1 = "default:stone_slab",
+	output = "default:stone_flat_slab",
+	instrument = "chisel"
+})
+
+realtest.register_joiner_table_recipe({
+	item1 = "default:stone_stair",
+	output = "default:stone_flat_stair",
+	instrument = "chisel"
+})
+
+realtest.register_joiner_table_recipe({
 	item1 = "default:desert_stone",
 	output = "default:desert_stone_flat",
+	instrument = "chisel"
+})
+
+realtest.register_joiner_table_recipe({
+	item1 = "default:desert_stone_slab",
+	output = "default:desert_stone_flat_slab",
+	instrument = "chisel"
+})
+
+realtest.register_joiner_table_recipe({
+	item1 = "default:desert_stone_stair",
+	output = "default:desert_stone_flat_stair",
 	instrument = "chisel"
 })
 
