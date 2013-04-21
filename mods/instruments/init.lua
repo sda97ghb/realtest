@@ -56,8 +56,7 @@ instruments.stone_head_recipes = {
 
 instruments.levels = {0,0,0,0,1,2,2,2,2,2,3,4,5}
 
---instruments.durability = {50, 211, 281, 296, 411, 521, 531, 581, 601, 731, 801, 1101, 1501}
-instruments.durability = {13, 53, 71, 74, 103, 131, 133, 151, 151, 183, 201, 326, 376}
+instruments.durability = {50, 211, 281, 296, 411, 521, 531, 581, 601, 731, 801, 1101, 1501}
 
 instruments.list = {"pick", "axe", "shovel", "hammer", "sword", "spear", "chisel", "saw"}
 
@@ -148,7 +147,7 @@ for i, material in ipairs(instruments.materials) do
 				elseif n.name == "default:desert_stone_stair_upside_down" then
 					minetest.env:add_node(pointed_thing.under, {name="default:desert_stone_flat_stair_upside_down", param2=n.param2})
 				end
-				item:add_wear(65535/instruments.durability[i])
+				item:add_wear(65535/instruments.durability[i]/4)
 				return item
 			end,
 			groups = {material_level=instruments.levels[i], durability=instruments.durability[i], chisel=1},

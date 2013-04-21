@@ -124,7 +124,7 @@ for _, tree in pairs(realtest.registered_trees) do
 							end
 							output:add_item(recipe.output)
 							inv:set_stack("output", 1, output)
-							instr_stack:add_wear(65535/minetest.get_item_group(instr_stack:get_name(), "durability"))
+							instr_stack:add_wear(65535/minetest.get_item_group(instr_stack:get_name(), "durability")/4)
 							inv:set_stack("instruments", instr, instr_stack)
 						end
 						return
