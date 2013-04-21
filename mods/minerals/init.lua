@@ -1,5 +1,5 @@
 MINERALS_LIST={
-	'lapis',
+	'lazurite',
 	'anthracite',
 	'lignite',
 	'bituminous_coal',
@@ -41,7 +41,7 @@ MINERALS_LIST={
 }
 
 MINERALS_DESC_LIST={
-	'Lapis',
+	'Lazurite',
 	'Anthracite',
 	'Lignite',
 	'Bituminous coal',
@@ -120,3 +120,4 @@ minetest.register_craft({
 })
 
 minetest.register_alias("minerals:brown_coal", "minerals:lignite")
+minetest.register_alias("minerals:lapis", "minerals:lazurite")

@@ -109,7 +109,7 @@ for i=1, #metals.list do
 		particle_image = {"metals_"..metals.list[i].."_block.png"},
 		is_ground_content = true,
 		drop = "metals:"..metals.list[i].."_doubleingot 4",
-		groups = {snappy=1,bendy=2,cracky=1,melty=2,level=2,drop_on_dig=1},
+		groups = {snappy=1,bendy=2,cracky=2,melty=2,level=2,drop_on_dig=1},
 		sounds = default.node_sound_stone_defaults(),
 	})
 	
