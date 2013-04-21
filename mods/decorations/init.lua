@@ -60,7 +60,7 @@ for _, mineral in ipairs(decor_minerals) do
 			selection_box = {
 					type = "fixed",
 					fixed = {
-						{-0.5, -0.5, -0.5, 0.5, 0.4375, 0.5},
+						{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
 					},
 				},
 			tiles = {"decorations_"..mineral[1]..".png", tree.textures.planks.."^decorations_"..mineral[1].."_table_bottom.png",
