@@ -65,7 +65,7 @@ for _, tree in pairs(realtest.registered_trees) do
 	minetest.register_node("joiner_table:joiner_table_"..tree.name:remove_modname_prefix(), {
 		description = tree.description .. " Joiner Table",
 		tiles = {planks.."^joiner_table_top.png", planks, planks.."^joiner_table_side.png",
-				planks.."^joiner_table_side.png", planks.."^joiner_table_side.png", planks.."^joiner_table_face.png"},
+				planks.."^joiner_table_side2.png", planks.."^joiner_table_side3.png", planks.."^joiner_table_face.png"},
 		groups = {oddly_breakable_by_hand=3, dig_immediate=2},
 		sounds = default.node_sound_wood_defaults(),
 		paramtype = "light",
