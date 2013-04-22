@@ -1,9 +1,6 @@
 realtest.registered_trees = {}
 realtest.registered_trees_list = {}
 function realtest.register_tree(name, TreeDef)
-	if not TreeDef.textures then
-		return
-	end
 	local tree = {
 		name = name,
 		description = TreeDef.description or "",
@@ -14,8 +11,33 @@ function realtest.register_tree(name, TreeDef)
 		textures = TreeDef.textures or {},
 		grow_interval = TreeDef.grow_interval or 60,
 		grow_chance = TreeDef.grow_chance or 20,
-		grow_light = TreeDef.grow_light or 8
+		grow_light = TreeDef.grow_light or 8,
+		gen_autumn_leaves = false,
+		gen_winter_leaves = false,
 	}
+	if TreeDef.gen_autumn_leaves then
+		tree.gen_autumn_leaves = true
+	end
+	if TreeDef.gen_winter_leaves then
+		tree.gen_winter_leaves = true
+	end
+	local name_ = name:get_modname_prefix().."_"..name:remove_modname_prefix()
+	tree.textures.trunk = tree.textures.trunk or {name_.."_trunk_top.png", name_.."_trunk_top.png", name_.."_trunk.png"}
+	tree.textures.leaves = tree.textures.leaves or name_.."_leaves.png"
+	tree.textures.autumn_leaves = tree.textures.autumn_leaves or name_.."_autumn_leaves.png"
+	tree.textures.winter_leaves = tree.textures.winter_leaves or name_.."_winter_leaves.png"
+	tree.textures.planks = tree.textures.planks or name_.."_planks.png"
+	tree.textures.stick = tree.textures.stick or name_.."_stick.png"
+	tree.textures.sapling = tree.textures.sapling or name_.."_sapling.png"
+	tree.textures.log = tree.textures.log or name_.."_log.png"
+	tree.textures.plank = tree.textures.plank or name_.."_plank.png"
+	tree.textures.ladder = tree.textures.ladder or name_.."_ladder.png"
+	tree.textures.door_inventory = tree.textures.door_inventory or name_.."_door_inventory.png"
+	tree.textures.door_top = tree.textures.door_top or name_.."_door_top.png"
+	tree.textures.door_bottom = tree.textures.door_bottom or name_.."_door_bottom.png"
+	tree.textures.chest = tree.textures.chest or {name_.."_chest_top.png", name_.."_chest_top.png", name_.."_chest_side.png", name_.."_chest_side.png", name_.."_chest_side.png", name_.."_chest_front.png"}
+	tree.textures.locked_chest = tree.textures.locked_chest or {name_.."_chest_top.png", name_.."_chest_top.png", name_.."_chest_side.png", name_.."_chest_side.png", name_.."_chest_side.png", name_.."_chest_lock.png"}
+
 	realtest.registered_trees[name] = tree
 	table.insert(realtest.registered_trees_list, tree.name)
 	
@@ -164,7 +186,7 @@ function realtest.register_tree(name, TreeDef)
 		climbable = true,
 	})
 	
-	if tree.textures.autumn_leaves then
+	if tree.gen_autumn_leaves then
 		minetest.register_node(tree.name.."_leaves_autumn", {
 			description = tree.description.." Leaves",
 			drawtype = "allfaces_optional",
@@ -194,7 +216,7 @@ function realtest.register_tree(name, TreeDef)
 		})
 	end
 	
-	if tree.textures.winter_leaves then
+	if tree.gen_winter_leaves then
 		minetest.register_node(tree.name.."_leaves_winter", {
 			description = tree.description.." Leaves",
 			drawtype = "allfaces_optional",
@@ -609,24 +631,6 @@ realtest.register_tree("trees:ash", {
 	height = function()
 		return 4 + math.random(4)
 	end,
-	textures = {
-		trunk = {"trees_ash_trunk_top.png", "trees_ash_trunk_top.png", "trees_ash_trunk.png"},
-		leaves = "trees_ash_leaves.png",
-		autumn_leaves = "trees_ash_autumn_leaves.png",
-		planks = "trees_ash_planks.png",
-		stick = "trees_ash_stick.png",
-		sapling = "trees_ash_sapling.png",
-		log = "trees_ash_log.png",
-		plank = "trees_ash_plank.png",
-		ladder = "trees_ash_ladder.png",
-		door_inventory = "trees_ash_door_inventory.png",
-		door_top = "trees_ash_door_top.png",
-		door_bottom = "trees_ash_door_bottom.png",
-		chest = {"trees_ash_chest_top.png", "trees_ash_chest_top.png", "trees_ash_chest_side.png",
-				"trees_ash_chest_side.png", "trees_ash_chest_side.png", "trees_ash_chest_front.png"},
-		locked_chest = {"trees_ash_chest_top.png", "trees_ash_chest_top.png", "trees_ash_chest_side.png",
-			"trees_ash_chest_side.png", "trees_ash_chest_side.png", "trees_ash_chest_lock.png"},
-	}
 })
 realtest.register_tree("trees:aspen", {
 	description = "Aspen",
@@ -634,23 +638,6 @@ realtest.register_tree("trees:aspen", {
 	height = function()
 		return 10 + math.random(4)
 	end,
-	textures = {
-		trunk = {"trees_aspen_trunk_top.png", "trees_aspen_trunk_top.png", "trees_aspen_trunk.png"},
-		leaves = "trees_aspen_leaves.png",
-		planks = "trees_aspen_planks.png",
-		stick = "trees_aspen_stick.png",
-		sapling = "trees_aspen_sapling.png",
-		log = "trees_aspen_log.png",
-		plank = "trees_aspen_plank.png",
-		ladder = "trees_aspen_ladder.png",
-		door_inventory = "trees_aspen_door_inventory.png",
-		door_top = "trees_aspen_door_top.png",
-		door_bottom = "trees_aspen_door_bottom.png",
-		chest = {"trees_aspen_chest_top.png", "trees_aspen_chest_top.png", "trees_aspen_chest_side.png",
-				"trees_aspen_chest_side.png", "trees_aspen_chest_side.png", "trees_aspen_chest_front.png"},
-		locked_chest = {"trees_aspen_chest_top.png", "trees_aspen_chest_top.png", "trees_aspen_chest_side.png",
-			"trees_aspen_chest_side.png", "trees_aspen_chest_side.png", "trees_aspen_chest_lock.png"},
-	}
 })
 realtest.register_tree("trees:birch", {
 	description = "Birch",
@@ -658,23 +645,6 @@ realtest.register_tree("trees:birch", {
 	height = function()
 		return 10 + math.random(4)
 	end,
-	textures = {
-		trunk = {"trees_birch_trunk_top.png", "trees_birch_trunk_top.png", "trees_birch_trunk.png"},
-		leaves = "trees_birch_leaves.png",
-		planks = "trees_birch_planks.png",
-		stick = "trees_birch_stick.png",
-		sapling = "trees_birch_sapling.png",
-		log = "trees_birch_log.png",
-		plank = "trees_birch_plank.png",
-		ladder = "trees_birch_ladder.png",
-		door_inventory = "trees_birch_door_inventory.png",
-		door_top = "trees_birch_door_top.png",
-		door_bottom = "trees_birch_door_bottom.png",
-		chest = {"trees_birch_chest_top.png", "trees_birch_chest_top.png", "trees_birch_chest_side.png",
-				"trees_birch_chest_side.png", "trees_birch_chest_side.png", "trees_birch_chest_front.png"},
-		locked_chest = {"trees_birch_chest_top.png", "trees_birch_chest_top.png", "trees_birch_chest_side.png",
-			"trees_birch_chest_side.png", "trees_birch_chest_side.png", "trees_birch_chest_lock.png"},
-	}
 })
 realtest.register_tree("trees:maple", {
 	description = "Maple",
@@ -682,23 +652,6 @@ realtest.register_tree("trees:maple", {
 	height = function()
 		return 7 + math.random(5)
 	end,
-	textures = {
-		trunk = {"trees_maple_trunk_top.png", "trees_maple_trunk_top.png", "trees_maple_trunk.png"},
-		leaves = "trees_maple_leaves.png",
-		planks = "trees_maple_planks.png",
-		stick = "trees_maple_stick.png",
-		sapling = "trees_maple_sapling.png",
-		log = "trees_maple_log.png",
-		plank = "trees_maple_plank.png",
-		ladder = "trees_maple_ladder.png",
-		door_inventory = "trees_maple_door_inventory.png",
-		door_top = "trees_maple_door_top.png",
-		door_bottom = "trees_maple_door_bottom.png",
-		chest = {"trees_maple_chest_top.png", "trees_maple_chest_top.png", "trees_maple_chest_side.png",
-				"trees_maple_chest_side.png", "trees_maple_chest_side.png", "trees_maple_chest_front.png"},
-		locked_chest = {"trees_maple_chest_top.png", "trees_maple_chest_top.png", "trees_maple_chest_side.png",
-			"trees_maple_chest_side.png", "trees_maple_chest_side.png", "trees_maple_chest_lock.png"},
-	}
 })
 realtest.register_tree("trees:chestnut", {
 	description = "Chestnut",
@@ -707,23 +660,6 @@ realtest.register_tree("trees:chestnut", {
 		return 9 + math.random(2)
 	end,
 	radius = 10,
-	textures = {
-		trunk = {"trees_chestnut_trunk_top.png", "trees_chestnut_trunk_top.png", "trees_chestnut_trunk.png"},
-		leaves = "trees_chestnut_leaves.png",
-		planks = "trees_chestnut_planks.png",
-		stick = "trees_chestnut_stick.png",
-		sapling = "trees_chestnut_sapling.png",
-		log = "trees_chestnut_log.png",
-		plank = "trees_chestnut_plank.png",
-		ladder = "trees_chestnut_ladder.png",
-		door_inventory = "trees_chestnut_door_inventory.png",
-		door_top = "trees_chestnut_door_top.png",
-		door_bottom = "trees_chestnut_door_bottom.png",
-		chest = {"trees_chestnut_chest_top.png", "trees_chestnut_chest_top.png", "trees_chestnut_chest_side.png",
-				"trees_chestnut_chest_side.png", "trees_chestnut_chest_side.png", "trees_chestnut_chest_front.png"},
-		locked_chest = {"trees_chestnut_chest_top.png", "trees_chestnut_chest_top.png", "trees_chestnut_chest_side.png",
-			"trees_chestnut_chest_side.png", "trees_chestnut_chest_side.png", "trees_chestnut_chest_lock.png"},
-	}
 })
 realtest.register_tree("trees:pine", {
 	description = "Pine",
@@ -732,21 +668,4 @@ realtest.register_tree("trees:pine", {
 		return 13 + math.random(4)
 	end,
 	radius = 8,
-	textures = {
-		trunk = {"trees_pine_trunk_top.png", "trees_pine_trunk_top.png", "trees_pine_trunk.png"},
-		leaves = "trees_pine_leaves.png",
-		planks = "trees_pine_planks.png",
-		stick = "trees_pine_stick.png",
-		sapling = "trees_pine_sapling.png",
-		log = "trees_pine_log.png",
-		plank = "trees_pine_plank.png",
-		ladder = "trees_pine_ladder.png",
-		door_inventory = "trees_pine_door_inventory.png",
-		door_top = "trees_pine_door_top.png",
-		door_bottom = "trees_pine_door_bottom.png",
-		chest = {"trees_pine_chest_top.png", "trees_pine_chest_top.png", "trees_pine_chest_side.png",
-				"trees_pine_chest_side.png", "trees_pine_chest_side.png", "trees_pine_chest_front.png"},
-		locked_chest = {"trees_pine_chest_top.png", "trees_pine_chest_top.png", "trees_pine_chest_side.png",
-			"trees_pine_chest_side.png", "trees_pine_chest_side.png", "trees_pine_chest_lock.png"},
-	}
 })

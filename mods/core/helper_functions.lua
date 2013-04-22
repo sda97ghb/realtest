@@ -41,6 +41,18 @@ function string:remove_modname_prefix()
 	return nil
 end
 
+function string:get_modname_prefix()
+	local i = self:find(":")
+	if i == 1 then
+		self = self:sub(2, -1)
+	end
+	i = self:find(":")
+	if i then
+		return self:sub(1, i-1)
+	end
+	return nil
+end
+
 function set_node_instead_air(pos, node)
 	if minetest.env:get_node(pos).name == "air" then
 		minetest.env:set_node(pos, node)
