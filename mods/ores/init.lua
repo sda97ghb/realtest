@@ -416,8 +416,6 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	
 end)
 
-minetest.register_alias("ores:brown_coal","ores:lignite")
-
 --
 -- Recipes of crafting
 --

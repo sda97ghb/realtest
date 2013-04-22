@@ -284,5 +284,3 @@ for i, tree_name in ipairs(realtest.registered_trees_list) do
 		}
 	})
 end
-
-minetest.register_alias("decorations:casket", "decorations:malachite_casket")

@@ -91,8 +91,6 @@ for j, tree_name in ipairs(realtest.registered_trees_list) do
 		on_construct = update_fence
 	})
 
-	minetest.register_alias(tree.name.."_fence","fences:"..tree.name:remove_modname_prefix().."_fence")
-
 	minetest.register_craft({
 		output = "fences:"..tree.name:remove_modname_prefix().."_fence 2",
 		recipe = {

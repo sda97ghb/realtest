@@ -25,7 +25,6 @@ for i = 1,4 do
 			fixed = {-i/10, -0.5, -i/10, i/10, 0.5, i/10}
 		},
 	})
-	minetest.register_alias("icicle_"..5-i, "icicles:icicle_"..5-i)
 end
 
 icicles = {}

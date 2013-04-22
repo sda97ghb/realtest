@@ -118,6 +118,3 @@ minetest.register_craft({
 	recipe = "minerals:anthracite",
 	burntime = 50,
 })
-
-minetest.register_alias("minerals:brown_coal", "minerals:lignite")
-minetest.register_alias("minerals:lapis", "minerals:lazurite")

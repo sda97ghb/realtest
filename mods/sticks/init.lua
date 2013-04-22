@@ -99,5 +99,3 @@ minetest.register_craft({
 	output = "sticks:sticks",
 	recipe = {"group:stick", "group:stick"},
 })
-
-minetest.register_alias("sticks", "sticks:sticks")

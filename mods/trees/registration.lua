@@ -603,13 +603,6 @@ function realtest.register_tree(name, TreeDef)
 	})
 end
 
-minetest.after(0, function()
-	if #realtest.registered_trees_list > 0 then
-		minetest.register_alias("default:chest", realtest.registered_trees_list[1].."_chest")
-		minetest.register_alias("default:chest_locked", realtest.registered_trees_list[1].."_chest_locked")
-	end
-end)
-
 realtest.register_tree("trees:ash", {
 	description = "Ash",
 	leaves = trees.gen_lists.ash,
