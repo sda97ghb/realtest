@@ -21,7 +21,7 @@ ores.list = {
 	"native_silver",
 	"sphalerite",
 	"tetrahedrite",
-	"lapis",
+	"lazurite",
 	"bauxite",
 	---------------------------
 	'cinnabar',
@@ -33,7 +33,7 @@ ores.list = {
 	'jet',
 	'kaolinite',
 	'kimberlite',
-	'olovine',
+	'olivine',
 	'petrified_wood',
 --	'pitchblende',
 	'saltpeter',
