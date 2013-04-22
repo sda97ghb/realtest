@@ -113,7 +113,7 @@ trees.gen_lists.ash={
 	{0,-3,2},
 }
 
-trees.gen_lists.mapple={
+trees.gen_lists.maple={
 	{0,1,0},
 	{-1,1,0},
 	{1,1,0},

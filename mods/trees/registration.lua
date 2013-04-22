@@ -676,28 +676,28 @@ realtest.register_tree("trees:birch", {
 			"trees_birch_chest_side.png", "trees_birch_chest_side.png", "trees_birch_chest_lock.png"},
 	}
 })
-realtest.register_tree("trees:mapple", {
+realtest.register_tree("trees:maple", {
 	description = "Maple",
-	leaves = trees.gen_lists.mapple,
+	leaves = trees.gen_lists.maple,
 	height = function()
 		return 7 + math.random(5)
 	end,
 	textures = {
-		trunk = {"trees_mapple_trunk_top.png", "trees_mapple_trunk_top.png", "trees_mapple_trunk.png"},
-		leaves = "trees_mapple_leaves.png",
-		planks = "trees_mapple_planks.png",
-		stick = "trees_mapple_stick.png",
-		sapling = "trees_mapple_sapling.png",
-		log = "trees_mapple_log.png",
-		plank = "trees_mapple_plank.png",
-		ladder = "trees_mapple_ladder.png",
-		door_inventory = "trees_mapple_door_inventory.png",
-		door_top = "trees_mapple_door_top.png",
-		door_bottom = "trees_mapple_door_bottom.png",
-		chest = {"trees_mapple_chest_top.png", "trees_mapple_chest_top.png", "trees_mapple_chest_side.png",
-				"trees_mapple_chest_side.png", "trees_mapple_chest_side.png", "trees_mapple_chest_front.png"},
-		locked_chest = {"trees_mapple_chest_top.png", "trees_mapple_chest_top.png", "trees_mapple_chest_side.png",
-			"trees_mapple_chest_side.png", "trees_mapple_chest_side.png", "trees_mapple_chest_lock.png"},
+		trunk = {"trees_maple_trunk_top.png", "trees_maple_trunk_top.png", "trees_maple_trunk.png"},
+		leaves = "trees_maple_leaves.png",
+		planks = "trees_maple_planks.png",
+		stick = "trees_maple_stick.png",
+		sapling = "trees_maple_sapling.png",
+		log = "trees_maple_log.png",
+		plank = "trees_maple_plank.png",
+		ladder = "trees_maple_ladder.png",
+		door_inventory = "trees_maple_door_inventory.png",
+		door_top = "trees_maple_door_top.png",
+		door_bottom = "trees_maple_door_bottom.png",
+		chest = {"trees_maple_chest_top.png", "trees_maple_chest_top.png", "trees_maple_chest_side.png",
+				"trees_maple_chest_side.png", "trees_maple_chest_side.png", "trees_maple_chest_front.png"},
+		locked_chest = {"trees_maple_chest_top.png", "trees_maple_chest_top.png", "trees_maple_chest_side.png",
+			"trees_maple_chest_side.png", "trees_maple_chest_side.png", "trees_maple_chest_lock.png"},
 	}
 })
 realtest.register_tree("trees:chestnut", {
