@@ -69,14 +69,6 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "default:clay",
-	recipe = {
-		{"default:clay_lump", "default:clay_lump"},
-		{"default:clay_lump", "default:clay_lump"},
-	}
-})
-
-minetest.register_craft({
 	output = "default:brick",
 	recipe = {
 		{"default:clay_brick", "default:clay_brick"},
@@ -122,12 +114,6 @@ minetest.register_craft({
 	type = "cooking",
 	output = "default:glass",
 	recipe = "default:desert_sand",
-})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "default:clay_brick",
-	recipe = "default:clay_lump",
 })
 
 --
@@ -327,27 +313,6 @@ minetest.register_node("default:cobbleblock_flat", {
 	sounds = default.node_sound_stone_defaults(),
 })
 
-minetest.register_node("default:dirt_with_grass", {
-	description = "Dirt with Grass",
-	tiles = {"default_grass.png", "default_dirt.png", "default_grass.png"},
-	particle_image = {"default_dirt.png"},
-	is_ground_content = true,
-	groups = {crumbly=3,drop_on_dig=1},
-	drop = "default:dirt",
-	sounds = default.node_sound_dirt_defaults({
-		footstep = {name="default_grass_footstep", gain=0.4},
-	}),
-})
-
-minetest.register_node("default:dirt", {
-	description = "Dirt",
-	tiles = {"default_dirt.png"},
-	particle_image = {"default_dirt.png"},
-	is_ground_content = true,
-	groups = {crumbly=3,drop_on_dig=1, falling_node=1},
-	sounds = default.node_sound_dirt_defaults(),
-})
-
 minetest.register_node("default:sand", {
 	description = "Sand",
 	tiles = {"default_sand.png"},
@@ -386,43 +351,6 @@ minetest.register_node("default:sandstone", {
 	drop = "default:sand",
 	sounds = default.node_sound_stone_defaults(),
 })
-
-minetest.register_node("default:sand_with_clay", {
-	description = "Clay",
-	tiles = {"default_sand.png^default_clay.png"},
-	particle_image = {"default_clay_lump.png"},
-	is_ground_content = true,
-	groups = {crumbly=3,drop_on_dig=1},
-	drop = "default:clay_lump 4",
-	sounds = default.node_sound_dirt_defaults({
-		footstep = "",
-	}),
-})
-
-minetest.register_node("default:dirt_with_clay", {
-	description = "Clay",
-	tiles = {"default_dirt.png^default_clay.png"},
-	particle_image = {"default_clay_lump.png"},
-	is_ground_content = true,
-	groups = {crumbly=3, drop_on_dig=1},
-	drop = "default:clay_lump 4",
-	sounds = default.node_sound_dirt_defaults({
-		footstep = "",
-	}),
-})
-
-minetest.register_node("default:dirt_with_grass_and_clay", {
-	description = "Clay",
-	tiles = {"default_grass.png", "default_dirt.png^default_clay.png", "default_grass.png"},
-	particle_image = {"default_clay_lump.png"},
-	is_ground_content = true,
-	groups = {crumbly=3, drop_on_dig=1},
-	drop = "default:clay_lump 4",
-	sounds = default.node_sound_dirt_defaults({
-		footstep = "",
-	}),
-})
-
 
 minetest.register_node("default:brick", {
 	description = "Brick Block",
