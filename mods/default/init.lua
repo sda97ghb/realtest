@@ -322,6 +322,18 @@ minetest.register_node("default:sand", {
 	sounds = default.node_sound_sand_defaults(),
 })
 
+minetest.register_node("default:sand_with_clay", {
+	description = "Clay",
+	tiles = {"default_sand.png^default_clay.png"},
+	particle_image = {"default_clay_lump.png"},
+	is_ground_content = true,
+	groups = {crumbly=3,drop_on_dig=1},
+	drop = "default:clay_lump 4",
+	sounds = default.node_sound_dirt_defaults({
+		footstep = "",
+	}),
+})
+
 minetest.register_node("default:desert_sand", {
 	description = "Desert Sand",
 	tiles = {"default_desert_sand.png"},

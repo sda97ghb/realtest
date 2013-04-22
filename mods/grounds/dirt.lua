@@ -205,6 +205,13 @@ function realtest.register_dirt(name, DirtRef)
 		chance = 2,
 		action = function(pos, node)
 			pos.y = pos.y + 1
+			if node then
+				if not minetest.registered_nodes[minetest.env:get_node(pos).name].buildable_to then
+					pos.y = pos.y - 1
+					minetest.env:set_node(pos, {name = farm_nofarm[node.name]})
+					return
+				end
+			end
 			local objs = minetest.env:get_objects_inside_radius(pos, 1)
 			for k, obj in pairs(objs) do
 				if obj:is_player() then
