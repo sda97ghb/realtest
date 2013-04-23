@@ -1,14 +1,12 @@
 realtest = {}
 
-local worldconf = minetest.get_worldpath().."/realtest.conf.lua"
-
 dofile(minetest.get_modpath("core").."/default_config.lua")
-local f = io.open(worldconf)
+local user_conf = minetest.get_modpath("core").."/../config.lua"
+local f = io.open(user_conf)
 if f then
-	dofile(worldconf)
+	dofile(user_conf)
 	f:close()
 end
-dofile(minetest.get_modpath("core").."/../config.lua")
 dofile(minetest.get_modpath("core").."/helper_functions.lua")
 dofile(minetest.get_modpath("core").."/drop.lua")
 dofile(minetest.get_modpath("core").."/place.lua")
