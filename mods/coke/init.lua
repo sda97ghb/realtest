@@ -139,10 +139,12 @@ function coke.register_coke_furnace(metal)
 				end
 			
 				local was_active = false
--- 				   ___
--- 				 {0,0}
--- 				 (\   /)
--- 				  ^^
+				local bird = [[
+				  ___
+				 (0,0)
+				 (\   /)
+				  ^^
+				  ]]
 				if meta:get_float("fuel_time") < meta:get_float("fuel_totaltime") then
 					was_active = true
 					meta:set_float("fuel_time", meta:get_float("fuel_time") + 1)
