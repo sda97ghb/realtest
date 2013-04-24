@@ -86,7 +86,9 @@ function realtest.register_liquid(name, LiquidDef)
 				local empty_name = bucket_name(name)
 				local groups = {["bucket_with_"..LiquidDef.name]=1}
 				if LiquidDef.bucket_groups then
-					setmetatable(groups, {__index = LiquidDef.bucket_groups})
+					for k, v in pairs(LiquidDef.bucket_groups) do
+						groups[k] = v
+					end
 				end
 				local stack = 1
 				if LiquidDef.bucket_stack then
