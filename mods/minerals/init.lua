@@ -1,17 +1,17 @@
-minerals = {list={}}
+mineralsi = {list={}}
 
-function minerals.register_mineral(mineral, description, is_metal, metal)
+function mineralsi.register_mineral(mineral, description, ore, metal)
 	minetest.register_craftitem("minerals:"..mineral, {
 		description = description,
 		inventory_image = "minerals_"..mineral..".png",
 	})
 
-	if is_metal then
+	if ore then
 		minetest.register_node("minerals:"..mineral.."_block", {
 			description = "Block of "..description,
 			tiles = {"furnace_top_active.png"},
 			particle_image = {"furnace_top_active.png"},
-			groups = {falling_node=1},
+			groups = {falling_node=1,oddly_breakable_by_hand=1},
 		})
 
 		minetest.register_craft({
@@ -21,48 +21,48 @@ function minerals.register_mineral(mineral, description, is_metal, metal)
 					"minerals:"..mineral,"minerals:"..mineral,"minerals:"..mineral,"minerals:"..mineral},
 		})
 		
-		table.insert(minerals.list,{name=mineral, description=description, ismetal=true, metal=metal})
+		table.insert(mineralsi.list,{name=mineral, description=description, ore=true, metal=metal})
 		return
 	end
-	table.insert(minerals.list,{name=mineral, description=description, ismetal=false})
+	table.insert(mineralsi.list,{name=mineral, description=description, ore=false, nil})
 end
 
-minerals.register_mineral('lapis','Lapis',false)
-minerals.register_mineral('anthracite','Anthracite',false)
-minerals.register_mineral('lignite','Lignite',false)
-minerals.register_mineral('bituminous_coal','Bituminous coal',false)
-minerals.register_mineral('magnetite','Magnetite',true,'pig_iron')
-minerals.register_mineral('hematite','Hematite',true,'pig_iron')
-minerals.register_mineral('limonite','Limonite',true,'pig_iron')
-minerals.register_mineral('bismuthinite','Bismuthinite',true,'bismuth')
-minerals.register_mineral('cassiterite','Cassiterite',true,'tin')
-minerals.register_mineral('galena','Galena',true,'lead')
-minerals.register_mineral('garnierite','Garnierite',true,'nickel')
-minerals.register_mineral('malachite','Malachite',true,'copper')
-minerals.register_mineral('native_copper','Native copper',true,'copper')
-minerals.register_mineral('native_gold','Native gold',true,'gold')
-minerals.register_mineral('native_platinum','Native platinum',true,'platinum')
-minerals.register_mineral('native_silver','Native silver',true,'silver')
-minerals.register_mineral('sphalerite','Sphalerite',true,'zink')
-minerals.register_mineral('tetrahedrite','Tetrahedrite',true,'copper')
-minerals.register_mineral('bauxite','Bauxite',true,'aluminium')
-minerals.register_mineral('cinnabar','Cinnabar',false)
-minerals.register_mineral('cryolite','Cryolite',false)
-minerals.register_mineral('graphite','Graphite',false)
-minerals.register_mineral('gypsum','Gypsum',false)
-minerals.register_mineral('jet','Jet',false)
-minerals.register_mineral('kaolinite','Kaolinite',false)
-minerals.register_mineral('kimberlite','Kimberlite',false)
-minerals.register_mineral('olovine','Olovine',false)
-minerals.register_mineral('petrified_wood','Petrified wood',false)
-minerals.register_mineral('pitchblende','Pitchblende',false)
-minerals.register_mineral('saltpeter','Saltpeter',false)
-minerals.register_mineral('satinspar','Satinspar',false)
-minerals.register_mineral('selenite','Selenite',false)
-minerals.register_mineral('serpentine','Serpentine',false)
-minerals.register_mineral('sulfur','Sulfur',false)
-minerals.register_mineral('sylvite','Sylvite',false)
-minerals.register_mineral('tenorite','Tenorite',false)
+mineralsi.register_mineral('lapis','Lapis',false)
+mineralsi.register_mineral('anthracite','Anthracite',false)
+mineralsi.register_mineral('lignite','Lignite',false)
+mineralsi.register_mineral('bituminous_coal','Bituminous coal',false)
+mineralsi.register_mineral('magnetite','Magnetite',true,'pig_iron')
+mineralsi.register_mineral('hematite','Hematite',true,'pig_iron')
+mineralsi.register_mineral('limonite','Limonite',true,'pig_iron')
+mineralsi.register_mineral('bismuthinite','Bismuthinite',true,'bismuth')
+mineralsi.register_mineral('cassiterite','Cassiterite',true,'tin')
+mineralsi.register_mineral('galena','Galena',true,'lead')
+mineralsi.register_mineral('garnierite','Garnierite',true,'nickel')
+mineralsi.register_mineral('malachite','Malachite',true,'copper')
+mineralsi.register_mineral('native_copper','Native copper',true,'copper')
+mineralsi.register_mineral('native_gold','Native gold',true,'gold')
+mineralsi.register_mineral('native_platinum','Native platinum',true,'platinum')
+mineralsi.register_mineral('native_silver','Native silver',true,'silver')
+mineralsi.register_mineral('sphalerite','Sphalerite',true,'zink')
+mineralsi.register_mineral('tetrahedrite','Tetrahedrite',true,'copper')
+mineralsi.register_mineral('bauxite','Bauxite',true,'aluminium')
+mineralsi.register_mineral('cinnabar','Cinnabar',false)
+mineralsi.register_mineral('cryolite','Cryolite',false)
+mineralsi.register_mineral('graphite','Graphite',false)
+mineralsi.register_mineral('gypsum','Gypsum',false)
+mineralsi.register_mineral('jet','Jet',false)
+mineralsi.register_mineral('kaolinite','Kaolinite',false)
+mineralsi.register_mineral('kimberlite','Kimberlite',false)
+mineralsi.register_mineral('olovine','Olovine',false)
+mineralsi.register_mineral('petrified_wood','Petrified wood',false)
+mineralsi.register_mineral('pitchblende','Pitchblende',false)
+mineralsi.register_mineral('saltpeter','Saltpeter',false)
+mineralsi.register_mineral('satinspar','Satinspar',false)
+mineralsi.register_mineral('selenite','Selenite',false)
+mineralsi.register_mineral('serpentine','Serpentine',false)
+mineralsi.register_mineral('sulfur','Sulfur',false)
+mineralsi.register_mineral('sylvite','Sylvite',false)
+mineralsi.register_mineral('tenorite','Tenorite',false)
 
 minetest.register_craftitem("minerals:flux", {
 	description = "Flux",
