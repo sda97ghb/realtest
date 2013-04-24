@@ -1,0 +1,122 @@
+
+
+-------------
+  Separator  
+-------------
+
+18:35:20: ERROR[main]: ========== ERROR FROM LUA ===========
+18:35:21: ERROR[main]: Failed to load and run script from 
+18:35:21: ERROR[main]: /home/dima/repositories/minetest/bin/../games/realtest/mods/forge/init.lua:
+18:35:21: ERROR[main]: ...ome/dima/repositories/minetest/bin/../games/realtest/mods/forge/init.lua:100: '=' expected near '4'
+18:35:21: ERROR[main]: =======END OF ERROR FROM LUA ========
+18:35:21: ERROR[main]: Server: Failed to load and run /home/dima/repositories/minetest/bin/../games/realtest/mods/forge/init.lua
+18:35:21: ERROR[main]: ModError: Failed to load and run /home/dima/repositories/minetest/bin/../games/realtest/mods/forge/init.lua
+18:36:13: ERROR[main]: ========== ERROR FROM LUA ===========
+18:36:13: ERROR[main]: Failed to load and run script from 
+18:36:13: ERROR[main]: /home/dima/repositories/minetest/bin/../games/realtest/mods/forge/init.lua:
+18:36:13: ERROR[main]: ...ome/dima/repositories/minetest/bin/../games/realtest/mods/forge/init.lua:100: ')' expected near 'mod'
+18:36:13: ERROR[main]: =======END OF ERROR FROM LUA ========
+18:36:13: ERROR[main]: Server: Failed to load and run /home/dima/repositories/minetest/bin/../games/realtest/mods/forge/init.lua
+18:36:14: ERROR[main]: ModError: Failed to load and run /home/dima/repositories/minetest/bin/../games/realtest/mods/forge/init.lua
+18:37:21: ERROR[main]: ========== ERROR FROM LUA ===========
+18:37:21: ERROR[main]: Failed to load and run script from 
+18:37:21: ERROR[main]: /home/dima/repositories/minetest/bin/../games/realtest/mods/forge/init.lua:
+18:37:21: ERROR[main]: ...ome/dima/repositories/minetest/bin/../games/realtest/mods/forge/init.lua:101: ')' expected near 'mod'
+18:37:21: ERROR[main]: =======END OF ERROR FROM LUA ========
+18:37:21: ERROR[main]: Server: Failed to load and run /home/dima/repositories/minetest/bin/../games/realtest/mods/forge/init.lua
+18:37:21: ERROR[main]: ModError: Failed to load and run /home/dima/repositories/minetest/bin/../games/realtest/mods/forge/init.lua
+18:39:36: ACTION[main]:         .__               __                   __   
+18:39:36: ACTION[main]:   _____ |__| ____   _____/  |_  ____   _______/  |_ 
+18:39:36: ACTION[main]:  /     \|  |/    \_/ __ \   __\/ __ \ /  ___/\   __\
+18:39:36: ACTION[main]: |  Y Y  \  |   |  \  ___/|  | \  ___/ \___ \  |  |  
+18:39:36: ACTION[main]: |__|_|  /__|___|  /\___  >__|  \___  >____  > |__|  
+18:39:36: ACTION[main]:       \/        \/     \/          \/     \/        
+18:39:36: ACTION[main]: World at [/home/dima/repositories/minetest/bin/../worlds/q]
+18:39:36: ACTION[main]: Server for gameid="realtest" listening on port 30000.
+creative inventory size: 756
+18:39:36: ACTION[ServerThread]: divano joins game. List of players: divano 
+Font size: 8 15
+18:40:01: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,11,881)
+18:40:08: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,12,881)
+18:40:08: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,13,881)
+18:40:08: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,14,881)
+18:40:08: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,15,881)
+18:40:09: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,16,881)
+18:40:09: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,17,881)
+18:40:09: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,18,881)
+18:40:09: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,19,881)
+18:40:10: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,20,881)
+18:40:10: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,21,881)
+18:40:10: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,22,881)
+18:40:11: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,23,881)
+18:40:11: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,24,881)
+18:40:11: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,25,881)
+18:40:11: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,26,881)
+18:40:12: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,27,881)
+18:40:12: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,28,881)
+18:40:12: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,29,881)
+18:40:12: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,30,881)
+18:40:12: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,31,881)
+18:40:13: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,32,881)
+18:40:13: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,33,881)
+18:40:13: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,34,881)
+node_dig
+18:40:31: ACTION[ServerThread]: divano digs minerals:magnetite_block at (-837,27,881)
+node_dig
+18:40:32: ACTION[ServerThread]: divano digs minerals:magnetite_block at (-837,27,881)
+node_dig
+18:40:32: ACTION[ServerThread]: divano digs minerals:magnetite_block at (-837,27,881)
+node_dig
+18:40:40: ACTION[ServerThread]: divano digs minerals:magnetite_block at (-837,27,881)
+node_dig
+18:40:40: ACTION[ServerThread]: divano digs minerals:magnetite_block at (-837,27,881)
+node_dig
+18:40:41: ACTION[ServerThread]: divano digs minerals:magnetite_block at (-837,27,881)
+node_dig
+18:40:42: ACTION[ServerThread]: divano digs minerals:magnetite_block at (-837,27,881)
+node_dig
+18:40:48: ACTION[ServerThread]: divano digs metals:pig_iron_block at (-837,12,881)
+node_dig
+18:40:49: ACTION[ServerThread]: divano digs metals:pig_iron_block at (-837,13,881)
+node_dig
+18:40:50: ACTION[ServerThread]: divano digs metals:pig_iron_block at (-837,14,881)
+node_dig
+18:40:51: ACTION[ServerThread]: divano digs metals:pig_iron_block at (-837,15,881)
+node_dig
+18:40:53: ACTION[ServerThread]: divano digs metals:pig_iron_block at (-837,16,881)
+node_dig
+18:40:53: ACTION[ServerThread]: divano digs metals:pig_iron_block at (-837,17,881)
+node_dig
+18:40:55: ACTION[ServerThread]: divano digs metals:pig_iron_block at (-837,18,881)
+node_dig
+18:40:56: ACTION[ServerThread]: divano digs metals:pig_iron_block at (-837,19,881)
+node_dig
+18:40:57: ACTION[ServerThread]: divano digs metals:pig_iron_block at (-837,20,881)
+node_dig
+18:40:57: ACTION[ServerThread]: divano digs metals:pig_iron_block at (-837,21,881)
+node_dig
+18:40:59: ACTION[ServerThread]: divano digs metals:pig_iron_block at (-837,22,881)
+node_dig
+18:40:59: ACTION[ServerThread]: divano digs metals:pig_iron_block at (-837,23,881)
+node_dig
+18:41:00: ACTION[ServerThread]: divano digs metals:pig_iron_block at (-837,24,881)
+node_dig
+18:41:01: ACTION[ServerThread]: divano digs metals:pig_iron_block at (-837,25,881)
+node_dig
+18:41:01: ACTION[ServerThread]: divano digs metals:pig_iron_block at (-837,26,881)
+18:41:11: ACTION[ServerThread]: divano uses sticks:sticks, pointing at [node under=-837,11,882 above=-836,11,882]
+18:41:16: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,13,881)
+18:41:19: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,14,881)
+18:41:20: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,15,881)
+node_dig
+18:41:22: ACTION[ServerThread]: divano digs metals:pig_iron_block at (-837,13,881)
+18:41:23: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,13,881)
+18:41:25: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,16,881)
+18:41:28: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-836,11,882)
+18:41:29: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-838,11,882)
+18:41:29: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,11,883)
+node_dig
+18:41:31: ACTION[ServerThread]: divano digs metals:pig_iron_block at (-837,13,881)
+node_dig
+18:41:32: ACTION[ServerThread]: divano digs metals:pig_iron_block at (-837,12,881)
+18:41:33: ACTION[ServerThread]: divano places node minerals:magnetite_block at (-837,12,881)

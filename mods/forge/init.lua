@@ -94,31 +94,19 @@ function forge.register(metal)
 				if meta:get_float("fuel_time") < meta:get_float("fuel_totaltime") then
 					was_active = true
 					meta:set_float("fuel_time", meta:get_float("fuel_time") + 1)
-					local b, bb = true, true
+					local b = true, true
+					local ymax = 16
 					local side = minetest.env:get_node(pos).param2
-					local xd, zd, ymax = 0, 0, 16
-					if side==0 then
-						xd = 0
-						zd = 1
-					end
-					if side==1 then
-						xd = 1
-						zd = 0
-					end
-					if side==2 then
-						xd = 0
-						zd = -1
-					end
-					if side==3 then
-						xd = -1
-						zd = 0
-					end
+					side = side - math.floor(side/4)*4
+					local xd = (side-math.floor(side/2)*2)*(2-side);
+					side = side + 1
+					local zd = (side-math.floor(side/2)*2)*(2-side);
 					for y=0,ymax-1 do
-						if b --[[and math.random(128) == 1]] then
-							local p ={x=pos.x+xd, y=pos.y+y, z=pos.z+zd}
-							for m in ipairs(minerals.list) do
-								if minetest.env:get_node(p).name == "mineral:"..m.name.."_block" then
-									minetest.env:set_node(p,{name = "metals:"..m.metal.."_block"})
+						local p ={x=pos.x+xd, y=pos.y+y, z=pos.z+zd}
+						for m = 1, #mineralsi.list do
+							if mineralsi.list[m].ore then
+								if minetest.env:get_node(p).name == "minerals:"..mineralsi.list[m].name.."_block" and b then
+									minetest.env:set_node(p,{name = "metals:"..mineralsi.list[m].metal.."_block"})
 									b = false
 								end
 							end
