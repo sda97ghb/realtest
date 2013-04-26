@@ -97,6 +97,7 @@ for i=1, #metals.list do
 	minetest.register_craftitem("metals:"..metals.list[i].."_lock", {
 		description = metals.desc_list[i].." Lock",
 		inventory_image = "metals_"..metals.list[i].."_lock.png",
+		groups = {lock=1}
 	})
 	
 	--
