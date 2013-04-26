@@ -1,2 +1,4 @@
 core 
 default
+joiner_table
+instruments

@@ -10,3 +10,4 @@ minetest.register_craft({
 })
 
 dofile(minetest.get_modpath("grounds").."/dirt.lua")
+dofile(minetest.get_modpath("grounds").."/stone.lua")

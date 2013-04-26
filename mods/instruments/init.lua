@@ -1,6 +1,8 @@
 instruments = {}
 instruments.spear = {}
 
+instruments.chisel_pairs = {}
+
 instruments.spear.damage = 10
 instruments.spear.gravity = 9
 instruments.spear.velocity = 19
@@ -126,26 +128,8 @@ for i, material in ipairs(instruments.materials) do
 					return
 				end
 				local n = minetest.env:get_node(pointed_thing.under)
-				if  n.name == "default:stone" then
-					minetest.env:add_node(pointed_thing.under, {name="default:stone_flat"})
-				elseif n.name == "default:desert_stone" then
-					minetest.env:add_node(pointed_thing.under, {name="default:desert_stone_flat"})
-				elseif n.name == "default:stone_slab_r" then
-					minetest.env:add_node(pointed_thing.under, {name="default:stone_flat_slab_r", param2=n.param2})
-				elseif n.name == "default:stone_slab" then
-					minetest.env:add_node(pointed_thing.under, {name="default:stone_flat_slab_r", param2=1})
-				elseif n.name == "default:desert_stone_slab_r" then
-					minetest.env:add_node(pointed_thing.under, {name="default:desert_stone_flat_slab_r", param2=n.param2})
-				elseif n.name == "default:desert_stone_slab" then
-					minetest.env:add_node(pointed_thing.under, {name="default:desert_stone_flat_slab_r", param2=1})
-				elseif n.name == "default:stone_stair" then
-					minetest.env:add_node(pointed_thing.under, {name="default:stone_flat_stair", param2=n.param2})
-				elseif n.name == "default:stone_stair_upside_down" then
-					minetest.env:add_node(pointed_thing.under, {name="default:stone_flat_stair_upside_down", param2=n.param2})
-				elseif n.name == "default:desert_stone_stair" then
-					minetest.env:add_node(pointed_thing.under, {name="default:desert_stone_flat_stair", param2=n.param2})
-				elseif n.name == "default:desert_stone_stair_upside_down" then
-					minetest.env:add_node(pointed_thing.under, {name="default:desert_stone_flat_stair_upside_down", param2=n.param2})
+				if instruments.chisel_pairs[n.name] then
+					minetest.env:add_node(pointed_thing.under, {name=instruments.chisel_pairs[n.name], param2=n.param2})
 				end
 				item:add_wear(65535/instruments.durability[i]/4)
 				return item

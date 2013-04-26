@@ -237,82 +237,6 @@ function default.node_sound_glass_defaults(table)
 	return table
 end
 
---
-
-minetest.register_node("default:stone", {
-	description = "Stone",
-	tiles = {"default_stone.png"},
-	particle_image = {"default_cobble.png"},
-	is_ground_content = true,
-	groups = {cracky=3,drop_on_dig=1},
-	drop = {
-		max_items = 1,
-		items = {
-			{
-				items = {"default:cobble", "minerals:borax"},
-				rarity = 50,
-			},
-			{
-				items = {"default:cobble", "default:cobble", "default:cobble"},
-				rarity = 5
-			},
-			{
-				items = {"default:cobble", "default:cobble"}
-			},
-			{
-				items = {"default:cobble"},
-				rarity = 5
-			},
-		},
-	},
-	sounds = default.node_sound_stone_defaults(),
-})
-
-minetest.register_node("default:desert_stone", {
-	description = "Desert Stone",
-	tiles = {"default_desert_stone.png"},
-	particle_image = {"default_desert_stone.png"},
-	is_ground_content = true,
-	groups = {cracky=3,drop_on_dig=1},
-	sounds = default.node_sound_stone_defaults(),
-})
-
-minetest.register_node("default:stone_flat", {
-	description = "Flat Stone",
-	tiles = {"default_stone_flat.png"},
-	particle_image = {"default_stone_flat.png"},
-	is_ground_content = true,
-	groups = {cracky=3,drop_on_dig=1},
-	sounds = default.node_sound_stone_defaults(),
-})
-
-minetest.register_node("default:desert_stone_flat", {
-	description = "Desert Flat Stone",
-	tiles = {"default_desert_stone_flat.png"},
-	particle_image = {"default_desert_stone_flat.png"},
-	is_ground_content = true,
-	groups = {cracky=3,drop_on_dig=1},
-	sounds = default.node_sound_stone_defaults(),
-})
-
-minetest.register_node("default:desert_stone_bricks", {
-	description = "Desert Stone Bricks",
-	tiles = {"default_desert_stone_bricks.png"},
-	particle_image = {"default_desert_stone_bricks.png"},
-	is_ground_content = true,
-	groups = {cracky=3,drop_on_dig=1},
-	sounds = default.node_sound_stone_defaults(),
-})
-
-minetest.register_node("default:cobbleblock_flat", {
-	description = "Stone Bricks",
-	tiles = {"default_cobbleblock_flat.png"},
-	particle_image = {"default_cobble.png"},
-	is_ground_content = true,
-	groups = {cracky=3,drop_on_dig=1},
-	sounds = default.node_sound_stone_defaults(),
-})
-
 minetest.register_node("default:sand", {
 	description = "Sand",
 	tiles = {"default_sand.png"},
@@ -688,49 +612,6 @@ minetest.register_node("default:sign_wall", {
 		meta:set_string("text", fields.text)
 		meta:set_string("infotext", "\""..fields.text.."\"")
 	end,
-})
-
-minetest.register_node("default:cobbleblock", {
-	description = "Block of Cobble",
-	tiles = {"default_cobbleblock.png"},
-	particle_image = {"default_cobble.png"},
-	is_ground_content = true,
-	drop = "default:cobble 9",
-	groups = {crumbly=2, oddly_breakable_by_hand=1, falling_node=1, drop_on_dig=1},
-	sounds = default.node_sound_stone_defaults(),
-})
-
-minetest.register_craftitem("default:cobble", {
-	description = "Stone",
-	inventory_image = "default_cobble.png",
-})
-
-minetest.register_node("default:cobble_node", {
-	tiles = {"default_stone.png"},
-	paramtype = "light",
-	sunlight_propagates = true,
-	drawtype = "nodebox",
-	node_box = {
-		type = "fixed",
-		fixed = {-0.5+9/32, -0.5, -0.5+12/32, 0.5-9/32, -0.5+1/8, 0.5-12/32},
-	},
-	selection_box = {
-		type = "fixed",
-		fixed = {-0.5+9/32, -0.5, -0.5+12/32, 0.5-9/32, -0.5+1/8, 0.5-12/32},
-	},
-	drop = "default:cobble",
-	groups = {dig_immediate=2,dropping_node=1,drop_on_dig=1},
-	buildable_to = true,
-	sounds = default.node_sound_stone_defaults(),
-})
-
-minetest.register_craft({
-	output = "default:cobbleblock",
-	recipe = {
-		{"default:cobble","default:cobble","default:cobble"},
-		{"default:cobble","default:cobble","default:cobble"},
-		{"default:cobble","default:cobble","default:cobble"},
-	},
 })
 
 minetest.register_node("default:dry_shrub", {

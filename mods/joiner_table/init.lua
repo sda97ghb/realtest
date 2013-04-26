@@ -32,58 +32,6 @@ for _, tree in pairs(realtest.registered_trees_list) do
 	})
 end
 
-realtest.register_joiner_table_recipe({
-	item1 = "default:stone",
-	output = "default:stone_flat",
-	instrument = "chisel"
-})
-
-realtest.register_joiner_table_recipe({
-	item1 = "default:stone_slab",
-	output = "default:stone_flat_slab",
-	instrument = "chisel"
-})
-
-realtest.register_joiner_table_recipe({
-	item1 = "default:stone_stair",
-	output = "default:stone_flat_stair",
-	instrument = "chisel"
-})
-
-realtest.register_joiner_table_recipe({
-	item1 = "default:desert_stone",
-	output = "default:desert_stone_flat",
-	instrument = "chisel"
-})
-
-realtest.register_joiner_table_recipe({
-	item1 = "default:desert_stone_slab",
-	output = "default:desert_stone_flat_slab",
-	instrument = "chisel"
-})
-
-realtest.register_joiner_table_recipe({
-	item1 = "default:desert_stone_stair",
-	output = "default:desert_stone_flat_stair",
-	instrument = "chisel"
-})
-
-realtest.register_joiner_table_recipe({
-	item1 = "default:stone_flat",
-	item2 = "scribing_table:stonebricks",
-	output = "default:cobbleblock_flat",
-	rmitem2 = false,
-	instrument = "chisel"
-})
-
-realtest.register_joiner_table_recipe({
-	item1 = "default:desert_stone_flat",
-	item2 = "scribing_table:stonebricks",
-	output = "default:desert_stone_bricks",
-	rmitem2 = false,
-	instrument = "chisel"
-})
-
 for _, tree in pairs(realtest.registered_trees) do
 	local planks = tree.textures.planks
 	minetest.register_node("joiner_table:joiner_table_"..tree.name:remove_modname_prefix(), {

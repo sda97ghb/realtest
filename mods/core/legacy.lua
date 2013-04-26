@@ -44,3 +44,7 @@ minetest.register_alias("trees:mapple_planks_slab_r", "trees:maple_planks_slab_r
 minetest.register_alias("trees:mapple_planks_stair", "trees:maple_planks_stair")
 minetest.register_alias("trees:mapple_planks_stair_upside_down", "trees:maple_planks_stair_upside_down")
 minetest.register_alias("default:clay_lump", "grounds:clay_lump")
+minetest.register_alias("default:cobble", "default:stone_small_rock")
+minetest.register_alias("default:cobbleblock", "default:stone_macadam")
+minetest.register_alias("default:cobbleblock_flat", "default:stone_bricks")
+minetest.register_alias("default:cobble_node", "default:stone_small_rock_node")
