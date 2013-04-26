@@ -16,13 +16,8 @@ function realtest.add_bonfire_fuel(fuel)
 end
 realtest.add_bonfire_fuel("default:cactus")
 realtest.add_bonfire_fuel("default:papyrus")
-realtest.add_bonfire_fuel("default:bookshelf")
-realtest.add_bonfire_fuel("default:fence_wood")
-realtest.add_bonfire_fuel("default:ladder")
 realtest.add_bonfire_fuel("default:torch")
 realtest.add_bonfire_fuel("default:sign_wall")
-realtest.add_bonfire_fuel("default:chest")
-realtest.add_bonfire_fuel("default:chest_locked")
 realtest.add_bonfire_fuel("ores:peat")
 realtest.add_bonfire_fuel("default:coal_lump")
 

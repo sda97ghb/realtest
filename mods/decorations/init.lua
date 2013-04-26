@@ -200,7 +200,7 @@ for _, mineral in ipairs(decor_minerals) do
 	})
 
 	minetest.register_craft({
-		output = "decorations:"..mineral[1].."_chest",
+		output = "decorations:"..mineral[1].."_chest 2",
 		recipe = {
 			{"minerals:"..mineral[1],"minerals:"..mineral[1],"minerals:"..mineral[1]},
 			{"minerals:"..mineral[1],"","minerals:"..mineral[1]},

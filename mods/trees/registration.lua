@@ -472,7 +472,7 @@ function realtest.register_tree(name, TreeDef)
 	})
 	
 	minetest.register_craft({
-		output = tree.name.."_chest",
+		output = tree.name.."_chest 2",
 		recipe = {
 			{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
 			{tree.name.."_plank", "", tree.name.."_plank"},
@@ -482,7 +482,7 @@ function realtest.register_tree(name, TreeDef)
 	
 	for i,metal in ipairs(metals.list) do
 		minetest.register_craft({
-			output = tree.name.."_chest_locked",
+			output = tree.name.."_chest_locked 2",
 			recipe = {
 				{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
 				{tree.name.."_plank", "metals:"..metal.."_lock", tree.name.."_plank"},
