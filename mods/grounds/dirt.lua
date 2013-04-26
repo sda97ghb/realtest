@@ -190,8 +190,7 @@ function realtest.register_dirt(name, DirtRef)
 				return
 			end
 			if (n.liquidtype and n.liquidtype ~= "none")
-				or (minetest.env:get_node_light(pos) and minetest.env:get_node_light(pos) < 5)
-				or minetest.registered_nodes[minetest.env:get_node({x=pos.x,y=pos.y-2,z=pos.z}).name].buildable_to then
+				or (minetest.env:get_node_light(pos) and minetest.env:get_node_light(pos) < 5) then
 				pos.y = pos.y-1
 				minetest.env:set_node(pos, {name=grass_nograss[node.name]})
 				nodeupdate_single(pos)
@@ -204,20 +203,35 @@ function realtest.register_dirt(name, DirtRef)
 		interval = 1,
 		chance = 2,
 		action = function(pos, node)
-			pos.y = pos.y + 1
 			if node then
-				if not minetest.registered_nodes[minetest.env:get_node(pos).name].buildable_to then
-					pos.y = pos.y - 1
+				if not minetest.registered_nodes[minetest.env:get_node({x=pos.x,y=pos.y+1,z=pos.z}).name].buildable_to then
 					minetest.env:set_node(pos, {name = farm_nofarm[node.name]})
 					return
 				end
 			end
-			local objs = minetest.env:get_objects_inside_radius(pos, 1)
+			local objs = minetest.env:get_objects_inside_radius({x=pos.x,y=pos.y+1,z=pos.z}, 1)
 			for k, obj in pairs(objs) do
 				if obj:is_player() then
-					pos.y = pos.y - 1
 					minetest.env:set_node(pos, {name = farm_nofarm[node.name]})
 					return
+				end
+			end
+		end,
+	})
+	
+	minetest.register_abm({
+		nodenames = {name.."_with_grass", name.."_farm_with_grass", name.."_with_grass_and_clay", name.."_farm_with_grass_and_clay"},
+		interval = 2,
+		chance = 5,
+		action = function(pos, node)
+			local objs = minetest.env:get_objects_inside_radius({x=pos.x,y=pos.y+1,z=pos.z}, 1)
+			for k, obj in pairs(objs) do
+				if obj:is_player() then
+					if minetest.registered_nodes[minetest.env:get_node({x=pos.x,y=pos.y-1,z=pos.z}).name].buildable_to then
+						minetest.env:set_node(pos, {name=grass_nograss[node.name]})
+						nodeupdate_single(pos)
+						return
+					end
 				end
 			end
 		end,
