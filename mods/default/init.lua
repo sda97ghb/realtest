@@ -740,6 +740,9 @@ minetest.register_abm({
 	chance = 5,
 	neighbors = {"air"},
 	action = function(pos, node)
+		if math.random() > 0.4 then
+			return
+		end
 		if minetest.env:get_node({x=pos.x, y=pos.y-1, z=pos.z}).name == "air" then
 			minetest.env:set_node(pos, {name="default:dirt"})
 			nodeupdate_single(pos)
