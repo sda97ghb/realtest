@@ -602,7 +602,7 @@ function realtest.register_tree(name, TreeDef)
 	
 	minetest.register_craft({
 		type="cooking",
-		output="default:coal_lump",
+		output="minerals:charcoal",
 		recipe=tree.name.."_log",
 	})
 	

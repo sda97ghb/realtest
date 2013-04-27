@@ -38,6 +38,7 @@ MINERALS_LIST={
 	'sulfur',
 	'sylvite',
 	'tenorite',
+	'charcoal'
 }
 
 MINERALS_DESC_LIST={
@@ -80,6 +81,7 @@ MINERALS_DESC_LIST={
 	'Sulfur',
 	'Sylvite',
 	'Tenorite',
+	'Charcoal'
 }
 
 for i=1, #MINERALS_LIST do
@@ -100,6 +102,12 @@ minetest.register_craftitem("minerals:borax", {
 })
 
 -------------------------------------------------
+
+minetest.register_craft({
+	type = "fuel",
+	recipe = "minerals:charcoal",
+	burntime = 20,
+})
 
 minetest.register_craft({
 	type = "fuel",

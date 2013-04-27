@@ -134,12 +134,6 @@ minetest.register_craft({
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "default:bookshelf",
-	burntime = 40,
-})
-
-minetest.register_craft({
-	type = "fuel",
 	recipe = "default:fence_wood",
 	burntime = 15,
 })
@@ -154,12 +148,6 @@ minetest.register_craft({
 	type = "fuel",
 	recipe = "default:sign_wall",
 	burntime = 20,
-})
-
-minetest.register_craft({
-	type = "fuel",
-	recipe = "default:coal_lump",
-	burntime = 30,
 })
 
 --
@@ -644,11 +632,6 @@ minetest.register_craftitem("default:paper", {
 minetest.register_craftitem("default:book", {
 	description = "Book",
 	inventory_image = "default_book.png",
-})
-
-minetest.register_craftitem("default:coal_lump", {
-	description = "Charcoal",
-	inventory_image = "default_charcoal.png",
 })
 
 minetest.register_craftitem("default:clay_lump", {
