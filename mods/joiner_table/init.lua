@@ -42,6 +42,11 @@ for _, tree in pairs(realtest.registered_trees) do
 		sounds = default.node_sound_wood_defaults(),
 		paramtype = "light",
 		paramtype2 = "facedir",
+		can_dig = function(pos,player)
+			local meta = minetest.env:get_meta(pos);
+			local inv = meta:get_inventory()
+			return inv:is_empty("src1") and inv:is_empty("src2") and inv:is_empty("instruments") and inv:is_empty("output")
+		end,
 		on_construct = function(pos)
 			local meta = minetest.env:get_meta(pos)
 			meta:set_string("formspec", "size[8,8]"..
