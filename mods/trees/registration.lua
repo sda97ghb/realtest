@@ -480,16 +480,11 @@ function realtest.register_tree(name, TreeDef)
 		},
 	})
 	
-	for i,metal in ipairs(metals.list) do
-		minetest.register_craft({
-			output = tree.name.."_chest_locked 2",
-			recipe = {
-				{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
-				{tree.name.."_plank", "metals:"..metal.."_lock", tree.name.."_plank"},
-				{tree.name.."_plank", tree.name.."_plank", tree.name.."_plank"},
-			}
-		})
-	end
+	minetest.register_craft({
+		type = "shapeless",
+		output = tree.name.."_chest_locked",
+		recipe = {"group:lock", tree.name.."_chest"}
+	})
 	
 	realtest.register_stair(tree.name.."_planks",nil,nil,nil,tree.description.." Stair")
 	realtest.register_slab(tree.name.."_planks",nil,nil,nil,tree.description.." Slab")

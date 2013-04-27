@@ -299,12 +299,9 @@ for _, mineral in ipairs(decor_minerals) do
 	})
 	
 	minetest.register_craft({
-		output = "decorations:"..mineral[1].."_chest_locked 2",
-		recipe = {
-			{"minerals:"..mineral[1],"minerals:"..mineral[1],"minerals:"..mineral[1]},
-			{"minerals:"..mineral[1],"group:lock","minerals:"..mineral[1]},
-			{"minerals:"..mineral[1],"minerals:"..mineral[1],"minerals:"..mineral[1]},
-		}
+		type = "shapeless",
+		output = "decorations:"..mineral[1].."_chest_locked",
+		recipe = {"group:lock","decorations:"..mineral[1].."_chest"}
 	})
 
 	minetest.register_craft({
