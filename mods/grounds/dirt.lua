@@ -155,7 +155,7 @@ function realtest.register_dirt(name, DirtRef)
 	minetest.register_abm({
 		nodenames = {name, name.."_farm", name.."_with_clay", name.."_farm_with_clay"},
 		interval = 200,
-		chance = 200,
+		chance = 30,
 		action = function(pos, node)
 			pos.y = pos.y+1
 			local n = minetest.registered_nodes[minetest.env:get_node(pos).name]
@@ -182,7 +182,7 @@ function realtest.register_dirt(name, DirtRef)
 	minetest.register_abm({
 		nodenames = {name.."_with_grass", name.."_farm_with_grass", name.."_with_grass_and_clay", name.."_farm_with_grass_and_clay"},
 		interval = 200,
-		chance = 200,
+		chance = 30,
 		action = function(pos, node)
 			pos.y = pos.y+1
 			local n = minetest.registered_nodes[minetest.env:get_node(pos).name]
