@@ -736,9 +736,13 @@ end)
 
 minetest.register_abm({
 	nodenames = {"default:dirt_with_grass"},
-	interval = 2,
-	chance = 200,
+	interval = 200,
+	chance = 30,
+	neighbors = {"air"},
 	action = function(pos, node)
+		if math.random() > 0.4 then
+			return
+		end
 		if minetest.env:get_node({x=pos.x, y=pos.y-1, z=pos.z}).name == "air" then
 			minetest.env:set_node(pos, {name="default:dirt"})
 			nodeupdate_single(pos)
@@ -748,8 +752,8 @@ minetest.register_abm({
 
 minetest.register_abm({
 	nodenames = {"default:dirt_with_clay"},
-	interval = 2,
-	chance = 200,
+	interval = 200,
+	chance = 30,
 	action = function(pos, node)
 		pos.y = pos.y+1
 		local n = minetest.registered_nodes[minetest.env:get_node(pos).name]
@@ -775,8 +779,8 @@ minetest.register_abm({
 
 minetest.register_abm({
  	nodenames = {"default:dirt_with_grass_and_clay"},
-	interval = 2,
-	chance = 200,
+	interval = 200,
+	chance = 30,
 	action = function(pos, node)
 		pos.y = pos.y+1
 		local n = minetest.registered_nodes[minetest.env:get_node(pos).name]

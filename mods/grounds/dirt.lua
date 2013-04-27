@@ -221,7 +221,7 @@ function realtest.register_dirt(name, DirtRef)
 	
 	minetest.register_abm({
 		nodenames = {name.."_with_grass", name.."_farm_with_grass", name.."_with_grass_and_clay", name.."_farm_with_grass_and_clay"},
-		interval = 2,
+		interval = 17,
 		chance = 5,
 		action = function(pos, node)
 			local objs = minetest.env:get_objects_inside_radius({x=pos.x,y=pos.y+1,z=pos.z}, 1)
