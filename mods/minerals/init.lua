@@ -9,8 +9,15 @@ function mineralsi.register_mineral(mineral, description, ore, metal)
 	if ore then
 		minetest.register_node("minerals:"..mineral.."_block", {
 			description = "Block of "..description,
-			tiles = {"furnace_top_active.png"},
-			particle_image = {"furnace_top_active.png"},
+			tiles = {"minerals_block.png"},
+			particle_image = {"minerals_block.png"},
+			groups = {falling_node=1,oddly_breakable_by_hand=1},
+		})
+		
+		minetest.register_node("minerals:"..mineral.."_block_liquid", {
+			description = "Liquid Block of "..description,
+			tiles = {"minerals_block_liquid.png"},
+			particle_image = {"minerals_block_liquid.png"},
 			groups = {falling_node=1,oddly_breakable_by_hand=1},
 		})
 
@@ -19,6 +26,33 @@ function mineralsi.register_mineral(mineral, description, ore, metal)
 			output = "minerals:"..mineral.."_block",
 			recipe = {"minerals:"..mineral,"minerals:"..mineral,"minerals:"..mineral,"minerals:"..mineral,
 					"minerals:"..mineral,"minerals:"..mineral,"minerals:"..mineral,"minerals:"..mineral},
+		})
+		
+		minetest.register_abm({
+			nodenames = {"minerals:"..mineral.."_block","minerals:"..mineral.."_block_liquid","default:brick"},
+			interval = 1.0,
+			chance = 1,
+			action = function(pos, node, active_object_count, active_object_count_wider)
+				local p = {x=pos.x, y=pos.y+1, z=pos.z}
+				local objects = minetest.env:get_objects_inside_radius(p, 0.5)
+				local ore = 0
+				local ores = {}
+				for _, v in ipairs(objects) do
+					if not v:is_player() and v:get_luaentity() and v:get_luaentity().name == "__builtin:item" then
+						local istack = ItemStack(v:get_luaentity().itemstring)
+						if istack:get_name() == "minerals:"..mineral then
+							ore = ore + istack:get_count()
+							table.insert(ores,v)
+						end
+					end
+				end
+				if minetest.env:get_node(p).name == "air" and ore == 4 then
+					for _, v in ipairs(ores) do
+						v:remove()
+					end
+					minetest.env:set_node(p, {name = "minerals:"..mineral.."_block"})
+				end
+			end
 		})
 		
 		table.insert(mineralsi.list,{name=mineral, description=description, ore=true, metal=metal})
@@ -105,5 +139,59 @@ minetest.register_craft({
 	recipe = "minerals:anthracite",
 	burntime = 50,
 })
+
+minetest.register_abm({
+	nodenames = {"coke:bituminous_coal_block","coke:lignite_block","default:brick","coke:coke_block"},
+	interval = 1.0,
+	chance = 1,
+	action = function(pos, node, active_object_count, active_object_count_wider)
+		local p = {x=pos.x, y=pos.y+1, z=pos.z}
+		local objects = minetest.env:get_objects_inside_radius(p, 0.5)
+		local lignite = 0
+		local coals = {}
+		for _, v in ipairs(objects) do
+			if not v:is_player() and v:get_luaentity() and v:get_luaentity().name == "__builtin:item" then
+				local istack = ItemStack(v:get_luaentity().itemstring)
+				if istack:get_name() == "minerals:lignite" then
+					lignite = lignite + istack:get_count()
+					table.insert(coals,v)
+				end
+			end
+		end
+		if minetest.env:get_node(p).name == "air" and lignite == 4 then
+			for _, v in ipairs(coals) do
+				v:remove()
+			end
+			minetest.env:set_node(p, {name = "coke:lignite_block"})
+			return
+		end
+		local bituminous_coal = 0
+		local coals = {}
+		for _, v in ipairs(objects) do
+			if not v:is_player() and v:get_luaentity() and v:get_luaentity().name == "__builtin:item" then
+				local istack = ItemStack(v:get_luaentity().itemstring)
+				if istack:get_name() == "minerals:bituminous_coal" then
+					bituminous_coal = bituminous_coal + istack:get_count()
+					table.insert(coals,v)
+				end
+			end
+		end
+		if minetest.env:get_node(p).name == "air" and bituminous_coal == 4 then
+			for _, v in ipairs(coals) do
+				v:remove()
+			end
+			minetest.env:set_node(p, {name = "coke:bituminous_coal_block"})
+		end
+	end
+})
+
+--[[minetest.register_abm({
+	nodenames = {"coke:bituminous_coal_block","coke:lignite_block","default:brick"},
+	interval = 1.0,
+	chance = 1,
+	action = function(pos, node, active_object_count, active_object_count_wider)
+		
+	end
+})]]
 
 minetest.register_alias("minerals:brown_coal", "minerals:lignite")

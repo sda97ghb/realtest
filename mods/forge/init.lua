@@ -13,6 +13,7 @@ function forge.register(metal)
 		"image[1,1;1,1;default_furnace_fire_bg.png]"..
 		"list[current_name;fuel;2.5,1;1,1;]"..
 		"list[current_name;out;4.5,1;1,1;]"..
+		"list[current_name;molds;6.5,1;1,1;]"..
 		"list[current_player;main;0,3;8,4;]"
 
 	minetest.register_node("forge:"..metal, {
@@ -31,12 +32,14 @@ function forge.register(metal)
 			local inv = meta:get_inventory()
 			inv:set_size("fuel", 1)
 			inv:set_size("out", 1)
+			inv:set_size("molds", 1)
 		end,
 		can_dig = function(pos,player)
 			local meta = minetest.env:get_meta(pos);
 			local inv = meta:get_inventory()
 			if not inv:is_empty("fuel") then return false end
 			if not inv:is_empty("out") then return false end
+			if not inv:is_empty("molds") then return false end
 			return true
 		end,
 	})
@@ -59,12 +62,14 @@ function forge.register(metal)
 			local inv = meta:get_inventory()
 			inv:set_size("fuel", 1)
 			inv:set_size("out", 1)
+			inv:set_size("molds", 1)
 		end,
 		can_dig = function(pos,player)
 			local meta = minetest.env:get_meta(pos);
 			local inv = meta:get_inventory()
 			if not inv:is_empty("fuel") then return false end
 			if not inv:is_empty("out") then return false end
+			if not inv:is_empty("molds") then return false end
 			return true
 		end,
 	})
@@ -106,10 +111,36 @@ function forge.register(metal)
 						for m = 1, #mineralsi.list do
 							if mineralsi.list[m].ore then
 								if minetest.env:get_node(p).name == "minerals:"..mineralsi.list[m].name.."_block" and b then
-									minetest.env:set_node(p,{name = "metals:"..mineralsi.list[m].metal.."_block"})
+									minetest.env:set_node(p,{name = "minerals:"..mineralsi.list[m].name.."_block_liquid"})
 									b = false
 								end
 							end
+						end
+					end
+					
+					local out_stack = inv:get_stack("out", 1)
+					local molds_stack = inv:get_stack("molds", 1)
+					local out_item = ""
+					for m = 1, #mineralsi.list do
+						if mineralsi.list[m].ore and
+							minetest.env:get_node({x=pos.x+xd, y=pos.y, z=pos.z+zd}).name == "minerals:"..mineralsi.list[m].name.."_block_liquid" then
+							out_item = "metals:"..mineralsi.list[m].metal.."_unshaped"
+						end
+					end
+					
+					if molds_stack:get_count() > 3 and out_item~= "" then
+						if inv:room_for_item("out", out_item) then
+							inv:add_item("out", out_item)
+							inv:add_item("out", out_item)
+							inv:add_item("out", out_item)
+							inv:add_item("out", out_item)
+							molds_stack:take_item()
+							molds_stack:take_item()
+							molds_stack:take_item()
+							molds_stack:take_item()
+							inv:set_stack("molds", 1, molds_stack)
+							minetest.env:remove_node({x=pos.x+xd, y=pos.y, z=pos.z+zd})
+							nodeupdate({x=pos.x+xd, y=pos.y, z=pos.z+zd})
 						end
 					end
 				end
@@ -124,7 +155,8 @@ function forge.register(metal)
 						"image[1,1;1,1;default_furnace_fire_bg.png^[lowpart:"..
 							(100-percent)..":default_furnace_fire_fg.png]"..
 						"list[current_name;fuel;2.5,1;1,1;]"..
-						"list[current_name;fuel;4.5,1;1,1;]"..
+						"list[current_name;out;4.5,1;1,1;]"..
+						"list[current_name;molds;6.5,1;1,1;]"..
 						"list[current_player;main;0,3;8,4;]")
 					return
 				end
@@ -157,5 +189,39 @@ function forge.register(metal)
 		end,
 	})
 end
+
+--[[minetest.register_abm({
+	nodenames = {"coke:lignite_block","coke:bituminous_coal_block","default:brick"},
+	interval = 1.0,
+	chance = 1,
+	action = function(pos, node, active_object_count, active_object_count_wider)
+		local p = {x=pos.x, y=pos.y+1, z=pos.z}
+		local objects = minetest.env:get_objects_inside_radius(p, 0.5)
+		local bituminous_coal, lignite = 0, 0
+		local coals = {}
+		for _, v in ipairs(objects) do
+			if not v:is_player() and v:get_luaentity() and v:get_luaentity().name == "__builtin:item" then
+				local istack = ItemStack(v:get_luaentity().itemstring)
+				if istack:get_name() == "minerals:bituminous_coal" then
+					bituminous_coal = bituminous_coal + istack:get_count()
+					table.insert(coals,v)
+				elseif istack:get_name() == "minerals:lignite" then
+					lignite = lignite + istack:get_count()
+					table.insert(coals,v)
+				end
+			end
+		end
+		if minetest.env:get_node(p).name == "air" and lignite+bituminous_coal == 9 and (lignite == 9 or bituminous_coal == 9) then
+			for _, v in ipairs(coals) do
+				v:remove()
+			end
+			if lignite == 9 then
+				minetest.env:set_node(p, {name = "coke:lignite_block"})
+			elseif bituminous_coal == 9 then
+				minetest.env:set_node(p, {name = "coke:bituminous_coal_block"})
+			end
+		end
+	end
+})]]
 
 forge.register("bronze")

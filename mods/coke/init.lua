@@ -3,7 +3,7 @@ coke = {}
 minetest.register_node("coke:bituminous_coal_block", {
 	description = "Bituminous Coal Block",
 	tiles = {"coke_bituminous_coal_block.png"},
-	drop = "minerals:bituminous_coal 9",
+	drop = "minerals:bituminous_coal 4",
 	particle_image = {"coke_bituminous_coal_block.png"},
 	groups = {crumbly=3, oddly_breakable_by_hand=1},
 	sounds = default.node_sound_stone_defaults(),
@@ -12,7 +12,7 @@ minetest.register_node("coke:bituminous_coal_block", {
 minetest.register_node("coke:lignite_block", {
 	description = "Lignite Block",
 	tiles = {"coke_lignite_block.png"},
-	drop = "minerals:lignite 9",
+	drop = "minerals:lignite 4",
 	particle_image = {"coke_coal_block.png"},
 	groups = {crumbly=3, oddly_breakable_by_hand=1},
 	sounds = default.node_sound_stone_defaults(),
@@ -21,7 +21,22 @@ minetest.register_node("coke:lignite_block", {
 minetest.register_node("coke:coke_block", {
 	description = "Coke Block",
 	tiles = {"coke_coke_block.png"},
-	drop = "coke:coke 8",
+	drop = {
+		max_items = 1,
+		items = {
+			{
+				items = {"coke:coke", "coke:coke", "coke:coke", "coke:coke"},
+				rarity = 3
+			},
+			{
+				items = {"coke:coke", "coke:coke", "coke:coke"}
+			},
+			{
+				items = {"coke:coke", "coke:coke"},
+				rarity = 5
+			},
+		},
+	},
 	particle_image = {"coke_coke_block.png"},
 	groups = {crumbly=3, oddly_breakable_by_hand=1},
 	sounds = default.node_sound_stone_defaults(),
