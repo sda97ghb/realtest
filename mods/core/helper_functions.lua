@@ -34,11 +34,13 @@ function string:capitalize()
 end
 
 function string:remove_modname_prefix()
-	local i = self:find(":")
-	if i then
-		return self:sub(i+1)
+	for i = 1,2 do
+		local i = self:find(":")
+		if i then
+			self = self:sub(i+1)
+		end
 	end
-	return nil
+	return self
 end
 
 function string:get_modname_prefix()
@@ -50,13 +52,7 @@ function string:get_modname_prefix()
 	if i then
 		return self:sub(1, i-1)
 	end
-	return nil
-end
-
-function set_node_instead_air(pos, node)
-	if minetest.env:get_node(pos).name == "air" then
-		minetest.env:set_node(pos, node)
-	end
+	return self
 end
 
 function merge(lhs, rhs)
