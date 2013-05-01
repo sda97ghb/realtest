@@ -23,8 +23,8 @@ function realtest.register_stair(name, recipeitem, groups, images, description, 
 		node_box = {
 			type = "fixed",
 			fixed = {
-				{-0.5, -0.5, -0.5, 0.5, 0, 0.5},
-				{-0.5, 0, 0, 0.5, 0.5, 0.5},
+				{-0.5, -0.5, 0, 0.5, 0.5, 0.5},
+				{-0.5, -0.5, -0.5, 0.5, 0, 0}
 			},
 		},
 		selection_box = {

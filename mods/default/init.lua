@@ -644,6 +644,7 @@ minetest.register_craftitem("default:clay_brick", {
 	inventory_image = "default_clay_brick.png",
 })
 
+realtest.register_stair_and_slab("default:glass")
 realtest.register_stair_and_slab("default:stone")
 realtest.register_stair_and_slab("default:stone_flat")
 realtest.register_stair_and_slab("default:desert_stone")
