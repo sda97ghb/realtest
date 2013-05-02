@@ -52,6 +52,10 @@ function mineralsi.register_mineral(mineral, description, ore, metal)
 			interval = 1.0,
 			chance = 1,
 			action = function(pos, node, active_object_count, active_object_count_wider)
+				if minetest.env:get_node({x=pos.x-1, y=pos.y+1, z=pos.z}).name == "air" then return end
+				if minetest.env:get_node({x=pos.x+1, y=pos.y+1, z=pos.z}).name == "air" then return end
+				if minetest.env:get_node({x=pos.x, y=pos.y+1, z=pos.z-1}).name == "air" then return end
+				if minetest.env:get_node({x=pos.x, y=pos.y+1, z=pos.z+1}).name == "air" then return end
 				local p = {x=pos.x, y=pos.y+1, z=pos.z}
 				local objects = minetest.env:get_objects_inside_radius(p, 0.5)
 				local ore = 0
@@ -65,11 +69,15 @@ function mineralsi.register_mineral(mineral, description, ore, metal)
 						end
 					end
 				end
-				if minetest.env:get_node(p).name == "air" and ore == 4 then
+				if minetest.env:get_node(p).name == "air" and ore > 3 then
 					for _, v in ipairs(ores) do
 						v:remove()
 					end
 					minetest.env:set_node(p, {name = "minerals:"..mineral.."_block"})
+					if ore-4 > 0 then
+						ore = ore - 4
+						minetest.env:add_item({x=pos.x, y=pos.y+2, z=pos.z},"minerals:"..mineral.." "..ore)
+					end
 				end
 			end
 		})
@@ -222,11 +230,15 @@ minetest.register_abm({
 				end
 			end
 		end
-		if minetest.env:get_node(p).name == "air" and lignite == 4 then
+		if minetest.env:get_node(p).name == "air" and lignite ==4 then
 			for _, v in ipairs(coals) do
 				v:remove()
 			end
 			minetest.env:set_node(p, {name = "coke:lignite_block"})
+			--[[if lignite-4 > 0 then
+				lignite = lignite - 4
+				minetest.env:add_item({x=pos.x, y=pos.y+2, z=pos.z},"minerals:lignite "..lignite)
+			end]]
 			return
 		end
 		local bituminous_coal = 0
@@ -240,11 +252,15 @@ minetest.register_abm({
 				end
 			end
 		end
-		if minetest.env:get_node(p).name == "air" and bituminous_coal == 4 then
+		if minetest.env:get_node(p).name == "air" and bituminous_coal ==4 then
 			for _, v in ipairs(coals) do
 				v:remove()
 			end
 			minetest.env:set_node(p, {name = "coke:bituminous_coal_block"})
+			--[[if bituminous_coal-4 > 0 then
+				bituminous_coal = bituminous_coal - 4
+				minetest.env:add_item({x=pos.x, y=pos.y+2, z=pos.z},"minerals:lignite "..bituminous_coal)
+			end]]
 		end
 -- 		end
 	end
