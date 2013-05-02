@@ -1,6 +1,6 @@
 metals = {}
 
-metals.levels = {0,0,0,1,2,2,2,2,2,2,2,2,2,2,3,3,3,4,4,5}
+metals.levels = {0,0,0,1,2,2,2,2,2,2,2,2,2,2,3,3,3,4,4,4,5}
 
 metals.list = {
 	'bismuth',
@@ -26,6 +26,7 @@ metals.list = {
 	----------
 	'nickel',
 	'steel',
+	'tungsten',
 	----------
 	'black_steel'
 }
@@ -54,6 +55,7 @@ metals.desc_list = {
 	----------
 	'Nickel',
 	'Steel',
+	'Tungsten',
 	----------
 	'Black Steel'
 }
