@@ -15,6 +15,18 @@ function table:get_index(value)
 	end
 end
 
+function copy_table(t)
+    local u = { }
+    for k, v in pairs(t) do
+        u[k] = v
+    end
+    return setmetatable(u, getmetatable(t))
+end
+
+function mod_pos(p, dx, dy, dz)
+    return { x = p.x + dx, y = p.y + dy, z = p.z + dz }
+end
+
 function hacky_swap_node(pos,name)
 	local node = minetest.env:get_node(pos)
 	local meta = minetest.env:get_meta(pos)

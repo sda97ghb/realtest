@@ -183,6 +183,7 @@ function realtest.register_tree(name, TreeDef)
 		},
 		sounds = default.node_sound_leaves_defaults(),
 		walkable = false,
+		falling_node_walkable = false,
 		climbable = true,
 	})
 	
@@ -212,6 +213,7 @@ function realtest.register_tree(name, TreeDef)
 			},
 			sounds = default.node_sound_leaves_defaults(),
 			walkable = false,
+			falling_node_walkable = false,
 			climbable = true,
 		})
 	end
@@ -238,6 +240,7 @@ function realtest.register_tree(name, TreeDef)
 			},
 			sounds = default.node_sound_leaves_defaults(),
 			walkable = false,
+			falling_node_walkable = false,
 			climbable = true,
 		})
 	end
