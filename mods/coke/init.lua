@@ -5,7 +5,7 @@ minetest.register_node("coke:bituminous_coal_block", {
 	tiles = {"coke_bituminous_coal_block.png"},
 	drop = "minerals:bituminous_coal 4",
 	particle_image = {"coke_bituminous_coal_block.png"},
-	groups = {crumbly=3, oddly_breakable_by_hand=1},
+	groups = {crumbly=3, falling_node=1, oddly_breakable_by_hand=1},
 	sounds = default.node_sound_stone_defaults(),
 })
 
@@ -14,7 +14,7 @@ minetest.register_node("coke:lignite_block", {
 	tiles = {"coke_lignite_block.png"},
 	drop = "minerals:lignite 4",
 	particle_image = {"coke_coal_block.png"},
-	groups = {crumbly=3, oddly_breakable_by_hand=1},
+	groups = {crumbly=3, falling_node=1, oddly_breakable_by_hand=1},
 	sounds = default.node_sound_stone_defaults(),
 })
 

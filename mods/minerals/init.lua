@@ -29,6 +29,24 @@ function mineralsi.register_mineral(mineral, description, ore, metal)
 		})
 		
 		minetest.register_abm({
+			nodenames = {"minerals:"..mineral.."_block","minerals:"..mineral.."_block_liquid",},
+			interval = 1.0,
+			chance = 1,
+			action = function(pos, node, active_object_count, active_object_count_wider)
+				local b = false
+				if minetest.env:get_node({x=pos.x+1, y=pos.y, z=pos.z}).name == 'air' then b=true end
+				if minetest.env:get_node({x=pos.x-1, y=pos.y, z=pos.z}).name == 'air' then b=true end
+				if minetest.env:get_node({x=pos.x, y=pos.y, z=pos.z+1}).name == 'air' then b=true end
+				if minetest.env:get_node({x=pos.x, y=pos.y, z=pos.z-1}).name == 'air' then b=true end
+				if b then
+					minetest.env:remove_node(pos);
+					minetest.env:add_item(pos, "minerals:"..mineral.." 4")
+					nodeupdate(pos)
+				end
+			end
+		})
+		
+		minetest.register_abm({
 			nodenames = {"minerals:"..mineral.."_block","minerals:"..mineral.."_block_liquid",
 				"default:brick","default:stone_flat","default:desert_stone_flat","default:cobbleblock_flat"},
 			interval = 1.0,
@@ -144,11 +162,53 @@ minetest.register_craft({
 })
 
 minetest.register_abm({
+	nodenames = {"coke:lignite_block"},
+	interval = 1.0,
+	chance = 1,
+	action = function(pos, node, active_object_count, active_object_count_wider)
+		local b = false
+		if minetest.env:get_node({x=pos.x+1, y=pos.y, z=pos.z}).name == 'air' then b=true end
+		if minetest.env:get_node({x=pos.x-1, y=pos.y, z=pos.z}).name == 'air' then b=true end
+		if minetest.env:get_node({x=pos.x, y=pos.y, z=pos.z+1}).name == 'air' then b=true end
+		if minetest.env:get_node({x=pos.x, y=pos.y, z=pos.z-1}).name == 'air' then b=true end
+		if b then
+			minetest.env:remove_node(pos);
+			minetest.env:add_item(pos, "minerals:bituminous_coal 4")
+			nodeupdate(pos)
+		end
+	end
+})
+
+minetest.register_abm({
+	nodenames = {"coke:bituminous_coal_block"},
+	interval = 1.0,
+	chance = 1,
+	action = function(pos, node, active_object_count, active_object_count_wider)
+		local b = false
+		if minetest.env:get_node({x=pos.x+1, y=pos.y, z=pos.z}).name == 'air' then b=true end
+		if minetest.env:get_node({x=pos.x-1, y=pos.y, z=pos.z}).name == 'air' then b=true end
+		if minetest.env:get_node({x=pos.x, y=pos.y, z=pos.z+1}).name == 'air' then b=true end
+		if minetest.env:get_node({x=pos.x, y=pos.y, z=pos.z-1}).name == 'air' then b=true end
+		if b then
+			minetest.env:remove_node(pos);
+			minetest.env:add_item(pos, "minerals:bituminous_coal 4")
+			nodeupdate(pos)
+		end
+	end
+})
+
+minetest.register_abm({
 	nodenames = {"coke:bituminous_coal_block","coke:lignite_block","default:brick","coke:coke_block",
 		"default:stone_flat","default:desert_stone_flat","default:cobbleblock_flat"},
 	interval = 1.0,
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
+-- 		local b = true
+-- 		if minetest.env:get_node({x=pos.x+1, y=pos.y+1, z=pos.z}).name == 'air' then b=false end
+-- 		if minetest.env:get_node({x=pos.x-1, y=pos.y+1, z=pos.z}).name == 'air' then b=false end
+-- 		if minetest.env:get_node({x=pos.x, y=pos.y+1, z=pos.z+1}).name == 'air' then b=false end
+-- 		if minetest.env:get_node({x=pos.x, y=pos.y+1, z=pos.z-1}).name == 'air' then b=false end
+-- 		if b then
 		local p = {x=pos.x, y=pos.y+1, z=pos.z}
 		local objects = minetest.env:get_objects_inside_radius(p, 0.5)
 		local lignite = 0
@@ -186,16 +246,8 @@ minetest.register_abm({
 			end
 			minetest.env:set_node(p, {name = "coke:bituminous_coal_block"})
 		end
+-- 		end
 	end
 })
-
---[[minetest.register_abm({
-	nodenames = {"coke:bituminous_coal_block","coke:lignite_block","default:brick"},
-	interval = 1.0,
-	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
-		
-	end
-})]]
 
 minetest.register_alias("minerals:brown_coal", "minerals:lignite")

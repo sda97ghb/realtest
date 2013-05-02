@@ -1,14 +1,14 @@
-forge = {}
+horn = {}
 
-function forge.register(metal)
+function horn.register(metal)
 	minetest.register_craft({
-		output = "forge:"..metal,
+		output = "horn:"..metal,
 		recipe = {{"","metals:"..metal.."_sheet",""},
 				{"metals:"..metal.."_ingot","coke:coke","metals:"..metal.."_ingot"},
 				{"","metals:"..metal.."_doubleingot",""}},
 	})
 
-	forge.formspec = 
+	horn.formspec = 
 		"size[8,7]"..
 		"image[1,1;1,1;default_furnace_fire_bg.png]"..
 		"list[current_name;fuel;2.5,1;1,1;]"..
@@ -16,18 +16,18 @@ function forge.register(metal)
 		"list[current_name;molds;6.5,1;1,1;]"..
 		"list[current_player;main;0,3;8,4;]"
 
-	minetest.register_node("forge:"..metal, {
-		description = "Forge",
-		tiles = {"forge_"..metal..".png","forge_"..metal..".png","forge_"..metal..".png",
-			"forge_"..metal..".png","forge_"..metal.."_back.png","forge_"..metal.."_front.png"},
-		particle_image = {"forge_"..metal..".png"},
+	minetest.register_node("horn:"..metal, {
+		description = "Horn",
+		tiles = {"horn_"..metal..".png","horn_"..metal..".png","horn_"..metal..".png",
+			"horn_"..metal..".png","horn_"..metal.."_back.png","horn_"..metal.."_front.png"},
+		particle_image = {"horn_"..metal..".png"},
 		groups = {oddly_breakable_by_hand=1},
 		paramtype2 = "facedir",
 		sounds = default.node_sound_stone_defaults(),
 		on_construct = function(pos)
 			local meta = minetest.env:get_meta(pos)
-			meta:set_string("formspec", forge.formspec)
-			meta:set_string("infotext", "Forge")
+			meta:set_string("formspec", horn.formspec)
+			meta:set_string("infotext", "Horn")
 			meta:set_int("active", 0)
 			local inv = meta:get_inventory()
 			inv:set_size("fuel", 1)
@@ -44,20 +44,20 @@ function forge.register(metal)
 		end,
 	})
 
-	minetest.register_node("forge:"..metal.."_active", {
-		description = "Forge",
-		tiles = {"forge_"..metal..".png","forge_"..metal..".png","forge_"..metal..".png",
-			"forge_"..metal..".png","forge_"..metal.."_back.png","forge_"..metal.."_front_active.png"},
-		particle_image = {"forge_"..metal..".png"},
+	minetest.register_node("horn:"..metal.."_active", {
+		description = "Horn",
+		tiles = {"horn_"..metal..".png","horn_"..metal..".png","horn_"..metal..".png",
+			"horn_"..metal..".png","horn_"..metal.."_back.png","horn_"..metal.."_front_active.png"},
+		particle_image = {"horn_"..metal..".png"},
 		light_source = 12,
-		drop = "forge:"..metal,
+		drop = "horn:"..metal,
 		groups = {igniter=1, not_in_creative_inventory=1},
 		paramtype2 = "facedir",
 		sounds = default.node_sound_stone_defaults(),
 		on_construct = function(pos)
 			local meta = minetest.env:get_meta(pos)
-			meta:set_string("formspec", forge.formspec)
-			meta:set_string("infotext", "Forge")
+			meta:set_string("formspec", horn.formspec)
+			meta:set_string("infotext", "Horn")
 			meta:set_int("active", 0)
 			local inv = meta:get_inventory()
 			inv:set_size("fuel", 1)
@@ -75,7 +75,7 @@ function forge.register(metal)
 	})
 
 	minetest.register_abm({
-		nodenames = {"forge:"..metal, "forge:"..metal.."_active"},
+		nodenames = {"horn:"..metal, "horn:"..metal.."_active"},
 		interval = 1.0,
 		chance = 1,
 		action = function(pos, node, active_object_count, active_object_count_wider)
@@ -99,7 +99,7 @@ function forge.register(metal)
 				if meta:get_float("fuel_time") < meta:get_float("fuel_totaltime") then
 					was_active = true
 					meta:set_float("fuel_time", meta:get_float("fuel_time") + 1)
-					local b = true, true
+					local b = true
 					local ymax = 16
 					local side = minetest.env:get_node(pos).param2
 					side = side - math.floor(side/4)*4
@@ -110,9 +110,11 @@ function forge.register(metal)
 						local p ={x=pos.x+xd, y=pos.y+y, z=pos.z+zd}
 						for m = 1, #mineralsi.list do
 							if mineralsi.list[m].ore then
-								if minetest.env:get_node(p).name == "minerals:"..mineralsi.list[m].name.."_block" and b then
-									minetest.env:set_node(p,{name = "minerals:"..mineralsi.list[m].name.."_block_liquid"})
-									b = false
+								if minetest.env:get_node(p).name == "minerals:"..mineralsi.list[m].name.."_block" then
+									if b and math.random(64) == 1 then
+										minetest.env:set_node(p,{name = "minerals:"..mineralsi.list[m].name.."_block_liquid"})
+									end
+									b=false
 								end
 							end
 						end
@@ -148,8 +150,8 @@ function forge.register(metal)
 				if meta:get_float("fuel_time") < meta:get_float("fuel_totaltime") then
 					local percent = math.floor(meta:get_float("fuel_time") /
 							meta:get_float("fuel_totaltime") * 100)
-					meta:set_string("infotext","Forge active: "..percent.."%")
-					hacky_swap_node(pos,"forge:"..metal.."_active")
+					meta:set_string("infotext","Horn active: "..percent.."%")
+					hacky_swap_node(pos,"horn:"..metal.."_active")
 					meta:set_string("formspec",
 						"size[8,7]"..
 						"image[1,1;1,1;default_furnace_fire_bg.png^[lowpart:"..
@@ -168,11 +170,11 @@ function forge.register(metal)
 					fuel = minetest.get_craft_result({method = "fuel", width = 1, items = fuellist})
 				end
 				local fuelstack = inv:get_stack("fuel", 1)
-				if fuelstack:get_name() ~= "coke:coke" then fuel.time = 0 end
+				if fuelstack:get_name() ~= "coke:coke" and fuelstack:get_name() ~= "minerals:anthracite" then fuel.time = 0 end
 				if fuel.time <= 0 then
-					meta:set_string("infotext","Forge out of fuel")
-					hacky_swap_node(pos,"forge:"..metal)
-					meta:set_string("formspec", forge.formspec)
+					meta:set_string("infotext","Horn out of fuel")
+					hacky_swap_node(pos,"horn:"..metal)
+					meta:set_string("formspec", horn.formspec)
 					meta:set_int("active", 0)
 					meta:set_int("sound_play", 0)
 					minetest.sound_stop(meta:get_int("sound_handle"))
@@ -190,38 +192,4 @@ function forge.register(metal)
 	})
 end
 
---[[minetest.register_abm({
-	nodenames = {"coke:lignite_block","coke:bituminous_coal_block","default:brick"},
-	interval = 1.0,
-	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
-		local p = {x=pos.x, y=pos.y+1, z=pos.z}
-		local objects = minetest.env:get_objects_inside_radius(p, 0.5)
-		local bituminous_coal, lignite = 0, 0
-		local coals = {}
-		for _, v in ipairs(objects) do
-			if not v:is_player() and v:get_luaentity() and v:get_luaentity().name == "__builtin:item" then
-				local istack = ItemStack(v:get_luaentity().itemstring)
-				if istack:get_name() == "minerals:bituminous_coal" then
-					bituminous_coal = bituminous_coal + istack:get_count()
-					table.insert(coals,v)
-				elseif istack:get_name() == "minerals:lignite" then
-					lignite = lignite + istack:get_count()
-					table.insert(coals,v)
-				end
-			end
-		end
-		if minetest.env:get_node(p).name == "air" and lignite+bituminous_coal == 9 and (lignite == 9 or bituminous_coal == 9) then
-			for _, v in ipairs(coals) do
-				v:remove()
-			end
-			if lignite == 9 then
-				minetest.env:set_node(p, {name = "coke:lignite_block"})
-			elseif bituminous_coal == 9 then
-				minetest.env:set_node(p, {name = "coke:bituminous_coal_block"})
-			end
-		end
-	end
-})]]
-
-forge.register("bronze")
+horn.register("bronze")

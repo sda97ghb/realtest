@@ -6,7 +6,7 @@ minetest.register_tool("sticks:sticks", {
 		if pointed_thing.type == "node" then	
 			if minetest.env:get_node(pointed_thing.under).name == "furnace:self" or minetest.env:get_node(pointed_thing.under).name == "bonfire:self" or
 				minetest.env:get_node(pointed_thing.under).name == "coke:bronze_furnace" or
-				minetest.env:get_node(pointed_thing.under).name == "forge:bronze" then
+				minetest.env:get_node(pointed_thing.under).name == "horn:bronze" then
 				local meta = minetest.env:get_meta(pointed_thing.under)
 				meta:set_int("active", 1)
 				item:add_wear(65535/10)
