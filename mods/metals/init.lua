@@ -1,116 +1,70 @@
 metals = {}
+metals.metals={}
+metals.list={}
+metals.desc_list={}
+metals.levels={}
 
-metals.levels = {0,0,0,1,2,2,2,2,2,2,2,2,2,2,3,3,3,4,4,4,5}
-
-metals.list = {
-	'bismuth',
-	'zinc',
-	'tin',
-	----------
-	'copper',
-	----------
-	'lead',
-	'silver',
-	'gold',
-	'brass',
-	'sterling_silver',
-	'rose_gold',
-	'black_bronze',
-	'bismuth_bronze',
-	'bronze',
-	'aluminium',
-	----------
-	'platinum',
-	'pig_iron',
-	'wrought_iron',
-	----------
-	'nickel',
-	'steel',
-	'tungsten',
-	----------
-	'black_steel'
-}
-
-metals.desc_list = {
-	'Bismuth',
-	'Zinc',
-	'Tin',
-	----------
-	'Copper',
-	----------
-	'Lead',
-	'Silver',
-	'Gold',
-	'Brass',
-	'Sterling Silver',
-	'Rose Gold',
-	'Black Bronze',
-	'Bismuth Bronze',
-	'Bronze',
-	'Aluminium',
-	----------
-	'Platinum',
-	'Pig Iron',
-	'Wrought Iron',
-	----------
-	'Nickel',
-	'Steel',
-	'Tungsten',
-	----------
-	'Black Steel'
-}
-
-for i=1, #metals.list do
+function realtest.register_metal(name, description, level)
+	local metal = {
+		name = name or "",
+		description = description or "",
+		level = level or "",
+	}
+	
+	table.insert(metals.metals,metal)
+	table.insert(metals.list,name)
+	table.insert(metals.desc_list,description)
+	table.insert(metals.levels,level)
 	
 	--
 	-- Craftitems
 	--
 	
-	minetest.register_craftitem("metals:"..metals.list[i].."_unshaped", {
-		description = "Unshaped "..metals.desc_list[i],
-		inventory_image = "metals_"..metals.list[i].."_unshaped.png",
+	minetest.register_craftitem("metals:"..name.."_unshaped", {
+		description = "Unshaped "..description,
+		inventory_image = "metals_"..name.."_unshaped.png",
 	})
 	
-	minetest.register_craftitem("metals:"..metals.list[i].."_ingot", {
-		description = metals.desc_list[i].." Ingot",
-		inventory_image = "metals_"..metals.list[i].."_ingot.png",
+	minetest.register_craftitem("metals:"..name.."_ingot", {
+		description = description.." Ingot",
+		inventory_image = "metals_"..name.."_ingot.png",
 	})
 	
-	minetest.register_craftitem("metals:"..metals.list[i].."_doubleingot", {
-		description = metals.desc_list[i].." Double Ingot",
-		inventory_image = "metals_"..metals.list[i].."_doubleingot.png",
+	minetest.register_craftitem("metals:"..name.."_doubleingot", {
+		description = description.." Double Ingot",
+		inventory_image = "metals_"..name.."_doubleingot.png",
 	})
 	
-	minetest.register_craftitem("metals:"..metals.list[i].."_sheet", {
-		description = metals.desc_list[i].." Sheet",
-		inventory_image = "metals_" .. metals.list[i].."_sheet.png",
+	minetest.register_craftitem("metals:"..name.."_sheet", {
+		description = description.." Sheet",
+		inventory_image = "metals_"..name.."_sheet.png",
 	})
 	
-	minetest.register_craftitem("metals:"..metals.list[i].."_doublesheet", {
-		description = metals.desc_list[i].." Double Sheet",
-		inventory_image = "metals_"..metals.list[i].."_doublesheet.png",
+	minetest.register_craftitem("metals:"..name.."_doublesheet", {
+		description = description.." Double Sheet",
+		inventory_image = "metals_"..name.."_doublesheet.png",
 	})
 	
-	minetest.register_craftitem("metals:ceramic_mold_"..metals.list[i], {
-		description = "Ceramic Mold with "..metals.desc_list[i],
-		inventory_image = "metals_ceramic_mold.png^metals_"..metals.list[i].."_ingot.png",
+	minetest.register_craftitem("metals:ceramic_mold_"..name, {
+		description = "Ceramic Mold with "..description,
+		inventory_image = "metals_ceramic_mold.png^metals_"..name.."_ingot.png",
 	})
 	
-	minetest.register_craftitem("metals:"..metals.list[i].."_lock", {
-		description = metals.desc_list[i].." Lock",
-		inventory_image = "metals_"..metals.list[i].."_lock.png",
+	minetest.register_craftitem("metals:"..name.."_lock", {
+		description = description.." Lock",
+		inventory_image = "metals_"..name.."_lock.png",
 	})
 	
 	--
 	-- Nodes
 	--
 	
-	minetest.register_node("metals:"..metals.list[i].."_block", {
-		description = "Block of "..metals.desc_list[i],
-		tiles = {"metals_"..metals.list[i].."_block.png"},
-		particle_image = {"metals_"..metals.list[i].."_block.png"},
+	minetest.register_node("metals:"..name.."_block", {
+		description = "Block of "..description,
+		tiles = {"metals_"..name.."_block.png"},
+		particle_image = {"metals_"..name.."_block.png"},
 		is_ground_content = true,
-		drop = "metals:"..metals.list[i].."_doubleingot 4",
+		drop = "metals:"..name.."_doubleingot 4",
 		groups = {snappy=1,bendy=2,cracky=1,melty=2,level=2,drop_on_dig=1},
 		sounds = default.node_sound_stone_defaults(),
 	})
@@ -120,50 +74,50 @@ for i=1, #metals.list do
 	--
 	
 	minetest.register_craft({
-		output = "metals:"..metals.list[i].."_block",
+		output = "metals:"..name.."_block",
 		recipe = {
-			{"metals:"..metals.list[i].."_doubleingot", "metals:"..metals.list[i].."_doubleingot"},
-			{"metals:"..metals.list[i].."_doubleingot", "metals:"..metals.list[i].."_doubleingot"},
+			{"metals:"..name.."_doubleingot", "metals:"..name.."_doubleingot"},
+			{"metals:"..name.."_doubleingot", "metals:"..name.."_doubleingot"},
 		}
 	})
 	
-	realtest.register_stair("metals:"..metals.list[i].."_block",nil,nil,nil,metals.desc_list[i].." Stair",nil,
-			"metals:"..metals.list[i].."_doubleingot 3")
-	realtest.register_slab("metals:"..metals.list[i].."_block",nil,nil,nil,metals.desc_list[i].." Slab",nil,
-			"metals:"..metals.list[i].."_doubleingot 2")
+	realtest.register_stair("metals:"..name.."_block",nil,nil,nil,description.." Stair",nil,
+			"metals:"..name.."_doubleingot 3")
+	realtest.register_slab("metals:"..name.."_block",nil,nil,nil,description.." Slab",nil,
+			"metals:"..name.."_doubleingot 2")
 	minetest.register_craft({
-		output = "metals:"..metals.list[i].."_block_slab",
+		output = "metals:"..name.."_block_slab",
 		recipe = {
-			{"metals:"..metals.list[i].."_doubleingot","metals:"..metals.list[i].."_doubleingot"},
+			{"metals:"..name.."_doubleingot","metals:"..name.."_doubleingot"},
 		},
 	})
 	minetest.register_craft({
-		output = "metals:"..metals.list[i].."_block_stair",
+		output = "metals:"..name.."_block_stair",
 		recipe = {
-			{"metals:"..metals.list[i].."_doubleingot",""},
-			{"metals:"..metals.list[i].."_doubleingot","metals:"..metals.list[i].."_doubleingot"},
+			{"metals:"..name.."_doubleingot",""},
+			{"metals:"..name.."_doubleingot","metals:"..name.."_doubleingot"},
 		},
 	})
 	minetest.register_craft({
-		output = "metals:"..metals.list[i].."_block_stair",
+		output = "metals:"..name.."_block_stair",
 		recipe = {
-			{"","metals:"..metals.list[i].."_doubleingot"},
-			{"metals:"..metals.list[i].."_doubleingot","metals:"..metals.list[i].."_doubleingot"},
+			{"","metals:"..name.."_doubleingot"},
+			{"metals:"..name.."_doubleingot","metals:"..name.."_doubleingot"},
 		},
 	})
 	
 	minetest.register_craft({
-		output = "metals:ceramic_mold_"..metals.list[i],
+		output = "metals:ceramic_mold_"..name,
 		recipe = {
-			{"metals:"..metals.list[i].."_ingot"},
+			{"metals:"..name.."_ingot"},
 			{"metals:ceramic_mold"},
 		}
 	})
 	
 	minetest.register_craft({
-		output = "metals:"..metals.list[i].."_ingot",
-		recipe = {{"metals:ceramic_mold_"..metals.list[i]}},
-		replacements = {{"metals:ceramic_mold_"..metals.list[i], "metals:ceramic_mold"}},
+		output = "metals:"..name.."_ingot",
+		recipe = {{"metals:ceramic_mold_"..name}},
+		replacements = {{"metals:ceramic_mold_"..name, "metals:ceramic_mold"}},
 	})
 	
 	--
@@ -172,98 +126,14 @@ for i=1, #metals.list do
 	
 	minetest.register_craft({
 		type = "cooking",
-		output = "metals:"..metals.list[i].."_unshaped",
-		recipe = "metals:ceramic_mold_"..metals.list[i],
+		output = "metals:"..name.."_unshaped",
+		recipe = "metals:ceramic_mold_"..name,
 	})
 end
 
---
--- Smelting
---
-
-minetest.register_craftitem("metals:clay_mold", {
-	description = "Clay mold",
-	inventory_image = "metals_clay_mold.png",
-})
-
-minetest.register_craftitem("metals:ceramic_mold", {
-	description = "Ceramic mold",
-	inventory_image = "metals_ceramic_mold.png",
-})
-
-minetest.register_craft({
-	output = "metals:clay_mold 5",
-	recipe = {
-		{"default:clay_lump", "",                  "default:clay_lump"},
-		{"default:clay_lump", "default:clay_lump", "default:clay_lump"},
-	}
-})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "metals:ceramic_mold",
-	recipe = "metals:clay_mold",
-})
-
-minerals = {}
-
-minerals.list = {
-	'magnetite',
-	'hematite',
-	'limonite',
-	'bismuthinite',
-	'cassiterite',
-	'galena',
-	'malachite',
-	'native_copper',
-	'native_gold',
-	'native_platinum',
-	'native_silver',
-	'sphalerite',
-	'tetrahedrite',
-	'garnierite',
-	'bauxite',
-}
-
-minerals.desc_list = {
-	'Magnetite',
-	'Hematite',
-	'Limonite',
-	'Bismuthinite',
-	'Cassiterite',
-	'Galena',
-	'Malachite',
-	'Native Copper',
-	'Native Gold',
-	'Native Platinum',
-	'Native Silver',
-	'Sphalerite',
-	'Tetrahedrite',
-	'Garnierite',
-	'Bauxite',
-}
-
-minerals.metals_list = {
-	'pig_iron',
-	'pig_iron',
-	'pig_iron',
-	'bismuth',
-	'tin',
-	'lead',
-	'copper',
-	'copper',
-	'gold',
-	'platinum',
-	'silver',
-	'zinc',
-	'copper',
-	'nickel',
-	'aluminium',
-}
-
-for i, mineral in ipairs(minerals.list) do
+function realtest.register_smelting(mineral, mineral_desc, metal)
 	minetest.register_craftitem("metals:ceramic_mold_"..mineral, {
-		description = "Ceramic mold with "..minerals.desc_list[i],
+		description = "Ceramic mold with "..mineral_desc,
 		inventory_image = "metals_ceramic_mold_"..mineral..".png",
 	})
 
@@ -283,62 +153,107 @@ for i, mineral in ipairs(minerals.list) do
 
 	minetest.register_craft({
 		type = "cooking",
-		output = "metals:"..minerals.metals_list[i].."_unshaped",
+		output = "metals:"..metal.."_unshaped",
 		recipe = "metals:ceramic_mold_"..mineral,
 	})
 end
+
+function realtest.register_alloy(output,recipe)
+	minetest.register_craft({
+		type = "shapeless",
+		output = output or "",
+		recipe = recipe or "",
+	})
+end
+
+realtest.register_metal('bismuth', 'Bismuth', 0)
+realtest.register_metal('zinc','Zinc',0)
+realtest.register_metal('tin','Tin',0)
+realtest.register_metal('copper','Copper',1)
+realtest.register_metal('lead','Lead',2)
+realtest.register_metal('silver','Silver',2)
+realtest.register_metal('gold','Gold',2)
+realtest.register_metal('brass','Brass',2)
+realtest.register_metal('sterling_silver','Sterling silver',2)
+realtest.register_metal('rose_gold','Rose Gold',2)
+realtest.register_metal('black_bronze','Black Bronze',2)
+realtest.register_metal('bismuth_bronze','Bismuth Bronze',2)
+realtest.register_metal('bronze','Bronze',2)
+realtest.register_metal('aluminium','Aluminium',2)
+realtest.register_metal('platinum','Platinum',3)
+realtest.register_metal('pig_iron','Pig Iron',3)
+realtest.register_metal('wrought_iron','Wrought Iron',3)
+realtest.register_metal('nickel','Nickel',4)
+realtest.register_metal('steel','Steel',4)
+realtest.register_metal('tungsten','Tungsten',4)
+realtest.register_metal('black_steel','Black Steel',5)
+
+--
+-- Smelting
+--
+
+minetest.register_craftitem("metals:clay_mold", {
+	description = "Clay mold",
+	inventory_image = "metals_clay_mold.png",
+})
+
+minetest.register_craftitem("metals:ceramic_mold", {
+	description = "Ceramic mold",
+	inventory_image = "metals_ceramic_mold.png",
+})
+
+minetest.register_craft({
+	output = "metals:clay_mold 5",
+	recipe = {
+		{"default:clay_lump", "", "default:clay_lump"},
+		{"default:clay_lump", "default:clay_lump", "default:clay_lump"},
+	}
+})
+
+minetest.register_craft({
+	type = "cooking",
+	output = "metals:ceramic_mold",
+	recipe = "metals:clay_mold",
+})
+
+realtest.register_smelting('magnetite','Magnetite','pig_iron')
+realtest.register_smelting('hematite','Hematite','pig_iron')
+realtest.register_smelting('limonite','Limonite','pig_iron')
+realtest.register_smelting('bismuthinite','Bismuthinite','bismuth')
+realtest.register_smelting('cassiterite','Cassiterite','tin')
+realtest.register_smelting('galena','Galena','lead')
+realtest.register_smelting('malachite','Malachite','copper')
+realtest.register_smelting('native_copper','Native Copper','copper')
+realtest.register_smelting('native_gold','Native Gold','gold')
+realtest.register_smelting('native_platinum','Native Platinum','platinum')
+realtest.register_smelting('native_silver','Native Silver','silver')
+realtest.register_smelting('sphalerite','Sphalerite','zinc')
+realtest.register_smelting('tetrahedrite','Tetrahedrite','copper')
+realtest.register_smelting('garnierite','Garnierite','nickel')
+realtest.register_smelting('bauxite','Bauxite','aluminium')
+realtest.register_smelting('scheelite','Scheelite','tungsten')
+realtest.register_smelting('wolframite','Wolframite','tungsten')
 
 --
 -- Alloys
 --
 
-minetest.register_craft({
-	type = "shapeless",
-	output = "metals:steel_unshaped 4",
-	recipe = {"metals:wrought_iron_unshaped", "metals:wrought_iron_unshaped", "metals:wrought_iron_unshaped", "metals:pig_iron_unshaped"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "metals:brass_unshaped 4",
-	recipe = {"metals:copper_unshaped", "metals:copper_unshaped", "metals:copper_unshaped", "metals:zinc_unshaped"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "metals:sterling_silver_unshaped 4",
-	recipe = {"metals:silver_unshaped", "metals:silver_unshaped", "metals:silver_unshaped", "metals:copper_unshaped"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "metals:rose_gold_unshaped 4",
-	recipe = {"metals:gold_unshaped", "metals:gold_unshaped", "metals:gold_unshaped", "metals:brass_unshaped"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "metals:black_bronze_unshaped 4",
-	recipe = {"metals:copper_unshaped", "metals:copper_unshaped", "metals:gold_unshaped", "metals:silver_unshaped"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "metals:bismuth_bronze_unshaped 4",
-	recipe = {"metals:copper_unshaped", "metals:copper_unshaped", "metals:bismuth_unshaped", "metals:tin_unshaped"}
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "metals:bronze_unshaped 4",
-	recipe = {"metals:copper_unshaped", "metals:copper_unshaped", "metals:copper_unshaped", "metals:tin_unshaped"}
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "metals:black_steel_unshaped 4",
-	recipe = {"metals:steel_unshaped", "metals:steel_unshaped", "metals:nickel_unshaped", "metals:black_bronze_unshaped"}
-})
+realtest.register_alloy("metals:steel_unshaped 4",
+	{"metals:wrought_iron_unshaped", "metals:wrought_iron_unshaped", "metals:wrought_iron_unshaped", "metals:pig_iron_unshaped"})
+realtest.register_alloy("metals:brass_unshaped 4",
+	{"metals:copper_unshaped", "metals:copper_unshaped", "metals:copper_unshaped", "metals:zinc_unshaped"})
+realtest.register_alloy("metals:sterling_silver_unshaped 4",
+	{"metals:silver_unshaped", "metals:silver_unshaped", "metals:silver_unshaped", "metals:copper_unshaped"})
+realtest.register_alloy("metals:rose_gold_unshaped 4",
+	{"metals:gold_unshaped", "metals:gold_unshaped", "metals:gold_unshaped", "metals:brass_unshaped"})
+realtest.register_alloy("metals:black_bronze_unshaped 4",
+	{"metals:copper_unshaped", "metals:copper_unshaped", "metals:gold_unshaped", "metals:silver_unshaped"})
+realtest.register_alloy("metals:bismuth_bronze_unshaped 4",
+	{"metals:copper_unshaped", "metals:copper_unshaped", "metals:bismuth_unshaped", "metals:tin_unshaped"})
+realtest.register_alloy("metals:bronze_unshaped 4",
+	{"metals:copper_unshaped", "metals:copper_unshaped", "metals:copper_unshaped", "metals:tin_unshaped"})
+realtest.register_alloy("metals:black_steel_unshaped 4",
+	{"metals:steel_unshaped", "metals:steel_unshaped", "metals:nickel_unshaped", "metals:black_bronze_unshaped"})
 
 --
 -- Other

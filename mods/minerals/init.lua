@@ -29,7 +29,8 @@ function mineralsi.register_mineral(mineral, description, ore, metal)
 		})
 		
 		minetest.register_abm({
-			nodenames = {"minerals:"..mineral.."_block","minerals:"..mineral.."_block_liquid","default:brick"},
+			nodenames = {"minerals:"..mineral.."_block","minerals:"..mineral.."_block_liquid",
+				"default:brick","default:stone_flat","default:desert_stone_flat","default:cobbleblock_flat"},
 			interval = 1.0,
 			chance = 1,
 			action = function(pos, node, active_object_count, active_object_count_wider)
@@ -80,6 +81,8 @@ mineralsi.register_mineral('native_silver','Native silver',true,'silver')
 mineralsi.register_mineral('sphalerite','Sphalerite',true,'zink')
 mineralsi.register_mineral('tetrahedrite','Tetrahedrite',true,'copper')
 mineralsi.register_mineral('bauxite','Bauxite',true,'aluminium')
+mineralsi.register_mineral('scheelite','Scheelite',true,'tungsten')
+mineralsi.register_mineral('wolframite','Wolframite',true,'tungsten')
 mineralsi.register_mineral('cinnabar','Cinnabar',false)
 mineralsi.register_mineral('cryolite','Cryolite',false)
 mineralsi.register_mineral('graphite','Graphite',false)
@@ -141,7 +144,8 @@ minetest.register_craft({
 })
 
 minetest.register_abm({
-	nodenames = {"coke:bituminous_coal_block","coke:lignite_block","default:brick","coke:coke_block"},
+	nodenames = {"coke:bituminous_coal_block","coke:lignite_block","default:brick","coke:coke_block",
+		"default:stone_flat","default:desert_stone_flat","default:cobbleblock_flat"},
 	interval = 1.0,
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
