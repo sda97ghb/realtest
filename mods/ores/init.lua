@@ -25,6 +25,8 @@ ores.list = {
 	"bauxite",
 	"scheelite",
 	"wolframite",
+	"skutterudite",
+	"cobaltite",
 	---------------------------
 	'cinnabar',
 	'cryolite',
@@ -64,6 +66,10 @@ ores.desc_list = {
 	"Tetrahedrite",
 	"Lapis",
 	"Bauxite",
+	"Scheelite",
+	"Wolframite",
+	"Skutterudite",
+	"Cobaltite",
 	---------------------------
 	'Cinnabar',
 	'Cryolite',
@@ -320,6 +326,8 @@ minetest.register_on_generated(function(minp, maxp, seed)
 		{"ores:bauxite"},
 		{"ores:scheelite"},
 		{"ores:wolframite"},
+		{"ores:skutterudit"},
+		{"ores:cobaltite"},
 		{"ores:lapis"},
 		{'ores:cinnabar'},
 		{'ores:cryolite'},
