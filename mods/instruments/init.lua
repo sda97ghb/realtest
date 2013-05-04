@@ -24,6 +24,8 @@ instruments.materials = {
 	"steel",
 	--------
 	"black_steel",
+	--------
+	"pobedit",
 }
 
 instruments.desc_list = {
@@ -45,6 +47,8 @@ instruments.desc_list = {
 	"Steel",
 	--------
 	"Black Steel",
+	--------
+	"Pobedit",
 }
 
 instruments.stone_head_recipes = {
@@ -54,10 +58,10 @@ instruments.stone_head_recipes = {
 	hammer = {{{"default:cobble","default:cobble","default:cobble"},{"default:cobble","default:cobble","default:cobble"}},6},
 }
 
-instruments.levels = {0,0,0,0,1,2,2,2,2,2,3,4,5}
+instruments.levels = {0,0,0,0,1,2,2,2,2,2,3,4,5,6}
 
 --instruments.durability = {50, 211, 281, 296, 411, 521, 531, 581, 601, 731, 801, 1101, 1501}
-instruments.durability = {13, 53, 71, 74, 103, 131, 133, 151, 151, 183, 201, 326, 376}
+instruments.durability = {13, 53, 71, 74, 103, 131, 133, 151, 151, 183, 201, 326, 376, 421}
 
 instruments.list = {"pick", "axe", "shovel", "hammer", "sword", "spear", "chisel"}
 

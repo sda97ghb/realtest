@@ -188,6 +188,7 @@ realtest.register_metal('steel','Steel',4)
 realtest.register_metal('tungsten','Tungsten',4)
 realtest.register_metal('cobalt','Cobalt',5)
 realtest.register_metal('black_steel','Black Steel',5)
+realtest.register_metal('pobedit','Pobedit',6)
 
 --
 -- Smelting
@@ -257,7 +258,33 @@ realtest.register_alloy("metals:bronze_unshaped 4",
 	{"metals:copper_unshaped", "metals:copper_unshaped", "metals:copper_unshaped", "metals:tin_unshaped"})
 realtest.register_alloy("metals:black_steel_unshaped 4",
 	{"metals:steel_unshaped", "metals:steel_unshaped", "metals:nickel_unshaped", "metals:black_bronze_unshaped"})
+realtest.register_alloy("metals:pobedit_unshaped 2",
+	{"metals:cobalt_unshaped", "metals:tungsten_carbide_unshaped"})
 
 --
 -- Other
 --
+
+minetest.register_craftitem("metals:ceramic_mold_tungsten_unshaped_coke", {
+	description = "Ceramic mold with unshaped tungsten and coke",
+	inventory_image = "metals_ceramic_mold_tungsten_unshaped_coke.png",
+})
+
+minetest.register_craftitem("metals:tungsten_carbide_unshaped", {
+	description = "Unshaped Tungsten Carbide",
+	inventory_image = "metals_tungsten_carbide_unshaped.png",
+})
+
+minetest.register_craft({
+	output = "metals:ceramic_mold_tungsten_unshaped_coke",
+	recipe = {
+		{"coke:coke"},
+		{"metals:tungsten_unshaped"},
+	}
+})
+
+minetest.register_craft({
+	type = "cooking",
+	output = "metals:tungsten_carbide_unshaped",
+	recipe = "metals:ceramic_mold_tungsten_unshaped_coke",
+})
