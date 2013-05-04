@@ -259,7 +259,7 @@ realtest.register_alloy("metals:bronze_unshaped 4",
 realtest.register_alloy("metals:black_steel_unshaped 4",
 	{"metals:steel_unshaped", "metals:steel_unshaped", "metals:nickel_unshaped", "metals:black_bronze_unshaped"})
 realtest.register_alloy("metals:pobedit_unshaped 2",
-	{"metals:cobalt_unshaped", "metals:tungsten_carbide_unshaped"})
+	{"metals:cobalt_unshaped", "metals:tungsten_carbide_unshaped", "metals:tungsten_carbide_unshaped", "metals:tungsten_carbide_unshaped", "metals:tungsten_carbide_unshaped", "metals:tungsten_carbide_unshaped"})
 
 --
 -- Other
