@@ -39,7 +39,7 @@ function realtest.register_ore(name, OreDef)
 			description = ore.description .. " Ore",
 			tiles = wherein_textures,
 			particle_image = {ore.particle_image},
-			groups = {cracky=3,drop_on_dig=1,ore=1},
+			groups = {cracky=3,drop_on_dig=1,ore=1,dropping_like_stone=1},
 			drop = {
 				max_items = 1,
 				items = {

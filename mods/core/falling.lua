@@ -26,6 +26,88 @@ function minetest.register_node(name, nodedef)
 	minetest.register_item(name, nodedef)
 end
 
+realtest.registered_on_updatenodes = {}
+function realtest.register_on_updatenode(func)
+	table.insert(realtest.registered_on_updatenodes, func)
+end
+minetest.register_on_updatenode = realtest.register_on_updatenode
+
+function nodeupdate_single(pos)
+	for _, callback in ipairs(realtest.registered_on_updatenodes) do
+		callback(pos)
+	end
+end
+
+function nodeupdate(pos)
+	for x = -1,1 do
+		for y = -1,1 do
+			for z = -1,1 do
+				pos2 = {x=pos.x+x, y=pos.y+y, z=pos.z+z}
+				nodeupdate_single(pos2)
+			end
+		end
+	end
+end
+
+realtest.register_on_updatenode(function(pos)
+	local node = minetest.env:get_node(pos)
+	if minetest.get_node_group(node.name, "dropping_node") ~= 0 then
+		if minetest.registered_nodes[node.name].cause_drop(pos, node) then
+			local meta = minetest.env:get_meta(pos)
+			if minetest.registered_nodes[node.name].on_dropping then
+				minetest.registered_nodes[node.name].on_dropping(pos, node)
+			else
+				local drops = minetest.registered_nodes[node.name].drop_on_dropping or
+					minetest.registered_nodes[node.name].drop or node.name
+				if type(drops) == "string" then drops = {drops} end
+				minetest.env:remove_node(pos)
+				minetest.handle_node_drops(pos, drops)
+			end
+			if minetest.registered_nodes[node.name].after_dig_node then
+				minetest.registered_nodes[node.name].after_dig_node(pos, node, meta, nil)
+			end
+			nodeupdate(pos)
+		end
+	end
+end)
+
+realtest.register_on_updatenode(function(pos)
+		local node = minetest.env:get_node(pos)
+		local b_node = minetest.env:get_node({x=pos.x,y=pos.y-1,z=pos.z})
+		if minetest.get_node_group(node.name, "dropping_like_stone") ~= 0 and
+				(minetest.registered_nodes[b_node.name].walkable == false or
+					minetest.registered_nodes[b_node.name].buildable_to) then
+			local sides = {{x=-1,y=0,z=0}, {x=1,y=0,z=0}, {x=0,y=0,z=-1}, {x=0,y=0,z=1}, {x=0,y=-1,z=0}, {x=0,y=1,z=0}}
+			local fall = true
+			for _, s in ipairs(sides) do
+				if  minetest.get_node_group(minetest.env:get_node({x=pos.x+s.x,y=pos.y+s.y,z=pos.z+s.z}).name, "dropping_like_stone") ~= 0 then
+					fall = false
+					break
+				end
+			end
+			if fall then
+				minetest.env:remove_node({x=pos.x,y=pos.y,z=pos.z})
+				minetest.handle_node_drops(pos, {node.name})
+				nodeupdate(pos)
+			end
+		end
+	end)
+
+realtest.register_on_updatenode(function(pos)
+	local node = minetest.env:get_node(pos)
+	if minetest.get_node_group(node.name, "falling_node") ~= 0 then
+		if minetest.registered_nodes[node.name].cause_fall(pos, node) then
+			if minetest.registered_nodes[node.name].on_falling then
+				minetest.registered_nodes[node.name].on_falling(pos, node)
+			else
+				minetest.env:remove_node(pos)
+				spawn_falling_node(pos, node.name)
+			end
+			nodeupdate(pos)
+		end
+	end
+end)
+
 minetest.register_entity(":__builtin:falling_node", {
 	initial_properties = {
 		physical = true,
@@ -112,47 +194,3 @@ minetest.register_entity(":__builtin:falling_node", {
 		end
 	end
 })
-
-function nodeupdate_single(p)
-	n = minetest.env:get_node(p)
-	if minetest.get_node_group(n.name, "falling_node") ~= 0 then
-		if minetest.registered_nodes[n.name].cause_fall(p, n) then
-			if minetest.registered_nodes[n.name].on_falling then
-				minetest.registered_nodes[n.name].on_falling(p, n)
-			else
-				minetest.env:remove_node(p)
-				spawn_falling_node(p, n.name)
-			end
-			nodeupdate(p)
-		end
-	end
-	if minetest.get_node_group(n.name, "dropping_node") ~= 0 then
-		if minetest.registered_nodes[n.name].cause_drop(p, n) then
-			local meta = minetest.env:get_meta(p)
-			if minetest.registered_nodes[n.name].on_dropping then
-				minetest.registered_nodes[n.name].on_dropping(p, n)
-			else
-				local drops = minetest.registered_nodes[n.name].drop_on_dropping or
-					minetest.registered_nodes[n.name].drop or n.name
-				if type(drops) == "string" then drops = {drops} end
-				minetest.env:remove_node(p)
-				minetest.handle_node_drops(p, drops)
-			end
-			if minetest.registered_nodes[n.name].after_dig_node then
-				minetest.registered_nodes[n.name].after_dig_node(p, n, meta, nil)
-			end
-			nodeupdate(p)
-		end
-	end
-end
-
-function nodeupdate(p)
-	for x = -1,1 do
-		for y = -1,1 do
-			for z = -1,1 do
-				p2 = {x=p.x+x, y=p.y+y, z=p.z+z}
-				nodeupdate_single(p2)
-			end
-		end
-	end
-end
