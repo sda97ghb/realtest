@@ -34,7 +34,8 @@ minetest.register_on_updatenode = realtest.register_on_updatenode
 
 function nodeupdate_single(pos)
 	for _, callback in ipairs(realtest.registered_on_updatenodes) do
-		callback(pos)
+		local node = minetest.env:get_node(pos)
+		callback(pos, node)
 	end
 end
 
@@ -49,8 +50,7 @@ function nodeupdate(pos)
 	end
 end
 
-realtest.register_on_updatenode(function(pos)
-	local node = minetest.env:get_node(pos)
+realtest.register_on_updatenode(function(pos, node)
 	if minetest.get_node_group(node.name, "dropping_node") ~= 0 then
 		if minetest.registered_nodes[node.name].cause_drop(pos, node) then
 			local meta = minetest.env:get_meta(pos)
@@ -71,21 +71,20 @@ realtest.register_on_updatenode(function(pos)
 	end
 end)
 
-realtest.register_on_updatenode(function(pos)
-		local node = minetest.env:get_node(pos)
+realtest.register_on_updatenode(function(pos, node)
 		local b_node = minetest.env:get_node({x=pos.x,y=pos.y-1,z=pos.z})
 		if minetest.get_node_group(node.name, "dropping_like_stone") ~= 0 and
 				(minetest.registered_nodes[b_node.name].walkable == false or
 					minetest.registered_nodes[b_node.name].buildable_to) then
 			local sides = {{x=-1,y=0,z=0}, {x=1,y=0,z=0}, {x=0,y=0,z=-1}, {x=0,y=0,z=1}, {x=0,y=-1,z=0}, {x=0,y=1,z=0}}
-			local fall = true
+			local drop = true
 			for _, s in ipairs(sides) do
 				if  minetest.get_node_group(minetest.env:get_node({x=pos.x+s.x,y=pos.y+s.y,z=pos.z+s.z}).name, "dropping_like_stone") ~= 0 then
-					fall = false
+					drop = false
 					break
 				end
 			end
-			if fall then
+			if drop then
 				minetest.env:remove_node({x=pos.x,y=pos.y,z=pos.z})
 				minetest.handle_node_drops(pos, {node.name})
 				nodeupdate(pos)
@@ -93,8 +92,7 @@ realtest.register_on_updatenode(function(pos)
 		end
 	end)
 
-realtest.register_on_updatenode(function(pos)
-	local node = minetest.env:get_node(pos)
+realtest.register_on_updatenode(function(pos, node)
 	if minetest.get_node_group(node.name, "falling_node") ~= 0 then
 		if minetest.registered_nodes[node.name].cause_fall(pos, node) then
 			if minetest.registered_nodes[node.name].on_falling then
@@ -103,6 +101,44 @@ realtest.register_on_updatenode(function(pos)
 				minetest.env:remove_node(pos)
 				spawn_falling_node(pos, node.name)
 			end
+			nodeupdate(pos)
+		end
+	end
+end)
+
+realtest.register_on_updatenode(function(pos, node)
+	if minetest.get_node_group(node.name, "attached_node") ~= 0 then
+		local function check_attached_node(p, n)
+			local def = minetest.registered_nodes[n.name]
+			local d = {x=0, y=0, z=0}
+			if def.paramtype2 == "wallmounted" then
+				if n.param2 == 0 then
+					d.y = 1
+				elseif n.param2 == 1 then
+					d.y = -1
+				elseif n.param2 == 2 then
+					d.x = 1
+				elseif n.param2 == 3 then
+					d.x = -1
+				elseif n.param2 == 4 then
+					d.z = 1
+				elseif n.param2 == 5 then
+					d.z = -1
+				end
+			else
+				d.y = -1
+			end
+			local p2 = {x=p.x+d.x, y=p.y+d.y, z=p.z+d.z}
+			local nn = minetest.env:get_node(p2).name
+			local def2 = minetest.registered_nodes[nn]
+			if def2 and (not def2.walkable or def2.buildable_to) then
+				return false
+			end
+			return true
+		end
+		if not check_attached_node(pos, node) then
+			minetest.env:remove_node(pos)
+			minetest.handle_node_drops(pos, {node.name})
 			nodeupdate(pos)
 		end
 	end

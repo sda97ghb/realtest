@@ -1,5 +1,3 @@
---Mod by PilzAdam
-
 if minetest.setting_getbool("creative_mode") then
 	function minetest.handle_node_drops(pos, drops, digger)
 		if not digger or not digger:is_player() then
