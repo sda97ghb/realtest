@@ -19,7 +19,7 @@ realtest.add_bonfire_fuel("default:papyrus")
 realtest.add_bonfire_fuel("default:torch")
 realtest.add_bonfire_fuel("default:sign_wall")
 realtest.add_bonfire_fuel("ores:peat")
-realtest.add_bonfire_fuel("default:coal_lump")
+realtest.add_bonfire_fuel("minerals:charcoal")
 
 minetest.register_node("bonfire:self", {
 	description = "Bonfire",
