@@ -172,7 +172,7 @@ for _, mineral in ipairs(decor_minerals) do
 		can_dig = function(pos,player)
 			local meta = minetest.env:get_meta(pos);
 			local inv = meta:get_inventory()
-			return inv:is_empty("main") and player:get_name() == meta:get_string("owner")
+			return inv:is_empty("main") and player:get_player_name() == meta:get_string("owner")
 		end,
 		allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
 			local meta = minetest.env:get_meta(pos)
