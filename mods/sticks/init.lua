@@ -31,7 +31,7 @@ minetest.register_tool("sticks:sticks", {
 						elseif minetest.get_item_group(istack:get_name(), "leaves") == 1  then
 							bonfireb = bonfireb + istack:get_count()
 							table.insert(sticks_and_leaves,v)
-						elseif istack:get_name() == "default:coal_lump" then
+						elseif istack:get_name() == "minerals:charcoal" then
 							furnaceb = furnaceb + istack:get_count()
 							table.insert(coals,v)
 						end

@@ -4,8 +4,9 @@ function furnace.check_furnace_blocks(pos)
 	local furnace_blocks = {{x=1,y=0,z=-1}, {x=1,y=0,z=0}, {x=1,y=0,z=1}, {x=0,y=0,z=-1}, {x=0,y=0,z=1}, {x=-1,y=0,z=-1}, {x=-1,y=0,z=0}, {x=-1,y=0,z=1}, {x=0,y=-1,z=0}, {x=1,y=-1,z=-1}, {x=1,y=-1,z=0}, {x=1,y=-1,z=1}, {x=0,y=-1,z=-1}, {x=0,y=-1,z=1}, {x=-1,y=-1,z=-1}, {x=-1,y=-1,z=0}, {x=-1,y=-1,z=1}}
 	for n = 1,#furnace_blocks do
 		local v = furnace_blocks[n]
-			if minetest.env:get_node({x=pos.x+v.x,y=pos.y+v.y,z=pos.z+v.z}).name ~= "default:cobbleblock_flat" and
-				minetest.env:get_node_or_nil({x=pos.x+v.x,y=pos.y+v.y,z=pos.z+v.z}) then
+			minetest.chat_send_all("furnace")
+			if minetest.env:get_node_or_nil({x=pos.x+v.x,y=pos.y+v.y,z=pos.z+v.z}) and 
+					minetest.get_node_group(minetest.env:get_node({x=pos.x+v.x,y=pos.y+v.y,z=pos.z+v.z}).name, "stone") ~= 1 then
 				return false
 			end
 		end
