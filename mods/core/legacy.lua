@@ -51,6 +51,8 @@ minetest.register_alias("default:cobbleblock_flat_slab_r", "default:stone_bricks
 minetest.register_alias("default:cobbleblock_flat_slab", "default:stone_bricks_slab")
 minetest.register_alias("default:cobbleblock_flat_stair_r", "default:stone_bricks_stair_r")
 minetest.register_alias("default:cobbleblock_flat_stair", "default:stone_bricks_stair")
+minetest.register_alias("default:cobbleblock_flat_stair_upside_down_r", "default:stone_bricks_stair_upside_down_r")
+minetest.register_alias("default:cobbleblock_flat_stair_upside_down", "default:stone_bricks_stair_upside_down")
 minetest.register_alias("default:cobble_node", "default:stone_small_rock_node")
 minetest.register_alias("default:coal_lump", "minerals:charcoal")
 minetest.register_alias("ores:lignite","ores:lignite_in_default_stone")
