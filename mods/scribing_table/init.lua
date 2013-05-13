@@ -13,7 +13,6 @@ function realtest.register_instrument_plan(name, PlanDef)
 		minetest.register_craftitem(name, {
 			description = plan.description,
 			inventory_image = plan.inventory_image,
-			stack_max = 1,
 		})
 		table.insert(realtest.registered_instrument_plans, plan)
 	end
