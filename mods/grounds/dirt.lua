@@ -189,8 +189,7 @@ function realtest.register_dirt(name, DirtRef)
 			if not n then
 				return
 			end
-			if (n.liquidtype and n.liquidtype ~= "none")
-				or (minetest.env:get_node_light(pos) and minetest.env:get_node_light(pos) < 5) then
+			if (n.liquidtype and n.liquidtype ~= "none") then
 				pos.y = pos.y-1
 				minetest.env:set_node(pos, {name=grass_nograss[node.name]})
 				nodeupdate_single(pos)
