@@ -193,8 +193,8 @@ minetest.register_craftitem("metals:ceramic_mold", {
 minetest.register_craft({
 	output = "metals:clay_mold 5",
 	recipe = {
-		{"default:clay_lump", "",                  "default:clay_lump"},
-		{"default:clay_lump", "default:clay_lump", "default:clay_lump"},
+		{"grounds:clay_lump", "",                  "grounds:clay_lump"},
+		{"grounds:clay_lump", "grounds:clay_lump", "grounds:clay_lump"},
 	}
 })
 

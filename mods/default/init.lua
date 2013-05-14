@@ -240,7 +240,7 @@ minetest.register_node("default:sand_with_clay", {
 	particle_image = {"default_clay_lump.png"},
 	is_ground_content = true,
 	groups = {crumbly=3,drop_on_dig=1},
-	drop = "default:clay_lump 4",
+	drop = "grounds:clay_lump 4",
 	sounds = default.node_sound_dirt_defaults({
 		footstep = "",
 	}),
@@ -632,11 +632,6 @@ minetest.register_craftitem("default:paper", {
 minetest.register_craftitem("default:book", {
 	description = "Book",
 	inventory_image = "default_book.png",
-})
-
-minetest.register_craftitem("default:clay_lump", {
-	description = "Clay Lump",
-	inventory_image = "default_clay_lump.png",
 })
 
 minetest.register_craftitem("default:clay_brick", {
