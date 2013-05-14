@@ -609,6 +609,12 @@ function realtest.register_tree(name, TreeDef)
 		recipe=tree.name.."_log",
 	})
 	
+	minetest.register_craft({
+		type = "cooking",
+		output = "default:torch 2",
+		recipe = tree.name.."_stick"
+	})
+	
 	minetest.register_abm({
 		nodenames = {tree.name.."_sapling"},
 		neighbors = tree.grounds,
