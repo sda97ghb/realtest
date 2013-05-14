@@ -209,3 +209,9 @@ minetest.register_node("ores:peat", {
 	groups = {crumbly=3,drop_on_dig=1,falling_node=1},
 	sounds = default.node_sound_dirt_defaults(),
 })
+
+minetest.register_craft({
+	type = "fuel",
+	recipe = "ores:peat",
+	burntime = 15
+})
