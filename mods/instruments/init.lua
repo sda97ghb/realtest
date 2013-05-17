@@ -130,6 +130,7 @@ for i, material in ipairs(instruments.materials) do
 				local n = minetest.env:get_node(pointed_thing.under)
 				if instruments.chisel_pairs[n.name] then
 					minetest.env:add_node(pointed_thing.under, {name=instruments.chisel_pairs[n.name], param2=n.param2})
+					nodeupdate(pointed_thing.under)
 				end
 				item:add_wear(65535/instruments.durability[i]/4)
 				return item
