@@ -67,15 +67,16 @@ function realtest.register_stone(name, StoneRef)
 		description = stone.description.." Macadam",
 		tiles = {name_.."_macadam.png"},
 		particle_image = {name_.."_small_rock.png"},
-		groups = {crumbly=2, drop_on_dig=1, stone=1, macadam=1},
+		groups = {crumbly=2, drop_on_dig=1, stone=1, macadam=1, falling_node=1},
 		sounds = default.node_sound_stone_defaults(),
 		drop = name.."_small_rock 4"
 	})
 	
 	minetest.register_craft({
 		recipe = {
-			{name.."_small_rock", name.."_small_rock"},
-			{name.."_small_rock", name.."_small_rock"}
+			{name.."_small_rock", name.."_small_rock", name.."_small_rock"},
+			{name.."_small_rock", name.."_small_rock", name.."_small_rock"},
+			{name.."_small_rock", name.."_small_rock", name.."_small_rock"}
 		},
 		output = name.."_macadam"
 	})
