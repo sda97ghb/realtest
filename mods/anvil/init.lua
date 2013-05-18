@@ -10,6 +10,7 @@ function realtest.register_anvil_recipe(RecipeDef)
 		rmitem2 = RecipeDef.rmitem2,
 		output = RecipeDef.output or "",
 		level = RecipeDef.level or 0,
+		instrument = RecipeDef.instrument or "hammer"
 	}
 	if recipe.rmitem1 == nil then
 		recipe.rmitem1 = true
@@ -42,6 +43,18 @@ for i, metal in ipairs(metals.list) do
 		item1 = "metals:"..metal.."_doubleingot",
 		output = "metals:"..metal.."_sheet",
 		level = metals.levels[i] - 1,
+	})
+	realtest.register_anvil_recipe({
+		item1 = "metals:"..metal.."_doubleingot",
+		output = "metals:"..metal.."_ingot 2",
+		level = metals.levels[i] - 1,
+		instrument = "chisel"
+	})
+	realtest.register_anvil_recipe({
+		item1 = "metals:"..metal.."_doublesheet",
+		output = "metals:"..metal.."_sheet 2",
+		level = metals.levels[i] - 1,
+		instrument = "chisel"
 	})
 	realtest.register_anvil_recipe({
 		type = "weld",
@@ -204,14 +217,39 @@ for _, anvil in ipairs(anvils) do
 			local inv = meta:get_inventory()
 	
 			local src1, src2 = inv:get_stack("src1", 1), inv:get_stack("src2", 1)
-			local hammer, flux = inv:get_stack("hammer", 1), inv:get_stack("flux", 1)
+			local instrument, flux = inv:get_stack("hammer", 1), inv:get_stack("flux", 1)
 			local output = inv:get_stack("output", 1)
-			if string.sub(hammer:get_name(), 13, 18) == "hammer" then
-				local forge = function()
+			local forge = function()
+				for _, recipe in ipairs(realtest.registered_anvil_recipes) do
+					if recipe.type == "forge" and recipe.item1 == src1:get_name() and recipe.item2 == src2:get_name() and
+						anvil[3] >= recipe.level and
+						minetest.get_item_group(instrument:get_name(),  recipe.instrument) == 1 and
+						minetest.get_item_group(instrument:get_name(), "material_level") >= recipe.level - 1 then
+						if inv:room_for_item("output", recipe.output) then
+							if recipe.rmitem1 then
+								src1:take_item()
+								inv:set_stack("src1", 1, src1)
+							end
+							if recipe.item2 ~= "" and recipe.rmitem2 then
+								src2:take_item()
+								inv:set_stack("src2", 1, src2)
+							end
+							output:add_item(recipe.output)
+							inv:set_stack("output", 1, output)
+							instrument:add_wear(65535/minetest.get_item_group(instrument:get_name(), "durability"))
+							inv:set_stack("hammer", 1, instrument)
+						end
+						return
+					end
+				end
+			end
+			local weld = function()
+				if flux:get_name() == "minerals:flux" then
 					for _, recipe in ipairs(realtest.registered_anvil_recipes) do
-						if recipe.type == "forge" and recipe.item1 == src1:get_name() and recipe.item2 == src2:get_name() and
+						if recipe.type == "weld" and recipe.item1 == src1:get_name() and recipe.item2 == src2:get_name() and
 							anvil[3] >= recipe.level and
-							minetest.get_item_group(hammer:get_name(), "material_level") >= recipe.level - 1 then
+							minetest.get_item_group(instrument:get_name(),  recipe.instrument) == 1 and
+							minetest.get_item_group(instrument:get_name(), "material_level") >= recipe.level then
 							if inv:room_for_item("output", recipe.output) then
 								if recipe.rmitem1 then
 									src1:take_item()
@@ -223,52 +261,27 @@ for _, anvil in ipairs(anvils) do
 								end
 								output:add_item(recipe.output)
 								inv:set_stack("output", 1, output)
-								hammer:add_wear(65535/minetest.get_item_group(hammer:get_name(), "durability"))
-								inv:set_stack("hammer", 1, hammer)
+								flux:take_item()
+								inv:set_stack("flux", 1, flux)
+								instrument:add_wear(65535/minetest.get_item_group(instrument:get_name(), "durability")/2)
+								inv:set_stack("hammer", 1, instrument)
 							end
 							return
 						end
-					end
+					end 
 				end
-				local weld = function()
-					if flux:get_name() == "minerals:flux" then
-						for _, recipe in ipairs(realtest.registered_anvil_recipes) do
-							if recipe.type == "weld" and recipe.item1 == src1:get_name() and recipe.item2 == src2:get_name() and
-						 		anvil[3] >= recipe.level and
-						 		minetest.get_item_group(hammer:get_name(), "material_level") >= recipe.level then
-								if inv:room_for_item("output", recipe.output) then
-									if recipe.rmitem1 then
-										src1:take_item()
-										inv:set_stack("src1", 1, src1)
-									end
-									if recipe.item2 ~= "" and recipe.rmitem2 then
-										src2:take_item()
-										inv:set_stack("src2", 1, src2)
-									end
-									output:add_item(recipe.output)
-									inv:set_stack("output", 1, output)
-									flux:take_item()
-									inv:set_stack("flux", 1, flux)
-									hammer:add_wear(65535/minetest.get_item_group(hammer:get_name(), "durability")/2)
-									inv:set_stack("hammer", 1, hammer)
-								end
-								return
-							end
-						end 
-					end
-				end
-				if fields["buttonForge"] then
+			end
+			if fields["buttonForge"] then
+				forge()
+			elseif fields["buttonForge10"] then
+				for i = 0, 9 do
 					forge()
-				elseif fields["buttonForge10"] then
-					for i = 0, 9 do
-						forge()
-					end
-				elseif fields["buttonWeld"] then
+				end
+			elseif fields["buttonWeld"] then
+				weld()
+			elseif fields["buttonWeld10"] then
+				for i = 0, 9 do
 					weld()
-				elseif fields["buttonWeld10"] then
-					for i = 0, 9 do
-						weld()
-					end
 				end
 			end
 		end,
