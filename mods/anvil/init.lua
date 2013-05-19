@@ -121,15 +121,13 @@ for _, instrument in ipairs(instruments) do
 end
 
 local anvils = {
-	{'stone', 'Stone', 0, 61*2.3},
-	{'copper', 'Copper', 1, 411*2.3},
-	{'rose_gold', 'Rose Gold', 2, 521*2.3},
-	{'bismuth_bronze', 'Bismuth Bronze', 2, 581*2.3},
-	{'black_bronze', 'Black Bronze', 2, 531*2.3},
-	{'bronze', 'Bronze', 2, 601*2.3},
-	{'wrought_iron', 'Wrought Iron', 3, 801*2.3},
-	{'steel', 'Steel', 4, 1101*2.3},
-	{'black_steel', 'Black Steel', 5, 1501*2.3}
+	{'stone', 'Stone', 0},
+	{'copper', 'Copper', 1},
+	{'rose_gold', 'Rose Gold', 2},
+	{'bismuth_bronze', 'Bismuth Bronze', 2},
+	{'bronze', 'Bronze', 2},
+	{'wrought_iron', 'Wrought Iron', 3},
+	{'steel', 'Steel', 4}
 }
 
 minetest.register_craft({

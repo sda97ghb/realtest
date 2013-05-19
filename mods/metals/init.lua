@@ -1,6 +1,6 @@
 metals = {}
 
-metals.levels = {0,0,0,1,2,2,2,2,2,2,2,2,2,2,3,3,3,4,4,5}
+metals.levels = {0,0,0,1,2,2,2,2,2,2,2,2,2,3,3,3,4,4}
 
 metals.list = {
 	'bismuth',
@@ -15,7 +15,6 @@ metals.list = {
 	'brass',
 	'sterling_silver',
 	'rose_gold',
-	'black_bronze',
 	'bismuth_bronze',
 	'bronze',
 	'aluminium',
@@ -26,8 +25,6 @@ metals.list = {
 	----------
 	'nickel',
 	'steel',
-	----------
-	'black_steel'
 }
 
 metals.desc_list = {
@@ -43,7 +40,6 @@ metals.desc_list = {
 	'Brass',
 	'Sterling Silver',
 	'Rose Gold',
-	'Black Bronze',
 	'Bismuth Bronze',
 	'Bronze',
 	'Aluminium',
@@ -54,8 +50,6 @@ metals.desc_list = {
 	----------
 	'Nickel',
 	'Steel',
-	----------
-	'Black Steel'
 }
 
 for i=1, #metals.list do
@@ -317,12 +311,6 @@ minetest.register_craft({
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "metals:black_bronze_unshaped 4",
-	recipe = {"metals:copper_unshaped", "metals:copper_unshaped", "metals:gold_unshaped", "metals:silver_unshaped"},
-})
-
-minetest.register_craft({
-	type = "shapeless",
 	output = "metals:bismuth_bronze_unshaped 4",
 	recipe = {"metals:copper_unshaped", "metals:copper_unshaped", "metals:bismuth_unshaped", "metals:tin_unshaped"}
 })
@@ -331,12 +319,6 @@ minetest.register_craft({
 	type = "shapeless",
 	output = "metals:bronze_unshaped 4",
 	recipe = {"metals:copper_unshaped", "metals:copper_unshaped", "metals:copper_unshaped", "metals:tin_unshaped"}
-})
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "metals:black_steel_unshaped 4",
-	recipe = {"metals:steel_unshaped", "metals:steel_unshaped", "metals:nickel_unshaped", "metals:black_bronze_unshaped"}
 })
 
 --
