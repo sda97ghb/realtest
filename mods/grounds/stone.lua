@@ -69,7 +69,7 @@ function realtest.register_stone(name, StoneRef)
 		particle_image = {name_.."_small_rock.png"},
 		groups = {crumbly=2, drop_on_dig=1, stone=1, macadam=1, falling_node=1},
 		sounds = default.node_sound_stone_defaults(),
-		drop = name.."_small_rock 4"
+		drop = name.."_small_rock 9"
 	})
 	
 	minetest.register_craft({
