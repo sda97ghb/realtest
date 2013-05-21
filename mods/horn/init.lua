@@ -1,4 +1,89 @@
 horn = {}
+horn.recipes = {}
+
+function realtest.register_horn_recipe(mineral,count_mineral,metal,count_metal)
+	local horn_recipe={mineral=mineral, count_mineral=count_mineral, metal=metal, count_metal=count_metal}
+	table.insert(horn.recipes,horn_recipe)
+	
+	minetest.register_node("horn:"..mineral.."_block", {
+		description = "Block of "..mineral,
+		tiles = {"minerals_block.png"},
+		particle_image = {"minerals_block.png"},
+		groups = {falling_node=1,oddly_breakable_by_hand=1},
+		mineral = mineral,
+		metal = metal,
+	})
+	
+	minetest.register_node("horn:"..mineral.."_block_liquid", {
+		description = "Liquid Block of "..mineral,
+		tiles = {"minerals_block_liquid.png"},
+		particle_image = {"minerals_block_liquid.png"},
+		groups = {falling_node=1,oddly_breakable_by_hand=1},
+	})
+	
+	minetest.register_abm({
+		nodenames = {"horn:"..mineral.."_block","horn:"..mineral.."_block_liquid",},
+		interval = 1.0,
+		chance = 1,
+		action = function(pos, node, active_object_count, active_object_count_wider)
+			local b = false
+			if minetest.env:get_node({x=pos.x+1, y=pos.y, z=pos.z}).name == 'air' then b=true end
+			if minetest.env:get_node({x=pos.x-1, y=pos.y, z=pos.z}).name == 'air' then b=true end
+			if minetest.env:get_node({x=pos.x, y=pos.y, z=pos.z+1}).name == 'air' then b=true end
+			if minetest.env:get_node({x=pos.x, y=pos.y, z=pos.z-1}).name == 'air' then b=true end
+			if b then
+				minetest.env:remove_node(pos);
+				minetest.env:add_item(pos, "minerals:"..mineral.." "..count_mineral)
+				nodeupdate(pos)
+			end
+		end
+	})
+	
+	minetest.register_abm({
+		nodenames = {"horn:"..mineral.."_block","horn:"..mineral.."_block_liquid",
+			"default:brick","default:stone_flat","default:desert_stone_flat","default:cobbleblock_flat"},
+		interval = 1.0,
+		chance = 1,
+		action = function(pos, node, active_object_count, active_object_count_wider)
+			if minetest.env:get_node({x=pos.x-1, y=pos.y+1, z=pos.z}).name == "air" then return end
+			if minetest.env:get_node({x=pos.x+1, y=pos.y+1, z=pos.z}).name == "air" then return end
+			if minetest.env:get_node({x=pos.x, y=pos.y+1, z=pos.z-1}).name == "air" then return end
+			if minetest.env:get_node({x=pos.x, y=pos.y+1, z=pos.z+1}).name == "air" then return end
+			local p = {x=pos.x, y=pos.y+1, z=pos.z}
+			local objects = minetest.env:get_objects_inside_radius(p, 0.5)
+			local ore = 0
+			local ores = {}
+			for _, v in ipairs(objects) do
+				if not v:is_player() and v:get_luaentity() and v:get_luaentity().name == "__builtin:item" then
+					local istack = ItemStack(v:get_luaentity().itemstring)
+					if istack:get_name() == "minerals:"..mineral then
+						ore = ore + istack:get_count()
+						table.insert(ores,v)
+					end
+				end
+			end
+			if minetest.env:get_node(p).name == "air" and ore > count_mineral-1 then
+				for _, v in ipairs(ores) do
+					v:remove()
+				end
+				minetest.env:set_node(p, {name = "horn:"..mineral.."_block"})
+				if ore-count_mineral > 0 then
+					ore = ore - count_mineral
+					minetest.env:add_item({x=pos.x, y=pos.y+2, z=pos.z},"minerals:"..mineral.." "..ore)
+				end
+			end
+		end
+	})
+end
+
+function realtest.get_node_for_smelting(node)
+	for _, recipe in ipairs(horn.recipes) do
+		if node.mineral = recipe.mineral then
+			return recipe
+		end
+	end
+	return nil
+end
 
 function horn.register(metal)
 	minetest.register_craft({
@@ -103,11 +188,12 @@ function horn.register(metal)
 					local ymax = 16
 					local side = minetest.env:get_node(pos).param2
 					side = side - math.floor(side/4)*4
-					local xd = (side-math.floor(side/2)*2)*(2-side);
+					local xd = (side-math.floor(side/2)*2)*(2-side)
 					side = side + 1
-					local zd = (side-math.floor(side/2)*2)*(2-side);
+					local zd = (side-math.floor(side/2)*2)*(2-side)
+					
 					for y=0,ymax-1 do
-						local p ={x=pos.x+xd, y=pos.y+y, z=pos.z+zd}
+						local p = {x=pos.x+xd, y=pos.y+y, z=pos.z+zd}
 						for m = 1, #mineralsi.list do
 							if mineralsi.list[m].ore then
 								if minetest.env:get_node(p).name == "minerals:"..mineralsi.list[m].name.."_block" then
@@ -191,5 +277,7 @@ function horn.register(metal)
 		end,
 	})
 end
+
+realtest.register_horn_recipe('magnetite', 4, 'pig_iron', 4)
 
 horn.register("bronze")
