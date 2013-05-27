@@ -63,8 +63,9 @@ function realtest.register_tree(name, TreeDef)
 		wield_image = tree.textures.sapling,
 		paramtype = "light",
 		walkable = false,
+		falling_node_walkable = false,
 		groups = {snappy=2,dig_immediate=3,flammable=2,dropping_node=1},
-		sounds = default.node_sound_defaults(),
+		sounds = default.node_sound_defaults()
 	})
 	
 	minetest.register_craftitem(tree.name.."_plank", {
