@@ -187,7 +187,7 @@ minetest.register_node("ores:sulfur", {
 	selection_box = {
 		type = "wallmounted",
 	},
-	groups = {cracky=3,drop_on_dig=1,dig_immediate=2},
+	groups = {cracky=3,drop_on_dig=1,dig_immediate=2,attached_node=1},
 	drop = {
 		max_items = 1,
 		items = {

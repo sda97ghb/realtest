@@ -138,7 +138,7 @@ realtest.register_on_updatenode(function(pos, node)
 		end
 		if not check_attached_node(pos, node) then
 			minetest.env:remove_node(pos)
-			minetest.handle_node_drops(pos, {node.name})
+			minetest.handle_node_drops(pos, minetest.get_node_drops(node.name, nil))
 			nodeupdate(pos)
 		end
 	end
