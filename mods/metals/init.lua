@@ -180,14 +180,38 @@ end
 -- Smelting
 --
 
+minetest.register_craftitem("metals:molding_sand_lump", {
+	description = "Molding Sand",
+	inventory_image = "metals_molding_sand.png"
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "metals:molding_sand_lump 5",
+	recipe = {"grounds:clay_lump", "default:sand", "default:desert_sand"}
+})
+
+minetest.register_craftitem("metals:molding_sand_mold", {
+	description = "Molding Sand Mold",
+	inventory_image = "metals_molding_sand_mold.png",
+})
+
 minetest.register_craftitem("metals:clay_mold", {
-	description = "Clay mold",
+	description = "Clay Mold",
 	inventory_image = "metals_clay_mold.png",
 })
 
 minetest.register_craftitem("metals:ceramic_mold", {
 	description = "Ceramic mold",
 	inventory_image = "metals_ceramic_mold.png",
+})
+
+minetest.register_craft({
+	output = "metals:molding_sand_mold 5",
+	recipe = {
+		{"metals:molding_sand_lump", "",                         "metals:molding_sand_lump"},
+		{"metals:molding_sand_lump", "metals:molding_sand_lump", "metals:molding_sand_lump"},
+	}
 })
 
 minetest.register_craft({
@@ -202,6 +226,12 @@ minetest.register_craft({
 	type = "cooking",
 	output = "metals:ceramic_mold",
 	recipe = "metals:clay_mold",
+})
+
+minetest.register_craft({
+	type = "cooking",
+	output = "metals:ceramic_mold",
+	recipe = "metals:molding_sand_mold",
 })
 
 minerals = {}
