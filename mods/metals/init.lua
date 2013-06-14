@@ -1,6 +1,6 @@
 metals = {}
 
-metals.levels = {0,0,0,1,2,2,2,2,2,2,2,2,2,2,3,3,3,4,4,5}
+metals.levels = {0,0,0,1,2,2,2,2,2,2,2,2,2,2,3,3,3,4,4,4,5}
 
 metals.list = {
 	'bismuth',
@@ -24,6 +24,7 @@ metals.list = {
 	'pig_iron',
 	'wrought_iron',
 	----------
+	'albata',
 	'nickel',
 	'steel',
 	----------
@@ -52,6 +53,7 @@ metals.desc_list = {
 	'Pig Iron',
 	'Wrought Iron',
 	----------
+	'Albata',
 	'Nickel',
 	'Steel',
 	----------
@@ -320,6 +322,12 @@ end
 --
 -- Alloys
 --
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "metals:albata_unshaped 4",
+	recipe = {"metals:zink_unshaped", "metals:zink_unshaped", "metals:nickel_unshaped", "metals:copper_unshaped"},
+})
 
 minetest.register_craft({
 	type = "shapeless",
