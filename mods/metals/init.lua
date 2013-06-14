@@ -326,7 +326,7 @@ end
 minetest.register_craft({
 	type = "shapeless",
 	output = "metals:albata_unshaped 4",
-	recipe = {"metals:zinс_unshaped", "metals:zinc_unshaped", "metals:nickel_unshaped", "metals:copper_unshaped"},
+	recipe = {"metals:copper_unshaped", "metals:nickel_unshaped", "metals:zinc_unshaped", "metals:zinc_unshaped"},
 })
 
 minetest.register_craft({
