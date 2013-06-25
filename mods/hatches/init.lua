@@ -19,10 +19,17 @@ function hatches.register_hatch(name, desc, is_wooden)
 			end
 		end
 	end
+	
+	local texture 
+	if is_wooden then
+		texture = "trees_"..name.."_planks.png"
+	else
+		texture = "metals_"..name.."_block.png"
+	end
 
 	minetest.register_node("hatches:"..name.."_hatch_opened_top", {
 		drawtype = "nodebox",
-		tile_images = {"hatches_"..name.."_hatch.png"},
+		tile_images = {texture},
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = true,
@@ -53,7 +60,7 @@ function hatches.register_hatch(name, desc, is_wooden)
 	minetest.register_node("hatches:"..name.."_hatch_closed", {
 		description = desc.." Hatch",
 		drawtype = "nodebox",
-		tile_images = {"hatches_"..name.."_hatch.png"},
+		tile_images = {texture},
 		inventory_image = "hatches_"..name.."_hatch.png",
 		wield_image = "hatches_"..name.."_hatch.png",
 		paramtype = "light",
@@ -83,7 +90,7 @@ function hatches.register_hatch(name, desc, is_wooden)
 
 	minetest.register_node("hatches:"..name.."_hatch_opened_bottom", {
 		drawtype = "nodebox",
-		tile_images = {"hatches_"..name.."_hatch.png"},
+		tile_images = {texture},
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = true,
@@ -122,7 +129,7 @@ function hatches.register_hatch(name, desc, is_wooden)
 end
 
 for i, metal_name in ipairs(metals.list) do
-	hatches.register_hatch(metal_name, metals.desc_list[i], false)
+	hatches.register_hatch(metal_name, metals.desc_list[i])
 end
 
 for i, tree_name in ipairs(realtest.registered_trees_list) do
