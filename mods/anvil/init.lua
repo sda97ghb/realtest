@@ -26,7 +26,7 @@ function realtest.register_anvil_recipe(RecipeDef)
 	end
 end
 
---Unshaped metals, buckets, double ingots, sheets, hammers and locks
+--Unshaped metals, buckets, double ingots, sheets, hammers, locks and hatches
 for i, metal in ipairs(metals.list) do
 	realtest.register_anvil_recipe({
 		item1 = "metals:"..metal.."_unshaped",
@@ -75,6 +75,13 @@ for i, metal in ipairs(metals.list) do
 		item2 = "scribing_table:plan_lock",
 		rmitem2 = false,
 		output = "metals:"..metal.."_lock",
+		level = metals.levels[i]
+	})
+	realtest.register_anvil_recipe({
+		item1 = "metals:"..metal.."_ingot",
+		item2 = "scribing_table:plan_hatch",
+		rmitem2 = false,
+		output = "hatches:"..metal.."_hatch_closed",
 		level = metals.levels[i]
 	})
 	realtest.register_anvil_recipe({

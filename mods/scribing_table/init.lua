@@ -117,6 +117,15 @@ realtest.register_instrument_plan("scribing_table:stonebricks", {
 		  1,1,1,1,1,}
 })
 
+realtest.register_instrument_plan("scribing_table:plan_hatch", {
+	description = "Hatch Plan",
+	bitmap = {1,1,1,1,1,
+		  1,1,0,1,1,
+		  1,0,1,0,1,
+		  1,1,0,1,1,
+		  1,1,1,1,1,}
+})
+
 local function check_recipe(pos)
 	local meta = minetest.env:get_meta(pos)
 	local inv = meta:get_inventory()
