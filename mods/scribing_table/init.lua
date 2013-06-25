@@ -120,9 +120,9 @@ realtest.register_instrument_plan("scribing_table:stonebricks", {
 realtest.register_instrument_plan("scribing_table:plan_hatch", {
 	description = "Hatch Plan",
 	bitmap = {1,1,1,1,1,
-		  1,1,0,1,1,
 		  1,0,1,0,1,
-		  1,1,0,1,1,
+		  1,1,1,1,1,
+		  1,0,1,0,1,
 		  1,1,1,1,1,}
 })
 
