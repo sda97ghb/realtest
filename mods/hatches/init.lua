@@ -1,6 +1,6 @@
 hatches = {}
 
-function hatches.register_hatch(name, desc)
+function hatches.register_hatch(name, desc, is_wooden)
 
 	local on_hatch_clicked = function(pos, node, puncher, itemstack)
 		if node.name == "hatches:"..name.."_hatch_opened_top" then
@@ -111,8 +111,21 @@ function hatches.register_hatch(name, desc)
 		end
 	})
 
+	if is_wooden then
+		realtest.register_joiner_table_recipe({
+			item1 = "trees:"..name.."_stick",
+			item2 = "trees:"..name.."_stick",
+			output = "hatches:"..name.."_hatch_closed"
+		})
+	end
+
 end
 
 for i, metal_name in ipairs(metals.list) do
-	hatches.register_hatch(metal_name, metals.desc_list[i])
+	hatches.register_hatch(metal_name, metals.desc_list[i], false)
+end
+
+for i, tree_name in ipairs(realtest.registered_trees_list) do
+	local tree_desc = realtest.registered_trees[tree_name].description
+	hatches.register_hatch(tree_name:remove_modname_prefix(), tree_desc, true)
 end
