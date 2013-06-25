@@ -113,9 +113,8 @@ function hatches.register_hatch(name, desc, is_wooden)
 
 	if is_wooden then
 		realtest.register_joiner_table_recipe({
-			item1 = "trees:"..name.."_stick",
-			item2 = "trees:"..name.."_stick",
-			output = "hatches:"..name.."_hatch_closed"
+			item1 = "trees:"..name.."_planks",
+			output = "hatches:"..name.."_hatch_closed 2"
 		})
 	end
 
