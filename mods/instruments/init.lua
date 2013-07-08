@@ -26,6 +26,7 @@ instruments.materials = {
 	"german_silver",
 	"albata",
 	"steel",
+	"monel",
 	--------
 	"black_steel",
 }
@@ -49,6 +50,7 @@ instruments.desc_list = {
 	"German Silver",
 	"Albata",
 	"Steel",
+	"Monel",
 	--------
 	"Black Steel",
 }
@@ -60,9 +62,9 @@ instruments.stone_head_recipes = {
 	hammer = {{{"default:cobble","default:cobble","default:cobble"},{"default:cobble","default:cobble","default:cobble"}},6},
 }
 
-instruments.levels = {0,0,0,0,1,2,2,2,2,2,3,4,4,4,5}
+instruments.levels = {0,0,0,0,1,2,2,2,2,2,3,4,4,4,4,5}
 
-instruments.durability = {50, 211, 281, 296, 411, 521, 531, 581, 601, 731, 801, 1001, 1011, 1101, 1501}
+instruments.durability = {50, 211, 281, 296, 411, 521, 531, 581, 601, 731, 801, 1001, 1011, 1101, 1111, 1501}
 
 instruments.list = {"pick", "axe", "shovel", "hammer", "sword", "spear", "chisel", "saw"}
 
