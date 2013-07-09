@@ -151,7 +151,6 @@ function realtest.register_stone(name, StoneRef)
 	instruments.chisel_pairs[name.."_slab_r"] = name.."_flat_slab_r"
 	instruments.chisel_pairs[name.."_stair"] = name.."_flat_stair"
 	instruments.chisel_pairs[name.."_stair_r"] = name.."_flat_stair_r"
-	instruments.chisel_pairs[name.."_macadam"] = name.."_bricks"
 end
 
 realtest.register_stone("default:stone")
