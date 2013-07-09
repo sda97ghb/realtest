@@ -163,8 +163,8 @@ instruments.groupcaps = {
 		 fleshy={times={[2]=1.00, [3]=0.50},           uses=instruments.durability[13]*1.2, maxlevel=2}},
 		{choppy={times={[1]=5.10, [2]=3.70, [3]=2.30}, uses=instruments.durability[14], maxlevel=3},--steel
 		 fleshy={times={[2]=1.00, [3]=0.50},           uses=instruments.durability[14]*1.2, maxlevel=2}},
-		{choppy={times={[1]=5.05, [2]=3.65, [3]=2.25}, uses.instruments.durability[15], maxlevel=3},--monel
-		 fleshy={times={[2]=1.00, [3]=0.50},           uses.instruments.durability[15]*1.2, maxlevel=2}},
+		{choppy={times={[1]=5.05, [2]=3.65, [3]=2.25}, uses=instruments.durability[15], maxlevel=3},--monel
+		 fleshy={times={[2]=1.00, [3]=0.50},           uses=instruments.durability[15]*1.2, maxlevel=2}},
 		{choppy={times={[1]=5.00, [2]=3.60, [3]=2.20}, uses=instruments.durability[16], maxlevel=3},--black steel
 		 fleshy={times={[2]=1.00, [3]=0.50},           uses=instruments.durability[16]*1.2, maxlevel=2}},
 	},
