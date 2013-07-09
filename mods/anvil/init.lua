@@ -186,7 +186,7 @@ for _, anvil in ipairs(anvils) do
 				{-0.35,-0.1,-0.2,0.35,0.1,0.2},
 			},
 		},
-		groups = {oddly_breakable_by_hand=2, dig_immediate=1},
+		groups = {oddly_breakable_by_hand=2, falling_node=1, dig_immediate=1},
 		sounds = default.node_sound_stone_defaults(),
 		can_dig = function(pos,player)
 			local meta = minetest.env:get_meta(pos);
