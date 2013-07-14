@@ -346,6 +346,18 @@ minetest.register_abm({
 	end
 })
 
+minetest.register_abm({
+	nodenames = {"default:cactus"},
+    interval = 0.5,
+    chance = 1,
+    action = function(pos, node, active_object_count, active_object_count_wider)
+    players = minetest.env:get_objects_inside_radius(pos, 1)
+	for i, player in ipairs(players) do
+		player:set_hp(player:get_hp() - 1)
+	end
+	end,
+})
+
 minetest.register_node("default:papyrus", {
 	description = "Papyrus",
 	drawtype = "plantlike",
