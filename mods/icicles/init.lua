@@ -1,7 +1,7 @@
 for i = 1,4 do
 	minetest.register_node("icicles:icicle_"..i, {
 		description = "Icicle "..i,
-		groups = {cracky=3, icicle=1, oddly_breakable_by_hand=4-i, drop_on_dig=1},
+		groups = {cracky=3, icicle=1, oddly_breakable_by_hand=4-i, drop_on_dig=1,attached_node=1},
 		tiles = {"default_stone.png"},
 		is_ground_content = true,
 		sounds = default.node_sound_stone_defaults(),
@@ -16,6 +16,7 @@ for i = 1,4 do
 		},
 		drawtype = "nodebox",
 		paramtype = "light",
+		paramtype2 = "wallmounted",
 		node_box = {
 			type = "fixed",
 			fixed = {-i/10, -0.5, -i/10, i/10, 0.5, i/10}
@@ -40,7 +41,7 @@ end
 function icicles.make_stalagmite(pos, length)
 	for i = 1,length do
 		if minetest.env:get_node({x=pos.x,y=pos.y+i-1,z=pos.z}).name == "air" then
-			minetest.env:set_node({x=pos.x,y=pos.y+i-1,z=pos.z}, {name = "icicles:icicle_"..5-i})
+			minetest.env:set_node({x=pos.x,y=pos.y+i-1,z=pos.z}, {name = "icicles:icicle_"..5-i, param2 = 1})
 		else return end
 	end
 end
