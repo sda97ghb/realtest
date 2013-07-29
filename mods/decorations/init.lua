@@ -281,8 +281,27 @@ for _, mineral in ipairs(decor_minerals) do
 		sounds = default.node_sound_stone_defaults(),
 	})
 	
-	minetest.register_node("decorations:"..mineral[1].."_vase_with_coals", {
-		description = mineral[2].." Vase With Coals",
+	minetest.register_node("decorations:"..mineral[1].."_bowl", {
+		description = mineral[2].." Bowl",
+		drawtype = "nodebox",
+		paramtype = "light",
+		node_box = {
+				type = "fixed",
+				fixed = {
+					{-0.5, -0.35, -0.5, -0.4, 0, 0.5},
+					{-0.5, -0.35, 0.4, 0.5, 0, 0.5},
+					{-0.5, -0.35, -0.5, 0.5, 0, -0.4},
+					{0.4,  -0.35, -0.5, 0.5, 0, 0.5},
+					{-0.4, -0.5, -0.4, 0.4, -0.35, 0.4},
+				},
+			},
+		tiles = {"decorations_"..mineral[1]..".png"},
+		groups = {cracky=3, oddly_breakable_by_hand = 2},
+		sounds = default.node_sound_stone_defaults(),
+	})
+	
+	minetest.register_node("decorations:"..mineral[1].."_bowl_with_coals", {
+		description = mineral[2].." Bowl With Coals",
 		drawtype = "nodebox",
 		paramtype = "light",
 		light_source = 14,
@@ -302,8 +321,6 @@ for _, mineral in ipairs(decor_minerals) do
 		groups = {cracky=3, oddly_breakable_by_hand = 2},
 		sounds = default.node_sound_stone_defaults(),
 	})
-	
-	
 	
 	minetest.register_craft({
 		output = "decorations:"..mineral[1].."_casket",
@@ -383,6 +400,53 @@ for _, mineral in ipairs(decor_minerals) do
 			{"minerals:"..mineral[1],"","minerals:"..mineral[1]},
 			{"","minerals:"..mineral[1],""},
 			{"","minerals:"..mineral[1],""},
+		}
+	})
+	minetest.register_craft({
+		output = "decorations:"..mineral[1].."_bowl",
+		recipe = {
+			{"minerals:"..mineral[1],"","minerals:"..mineral[1]},
+			{"","minerals:"..mineral[1],""},
+		}
+	})
+	
+	minetest.register_craft({
+		output = "decorations:"..mineral[1].."_bowl_with_coals",
+		recipe = {
+			{"minerals:charcoal"},
+			{"decorations:"..mineral[1].."_bowl"},
+		}
+	})
+	
+	minetest.register_craft({
+		output = "decorations:"..mineral[1].."_bowl_with_coals",
+		recipe = {
+			{"minerals:charcoal"},
+			{"decorations:"..mineral[1].."_bowl"},
+		}
+	})
+	
+	minetest.register_craft({
+		output = "decorations:"..mineral[1].."_bowl_with_coals",
+		recipe = {
+			{"minerals:bituminous_coal"},
+			{"decorations:"..mineral[1].."_bowl"},
+		}
+	})
+	
+	minetest.register_craft({
+		output = "decorations:"..mineral[1].."_bowl_with_coals",
+		recipe = {
+			{"minerals:lignite"},
+			{"decorations:"..mineral[1].."_bowl"},
+		}
+	})
+	
+	minetest.register_craft({
+		output = "decorations:"..mineral[1].."_bowl_with_coals",
+		recipe = {
+			{"minerals:anthracite"},
+			{"decorations:"..mineral[1].."_bowl"},
 		}
 	})
 end
