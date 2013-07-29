@@ -676,3 +676,10 @@ realtest.register_tree("trees:pine", {
 	end,
 	radius = 8,
 })
+realtest.register_tree("trees:spruce", {
+	description = "Spruce",
+	leaves = trees.gen_lists.spruce,
+	height = function()
+		return 10 + math.random(4)
+	end,
+})
